@@ -4,27 +4,19 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import { useEffect } from 'react';
 import axios from 'axios';
+import Login from './components/Login';
 
 
 function App() {
  
-  const [ sample, setSample ] = useState()
-   useEffect(() => {
-       const fetchOrder = async () =>{
-              try {
-                  const response = await fetch("http://localhost:5000");
-                  const data = await response.json();
-                  console.log(data)
-              } catch (error) {
-                  console.log(error)
-              }
-          };
-          fetchOrder();
-    }, []);
+  const [ name, setName ] = useState()
+
+
 
   return (
     <>
-      <h1>dsadsa</h1>
+      <h1>MusicQuestro</h1>
+       <Login />
     </>
   )
 }
