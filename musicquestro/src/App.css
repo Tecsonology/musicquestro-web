@@ -19,13 +19,20 @@
   flex-direction: row;
 }
 
+.aic {
+  align-items: center;
+}
+
 .jc-sb {
   justify-content: space-between;
 }
 
 .jc-c {
   justify-content: center;
+
 }
+
+
 
 input[type = text], input[type = password] {
   margin: 0.5em;
@@ -55,6 +62,66 @@ button {
   height: 100vh;
 }
 
+.btnMenu {
+  font-weight: 900;
+  background-color: rgb(223, 149, 2);
+  width: 15em;
+  box-shadow: 0 5px #666d66;
+}
+
+.btn-settings {
+    width: 5em;
+    position: absolute;
+    right: 1%;
+    top: 1%
+}
+
+#or {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 22em;
+
+  hr{
+    width: 9em;
+    border: 1px solid black;
+  }
+}
+
+.btn-back {
+  width: 8em;
+    position: absolute;
+    left: 1%;
+    top: 1%;
+    cursor: pointer;
+}
+
+.glass-bg {
+   background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 0.3em 0.4em;
+}
+
+
+
+.btn3d {
+  background-color: rgb(223, 149, 2);
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 5px #666d66;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -76,4 +143,19 @@ button {
 
 .read-the-docs {
   color: #888;
+}
+
+
+@media (max-width: 767px) {
+    .btn-back {
+         width: 6em;
+        position: absolute;
+        left: 0;
+        top: 1%;
+        cursor: pointer;
+    }
+
+    .main-logo {
+      width: 20em;
+    }
 }

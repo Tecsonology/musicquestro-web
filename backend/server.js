@@ -11,6 +11,8 @@ const app = express();
 app.use(cors())
 app.use(express.json())
 
+
+
 const PORT = process.env.PORT || 5000
 
 // Connect to MongoDB
@@ -33,7 +35,8 @@ app.get('/', (req, res) => {
 const UserSchema = new mongoose.Schema({ 
     id: { type: Number, required: true},
     username: { type: String, required: true},
-    password: { type: String, required: true}
+    password: { type: String, required: true},
+    userids: { type: String,}
 });
 
 const User = mongoose.model('User', UserSchema);
@@ -41,10 +44,10 @@ const User = mongoose.model('User', UserSchema);
 // API endpoint to add data
 app.post('/createUser', async (req, res) => {
     
-    const { id, username, password } = req.body;
+    const { id, username, password, userids} = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
-        const newUser = new User({ id, username, password: hashedPassword});
+        const newUser = new User({ id, username, password: hashedPassword, userids});
 
         await newUser.save();
         res.status(201).json({ message: 'User added successfully', user: newUser });
@@ -91,4 +94,34 @@ app.post('/auth', async (req, res)=> {
         console.log(error)
     }
 })
+
+app.post('/authCheck', async (req, res)=> {
+    const { userids } = req.body;
+
+
+        const checkUser = await User.findOne({userids: userids})
+
+        if(checkUser){
+            console.log('getting existing account...')
+            res.status(401).json({message: `User is existing${userids}`})
+        } else {
+            console.log("user not existing...")
+            res.status(200).json({message: `User not existing ${userids}`})
+        }
+
+})
+
+app.get('/player', async (req, res) => {
+    const { userids } = req.query;
+    if (!userids) {
+        return res.status(400).json({ message: 'Missing userids' });
+    }
+
+    // Example: Fetch user from MongoDB
+    const user = await User.findOne({ userids }); // Adjust query as needed
+    const userWithoutPassword = user.toObject();
+    delete userWithoutPassword.password;
+    res.json(userWithoutPassword);
+});
+
 

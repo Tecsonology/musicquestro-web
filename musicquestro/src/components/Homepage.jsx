@@ -2,22 +2,21 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { token } from '../Token'
+import '../styles/Homepage.css'
 import ProtectedComponent from './ProtectedComponent'
+import Lifebar from '../mini-components/Lifebar'
 
 function Homepage() {
 
-    useEffect(()=> {
-      setUserLogged(JSON.parse(localStorage.getItem("userLogged")))
-    }, [])
-
     const navigate = useNavigate()
     const [ userLogged, setUserLogged ] = useState()
+    
+    useEffect(()=> {
+       setUserLogged(JSON.parse(localStorage.getItem("userLogged")))
+    }, [])
 
     const menuRedirect =(e)=> {
         const directTo = e.target.id
-
-        console.log(directTo)
-
         switch(directTo){
             case 'newg':
                 navigate('/m') 
@@ -26,6 +25,10 @@ function Homepage() {
             case 'playg':
                 navigate('/m')
                 break;
+              
+            case 'user':
+              navigate('/user')
+              break;
             
             case 'leaderb':
                 navigate('/leaderboards')
@@ -37,15 +40,15 @@ function Homepage() {
 
   return (
     <ProtectedComponent children={
-      <div className='flex jc-c fdc'>
-      <h1>MusicQuestro</h1>
-      <h2>Hi {userLogged ? userLogged.username : ""}</h2>
-      <button id='newg' onClick={menuRedirect}>New Game</button>
-      <button id='playg' onClick={menuRedirect}>Play Game</button>
-      <button id='leaderb' onClick={menuRedirect}>Leaderboards</button>
-      <button onClick={()=> {
+      <div className='homepage flex jc-c aic fdc fpage'>
+        <Lifebar />
+      <img className='main-logo' src="https://i.ibb.co/MkgK8X5q/MUSIC-QUESTRO-NEW-LOGO-NO-STARS.png" alt="" />
+      <button className='btnMenu' id='playg' onClick={menuRedirect}>Play Game</button>
+      <button className='btnMenu' id='user' onClick={menuRedirect}>Profile</button>
+      <button className='btnMenu' id='leaderb' onClick={menuRedirect}>Leaderboards</button>
+      <button className='btnMenu' onClick={()=> {
         localStorage.removeItem("userLogged")
-        navigate('/')
+        window.location.href = '/'
       }}>Logout</button>
     </div>
     }/>

@@ -1,10 +1,12 @@
-import React, { Children } from 'react'
+import React, { Children, useEffect } from 'react'
 import { token } from '../Token'
 import { useNavigate } from 'react-router-dom'
 
 function ProtectedComponent(props) {
 
     const navigate = useNavigate()
+
+  
 
     const handleGoToLogin =()=> {
         navigate('/')

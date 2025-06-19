@@ -1,18 +1,37 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import '../styles/Maps.css'
+import ProtectedComponent from './ProtectedComponent'
+
 
 function Maps() {
 
   const navigate = useNavigate()
 
   return (
-    <div className='fpage' style={{backgroundImage: "url('https://i.ibb.co/HmSgs4B/Roblox-Screen-Shot20241125-112428379.png')"}}>
-      <h1>Maps</h1>
-      <button onClick={()=> {
-        navigate('/rhythmGame')
-      }}>Rhytm</button>
+    <ProtectedComponent>
+        <div className='maps fpage'>
+        <img onClick={()=> {
+          navigate(-1)
+        }} className='btn-back' src="https://i.ibb.co/KzBKmLC3/Untitled-design-2.png" alt="" />
+        <div className="maps-wrapper">
+          <h1 className='title'>Category</h1>
+        
+          <div className="map-selection">
+              <img onClick={()=> {
+                window.location.href = '/rhythmGame'
+              }} className='cat-card' src="https://i.ibb.co/VWV4wcPV/Untitled-design-15.png" alt="" />
+              <img onClick={()=> {
+                window.location.href = '/melodyGame'}} className='cat-card' src="https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png" alt="" />
+              <img className='cat-card' src="https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png" alt="" />
+              <img className='cat-card' src="https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png" alt="" />
+              <br /><br /><br /><br /><br /><br /><br />
+          
+          </div>
+        </div>
 
-    </div>
+      </div>
+    </ProtectedComponent>
   )
 }
 

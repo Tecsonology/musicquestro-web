@@ -1,0 +1,108 @@
+.melody-game-container {
+     background: #000000a2;
+    background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode:multiply;
+    overflow:hidden;
+    
+}
+
+.game-summary {
+    background-color: rgba(0, 0, 0, 0.63);
+    width: 100vw;
+    height: 100vh;
+}
+
+.game-summary-wrapper {
+    box-sizing: border-box;
+    color: black;
+    background-color: rgb(255, 255, 255);
+    width: 90%;
+    border-radius: 1em;
+    padding: 1em;
+}
+
+.game-buttons {
+    
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
+}
+
+.game-status-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    position: fixed;
+    top: 2em;
+
+}
+
+.game-status-wrapper {
+    justify-content: space-around;
+    padding: 0;
+    margin: 0;
+    p {
+        padding: 0;
+        margin: 0 0.5em;
+    }
+
+    img {
+        width: 1em;
+        margin: 0;
+    }
+
+    div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin: 0 1em;
+    }
+}
+
+.m-btn-container {
+    padding: 1em;
+}
+
+.btom-spells {
+    box-sizing: border-box;
+    width: 90%;
+    position: fixed;
+    bottom: 1em;
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    button {
+        font-size: 0.8em;
+        width: 6em;
+        height: 6em;
+        border-radius: 50%;
+        margin: 0 0.4em;
+
+    }
+}
+
+
+
+@media (min-width: 767px) {
+    .game-status-container {
+        width: 30em;
+    }
+
+    .game-summary-wrapper {
+        width: 30em;
+    }
+
+    
+}

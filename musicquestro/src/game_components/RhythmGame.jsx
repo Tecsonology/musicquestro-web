@@ -59,6 +59,9 @@ function RhythmGame() {
   return (
     
     <div className="fdc min-h-screen flex flex-col items-center justify-center bg-rose-50 p-6">
+      <audio controls autoPlay>
+        <source src="http://www.sndup.net/rykws" type='audio/mpeg'/>
+      </audio>
       <h1 className="text-3xl font-bold mb-6 text-red-700">🫀 Heartbeat Rhythm Game</h1>
       <button
         onClick={playRandomRhythm}

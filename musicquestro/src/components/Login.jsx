@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { use } from 'react';
 import App from '../App';
+import '../styles/Log.css'
+import GoogleLoginButton from './GoogleLoginButton';
+import BackgroundMusic from '../BackgroundMusic';
 
 function Login() {
 
@@ -20,14 +23,17 @@ function Login() {
         useEffect(()=> {
         const getCount = async()=> {
             try{
-            const response = await axios.get('http://localhost:5000/getUserCount')
+                const response = await axios.get('http://localhost:5000/getUserCount')
 
             if(response){
                 setReady(true)
             }
 
             let num = response.data.count
+           
             setId(id + num+1)
+
+
             } catch(error){
                 console.log(error)
             }
@@ -83,13 +89,14 @@ function Login() {
     }
 
   return (
-    <div className='flex jc-c fdc'>
-        <img className='main-logo' src="https://i.ibb.co/MkgK8X5q/MUSIC-QUESTRO-NEW-LOGO-NO-STARS.png" alt="" />
+    <div className='log fpage flex jc-c fdc'>
+        
           {
             ready ? (
-                <div>
-                      { error && error ? <p className='errorM'>Invalid username or password</p> : null}
-                    {log ? (<div className="login flex fdc jc-c">
+                <div className='flex fdc jc-c aic'>
+                    <img className='main-logo' src="https://i.ibb.co/MkgK8X5q/MUSIC-QUESTRO-NEW-LOGO-NO-STARS.png" alt="" />
+                     
+                    {log ? (<div className="login flex fdc jc-c aic">
                         <input
                         type="text"
                         value={username}
@@ -104,13 +111,22 @@ function Login() {
                             placeholder='Password'
                             required
                         />
+
+                         { error && error ? <p className='errorM'>Invalid username or password</p> : null}
                       
                         <button disabled={!ready} onClick={handleLogin}>Login</button>
+
+                        <div id='or'>
+                            <hr />
+                            <p>or</p>
+                            <hr />
+                        </div>
+                        <GoogleLoginButton />
                         <p>Need an account? <span style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(false)
                         }}>Click here</span></p>
                     </div>):(
-                        <div className="register flex fdc jc-c">
+                        <div className="register flex fdc jc-c aic">
                         <input
                         type="text"
                         value={username}
@@ -125,7 +141,8 @@ function Login() {
                         placeholder='Create a password'
                         required
                     />
-                    <button disabled={!ready} onClick={handleSubmit}>Register</button>
+                 
+                    <button id='btnRegister' disabled={!ready} onClick={handleSubmit}>Register</button>
                     <p>Already have an account? <span style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(true)
                         }}>Click here</span></p>
@@ -133,8 +150,9 @@ function Login() {
                     )}
                 </div>
             ) : (
-                <div>
+                <div className='flex aic jc-c fdc'>
                     <h1>Loading...</h1>
+                    <p>Please wait, we are taking you to the world of MusicQuestro...</p>
                 </div>
             )
           }

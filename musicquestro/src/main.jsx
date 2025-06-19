@@ -11,11 +11,18 @@ import Profile from './components/Profile.jsx';
 import Collections from './components/Collections.jsx';
 import Store from './components/Store.jsx';
 import RhythmGame from './game_components/RhythmGame.jsx';
+import Settings from './components/Settings.jsx';
+import LoginGoogle from './components/LoginGoogle.jsx';
+import BackgroundMusic from './BackgroundMusic.jsx';
+import MelodyGame from './game_components/MelodyGame.jsx';
+import HarmonyGame from './game_components/HarmonyGAme.jsx';
+
+<BackgroundMusic />
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Login />
+    element: <App />
   }, 
 
   {
@@ -52,6 +59,29 @@ const router = createBrowserRouter([
     path: '/rhythmGame',
     element: <RhythmGame />
   },
+
+  {
+    path: '/melodyGame',
+    element: <MelodyGame />
+  },
+
+   {
+    path: '/harmonyGame',
+    element: <HarmonyGame />
+  },
+
+
+  {
+    path: '/01',
+    element: <Settings />
+  },
+
+  {
+    path: '/createUser',
+    element: <LoginGoogle />
+  },
+
+
 
 
 ])

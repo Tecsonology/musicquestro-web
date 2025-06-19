@@ -1,0 +1,89 @@
+.maps {
+    background: #000000a2;
+    background-image: url('https://i.ibb.co/zT8xn7Zm/ec58ebf2-79dd-4304-abf8-b46a854f20c3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode:multiply;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.maps-wrapper {
+    margin-top: 3em;
+     display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.title {
+    font-size: 5em;
+    color: #ff8f25;
+}
+
+.map-selection {
+   display: flex;
+   flex-direction: row;
+
+  
+}
+
+.cat-card {
+    width: 14em;
+    margin: 0 1em;
+    cursor: pointer;
+
+}
+
+.cat-card {
+  transition: transform 0.3s ease; /* Smooth scaling */
+  color: #ff8e258f;
+}
+
+.cat-card:hover {
+  transform: scale(1.2); /* Scale up to 110% */
+}
+
+
+@media (max-width: 767px) {
+    .map-selection {
+       display: flex;
+      flex-direction: column;
+      overflow-y: auto;         /* enables vertical scrolling */
+      max-height: 90vh;         /* prevent overflow from breaking layout */
+      padding: 1em; 
+      margin-bottom: 30em;
+    
+    }
+
+    .cat-card {
+      width: 18em;
+    }
+
+    .maps {
+      overflow: hidden;
+    
+    }
+
+    .maps-wrapper {
+
+        
+        .title {
+          font-size: 2em;
+        }
+
+        
+    }
+
+
+    .map-selection {
+        
+    }
+
+  
+ 
+}
+
+

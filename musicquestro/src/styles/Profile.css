@@ -1,0 +1,46 @@
+.profile {
+     background-image: url('https://i.ibb.co/s953MgvC/9d63ad53-169e-453e-9238-f46e3fa9c15e.jpg');
+     background-repeat: no-repeat;
+     background-size: cover;
+     
+     p {
+        margin: 0;
+        font-weight: 900;
+     }
+}
+
+
+.profile-container {
+    background-color: rgb(193, 153, 153);
+   
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+    border: 10px solid white;
+    margin-right: 1em;
+
+    img {
+        width: 15em
+    }
+}
+
+.profile-wrapper {
+    box-sizing: border-box;
+    width: 93vw;
+    /* From https://css.glass */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1em;
+}
+
+
+@media (max-width: 767px) {
+    .profile-wrapper {
+        flex-direction: column;
+        width: 80vw;
+    }
+}

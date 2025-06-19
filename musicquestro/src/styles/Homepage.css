@@ -1,0 +1,16 @@
+.homepage {
+    background-image: url('https://i.ibb.co/zT8xn7Zm/ec58ebf2-79dd-4304-abf8-b46a854f20c3.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    
+    
+}
+
+.btn-settings {
+    width: 5em;
+    position: absolute;
+    right: 1%;
+    top: 1%
+}
+
