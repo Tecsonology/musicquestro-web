@@ -4,13 +4,13 @@ import GameSummary from './GameSummary';
 import GameStatus from './GameStatus';
 
 const notesMap = {
-  C: 261.63,
-  D: 293.66,
-  E: 329.63,
-  F: 349.23,
-  G: 392.00,
-  A: 440.00,
-  B: 493.88
+  DO: 261.63,
+  RE: 293.66,
+  MI: 329.63,
+  FA: 349.23,
+  SO: 392.00,
+  LA: 440.00,
+  TI: 493.88,
 };
 
 const noteNames = Object.keys(notesMap);
@@ -19,21 +19,20 @@ function MelodyGame() {
   const [melody, setMelody] = useState([]);
   const [userInput, setUserInput] = useState([]);
   const [result, setResult] = useState('');
-  const [noteLength, setNoteLength] = useState(3);
+  const [noteLength, setNoteLength] = useState(1);
   const [score, setScore] = useState(0);
   const [userPoints, setUserPoints] = useState(0);
   const [time, setTime] = useState(0);
   const [level, setLevel] = useState(null);
   const [message, setMessage] = useState('Listen to the melody and match the notes!');
-  const intervalRef = useRef(null); // Ref for timer interval
+  const intervalRef = useRef(null); 
   const [ wait, setWait ] = useState(false)
 
   const targetPoint = 85.00;
   let newMelody;
 
-  // Start the timer
   const startTime = () => {
-    if (intervalRef.current) return; // Prevent multiple intervals
+    if (intervalRef.current) return; 
     intervalRef.current = setInterval(() => {
       setTime(prev => prev + 1);
     }, 1000);
@@ -45,6 +44,12 @@ function MelodyGame() {
     intervalRef.current = null;
   };
 
+  useEffect(()=> {
+    if(userInput.length > 6){
+      setUserInput([])
+    }
+  })
+
   useEffect(() => {
     const handleBeforeUnload = (e) => {
       e.preventDefault();
@@ -55,12 +60,12 @@ function MelodyGame() {
 
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
-      stopTime(); // Cleanup timer
+      stopTime(); 
     };
   }, []);
 
   useEffect(() => {
-    if (score === 6 || score === 11 || score === 13) {
+    if (score == 3 || score == 11 || score == 13) {
       setNoteLength(noteLength + 1);
     }
   }, [score]);
@@ -72,7 +77,7 @@ function MelodyGame() {
 
     osc.connect(gainNode);
     gainNode.connect(context.destination);
-    osc.type = 'square';
+    osc.type = 'sawtooth';
     osc.frequency.value = freq;
     osc.start();
 
@@ -123,7 +128,8 @@ function MelodyGame() {
     setUserInput(updatedInput);
   };
 
-  const releaseNotes = () => {
+  const releaseNotes =(e) => {
+    console.log(e.target.disabled='true')
     if (userInput.length === melody.length) {
       const isCorrect = userInput.every((n, i) => n === melody[i]);
       if (isCorrect) {
@@ -131,10 +137,10 @@ function MelodyGame() {
         setScore(score + 1);
         setMessage("✅ Correct");
       } else {
-        setMessage("❌ Wrong");
+        setMessage("❌ Wrong, its "+melody.join(' '));
       }
     } else {
-      setMessage('❌ Wrong');
+      setMessage(`❌ Wrong, its `+melody.join(' '));
     }
 
     setTimeout(() => {
@@ -169,7 +175,7 @@ function MelodyGame() {
 
   return (
     <div className='melody-game-container fpage flex fdc aic jc-c' style={{ padding: 20, fontFamily: 'sans-serif', textAlign: 'center' }}>
-      
+  
       <GameStatus score={score} userPoints={userPoints} level={level} time={time} />
       <h2>{message}</h2>
       {listenMode()}

@@ -36,7 +36,10 @@ const UserSchema = new mongoose.Schema({
     id: { type: Number, required: true},
     username: { type: String, required: true},
     password: { type: String, required: true},
-    userids: { type: String,}
+    userids: { type: String,},
+    musicCoins: { type: Number }, 
+    totalPoints: { type: Number },
+    maps: { type: Object, default: {} }
 });
 
 const User = mongoose.model('User', UserSchema);
@@ -44,10 +47,10 @@ const User = mongoose.model('User', UserSchema);
 // API endpoint to add data
 app.post('/createUser', async (req, res) => {
     
-    const { id, username, password, userids} = req.body;
+    const { id, username, password, userids, musicCoins, totalPoints, maps } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
-        const newUser = new User({ id, username, password: hashedPassword, userids});
+        const newUser = new User({ id, username, password: hashedPassword, userids, musicCoins, totalPoints, maps});
 
         await newUser.save();
         res.status(201).json({ message: 'User added successfully', user: newUser });
@@ -116,12 +119,42 @@ app.get('/player', async (req, res) => {
     if (!userids) {
         return res.status(400).json({ message: 'Missing userids' });
     }
-
-    // Example: Fetch user from MongoDB
-    const user = await User.findOne({ userids }); // Adjust query as needed
+    const user = await User.findOne({ userids }); 
     const userWithoutPassword = user.toObject();
     delete userWithoutPassword.password;
     res.json(userWithoutPassword);
 });
+
+
+app.get('/api/player/maps', async ( req, res )=> {
+    const { userids } = req.query
+    console.log('User id get',userids)
+
+    const user = await User.findOne({userids: userids})
+    console.log('Result', user)
+    res.json(user.maps)
+})
+
+
+app.put('/api/update-user', async ( req, res)=> {
+
+    const { userids, updates } = req.body
+
+    try {
+
+        const updateUser = await User.updateOne({userids: userids},
+            { $set: updates }
+        )   
+
+        if(!updateUser){
+            res.status(404).json({message: 'User not found'})
+        }
+
+        res.json(updateUser)
+
+    } catch(err){
+        res.status(505).json({message: "ssss",})
+    }
+})
 
 

@@ -93,6 +93,10 @@
     }
 }
 
+button:disabled {
+    background-color: black;
+}
+
 
 
 @media (min-width: 767px) {
@@ -104,5 +108,8 @@
         width: 30em;
     }
 
+    .btom-spells {
+        width: 30em;
+    }
     
 }

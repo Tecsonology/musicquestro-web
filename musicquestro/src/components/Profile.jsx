@@ -30,7 +30,8 @@ function Profile() {
                 <p>User id: {userLogged && `${userLogged.userids}`}</p>
 
                 <p className='flex fdr aic' style={{margin: '0.5em 0'}}><span><img src="https://i.ibb.co/N6w014ng/Currency.png" width={25}
-                style={{marginRight: '0.5em'}} alt="" /></span>9000</p>
+                style={{marginRight: '0.5em'}} alt="" /></span>{ userLogged && userLogged.musicCoins}</p>
+                <p>Points: {userLogged && userLogged.totalPoints}</p>
               </div>
           </div>
           <h3>Progress</h3>

@@ -1,12 +1,51 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CalculateGame from '../CalculateGame.js'
+import axios from 'axios'
+import { token, userToken} from '../Token.js'
 
 function GameSummary(props) {
 
   const calculate = new CalculateGame(props.score, props.points, props.time)
   const gamePoints = calculate.calculateGame()
   const coinedGained = calculate.getCoins()
-  console.log()
+
+  const userids = userToken.userids
+
+  const [ currentUser, setCurrentUser ] = useState()
+
+  const getUser = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/player', {
+                params: { userids }
+            });
+          
+            const user = response.data;
+            
+             setCurrentUser(user)
+            
+  
+        } catch (error) {
+            console.error('Error fetching user:', error);
+        }
+    };
+  
+  const gameUpload  = async ()=> {
+      await getUser()
+      try {
+          const updateUser = await axios.put('http://localhost:5000/api/update-user',
+            { userids: userids,
+              updates: {
+                musicCoins: currentUser.musicCoins + parseInt(coinedGained),
+                totalPoints: currentUser.totalPoints + parseFloat(gamePoints)
+              }
+            }
+          )
+
+          console.log("Updated User:", updateUser.data)
+      } catch(err){
+        console.log('dasd')
+      }
+  }
 
   return (
     <div className='game-summary fpage flex fdc jc-c aic' style={{position: 'fixed'}}>
@@ -20,10 +59,20 @@ function GameSummary(props) {
         <p>Target Points: atleast {props.targetPoint.toFixed(2)}</p>
 
         {gamePoints >= props.targetPoint ? <button onClick={()=> {
-            window.location.href = '/m'
-        }}>Ok</button> : <button onClick={()=> {
-          window.location.reload()
-        }}>Retry</button>}
+                 gameUpload()
+                 
+            }}>Ok</button> : 
+
+            <div>
+                    <button onClick={()=> {
+                  window.location.reload()
+                }}>Retry</button>
+                <button onClick={()=> {
+                  window.location.href = '/m'
+                }}>Back to map</button>
+            </div>
+              
+        }
       </div>
     </div>
   )

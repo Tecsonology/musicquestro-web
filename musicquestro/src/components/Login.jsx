@@ -4,8 +4,9 @@ import axios from 'axios';
 import { use } from 'react';
 import App from '../App';
 import '../styles/Log.css'
-import GoogleLoginButton from './GoogleLoginButton';
+import GoogleLoginButton, { userids } from './GoogleLoginButton';
 import BackgroundMusic from '../BackgroundMusic';
+import { token } from '../Token.js'
 
 function Login() {
 
@@ -40,13 +41,35 @@ function Login() {
         }
         getCount()
          }, [])
+
+         useEffect(()=> {
+            if(token){
+                navigate('/h')
+            }
+         }, [])
     
 
   const handleSubmit = async (e) => {
 
+        let musicCoins = 1000
+        let totalPoints = 0
+        let maps = {
+            rhythm: "dsadas"
+        }
+        
         e.preventDefault();
         try {
-            const response = await axios.post('http://localhost:5000/createUser', { id, username, password});
+            const response = await axios.post('http://localhost:5000/createUser', 
+                { 
+                    id, 
+                    username, 
+                    password,
+                    musicCoins,
+                    totalPoints,
+                    maps,
+
+
+                });
             alert(response.data.message);
            
         } catch (error) {
@@ -87,6 +110,8 @@ function Login() {
     const removeErrorMessage =()=> {
         setError(false)
     }
+
+    
 
   return (
     <div className='log fpage flex jc-c fdc'>

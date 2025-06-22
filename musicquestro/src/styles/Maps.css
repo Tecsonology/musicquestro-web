@@ -38,21 +38,23 @@
 }
 
 .cat-card {
-  transition: transform 0.3s ease; /* Smooth scaling */
+  transition: transform 0.3s ease; 
   color: #ff8e258f;
 }
 
 .cat-card:hover {
-  transform: scale(1.2); /* Scale up to 110% */
+  transform: scale(1.2); 
 }
+
+
 
 
 @media (max-width: 767px) {
     .map-selection {
        display: flex;
       flex-direction: column;
-      overflow-y: auto;         /* enables vertical scrolling */
-      max-height: 90vh;         /* prevent overflow from breaking layout */
+      overflow-y: auto;        
+      max-height: 90vh;        
       padding: 1em; 
       margin-bottom: 30em;
     
