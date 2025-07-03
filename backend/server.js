@@ -2,7 +2,8 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcrypt');
+
 
 require('dotenv').config();
 
@@ -38,19 +39,21 @@ const UserSchema = new mongoose.Schema({
     password: { type: String, required: true},
     userids: { type: String,},
     musicCoins: { type: Number }, 
+    life: { type: Number},
     totalPoints: { type: Number },
-    maps: { type: Object, default: {} }
+    maps: { type: Object, default: {} },
+    collection: { type: Object, default: {}}
+
 });
 
 const User = mongoose.model('User', UserSchema);
 
-// API endpoint to add data
 app.post('/createUser', async (req, res) => {
     
-    const { id, username, password, userids, musicCoins, totalPoints, maps } = req.body;
+    const { id, username, password, userids, musicCoins, life, totalPoints, maps } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
-        const newUser = new User({ id, username, password: hashedPassword, userids, musicCoins, totalPoints, maps});
+        const newUser = new User({ id, username, password: hashedPassword, userids, musicCoins, life, totalPoints, maps});
 
         await newUser.save();
         res.status(201).json({ message: 'User added successfully', user: newUser });
@@ -74,6 +77,7 @@ app.get('/getUserCount', async (req, res)=> {
 
 app.post('/auth', async (req, res)=> {
     const { username, password } = req.body;
+
     try{
         
         const checkUser = await User.findOne({username});
@@ -128,7 +132,6 @@ app.get('/player', async (req, res) => {
 
 app.get('/api/player/maps', async ( req, res )=> {
     const { userids } = req.query
-    console.log('User id get',userids)
 
     const user = await User.findOne({userids: userids})
     console.log('Result', user)
@@ -155,6 +158,151 @@ app.put('/api/update-user', async ( req, res)=> {
     } catch(err){
         res.status(505).json({message: "ssss",})
     }
+})
+
+app.get('/api/get/leaderboards', async (req, res)=> {
+
+    try {
+
+        const players = await User.find({}, { username: 1, totalPoints: 1, _id: 0})
+
+        res.json(players)
+        
+
+    } catch(err){
+        res.status(505).json({messsage: 'Error accessing leaderboards'})
+    }
+})
+
+app.put('/api/update-user-from-shop', async (req, res)=> {
+
+    const { userids, coinsDeduct, newItem } = req.body
+    
+    try {
+
+        const checkUser = await User.findOne({userids})
+
+        if(checkUser.musicCoins > coinsDeduct){
+            const updateUser = await User.findOneAndUpdate({userids: userids},
+            {
+                $inc: { musicCoins: - coinsDeduct},
+                $push: { collection: newItem}
+            },
+
+            { new: true}
+            )
+
+            if(!updateUser){
+                res.status(404).json({message: 'Error'})
+            }
+
+            res.status(200).json(updateUser)
+        } else {
+            res.status(200).json({message: 'Not enough coinds'})
+        }
+
+    } catch(err){
+        res.status(404).json({message: 'Error updating user from shop'})
+    }
+})
+
+
+app.put('/api/user-add-life', async ( req, res)=> {
+
+    const { userids, lifeAdded, coinDeduct } = req.body
+
+    try{
+
+
+        const checkUser = await User.findOne({userids})
+
+        if(checkUser.musicCoins < coinDeduct){
+            res.send('dsadsa');
+        } else {
+            const user = await User.findOneAndUpdate({userids: userids}, 
+            {
+                $inc: { life: + lifeAdded, musicCoins: - coinDeduct},
+            
+            },
+
+            { new: true}
+
+            )
+            res.status(200).json(user)
+        }
+
+        
+
+    } catch(err){
+        res.status(500).json({message: ' Error'})
+    }
+
+})
+
+app.put('/api/user-deduct-life', async ( req, res)=> {
+
+    const { userids, lifeDeduct } = req.body
+
+    try{
+
+        const checkUser = await User.findOne({userids})
+
+        if(checkUser.life >= lifeDeduct){
+            const user = await User.findOneAndUpdate({userids: userids}, 
+                {
+                    $inc: { life: - lifeDeduct},
+                
+                },
+
+                { new: true}
+
+            )
+            res.status(200).json(user)
+        } else {
+            res.status(300).json({message: 'insufficient Life'})
+        }
+
+        
+
+    } catch(err){
+        res.status(400).json({message: ' Error'})
+    }
+
+})
+
+
+app.get('/api/get-user-collection', async ( req, res)=> {
+
+    const { userids } = req.query
+
+    try {
+
+        const user = await User.findOne({userids: userids})
+
+        console.log(user)
+
+        res.json(user.collection)
+
+    } catch(err){
+        res.status(400).json({message: `Error getting user's collection`})
+    }
+})
+
+app.get('/api/check-collection', async ( req, res)=> {
+
+    const { userids, item } = req.query
+
+    try {
+
+        const checkItem = await User.findOne({userids: userids}, {collection: item })
+
+        res.json(checkItem)
+
+
+    } catch(err){
+        res.status(500).json({message: 'Error checking collection'})
+    }
+
 })
 
 

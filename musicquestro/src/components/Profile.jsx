@@ -1,11 +1,12 @@
 import React from 'react'
 import ProtectedComponent from './ProtectedComponent'
-import { useState, useEffect, } from 'react'
+import { useState, useEffect, useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Profile.css'
+import CurrentUserContext from './CurrentUserContext'
+import { UserContext } from './CurrentUserContext'
 
 function Profile() {
-
   const [ userLogged, setUserLogged ] = useState()
   const navigate = useNavigate()
         
@@ -15,6 +16,7 @@ function Profile() {
 
   return (
     <ProtectedComponent 
+
       children={
         <div className='profile fpage flex fdc jc-c aic'>
            <img onClick={()=> {

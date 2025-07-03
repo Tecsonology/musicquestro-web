@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, use } from 'react';
 import '../styles/GameStyles.css';
 import GameSummary from './GameSummary';
 import GameStatus from './GameStatus';
+import GamePrompt from '../mini-components/GamePrompt';
 
 const notesMap = {
   DO: 261.63,
@@ -27,6 +28,7 @@ function MelodyGame() {
   const [message, setMessage] = useState('Listen to the melody and match the notes!');
   const intervalRef = useRef(null); 
   const [ wait, setWait ] = useState(false)
+  const [ lifeCount, setLifeCount ] = useState(5)
 
   const targetPoint = 85.00;
   let newMelody;
@@ -62,6 +64,7 @@ function MelodyGame() {
       window.removeEventListener('beforeunload', handleBeforeUnload);
       stopTime(); 
     };
+    
   }, []);
 
   useEffect(() => {
@@ -90,7 +93,8 @@ function MelodyGame() {
   };
 
   const playMelody = async () => {
-    setWait(false)
+    try {
+          setWait(false)
     startTime();
     
 
@@ -120,6 +124,9 @@ function MelodyGame() {
       setLevel(prev => prev + 1);
     }
     setWait(true)
+    } catch(err){
+      console.log(err)
+    }
   };
 
   const handleNoteClick = (note) => {
@@ -138,9 +145,11 @@ function MelodyGame() {
         setMessage("✅ Correct");
       } else {
         setMessage("❌ Wrong, its "+melody.join(' '));
+        setLifeCount(lifeCount - 1)
       }
     } else {
       setMessage(`❌ Wrong, its `+melody.join(' '));
+      setLifeCount(lifeCount - 1)
     }
 
     setTimeout(() => {
@@ -148,7 +157,7 @@ function MelodyGame() {
         playMelody();
       } else {
         setLevel(level+1)
-        stopTime(); // Stop timer at final level
+        stopTime(); 
       }
     }, 3000);
 
@@ -156,13 +165,17 @@ function MelodyGame() {
   };
 
   const playAgain = async () => {
-    setWait(false)
-    for (let i = 0; i < melody.length; i++) {
-      playNote(notesMap[melody[i]]);
-      await new Promise((res) => setTimeout(res, 700));
-    }
-    setUserInput([])
-    setWait(true)
+      try {
+          setWait(false)
+          for (let i = 0; i < melody.length; i++) {
+            playNote(notesMap[melody[i]]);
+            await new Promise((res) => setTimeout(res, 700));
+          }
+          setUserInput([])
+          setWait(true)
+      } catch (error) {
+        console.log(err)
+      }
   };
 
   const listenMode = ()=> {
@@ -175,9 +188,13 @@ function MelodyGame() {
 
   return (
     <div className='melody-game-container fpage flex fdc aic jc-c' style={{ padding: 20, fontFamily: 'sans-serif', textAlign: 'center' }}>
-  
+      {
+        lifeCount && lifeCount > 0 ? 
+        <>
+          <GamePrompt gameName={'Melody Lodi'}/>
       <GameStatus score={score} userPoints={userPoints} level={level} time={time} />
-      <h2>{message}</h2>
+      <p>Life: {lifeCount}</p>
+       <h2>{message}</h2>
       {listenMode()}
       <button onClick={(e) => {
         playMelody();
@@ -208,12 +225,12 @@ function MelodyGame() {
       </div>
 
       <div className="lower-buttons">
-        <button onClick={releaseNotes}>Release Notes</button>
+        <button onClick={releaseNotes}>Release Melody</button>
         <button onClick={() => { setUserInput([]); 
             if(userPoints > 0){
               setUserPoints(userPoints - 5);
             }
-         }} style={{ marginLeft: '1em' }}>Reset</button>
+         }} style={{ marginLeft: '1em' }}>Clear</button>
       </div>
 
   
@@ -241,6 +258,17 @@ function MelodyGame() {
       <div style={{ fontSize: 24, marginTop: 10 }}>{result}</div>
 
       {level > 15 ? <GameSummary score={score} points={userPoints} time={time} targetPoint={targetPoint}/> : null}
+        </> : 
+
+        <>
+          <h2>Game Over</h2>
+          <button onClick={()=> {
+            window.location.reload()
+          }}>Try Again</button>
+        </>
+        
+        
+      }
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState,} from 'react'
+import React, { useEffect, useState, useContext} from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { use } from 'react';
@@ -7,11 +7,12 @@ import '../styles/Log.css'
 import GoogleLoginButton, { userids } from './GoogleLoginButton';
 import BackgroundMusic from '../BackgroundMusic';
 import { token } from '../Token.js'
+import { UserContext } from './CurrentUserContext.jsx';
 
 function Login() {
 
     const navigate = useNavigate();
-
+    const  userName  = React.useContext(UserContext)
     const [ username, setName ] = useState()
     const [ password, setPassword ] = useState();
     const [ id, setId ] = useState(12000);
@@ -50,11 +51,22 @@ function Login() {
     
 
   const handleSubmit = async (e) => {
+        const idRandomizer = []
+        for(let x = 0; x < 20; x++){
+            idRandomizer.push(Math.floor(Math.random()*10))
+        }
+
+        const userids = idRandomizer.join('').toString()
 
         let musicCoins = 1000
         let totalPoints = 0
+        let life = 5
         let maps = {
-            rhythm: "dsadas"
+            rhythm: {isLocked: 'false'}, 
+            melody: {isLocked: 'true'},
+            harmony: {isLocked: 'true'},
+            pitch: {isLocked: 'true'},
+            
         }
         
         e.preventDefault();
@@ -64,7 +76,9 @@ function Login() {
                     id, 
                     username, 
                     password,
+                    userids,
                     musicCoins,
+                    life,
                     totalPoints,
                     maps,
 
@@ -119,6 +133,7 @@ function Login() {
           {
             ready ? (
                 <div className='flex fdc jc-c aic'>
+                    <h1>{userName}</h1>
                     <img className='main-logo' src="https://i.ibb.co/MkgK8X5q/MUSIC-QUESTRO-NEW-LOGO-NO-STARS.png" alt="" />
                      
                     {log ? (<div className="login flex fdc jc-c aic">

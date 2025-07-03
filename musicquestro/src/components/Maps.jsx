@@ -4,6 +4,7 @@ import '../styles/Maps.css'
 import ProtectedComponent from './ProtectedComponent'
 import axios from 'axios'
 import { token, userToken } from '../Token'
+import ButtonBack from '../mini-components/ButtonBack'
 
 
 const mapNames = {
@@ -16,18 +17,22 @@ const mapNames = {
     location: '/melodyGame'
   },
   harmony: {
-    imgLink: 'https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png',
-    location: '/melodyGame'
+    imgLink: 'https://i.ibb.co/FLZzsRfD/Untitled-design-61.png',
+    location: '/harmonyGame'
   },
   pitch: {
     imgLink: 'https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png',
-    location: '/melodyGame'
+    location: '/pitchGame'
   },
+
 }
+
+const lockImgLink = 'https://i.ibb.co/8455cZ4G/Untitled-design-59.png'
 
 function Maps() {
 
   let id = 0
+  const mapAvailability = []
   const navigate = useNavigate()  
   const [ maps, setMaps ] = useState()
   const userids = userToken.userids
@@ -56,29 +61,28 @@ function Maps() {
   }
 
   if(maps){
-    Object.values(maps).map((value, index)=> {
-      
-    })
+      maps && maps ?  Object.values(maps).map((val, indx)=> {
+          mapAvailability.push(val.isLocked)
+      }) : null
   }
 
   return (
     <ProtectedComponent>
         <div className='maps fpage'>
-        <img onClick={()=> {
-          navigate(-1)
-        }} className='btn-back' src="https://i.ibb.co/KzBKmLC3/Untitled-design-2.png" alt="" />
+        <ButtonBack />
         <div className="maps-wrapper">
           <h1 className='title'>Category</h1>
           <div className="map-selection">
               {
-                Object.values(mapNames).map((value, index)=> (
-                   <img key={index} src={value.imgLink} alt='' className='cat-card' 
+                 Object.values(mapNames).map((value, index)=> {
+                    
+                  return <img key={index} src={mapAvailability[index] == 'true' ? lockImgLink : value.imgLink} alt='' className='cat-card' 
                     onClick={()=> {
-                      window.location.href = `${value.location}`
+                        mapAvailability[index] == 'true' ? null : window.location.href = `${value.location}`
                     }}
                    />
         
-                ))
+                }   )
               }
               <br /><br /><br /><br /><br /><br /><br />
           

@@ -45,6 +45,7 @@ function LoginGoogle() {
     const handleSubmit = async (e) => {
          let musicCoins = 1000
         let totalPoints = 0
+        let life = 5
         let maps = {
             rhythm: {isLocked: 'false'}, 
             melody: {isLocked: 'true'},
@@ -61,6 +62,7 @@ function LoginGoogle() {
                     password,
                     userids: userids,
                     musicCoins,
+                    life,
                     totalPoints,
                     maps,
 

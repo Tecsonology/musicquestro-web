@@ -7,6 +7,7 @@ import axios from 'axios';
 import Login from './components/Login';
 import BackgroundMusic from './BackgroundMusic';
 import { BrowserRouter } from 'react-router-dom';
+import CurrentUserContext from './components/CurrentUserContext';
 
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
 
   return (
     <>
-       <Login />
+       
+          <Login />
+    
     </>
   )
 }

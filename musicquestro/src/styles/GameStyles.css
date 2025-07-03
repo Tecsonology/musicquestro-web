@@ -8,6 +8,92 @@
     
 }
 
+.rhythm-game-container {
+     background: #000000a2;
+    background-image: url('https://img.freepik.com/free-vector/gradient-karaoke-background_23-2150970007.jpg?semt=ais_hybrid&w=740');
+
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode:multiply;
+    overflow:hidden;
+
+}
+
+#btnStartRhythm {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    border: 2px solid white;
+    width: 4em;
+    height: 4em;
+    border-radius: 50%;
+    background-color: rgba(255, 0, 0, 0.366);
+}
+
+.beat-buttons {
+    margin-top: 1em;
+    flex-wrap: wrap;
+}
+
+.beat-buttons button {
+    color: rgb(223, 2, 212);
+    background-color: rgb(255, 255, 255);
+ 
+    width: 7em;
+    height: 8em;
+    margin: 0.4em;
+    border: 0.2em solid rgb(202, 179, 9);
+    -webkit-box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 1);
+    -moz-box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 1);
+    box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 0.234);
+
+    p {
+        margin: 0;
+    }
+}
+
+.input-notes {
+    background-color: rgba(169, 169, 169, 0.111);
+    width: 20em;
+    height: 3em;
+    margin: 1em 0;
+
+    hr {
+        background-color: rgba(255, 255, 255, 0.015);
+    }
+}
+
+.inputNote {
+ 
+    margin: 1em;
+}
+
+.input-overlay {
+     position: relative;
+    z-index: 10;
+    top: -4.5em ;
+    left: 1em;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+#playRhythm {
+   
+    font-weight: bolder;
+    font-size: 1.5em;
+    border-radius: 10em 5em 10em 5em;
+    box-shadow: 3px 8px 24px 0px rgba(204, 0, 255, 0.234);
+}
+
+button#playRhythm :hover {
+    background-color: rgb(149, 0, 242);
+}
+
+.bottom-buttons button {
+    margin: 1em 0.5em;
+}
+
 .game-summary {
     background-color: rgba(0, 0, 0, 0.63);
     width: 100vw;
@@ -23,9 +109,9 @@
     padding: 1em;
 }
 
-.game-buttons {
-    
-}
+
+
+
 
 .show {
     display: block;
@@ -97,7 +183,61 @@ button:disabled {
     background-color: black;
 }
 
+.store-btn-container {
+    position: absolute;
+    right: 2em;
+    top: 5.4em;
+    button {
+        padding: 0.3em 1.5em;
+        background-color: orange;
+    }
+}
 
+.life-container {
+    border: 1px solid orange;
+    
+    p {
+        color: white;
+        margin: 0;
+    }
+}
+
+.store-card, .collection-card {
+    background-color: white;
+    color: black;
+    padding: 0.5em;
+    min-width: 10em;
+    max-width: 10em;
+    height: 100%;
+    border-radius: 1em;
+    margin: 0.7em;
+
+    h3, h4, p, img, button {
+        margin: 0;
+    }
+
+    img {
+        width: 2em;
+    }
+
+    button {
+        margin-top: 1em;
+        margin-left: 0.6em;
+        background-color: green;
+    }
+}
+
+.collection-list {
+   flex-wrap: wrap;
+   width: 60em;
+}
+
+@media (max-width: 767px){
+    .store-card {
+        min-width: 8em;
+        max-width: 8em;
+    }
+}
 
 @media (min-width: 767px) {
     .game-status-container {
@@ -111,5 +251,7 @@ button:disabled {
     .btom-spells {
         width: 30em;
     }
+
+ 
     
 }

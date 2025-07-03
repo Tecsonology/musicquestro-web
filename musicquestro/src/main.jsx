@@ -16,6 +16,8 @@ import LoginGoogle from './components/LoginGoogle.jsx';
 import BackgroundMusic from './BackgroundMusic.jsx';
 import MelodyGame from './game_components/MelodyGame.jsx';
 import HarmonyGame from './game_components/HarmonyGAme.jsx';
+import PitchGame from './game_components/PitchGame.jsx';
+import CurrentUserContext from './components/CurrentUserContext.jsx';
 
 <BackgroundMusic />
 
@@ -27,7 +29,7 @@ const router = createBrowserRouter([
 
   {
     path: '/h',
-    element: <Homepage />
+    element: <CurrentUserContext><Homepage /></CurrentUserContext>
   },
 
   {
@@ -42,7 +44,7 @@ const router = createBrowserRouter([
 
   {
     path: '/user',
-    element: <Profile />
+    element: <CurrentUserContext><Profile /></CurrentUserContext>
   },
 
   {
@@ -52,7 +54,7 @@ const router = createBrowserRouter([
 
   {
     path: '/store',
-    element: <Store />
+    element: <CurrentUserContext><Store /></CurrentUserContext>
   },
 
    {
@@ -62,7 +64,7 @@ const router = createBrowserRouter([
 
   {
     path: '/melodyGame',
-    element: <MelodyGame />
+    element: <CurrentUserContext><MelodyGame /></CurrentUserContext>
   },
 
    {
@@ -70,6 +72,10 @@ const router = createBrowserRouter([
     element: <HarmonyGame />
   },
 
+  {
+    path: '/pitchGame',
+    element: <PitchGame />
+  },
 
   {
     path: '/01',

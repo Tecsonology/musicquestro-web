@@ -12,7 +12,7 @@ function GameStatus(props) {
             </div>
             <div>
               <img src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" />
-              <p>Points: {props.userPoints.toFixed(2)}</p>
+              <p>Points: {props.userPoints}</p>
             </div>
             <div>
               <p>Level: {props.level}/15</p>

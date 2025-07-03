@@ -12,6 +12,7 @@ function GameSummary(props) {
   const userids = userToken.userids
 
   const [ currentUser, setCurrentUser ] = useState()
+  const [ btnOk, setBtnOk ] = useState('Okay')
 
   const getUser = async () => {
         try {
@@ -22,6 +23,8 @@ function GameSummary(props) {
             const user = response.data;
             
              setCurrentUser(user)
+
+             return true
             
   
         } catch (error) {
@@ -30,21 +33,39 @@ function GameSummary(props) {
     };
   
   const gameUpload  = async ()=> {
-      await getUser()
-      try {
-          const updateUser = await axios.put('http://localhost:5000/api/update-user',
-            { userids: userids,
-              updates: {
-                musicCoins: currentUser.musicCoins + parseInt(coinedGained),
-                totalPoints: currentUser.totalPoints + parseFloat(gamePoints)
-              }
-            }
-          )
+       if(getUser()){
+            try {
+              const updateUser = await axios.put('http://localhost:5000/api/update-user',
+                { userids: userids,
+                  updates: {
+                    musicCoins: currentUser.musicCoins + parseInt(coinedGained),
+                    totalPoints: currentUser.totalPoints + parseFloat(gamePoints)
+                  }
+                }
+              )
 
-          console.log("Updated User:", updateUser.data)
-      } catch(err){
-        console.log('dasd')
-      }
+              console.log("Updated User:", updateUser.data)
+
+              if(updateUser){
+                setTimeout(()=> {
+              
+                  console.log("Game uploaded")
+                  
+                  window.location.href = '/m'
+                  return () => {
+                      window.removeEventListener('beforeunload', handleBeforeUnload);
+                      stopTime(); 
+                  };
+                }, 2000)
+              }
+
+          } catch(err){
+            console.log('dasd')
+          }
+
+          
+       }
+      
   }
 
   return (
@@ -59,9 +80,10 @@ function GameSummary(props) {
         <p>Target Points: atleast {props.targetPoint.toFixed(2)}</p>
 
         {gamePoints >= props.targetPoint ? <button onClick={()=> {
+                setBtnOk('Game uploading, please wait...')
                  gameUpload()
                  
-            }}>Ok</button> : 
+            }}>{btnOk}</button> : 
 
             <div>
                     <button onClick={()=> {
