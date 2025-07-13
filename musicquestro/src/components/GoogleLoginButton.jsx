@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
+
 export let userids;
 
 function GoogleLoginButton() {
@@ -26,9 +27,10 @@ function GoogleLoginButton() {
               params: { userids }
           });
         
-          const user = response.data;
+          const user = response.data.userWithoutPassword;
+          const token = response.data.token
+          localStorage.setItem('token', token)
           localStorage.setItem("userLogged", JSON.stringify(user))
-          
 
       } catch (error) {
           console.error('Error fetching user:', error);

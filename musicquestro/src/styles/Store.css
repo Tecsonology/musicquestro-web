@@ -1,6 +1,6 @@
 .shop {
     background: #000000a2;
-    background-image: url('https://i.ibb.co/zT8xn7Zm/ec58ebf2-79dd-4304-abf8-b46a854f20c3.jpg');
+    background-image: url('https://i.ibb.co/DDmLYjS6/Untitled-design-82.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode:multiply;
@@ -8,15 +8,51 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    overflow: hidden;
 }
 
 .item-lists button {
     margin: 1em;
 }
 
+.survival-items {
+    position: relative; 
+    overflow-x: auto;
+    padding-bottom: 4em;
+}
+
+.store-banner {
+    width: 45em;
+    position: relative;
+    top: -1em;
+    overflow: hidden;
+}
+
+
 @media (max-width: 767px) {
     .menu-items {
-        flex-direction: row;
-        flex-wrap: wrap;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        overflow-y: auto;    
+        overflow-x: hidden;    
+        max-height: 36vh;        
+       
+  
+  
+
     }
+
+}
+
+@media (min-width: 767px) {
+    .store-banner {
+        width: 100%;
+        position: relative;
+        top: -1em;
+        overflow: hidden;
+    }
+
+    
 }

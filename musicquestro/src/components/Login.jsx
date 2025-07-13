@@ -15,10 +15,11 @@ function Login() {
     const  userName  = React.useContext(UserContext)
     const [ username, setName ] = useState()
     const [ password, setPassword ] = useState();
-    const [ id, setId ] = useState(12000);
+    const [ id, setId ] = useState(455);
     const [ ready, setReady ] = useState(false)
     const [ log, setLog ] = useState(true);
     const [ error, setError ] = useState(false)
+    const [ disabled, setDisabled ] = useState(false)
 
 
  
@@ -48,6 +49,27 @@ function Login() {
                 navigate('/h')
             }
          }, [])
+
+
+         const getUser = async (userids) => {
+            try {
+                const response = await axios.get('http://localhost:5000/player', {
+                    params: { userids }
+                });
+                const user = response.data;
+                console.log(user.token)
+                localStorage.setItem("userLogged", JSON.stringify(user.userWithoutPassword))
+                localStorage.setItem("token", response.data.token)
+
+                console.log(localStorage.getItem('userLogged'))
+
+                window.location.href = '/h'
+
+
+            } catch (error) {
+                console.error('Error fetching user:', error);
+            }
+        };
     
 
   const handleSubmit = async (e) => {
@@ -57,7 +79,7 @@ function Login() {
         }
 
         const userids = idRandomizer.join('').toString()
-
+        let id = 555
         let musicCoins = 1000
         let totalPoints = 0
         let life = 5
@@ -68,6 +90,7 @@ function Login() {
             pitch: {isLocked: 'true'},
             
         }
+        let currentInstrument = 'sine'
         
         e.preventDefault();
         try {
@@ -81,10 +104,19 @@ function Login() {
                     life,
                     totalPoints,
                     maps,
-
+                    currentInstrument,
 
                 });
-            alert(response.data.message);
+            
+
+                if(response){
+                    setDisabled(true)
+                    await getUser(userids)
+
+                    console.log('dsadasdasd')
+
+                  
+                }
            
         } catch (error) {
             alert('Failed to add item');
@@ -104,10 +136,18 @@ function Login() {
                     headers: {
                     Authorization: `Bearer`,
                     },
+                },
+                {
+                    withCredentials: true
                 }
                 );
                 const user = response.data.userWithoutPassword;
+                console.log(response.data.token)
+
+                localStorage.setItem('token', response.data.token)
                 localStorage.setItem("userLogged", JSON.stringify(user))
+
+
                 window.location.href = '/h'
             } catch (error) {
                 setError(true)
@@ -115,11 +155,14 @@ function Login() {
 
                 setInterval(removeErrorMessage, 5000)
             }
+           
             };
 
             postData();
 
     }
+
+    
 
     const removeErrorMessage =()=> {
         setError(false)
@@ -161,7 +204,7 @@ function Login() {
                             <p>or</p>
                             <hr />
                         </div>
-                        <GoogleLoginButton />
+                       <GoogleLoginButton /> 
                         <p>Need an account? <span style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(false)
                         }}>Click here</span></p>
@@ -182,7 +225,7 @@ function Login() {
                         required
                     />
                  
-                    <button id='btnRegister' disabled={!ready} onClick={handleSubmit}>Register</button>
+                    <button id='btnRegister' disabled={disabled} onClick={handleSubmit}>Register</button>
                     <p>Already have an account? <span style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(true)
                         }}>Click here</span></p>
@@ -192,7 +235,7 @@ function Login() {
             ) : (
                 <div className='flex aic jc-c fdc'>
                     <h1>Loading...</h1>
-                    <p>Please wait, we are taking you to the world of MusicQuestro...</p>
+                    <p style={{color: 'white', textAlign: 'center'}}>Please wait, we are taking you to the world of MusicQuestro...</p>
                 </div>
             )
           }

@@ -1,5 +1,5 @@
 #root {
- 
+  overflow: hidden;
 }
 
 .main-logo {
@@ -91,6 +91,7 @@ button {
 .btn-back {
   width: 8em;
     position: absolute;
+    z-index: 5;
     left: 1%;
     top: 1%;
     cursor: pointer;

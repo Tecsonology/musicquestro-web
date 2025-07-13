@@ -19,6 +19,16 @@
 
 }
 
+.pitch-game-container {
+    background: #000000cb;
+    background-image: url(../assets/bg-assets/Cave.png);
+     
+     background-repeat: no-repeat;
+    background-size: cover;
+    background-blend-mode:multiply;
+    overflow:hidden;
+}
+
 #btnStartRhythm {
     display: flex;
     justify-content: center;
@@ -31,38 +41,14 @@
     background-color: rgba(255, 0, 0, 0.366);
 }
 
-.beat-buttons {
-    margin-top: 1em;
-    flex-wrap: wrap;
+
+.pitchCards :hover{
+    transition: 2s ease-in-out;
+    background-color: red;
+    color: red;
 }
 
-.beat-buttons button {
-    color: rgb(223, 2, 212);
-    background-color: rgb(255, 255, 255);
- 
-    width: 7em;
-    height: 8em;
-    margin: 0.4em;
-    border: 0.2em solid rgb(202, 179, 9);
-    -webkit-box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 1);
-    -moz-box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 1);
-    box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 0.234);
 
-    p {
-        margin: 0;
-    }
-}
-
-.input-notes {
-    background-color: rgba(169, 169, 169, 0.111);
-    width: 20em;
-    height: 3em;
-    margin: 1em 0;
-
-    hr {
-        background-color: rgba(255, 255, 255, 0.015);
-    }
-}
 
 .inputNote {
  
@@ -108,6 +94,12 @@ button#playRhythm :hover {
     border-radius: 1em;
     padding: 1em;
 }
+
+.cardLightOn {
+    border: 0.1em solid #050085;
+}
+
+
 
 
 
@@ -184,13 +176,12 @@ button:disabled {
 }
 
 .store-btn-container {
-    position: absolute;
-    right: 2em;
-    top: 5.4em;
-    button {
-        padding: 0.3em 1.5em;
-        background-color: orange;
-    }
+   margin: 0 0 0 1em;
+   font-size: 0.8em;
+   background-color: orange;
+   border: 3px dotted yellow;
+   color: rgb(255, 255, 255);
+   font-weight: bolder;
 }
 
 .life-container {
@@ -203,26 +194,25 @@ button:disabled {
 }
 
 .store-card, .collection-card {
-    background-color: white;
-    color: black;
+    background-color: #7F03F3;
+    color: #FAFAEF;
     padding: 0.5em;
-    min-width: 10em;
-    max-width: 10em;
-    height: 100%;
+    min-width: 9em;
+    max-width: 9em;
     border-radius: 1em;
     margin: 0.7em;
+    border: 2px solid black;
 
     h3, h4, p, img, button {
         margin: 0;
     }
 
     img {
-        width: 2em;
+        width: 3em;
     }
 
     button {
         margin-top: 1em;
-        margin-left: 0.6em;
         background-color: green;
     }
 }
@@ -232,11 +222,58 @@ button:disabled {
    width: 60em;
 }
 
+.pitch-container {
+    background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+input[type='range'] {
+-webkit-appearance: none;
+  width: 100%;
+  background: #aa7a7a;
+  border-radius: 5px;
+  outline: none;
+  cursor: pointer;
+  margin: 0;
+}
+
+
+.slider-container  {
+}
+
+.slider-container p {
+    margin: 0;
+}
+
+.attribute-bar {
+    position: absolute;
+    top: 1em;
+    right: -1%;
+}
+
+
+#gamecanvas {
+    border-radius: 1em;
+}
+
 @media (max-width: 767px){
     .store-card {
-        min-width: 8em;
-        max-width: 8em;
+        min-width: 15em;
+        max-width: 15em;
     }
+
+
+
+    #gamecanvas {
+        border-radius: 1em;
+        width: 100vw;
+        height: 70vh;
+    }
+
+  .slider-container input[type='range'] {
+    width: 15em !important;
+  }
 }
 
 @media (min-width: 767px) {
@@ -251,6 +288,12 @@ button:disabled {
     .btom-spells {
         width: 30em;
     }
+
+    .attribute-bar { 
+        right: 1%;
+    }
+
+    
 
  
     

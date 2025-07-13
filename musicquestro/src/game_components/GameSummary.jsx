@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import CalculateGame from '../CalculateGame.js'
 import axios from 'axios'
 import { token, userToken} from '../Token.js'
+import CurrentUserContext, { UserContext } from '../components/CurrentUserContext.jsx'
 
 function GameSummary(props) {
 
@@ -11,35 +12,36 @@ function GameSummary(props) {
 
   const userids = userToken.userids
 
-  const [ currentUser, setCurrentUser ] = useState()
+  const  { currentUser }  = useContext(UserContext)
   const [ btnOk, setBtnOk ] = useState('Okay')
 
-  const getUser = async () => {
-        try {
-            const response = await axios.get('http://localhost:5000/player', {
-                params: { userids }
-            });
-          
-            const user = response.data;
-            
-             setCurrentUser(user)
-
-             return true
-            
   
-        } catch (error) {
-            console.error('Error fetching user:', error);
-        }
-    };
+
+  if(currentUser){
+        const mapUnlocker =async (mapIndex) => {
+        let userids = currentUser.userids
+        let catIndex = mapIndex
+        console.log(userids, catIndex)
+        const updateUser = await axios.put('http://localhost:5000/unlockedCategory', { 
+            userids, 
+            catIndex 
+        })
+
+        console.log(updateUser)
+
+    }
+
+    mapUnlocker(1)
+  }
   
   const gameUpload  = async ()=> {
-       if(getUser()){
+   
             try {
               const updateUser = await axios.put('http://localhost:5000/api/update-user',
                 { userids: userids,
                   updates: {
-                    musicCoins: currentUser.musicCoins + parseInt(coinedGained),
-                    totalPoints: currentUser.totalPoints + parseFloat(gamePoints)
+                    musicCoins: currentUser ? currentUser.musicCoins + parseInt(coinedGained) : null,
+                    totalPoints: currentUser ? currentUser.totalPoints + parseFloat(gamePoints) : null
                   }
                 }
               )
@@ -64,12 +66,12 @@ function GameSummary(props) {
           }
 
           
-       }
+       
       
   }
 
   return (
-    <div className='game-summary fpage flex fdc jc-c aic' style={{position: 'fixed'}}>
+      <div className='game-summary fpage flex fdc jc-c aic' style={{position: 'fixed'}}>
       <div className="game-summary-wrapper">
         <h2>Summary</h2>
         <p>Score: {props.score}</p>

@@ -1,0 +1,43 @@
+.btnButton {
+    background-image: url('https://i.ibb.co/2YHn0n2b/Untitled-design-86.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+
+}
+
+.beat-buttons {
+    margin-top: 1em;
+    flex-wrap: wrap;
+}
+
+.beat-buttons button {
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+ 
+    width: 7em;
+    height: 8em;
+    margin: 0.4em;
+    border: 0.2em solid rgb(0, 0, 0);
+    -webkit-box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 1);
+    -moz-box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 1);
+    box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 0.234);
+
+    p {
+        margin: 0;
+    }
+}
+
+.input-notes {
+    background-color: rgba(169, 169, 169, 0.111);
+    width: 20em;
+    height: 3em;
+    margin: 1em 0;
+
+    hr {
+        background-color: rgba(255, 255, 255, 0.015);
+    }
+}
+
+@keyframes borderLights {
+   
+}

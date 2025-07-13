@@ -11,9 +11,47 @@
 }
 
 .leaderboard-wrapper {
-    margin-top: 5em;
-    height: 20em;
-    background-color: rgb(58, 71, 208);
-   border-radius: 10% 10% 90% 90%;
-   padding: 1em;
+    margin-top: 6em;
+    padding-top: 3em;
+  
+    width: 85%;
+    background-color: rgba(0, 0, 255, 0.418);
+    border: 4px solid yellow;
+  
 }
+
+#leaderboardBanner {
+    position: absolute;
+    top: 3em;
+    z-index: 2;
+}
+
+
+table {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-items: center;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  
+}
+  
+td {
+    width: 100vw;
+    text-align: center;
+    border-bottom: 1px solid white;
+
+    img {
+        margin: 0 1em;
+    }
+   
+    
+  }
+
+  tr {
+    border-radius: 1em;
+
+  }

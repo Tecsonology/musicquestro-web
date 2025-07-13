@@ -1,7 +1,9 @@
-import React, { useState, useReducer } from 'react';
+import React, { useState, useReducer, useContext } from 'react';
 import GameStatus from './GameStatus';
 import GamePrompt from '../mini-components/GamePrompt';
 import GameSummary from './GameSummary';
+import CurrentUserContext, { UserContext } from '../components/CurrentUserContext';
+import '../styles/RhythmGame.css'
 
 const durations = [
   { name: "rest", beats: 1, duration: 600, freq: 0, img: 'https://i.ibb.co/67NSSxxn/Untitled-design-74.png' },
@@ -30,13 +32,14 @@ const sample = durations.filter(note => note.name !== 'rest' && note.beats <= (4
 
 
 function RhythmGame() {
+  const { currentUser } = useContext(UserContext)
   const [ state, dispatch ] = useReducer(reducer, inititalState)
   const [currentNote, setCurrentNote] = useState('');
   const [ message, setMessage ] = useState()
   const [sequence, setSequence] = useState([]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [inputSequence, setInputSequence] = useState([]);
-  const [score, setScore] = useState(0);
+  const [score, setScore] = useState(0);  
   const [userPoints, setUserPoints] = useState(0);
   const [time, setTime] = useState(0);
   const [level, setLevel] = useState(0);
@@ -46,6 +49,12 @@ function RhythmGame() {
 
 
   let context;
+  let oscType;
+
+  if(currentUser){
+    console.log(currentUser.currentInstrument)
+    oscType = currentUser.currentInstrument
+  }
 
   const initializeAudio = () => {
     if (!context || context.state === 'closed') {
@@ -60,11 +69,28 @@ function RhythmGame() {
     const osc = context.createOscillator();
     const gainNode = context.createGain();
 
-    osc.type = 'square';
+    osc.type = oscType;
     osc.frequency.value = freq;
 
     gainNode.gain.setValueAtTime(1, context.currentTime);
     gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + duration / 1000);
+
+    const now = context.currentTime;
+
+const attackTime = 0.3;  // fade in (soft)
+const decayTime = 0.2;   // reduce volume slightly
+const sustainLevel = 0.6; // hold this level
+const releaseTime = 0.5;  // fade out when stopping
+
+// Attack
+gainNode.gain.linearRampToValueAtTime(1.0, now + attackTime);
+
+// Decay
+gainNode.gain.linearRampToValueAtTime(sustainLevel, now + attackTime + decayTime);
+
+// Release (when key is released or sound ends)
+const stopTime = now + 1.5;
+gainNode.gain.linearRampToValueAtTime(0.0, stopTime + releaseTime);
 
     osc.connect(gainNode);
     gainNode.connect(context.destination);
@@ -180,13 +206,16 @@ function RhythmGame() {
     setInputSequence([])
   }
 
-
-  console.log(state.userPoints)
+  const increaseScoreAndPoints =()=> {
+    setScore(score + 1)
+    setUserPoints(userPoints + 400)
+    
+  }
 
   return (
     <div className='rhythm-game-container fpage flex fdc jc-c aic'>
  
-      <GameStatus score={state.score} userPoints={state.userPoints} level={level} time={time} />
+      <GameStatus score={score} userPoints={userPoints} level={level} time={time} />
       <p><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Guess the rhythm played"}</strong></p>
 
       <div className="beat-indicator flex fdr jc-c aic" style={{ margin: '0' }}>
@@ -208,11 +237,12 @@ function RhythmGame() {
             </span>
           </div>
         ))}
+
+
         {inputSequence && inputSequence.length > 0 ? <button style={{margin: '0', backgroundColor: 'transparent'}} onClick={()=> { setInputSequence([])}}>Clear</button> : null}
       </div>
-      { level && level >= 0 ? null : <button id='btnStartRhythm' onClick={playSequence}>Lez go!</button> }
+      { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={playSequence}>Lez go!</button> : 'Loading...' }
   
-      <button onClick={()=> {dispatch({type: 'add-user-points', points: 400.00})}}>Sample</button>
 
       {
         inputSequence && inputSequence.length > 0 ?
@@ -237,7 +267,7 @@ function RhythmGame() {
       <div className="beat-buttons flex fdr jc-c aic">
         {
           durations.map((note, index) => (
-            <button key={index} onClick={() => {
+            <button className='btnButton' key={index} onClick={() => {
               pushInput(note);
               
               playNote(note.freq, note.duration);
@@ -254,8 +284,10 @@ function RhythmGame() {
             <button id='playRhythm' onClick={() => {
             if (JSON.stringify(sequence) === JSON.stringify(inputSequence)) {
               console.log('correct');
-              dispatch({type: 'increase-score'})
-              dispatch({type: 'add-user-points', points: 400.00})
+              
+              increaseScoreAndPoints()
+              
+
               setWait(false)
               setMessage('✅ Nays galing ah')
             } else {
@@ -279,7 +311,10 @@ function RhythmGame() {
       </div>
         </div> : null
       }
-        {level > 15 ? <GameSummary score={score} points={userPoints} time={time} targetPoint={targetPoint}/> : null}
+        {level > 15 ? 
+        <CurrentUserContext>
+          <GameSummary score={score} points={userPoints} time={time} targetPoint={targetPoint}/>
+        </CurrentUserContext> : null}
     </div>
     
   );

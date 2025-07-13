@@ -9,7 +9,8 @@ import StoreButton from '../mini-components/StoreButton'
 import ButtonSettings from '../mini-components/ButtonSettings'
 import PointsBar from '../mini-components/PointsBar'
 import { UserContext } from './CurrentUserContext'
-
+import AttributeBar from '../mini-components/AttributeBar'
+import axios from 'axios'
 function Homepage() {
 
     const navigate = useNavigate()
@@ -39,17 +40,33 @@ function Homepage() {
             case 'leaderb':
                 navigate('/leaderboards')
                 break;
+
+            case 'shop':
+                navigate('/store')
+                break;
         }
     }
+
+
+
+    
 
       
 
   return (
     <ProtectedComponent children={
       <div className='homepage flex jc-c aic fdc fpage'>
-        <Lifebar />
-        <PointsBar />
-        <StoreButton />
+
+    
+          <AttributeBar onClick={menuRedirect} children={
+            <div>
+            <button className='store-btn-container' onClick={()=> {
+              window.location.href = '/store'
+              }}>Store</button>
+            </div>
+          }/>
+       
+
       <img className='main-logo' src="https://i.ibb.co/MkgK8X5q/MUSIC-QUESTRO-NEW-LOGO-NO-STARS.png" alt="" />
 
       <button className='btnMenu' id='playg' onClick={menuRedirect}>Play Game</button>
@@ -57,6 +74,7 @@ function Homepage() {
       <button className='btnMenu' id='leaderb' onClick={menuRedirect}>Leaderboards</button>
       <button className='btnMenu' onClick={()=> {
         localStorage.removeItem("userLogged")
+        localStorage.removeItem('token')
         window.location.href = '/'
       }}>Logout</button>
       <ButtonSettings />

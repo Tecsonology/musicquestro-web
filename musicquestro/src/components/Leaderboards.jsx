@@ -4,6 +4,7 @@ import ProtectedComponent from './ProtectedComponent'
 import '../styles/Leaderboards.css'
 import axios from 'axios'
 import ButtonBack from '../mini-components/ButtonBack'
+import UserRank from '../mini-components/UserRank'
 
 function Leaderboards() {
 
@@ -35,27 +36,25 @@ function Leaderboards() {
   return (
     <ProtectedComponent>
       <div className='leaderboard fpage flex fdc aic jc-c'>
-        <div className="leaderboard-wrapper">
-            <h1>Leaderboard</h1>
+        <div className="leaderboard-wrapper flex fdc aic">
+            <img id='leaderboardBanner' width={350} src="https://i.ibb.co/xKsdRQH1/Untitled-design-64.png" alt="" />
             <ButtonBack />
-            <div className="ranks-container flex fdc jc-c aic">
-          {
-              players && [...players].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 10).map((user, index)=> (
-                 user.totalPoints > 0 ? 
-                 <div className='flex fdr aic jc-c' key={index} style={{width: '90%', backgroundColor: 'rgb(103, 115, 245)', borderRadius: '2em'
-                  , padding: '0', margin: '0.5em 0'
-                 }}>
-                  <h2>{index+1}</h2>
-                    <div className="profile-rank flex jc-c aic" style={{width: '3em', height: '3em', 
-                      borderRadius: '50%', backgroundColor: 'white', margin: '0 1em'}}>
-                      <p>p</p>
-                    </div>
-                    <h2>{user.username}</h2>
-                    <p style={{marginLeft: '3em'}}>{user.totalPoints}</p>
-                 </div> : null
-              ))
-          }
-          </div>
+      
+          <table>
+            <tbody>
+             
+               {
+                  players && [...players].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 10).map((user, index)=> (
+                    user.totalPoints > 0 ? 
+                    
+                      <UserRank key={index} rank={index+1} username={user.username} userPoints={user.totalPoints}/>
+                    : null
+                  ))
+              }
+            
+            </tbody>
+          </table>
+       
         </div>
       </div>
     </ProtectedComponent>

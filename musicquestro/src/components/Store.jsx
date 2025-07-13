@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import '../styles/Store.css'
 import ProtectedComponent from './ProtectedComponent'
 import Lifebar from '../mini-components/Lifebar'
@@ -10,6 +10,8 @@ import { useEffect } from 'react'
 import { userToken, userids } from '../Token'
 import axios from 'axios'
 import ShopStatus from '../mini-components/ShopStatus'
+import { UserContext } from './CurrentUserContext'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -43,45 +45,15 @@ function Store() {
 
 
   const userCollection = []
-  const [ currentUser, setCurrentUser ] = useState()
+  const navigate = useNavigate()
+  const { currentUser } = useContext(UserContext)
   const [ status, setStatus ] = useState(false)
 
 
-  useEffect(()=> {
-
-    const getCurrentUser  = async ()=> {
-        if(userids){
-            try {
-
-            const getUser = await axios.get('http://localhost:5000/player', {
-              params: { userids}
-            })
-            
-          setCurrentUser(getUser.data)
-
-          } catch(err){
-            console.log(err)
-        }
-        }
-    }
-
-     getCurrentUser()
-
-     const interval = setInterval(()=> {
-      getCurrentUser()
-     }, 1000)
-
-     return ()=> {
-      clearInterval(interval)
-     }
-
-  }, [userids])
+  
 
 
    async function  handleBuyItem (e, price, item) {
-
-
-      console.log(item, price)
 
       try {
 
@@ -92,7 +64,6 @@ function Store() {
 
         })
 
-        console.log(updateUserItems.data.message)
         if(updateUserItems){ 
           setStatus(updateUserItems.data.message) 
           setTimeout(()=> {
@@ -121,6 +92,13 @@ function Store() {
             coinDeduct
         })
 
+        if(addLife){
+          setStatus(addLife.data.message) 
+          setTimeout(()=> {
+            setStatus(false)
+          }, 3000)
+        }
+
         !addLife ? setStatus(addLife.data) : null
 
       } catch(err){
@@ -136,13 +114,23 @@ function Store() {
     <ProtectedComponent>
       <ButtonBack />
       
-      <div className='shop fpage flex fdc jc-c aic'>
+      <div className='fpage shop  flex fdc jc-c aic'>
+        <img className='store-banner' src="https://i.ibb.co/nN9KC0dr/Untitled-design-83.png" alt="Untitled-design-83" border="0"/>
         { status && status ? <ShopStatus message={status} /> : null}
-        <h1>Store</h1>
-        <div className="item-lists">
-            <h3>MusicLife: {currentUser && currentUser.life}</h3>
-            <h3>Coins: {currentUser && currentUser.musicCoins}</h3>
-            <div className="survival-items">
+        <div className='flex fdc aic jc-c' style={{position: 'absolute', zIndex: '3'}}>
+          <h1 style={{textAlign: 'center', backgroundColor: 'orange', padding: '0.1em 1em', borderRadius: '1em', border: '3px dotted yellow'}}>Store</h1>
+        <div className="item-lists flex fdc">
+            
+            <div className="survival-items flex fdc aic jc-c">
+              <div className='flex fdr aic jc-c'>
+                <div className='flex fdr aic jc-c' style={{margin: '1em', backgroundColor: '#0199DA', color: 'black', borderRadius: '1em', padding: '0.4em'}}>
+                <h3 style={{color: 'white', margin: '0', backgroundColor: '#025B82', padding: '0.4em 0.8em', borderRadius: '1em', marginRight: '0.6em'}}><span><img style={{width: '0.7em', marginRight: '0.5em', padding: '0'}} src="https://i.ibb.co/BVq668JC/Untitled-design-30.png"alt="" /></span>{currentUser && currentUser.life}</h3>
+                 <h3 style={{color: 'white', margin: '0', backgroundColor: '#025B82', padding: '0.4em 0.8em', borderRadius: '1em'}}>
+                  <span><img style={{width: '1em', marginRight: '0.5em'}} src="https://i.ibb.co/N6w014ng/Currency.png" alt="" /></span>
+                  {currentUser && currentUser.musicCoins}</h3>
+              </div>
+              <button style={{backgroundColor: 'green'}} onClick={()=> {navigate('/collections')}}>My Collections</button>
+              </div>
               <StoreCard itemName={'MusicLife'} itemPrice={50}
                 children={
                   <span><button onClick={handleAddLife}>Buy</button></span>
@@ -161,12 +149,11 @@ function Store() {
                 ))
               }
               </div>
-              <button onClick={()=> {
-                window.location.href = '/collections'
-              }}>View Collections</button>
+             
 
             
             </div>
+        </div>
         </div>
       </div>
     </ProtectedComponent>

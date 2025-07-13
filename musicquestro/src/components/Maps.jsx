@@ -21,7 +21,7 @@ const mapNames = {
     location: '/harmonyGame'
   },
   pitch: {
-    imgLink: 'https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png',
+    imgLink: 'https://i.ibb.co/W4bb6H3f/Untitled-design-79.png',
     location: '/pitchGame'
   },
 
@@ -35,13 +35,13 @@ function Maps() {
   const mapAvailability = []
   const navigate = useNavigate()  
   const [ maps, setMaps ] = useState()
-  const userids = userToken.userids
+  const userids = userToken ? userToken.userids : '46546546'
   
 
     useEffect(() => {
       getUserMap(userids);
     }, [userids]);
-
+ 
   async function getUserMap(userid) {
     try{
 
@@ -57,6 +57,7 @@ function Maps() {
 
     }catch(err){
       console.error('Error: ', err)
+     
     }
   }
 

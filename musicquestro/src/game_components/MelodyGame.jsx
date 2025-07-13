@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef, use } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import '../styles/GameStyles.css';
 import GameSummary from './GameSummary';
 import GameStatus from './GameStatus';
 import GamePrompt from '../mini-components/GamePrompt';
+import CurrentUserContext, { UserContext } from '../components/CurrentUserContext';
 
 const notesMap = {
   DO: 261.63,
@@ -17,6 +18,8 @@ const notesMap = {
 const noteNames = Object.keys(notesMap);
 
 function MelodyGame() {
+
+  const { currentUser } = useContext(UserContext)
   const [melody, setMelody] = useState([]);
   const [userInput, setUserInput] = useState([]);
   const [result, setResult] = useState('');
@@ -28,8 +31,6 @@ function MelodyGame() {
   const [message, setMessage] = useState('Listen to the melody and match the notes!');
   const intervalRef = useRef(null); 
   const [ wait, setWait ] = useState(false)
-  const [ lifeCount, setLifeCount ] = useState(5)
-
   const targetPoint = 85.00;
   let newMelody;
 
@@ -80,7 +81,7 @@ function MelodyGame() {
 
     osc.connect(gainNode);
     gainNode.connect(context.destination);
-    osc.type = 'sawtooth';
+    osc.type = currentUser ? currentUser.currentInstrument : 'sine';
     osc.frequency.value = freq;
     osc.start();
 
@@ -145,11 +146,9 @@ function MelodyGame() {
         setMessage("✅ Correct");
       } else {
         setMessage("❌ Wrong, its "+melody.join(' '));
-        setLifeCount(lifeCount - 1)
       }
     } else {
       setMessage(`❌ Wrong, its `+melody.join(' '));
-      setLifeCount(lifeCount - 1)
     }
 
     setTimeout(() => {
@@ -185,15 +184,29 @@ function MelodyGame() {
   }
 
   
+  
 
   return (
-    <div className='melody-game-container fpage flex fdc aic jc-c' style={{ padding: 20, fontFamily: 'sans-serif', textAlign: 'center' }}>
-      {
-        lifeCount && lifeCount > 0 ? 
-        <>
-          <GamePrompt gameName={'Melody Lodi'}/>
+    <CurrentUserContext>
+
+       <div className='melody-game-container fpage flex fdc aic jc-c' style={{ padding: 20, fontFamily: 'sans-serif', textAlign: 'center' }}>
+      <>
+      <h4>Current Instrument: {currentUser ? currentUser.currentInstrument : null}</h4>
+        <GamePrompt gameName={'Melody Lodi'}/>
       <GameStatus score={score} userPoints={userPoints} level={level} time={time} />
-      <p>Life: {lifeCount}</p>
+      
+      {/**
+       * 
+       *  <div style={{backgroundColor: 'white', padding: '0.3em', position: 'absolute', top: '5.5em', right: '1em', borderRadius: '0.4em'}}>
+        {
+          lifeCount.map((note, index)=> (
+             <img key={index}  style={{width: '1em', marginRight: '0.5em'}} src="https://i.ibb.co/BVq668JC/Untitled-design-30.png" alt="" />
+          ))
+        }
+      </div>
+       */}
+
+
        <h2>{message}</h2>
       {listenMode()}
       <button onClick={(e) => {
@@ -258,18 +271,9 @@ function MelodyGame() {
       <div style={{ fontSize: 24, marginTop: 10 }}>{result}</div>
 
       {level > 15 ? <GameSummary score={score} points={userPoints} time={time} targetPoint={targetPoint}/> : null}
-        </> : 
-
-        <>
-          <h2>Game Over</h2>
-          <button onClick={()=> {
-            window.location.reload()
-          }}>Try Again</button>
         </>
-        
-        
-      }
     </div>
+    </CurrentUserContext>
   );
 }
 

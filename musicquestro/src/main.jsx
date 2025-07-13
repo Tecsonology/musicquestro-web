@@ -15,9 +15,10 @@ import Settings from './components/Settings.jsx';
 import LoginGoogle from './components/LoginGoogle.jsx';
 import BackgroundMusic from './BackgroundMusic.jsx';
 import MelodyGame from './game_components/MelodyGame.jsx';
-import HarmonyGame from './game_components/HarmonyGAme.jsx';
+import HarmonyGame from './game_components/HarmonyGame.jsx';
 import PitchGame from './game_components/PitchGame.jsx';
 import CurrentUserContext from './components/CurrentUserContext.jsx';
+import HighPitch from './game_components/HighPitch.jsx';
 
 <BackgroundMusic />
 
@@ -34,7 +35,7 @@ const router = createBrowserRouter([
 
   {
     path: '/m',
-    element: <Maps />
+    element: <CurrentUserContext><Maps /></CurrentUserContext>
   },
 
   {
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
 
   {
     path: '/collections',
-    element: <Collections />
+    element: <CurrentUserContext><Collections /></CurrentUserContext>
   },
 
   {
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
 
    {
     path: '/rhythmGame',
-    element: <RhythmGame />
+    element: <CurrentUserContext><RhythmGame /></CurrentUserContext>
   },
 
   {
@@ -69,12 +70,17 @@ const router = createBrowserRouter([
 
    {
     path: '/harmonyGame',
-    element: <HarmonyGame />
+    element: <CurrentUserContext><HarmonyGame /></CurrentUserContext>
   },
 
   {
     path: '/pitchGame',
-    element: <PitchGame />
+    element: <CurrentUserContext><PitchGame /></CurrentUserContext>
+  },
+
+  {
+    path: '/highPitch',
+    element: <HighPitch />
   },
 
   {
@@ -93,9 +99,9 @@ const router = createBrowserRouter([
 ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  //<StrictMode>
     <RouterProvider router={router} />
-  </StrictMode>,
+  //</StrictMode>,
 )
 
 

@@ -1,113 +1,104 @@
-import React, { useState } from 'react';
+import React from 'react'
+import { useState, useContext } from 'react';
+import GameStatus from './GameStatus';
+import { UserContext } from '../components/CurrentUserContext';
+import GamePrompt from '../mini-components/GamePrompt';
 
-const instruments = [
-  { name: 'Piano', type: 'sine' },
-  { name: 'Guitar', type: 'square' },
-  { name: 'Violin', type: 'sawtooth' },
-  { name: 'Flute', type: 'triangle' },
-  { name: 'Xylophone', type: 'custom' }
-];
+const noteValues = [
+  300, 350, 400, 450, 500, 600
+]
 
 function HarmonyGame() {
-  const [harmonicCombo, setHarmonicCombo] = useState([]);
-  const [answer, setAnswer] = useState([]);
-  const [message, setMessage] = useState('');
 
-  const customWave = (audioCtx) => {
-    const real = new Float32Array([0, 1, 0.5, 0.2]);
-    const imag = new Float32Array(real.length);
-    return audioCtx.createPeriodicWave(real, imag);
-  };
+  const { currentUser, setCurrentUser } = useContext(UserContext) 
+   const [score, setScore] = useState(0);
+    const [userPoints, setUserPoints] = useState(0);
+    const [level, setLevel] = useState(0);
 
-  const playNote = (oscType, audioCtx) => {
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    gain.gain.value =   20;
+  let context;
 
-    if (oscType === 'custom') {
-      osc.setPeriodicWave(customWave(audioCtx));
-    } else {
-      osc.type = oscType;
+  const initializeAudio =()=> {
+    if(!context || context.state === 'closed'){
+      context = new (window.AudioContext || window.webAudioContext)()
+    } else if(context.state === 'suspended'){
+      context.resume()
     }
+  }
 
-    osc.frequency.value = 440; // A4
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 1);
-  };
+  const playSequence =async()=> {
+     playFirstSeq()
+     playSecondSeq()
+  }
 
-  const playHarmonic = () => {
-    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const combo = [];
+  const generateSequence =()=> {
+    let noteSequence = []
 
-    while (combo.length < 2) {
-      const rand = instruments[Math.floor(Math.random() * instruments.length)];
-      if (!combo.includes(rand)) {
-        combo.push(rand);
-        playNote(rand.type, audioCtx);
-      }
+    for(let x = 0; 4 >= x; x++){
+      noteSequence.push(Math.floor(Math.random() * noteValues.length))
     }
+    return noteSequence
 
-    setHarmonicCombo(combo);
-    setAnswer([]);
-    setMessage('');
-  };
+  }
 
-      console.log(harmonicCombo)
+  const playNote =(freq, type)=> {
+    if(!context) initializeAudio()
+
+        const seq = generateSequence()
+
+        const osc = context.createOscillator()
+        const gainNode = context.createGain()
+
+        osc.type = type
+        osc.frequency.value = freq
+
+        gainNode.gain.setValueAtTime(1, context.currentTime )
+        gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 1000);
+
+        osc.connect(gainNode)
+        gainNode.connect(context.destination)
+
+        osc.start()
+        osc.stop(context.currentTime + 800 / 1000)
+  }
 
 
-  const onDrop = (e) => {
-    const dropped = e.dataTransfer.getData('instrument');
-    const found = instruments.find((i) => i.name === dropped);
-    if (found && !answer.includes(found)) {
-      setAnswer([...answer, found]);
-    }
-  };
+  const playFirstSeq = async()=> {
+    const sequence = generateSequence()
+    console.log(sequence)
+    let delay = 0
+    sequence.forEach(element => {
+      setTimeout(()=> {
+        playNote(noteValues[element], 'triangle')
+      }, 1000 + delay)
 
-  const onDragStart = (e, instrumentName) => {
-    e.dataTransfer.setData('instrument', instrumentName);
-  };
+      delay += 1000  
+    })
+  }
 
-  const checkAnswer = () => {
-    if (answer.length !== 2) {
-      setMessage('Pick exactly 2 instruments!');
-      return;
-    }
+  const playSecondSeq = async()=> {
+    const sequence = generateSequence()
+    console.log(sequence)
+    let delay = 0
+    sequence.forEach(element => {
+      setTimeout(()=> {
+        playNote(noteValues[element], 'sawtooth')
+      }, 1000 + delay)
 
-    const correct = harmonicCombo.every(h => answer.find(a => a.name === h.name));
-    setMessage(correct ? '✅ Correct!' : '❌ Try Again!');
-  };
+      delay += 1000  
+    })
+  }
+
 
   return (
-    <div className="game">
-      <button onClick={playHarmonic}>🎵 Play Harmonic Sound</button>
-
-      <div className="instruments">
-        <h3>Instruments</h3>
-        {instruments.map((inst) => (
-          <div
-            key={inst.name}
-            className="instrument"
-            draggable
-            onDragStart={(e) => onDragStart(e, inst.name)}
-          >
-            {inst.name}
-          </div>
-        ))}
-      </div>
-
-      <div className="drop-zone" onDragOver={(e) => e.preventDefault()} onDrop={onDrop}>
-        <h3>Drop your guess here</h3>
-        {answer.map((a, idx) => (
-          <div key={idx} className="selected">{a.name}</div>
-        ))}
-      </div>
-
-      <button onClick={checkAnswer}>✅ Submit</button>
-      {message && <h3>{message}</h3>}
+    <div className='fpage flex fdc aic jc-c'>
+      <GamePrompt gameName={'Harmonia'} />
+      <GameStatus score={score} userPoints={userPoints} level={level} />
+      <h1>Harmonia</h1>
+      <button onClick={()=> {
+        playSequence()
+      }}>Play Note</button>
     </div>
-  );
+  )
 }
 
-export default HarmonyGame;
+export default HarmonyGame

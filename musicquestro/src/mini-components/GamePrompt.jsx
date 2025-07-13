@@ -44,7 +44,7 @@ function GamePrompt({ gameName, instr }) {
         {
             showPrompt && showPrompt ? 
             <div className='fpage flex fdc jc-c aic' style={{position: 'fixed', zIndex: '10', backgroundColor: 'rgba(0, 0, 0, 0.63)', height: '100%'}}>
-            <div style={{backgroundColor: 'white', color: 'black', padding: '1em', width: '17em', borderRadius: '1em'}}>
+            <div className='flex fdc aic jc-c' style={{backgroundColor: 'white', color: 'black', padding: '1em', width: '17em', borderRadius: '1em'}}>
                 <h3 onClick={hidePrompt} style={{position: 'relative', right: '-7em', top: '-1.5em', color: 'red'}}>x</h3>
                 <h3>{ gameName && gameName }</h3>
                 <span><span><img width={15} src="https://i.ibb.co/BVq668JC/Untitled-design-30.png" alt="" /></span> -5 </span>
@@ -56,13 +56,13 @@ function GamePrompt({ gameName, instr }) {
         {
             showError && showError ? 
              <div className='fpage flex fdc jc-c aic' style={{position: 'fixed', zIndex: '10', backgroundColor: 'rgba(0, 0, 0, 0.63)', height: '100%'}}>
-            <div style={{backgroundColor: 'white', color: 'black', padding: '1em', width: '17em', borderRadius: '1em'}}>
+            <div className='flex fdc aic jc-c' style={{backgroundColor: 'white', color: 'black', padding: '1em', width: '17em', borderRadius: '1em'}}>
                 <h3 onClick={hidePrompt} style={{position: 'relative', right: '-7em', top: '-1.5em', color: 'red'}}>x</h3>
                 <h3>Insufficient MusicLife</h3>
                 <button onClick={()=> {
                     window.location.href = '/h'
                 }}>Back to Home</button>
-                <button onClick={()=> { window.location.href = '/store'}}>Go to Shop</button>
+                <button style={{backgroundColor: 'green'}} onClick={()=> { window.location.href = '/store'}}>Go to Shop</button>
             </div>
             </div> : null
         }

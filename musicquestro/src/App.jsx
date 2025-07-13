@@ -8,6 +8,7 @@ import Login from './components/Login';
 import BackgroundMusic from './BackgroundMusic';
 import { BrowserRouter } from 'react-router-dom';
 import CurrentUserContext from './components/CurrentUserContext';
+import RhythmGame from './game_components/RhythmGame';
 
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
   return (
     <>
        
-          <Login />
+            <Login />
     
     </>
   )

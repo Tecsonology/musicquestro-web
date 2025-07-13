@@ -53,6 +53,7 @@ function LoginGoogle() {
             pitch: {isLocked: 'true'},
             
         }
+        let currentInstrument = 'sine'
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:5000/createUser', 
@@ -65,6 +66,7 @@ function LoginGoogle() {
                     life,
                     totalPoints,
                     maps,
+                    currentInstrument,
 
                 });
 

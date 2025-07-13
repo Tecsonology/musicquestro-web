@@ -8,12 +8,9 @@ import { UserContext } from './CurrentUserContext'
 
 function Profile() {
   const [ userLogged, setUserLogged ] = useState()
+  const { currentUser } = useContext(UserContext)
   const navigate = useNavigate()
-        
-      useEffect(()=> {
-         setUserLogged(JSON.parse(localStorage.getItem("userLogged")))
-      }, [])
-
+      
   return (
     <ProtectedComponent 
 
@@ -27,13 +24,15 @@ function Profile() {
                 <img src="https://i.ibb.co/1JmMD64Q/Maps-removebg-preview.png" alt="" />
               </div>
               <div className="right">
+                <h1>{currentUser ? currentUser.username : 'No data'}</h1>
                 <h2>{userLogged && `${userLogged.username}`}</h2>
-                <p>Player id: {userLogged && `${userLogged.id}`}</p>
-                <p>User id: {userLogged && `${userLogged.userids}`}</p>
+                <p>Player id: {currentUser ? currentUser.id : 'No data'}</p>
+                <p>User id: {currentUser ? currentUser.userids : 'No data'}</p>
 
                 <p className='flex fdr aic' style={{margin: '0.5em 0'}}><span><img src="https://i.ibb.co/N6w014ng/Currency.png" width={25}
-                style={{marginRight: '0.5em'}} alt="" /></span>{ userLogged && userLogged.musicCoins}</p>
-                <p>Points: {userLogged && userLogged.totalPoints}</p>
+                style={{marginRight: '0.5em'}} alt="" /></span>{currentUser ? currentUser.musicCoins : 'No data'}</p>
+                <p><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>Points: {currentUser ? currentUser.totalPoints : 'No data'}</p>
+                <p>Current Rank: </p>
               </div>
           </div>
           <h3>Progress</h3>
