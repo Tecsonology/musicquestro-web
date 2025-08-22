@@ -47,12 +47,7 @@ function Login() {
                 const response = await axios.post(
                 `${import.meta.env.VITE_NETWORK_HOST}/auth`,
                 { username: username, password: password },
-                {
-                    headers: {
-                    Authorization: `Bearer`,
-                    },
-                    withCredentials: true
-                },
+               
             
                 );
                 const user = response.data.userWithoutPassword;
