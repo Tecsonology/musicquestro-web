@@ -3,7 +3,7 @@ import { Outlet, useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import SetupAccount from './SetupAccount'
-const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
 function Register() {
