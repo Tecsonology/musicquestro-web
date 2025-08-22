@@ -2,6 +2,7 @@
      background-image: url('https://i.ibb.co/s953MgvC/9d63ad53-169e-453e-9238-f46e3fa9c15e.jpg');
      background-repeat: no-repeat;
      background-size: cover;
+     overflow: auto;
      
      p {
         margin: 0;
@@ -11,23 +12,14 @@
 
 
 .profile-container {
-    background-color: rgb(193, 153, 153);
-   
-    width: 6em;
-    height: 6em;
-    border-radius: 50%;
-    border: 10px solid white;
-    margin-right: 1em;
+    margin: 0 1em 0 0;
 
-    img {
-        width: 15em
-    }
+    
 }
 
 .profile-wrapper {
     box-sizing: border-box;
     width: 93vw;
-    /* From https://css.glass */
     background: rgba(255, 255, 255, 0.2);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
@@ -35,6 +27,14 @@
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 1em;
+    
+}
+
+.btnLogout {
+    position: relative;
+    right: -9em; 
+    top: -1em; 
+    font-size: 0.7em;
 }
 
 
@@ -43,4 +43,23 @@
         flex-direction: column;
         width: 80vw;
     }
+
+}
+
+@media (min-width: 1024px) {
+    .profile-wrapper {
+       width: 40vw;
+    }   
+
+    .btnLogout {
+        position: relative;
+        right: -41em; 
+        top: -8em; 
+        font-size: 0.7em;
+    }
+}
+
+/* Desktop screens */
+@media (min-width: 1440px) {
+  
 }

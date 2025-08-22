@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { BrowserRouter, Outlet, Route, Router, Routes, useNavigate } from 'react-router-dom'
 import { token } from '../Token'
 import '../styles/Homepage.css'
 import ProtectedComponent from './ProtectedComponent'
@@ -10,17 +10,15 @@ import ButtonSettings from '../mini-components/ButtonSettings'
 import PointsBar from '../mini-components/PointsBar'
 import { UserContext } from './CurrentUserContext'
 import AttributeBar from '../mini-components/AttributeBar'
+import BottonNavigation from './BottonNavigation'
 import axios from 'axios'
+import Maps from './Maps'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHouse } from '@fortawesome/free-solid-svg-icons'
 function Homepage() {
 
     const navigate = useNavigate()
-
-    const [ userLogged, setUserLogged ] = useState()
-    const { currentUser, setCurrentUser } = useContext(UserContext)
-    
-    useEffect(()=> {
-       setUserLogged(JSON.parse(localStorage.getItem("userLogged")))
-    }, [])
 
     const menuRedirect =(e)=> {
         const directTo = e.target.id
@@ -48,38 +46,15 @@ function Homepage() {
     }
 
 
-
-    
-
-      
-
   return (
-    <ProtectedComponent children={
+
       <div className='homepage flex jc-c aic fdc fpage'>
 
-    
-          <AttributeBar onClick={menuRedirect} children={
-            <div>
-            <button className='store-btn-container' onClick={()=> {
-              window.location.href = '/store'
-              }}>Store</button>
-            </div>
-          }/>
-       
-
-      <img className='main-logo' src="https://i.ibb.co/MkgK8X5q/MUSIC-QUESTRO-NEW-LOGO-NO-STARS.png" alt="" />
-
-      <button className='btnMenu' id='playg' onClick={menuRedirect}>Play Game</button>
-      <button className='btnMenu' id='user' onClick={menuRedirect}>Profile</button>
-      <button className='btnMenu' id='leaderb' onClick={menuRedirect}>Leaderboards</button>
-      <button className='btnMenu' onClick={()=> {
-        localStorage.removeItem("userLogged")
-        localStorage.removeItem('token')
-        window.location.href = '/'
-      }}>Logout</button>
-      <ButtonSettings />
+         
+      <Outlet />
+      <BottonNavigation />
     </div>
-    }/>
+
       
   )
 }

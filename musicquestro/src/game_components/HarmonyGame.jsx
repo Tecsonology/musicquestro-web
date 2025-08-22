@@ -1,19 +1,23 @@
 import React from 'react'
-import { useState, useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import { useState, useContext,  } from 'react';
 import GameStatus from './GameStatus';
 import { UserContext } from '../components/CurrentUserContext';
 import GamePrompt from '../mini-components/GamePrompt';
+import GameSummary from './GameSummary';
 
 const noteValues = [
   300, 350, 400, 450, 500, 600
 ]
 
 function HarmonyGame() {
-
+  const { id } = useParams()
   const { currentUser, setCurrentUser } = useContext(UserContext) 
    const [score, setScore] = useState(0);
     const [userPoints, setUserPoints] = useState(0);
     const [level, setLevel] = useState(0);
+    const [ time, setTime ] = useState(0)
+    const targetPoint = 0;
 
   let context;
 
@@ -28,6 +32,9 @@ function HarmonyGame() {
   const playSequence =async()=> {
      playFirstSeq()
      playSecondSeq()
+     setScore(score+1)
+     setUserPoints(userPoints+400)
+     setLevel(level+1)
   }
 
   const generateSequence =()=> {
@@ -91,12 +98,20 @@ function HarmonyGame() {
 
   return (
     <div className='fpage flex fdc aic jc-c'>
-      <GamePrompt gameName={'Harmonia'} />
-      <GameStatus score={score} userPoints={userPoints} level={level} />
-      <h1>Harmonia</h1>
-      <button onClick={()=> {
-        playSequence()
-      }}>Play Note</button>
+      <GamePrompt gameName={'Pitchy pitchy'}/>
+      {
+        level < 15 ?
+        <>
+          <GameStatus score={score} userPoints={userPoints} level={level} />
+          <h1>Harmonia</h1>
+          <button onClick={()=> {
+            playSequence()
+          }}>Play Note</button>
+        </> :
+        <>
+          <GameSummary userids={currentUser.userids} level={parseInt(id)}  gameName={'harmony'} score={score} points={userPoints} time={time} targetPoint={targetPoint} nextGameIndex={3} />
+        </>
+      }
     </div>
   )
 }

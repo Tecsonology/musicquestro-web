@@ -12,52 +12,51 @@ import axios from 'axios'
 import ShopStatus from '../mini-components/ShopStatus'
 import { UserContext } from './CurrentUserContext'
 import { useNavigate } from 'react-router-dom'
+import Loader from './Loader'
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 
 
 const ITEMS = {
   guitar: {
     itemName: 'Guitar',
+    imgItem: 'https://i.ibb.co/LhDmcNDy/Untitled-design-2025-07-31-T003054-923.png',
     price: 300
   },
 
   xylophone: {
     itemName: 'Xylophone',
+    imgItem: 'https://i.ibb.co/XrPv0k6K/Untitled-design-2025-07-31-T003239-927.png',
     price: 600
   },
 
   flute: {
     itemName: 'Flute',
+    imgItem: 'https://i.ibb.co/Fkh3850k/Untitled-design-2025-07-31-T003603-716.png',
     price: 1000
   },
 
   game: {
     itemName: 'Game',
+    imgItem: 'https://i.ibb.co/Fkh3850k/Untitled-design-2025-07-31-T003603-716.png',
     price: 1300
   },
 
 }
 
-
-
-
 function Store() {
 
-
+1
   const userCollection = []
   const navigate = useNavigate()
   const { currentUser } = useContext(UserContext)
   const [ status, setStatus ] = useState(false)
 
-
-  
-
-
    async function  handleBuyItem (e, price, item) {
 
       try {
 
-        const updateUserItems =  await axios.put('http://localhost:5000/api/update-user-from-shop', {
+        const updateUserItems =  await axios.put(`${VITE_NETWORK_HOST}/api/update-user-from-shop`, {
             userids: userids,
             coinsDeduct: price,
             newItem: item
@@ -83,10 +82,11 @@ function Store() {
   }
 
   const handleAddLife = async ()=> {
+    
       try {
         const lifeAdded = 1
         const coinDeduct = 50
-        const addLife = await axios.put('http://localhost:5000/api/user-add-life', {
+        const addLife = await axios.put(`${VITE_NETWORK_HOST}/api/user-add-life`, {
             userids,
             lifeAdded,
             coinDeduct
@@ -107,11 +107,9 @@ function Store() {
   }
   
 
-
-
-
   return (
-    <ProtectedComponent>
+    <>
+      
       <ButtonBack />
       
       <div className='fpage shop  flex fdc jc-c aic'>
@@ -129,26 +127,34 @@ function Store() {
                   <span><img style={{width: '1em', marginRight: '0.5em'}} src="https://i.ibb.co/N6w014ng/Currency.png" alt="" /></span>
                   {currentUser && currentUser.musicCoins}</h3>
               </div>
-              <button style={{backgroundColor: 'green'}} onClick={()=> {navigate('/collections')}}>My Collections</button>
+              <button style={{backgroundColor: 'green'}} onClick={()=> {navigate('../collections')}}>My Collections</button>
               </div>
-              <StoreCard itemName={'MusicLife'} itemPrice={50}
-                children={
-                  <span><button onClick={handleAddLife}>Buy</button></span>
-                }
-              />
-
-              <div className="menu-items flex fdr aic jc-c">
-                {
-                Object.values(ITEMS).map((item, index)=> (
-                  <StoreCard key={index}  itemName={item.itemName} itemPrice={item.price}
+              {
+                currentUser && currentUser ?
+                <div>
+                  <div className='flex fdr aic jc-c'>
+                      <StoreCard imgItem='https://i.ibb.co/BVq668JC/Untitled-design-30.png' itemName={'MusicLife'} itemPrice={50}
                     children={
-                      !userCollection.includes(item.itemName) ? <span><button onClick={(e)=> handleBuyItem(e, item.price, item.itemName)}>Buy</button></span>
-                      : <span><button disabled>Buy</button></span>
-                    }
-                  />
-                ))
+                      <span><button onClick={handleAddLife}>Buy</button></span>
+                  } />
+                  </div>
+
+                <div className="menu-items flex fdr aic jc-c">
+                  <h3>Instrumetnsxz</h3>
+                  {
+                  Object.values(ITEMS).map((item, index)=> (
+                    <StoreCard key={index} imgItem={item.imgItem}  itemName={item.itemName} itemPrice={item.price}
+                      children={
+                        !userCollection.includes(item.itemName) ? <span><button onClick={(e)=> handleBuyItem(e, item.price, item.itemName)}>Buy</button></span>
+                        : <span><button disabled>Buy</button></span>
+                      }
+                    />
+                  ))
+                }
+                </div>
+                </div> : <Loader />
+                 
               }
-              </div>
              
 
             
@@ -156,7 +162,8 @@ function Store() {
         </div>
         </div>
       </div>
-    </ProtectedComponent>
+    </>
+ 
   )
 }
 

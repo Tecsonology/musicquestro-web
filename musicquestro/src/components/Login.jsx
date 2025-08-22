@@ -8,121 +8,36 @@ import GoogleLoginButton, { userids } from './GoogleLoginButton';
 import BackgroundMusic from '../BackgroundMusic';
 import { token } from '../Token.js'
 import { UserContext } from './CurrentUserContext.jsx';
+import { Link } from 'react-router-dom';
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
+console.log("Network Host:", VITE_NETWORK_HOST);    
 
 function Login() {
 
     const navigate = useNavigate();
-    const  userName  = React.useContext(UserContext)
     const [ username, setName ] = useState()
     const [ password, setPassword ] = useState();
     const [ id, setId ] = useState(455);
     const [ ready, setReady ] = useState(false)
     const [ log, setLog ] = useState(true);
     const [ error, setError ] = useState(false)
-    const [ disabled, setDisabled ] = useState(false)
+    const [ disabled, setDisabled ] = useState(true)
 
 
- 
-        useEffect(()=> {
-        const getCount = async()=> {
-            try{
-                const response = await axios.get('http://localhost:5000/getUserCount')
 
-            if(response){
-                setReady(true)
-            }
+    useEffect(()=> {
 
-            let num = response.data.count
-           
-            setId(id + num+1)
-
-
-            } catch(error){
-                console.log(error)
-            }
-        }
-        getCount()
-         }, [])
-
-         useEffect(()=> {
-            if(token){
-                navigate('/h')
-            }
-         }, [])
-
-
-         const getUser = async (userids) => {
-            try {
-                const response = await axios.get('http://localhost:5000/player', {
-                    params: { userids }
-                });
-                const user = response.data;
-                console.log(user.token)
-                localStorage.setItem("userLogged", JSON.stringify(user.userWithoutPassword))
-                localStorage.setItem("token", response.data.token)
-
-                console.log(localStorage.getItem('userLogged'))
-
-                window.location.href = '/h'
-
-
-            } catch (error) {
-                console.error('Error fetching user:', error);
-            }
-        };
-    
-
-  const handleSubmit = async (e) => {
-        const idRandomizer = []
-        for(let x = 0; x < 20; x++){
-            idRandomizer.push(Math.floor(Math.random()*10))
+        if(username && username.length >= 0){
+            setDisabled(false)
+        } else {
+            setDisabled(true)
         }
 
-        const userids = idRandomizer.join('').toString()
-        let id = 555
-        let musicCoins = 1000
-        let totalPoints = 0
-        let life = 5
-        let maps = {
-            rhythm: {isLocked: 'false'}, 
-            melody: {isLocked: 'true'},
-            harmony: {isLocked: 'true'},
-            pitch: {isLocked: 'true'},
-            
-        }
-        let currentInstrument = 'sine'
-        
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:5000/createUser', 
-                { 
-                    id, 
-                    username, 
-                    password,
-                    userids,
-                    musicCoins,
-                    life,
-                    totalPoints,
-                    maps,
-                    currentInstrument,
 
-                });
-            
-
-                if(response){
-                    setDisabled(true)
-                    await getUser(userids)
-
-                    console.log('dsadasdasd')
-
-                  
-                }
-           
-        } catch (error) {
-            alert('Failed to add item');
-        }
-    };
-
+        if(token){
+            navigate('/h')
+         }
+    }, [username])    
 
     const handleLogin = async (e) => {
         e.preventDefault()
@@ -130,7 +45,7 @@ function Login() {
             const postData = async () => {
             try {
                 const response = await axios.post(
-                'http://localhost:5000/auth',
+                `${VITE_NETWORK_HOST}/auth`,
                 { username: username, password: password },
                 {
                     headers: {
@@ -163,23 +78,16 @@ function Login() {
     }
 
     
-
     const removeErrorMessage =()=> {
         setError(false)
     }
 
-    
-
   return (
-    <div className='log fpage flex jc-c fdc'>
-        
-          {
-            ready ? (
-                <div className='flex fdc jc-c aic'>
-                    <h1>{userName}</h1>
-                    <img className='main-logo' src="https://i.ibb.co/MkgK8X5q/MUSIC-QUESTRO-NEW-LOGO-NO-STARS.png" alt="" />
+    <div className='flex jc-c fdc'>
+        <div className='flex fdc jc-c aic'>
+                 
                      
-                    {log ? (<div className="login flex fdc jc-c aic">
+               <div className="login flex fdc jc-c aic">
                         <input
                         type="text"
                         value={username}
@@ -197,48 +105,19 @@ function Login() {
 
                          { error && error ? <p className='errorM'>Invalid username or password</p> : null}
                       
-                        <button disabled={!ready} onClick={handleLogin}>Login</button>
+                        <button disabled={disabled} onClick={handleLogin}>Login</button>
 
                         <div id='or'>
                             <hr />
                             <p>or</p>
                             <hr />
                         </div>
-                       <GoogleLoginButton /> 
-                        <p>Need an account? <span style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
+                      { /** <GoogleLoginButton />  */}
+                        <p>Need an account? <Link to={'/register'} style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(false)
-                        }}>Click here</span></p>
-                    </div>):(
-                        <div className="register flex fdc jc-c aic">
-                        <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setName(e.target.value)}
-                        placeholder="Create your username"
-                        required
-                    />
-
-                    <input type="password" name="password" id="txtPass" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder='Create a password'
-                        required
-                    />
-                 
-                    <button id='btnRegister' disabled={disabled} onClick={handleSubmit}>Register</button>
-                    <p>Already have an account? <span style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
-                            setLog(true)
-                        }}>Click here</span></p>
+                        }}>Click here</Link></p>
                     </div>
-                    )}
                 </div>
-            ) : (
-                <div className='flex aic jc-c fdc'>
-                    <h1>Loading...</h1>
-                    <p style={{color: 'white', textAlign: 'center'}}>Please wait, we are taking you to the world of MusicQuestro...</p>
-                </div>
-            )
-          }
     </div>
   )
 }

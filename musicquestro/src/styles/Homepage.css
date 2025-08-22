@@ -1,10 +1,10 @@
 .homepage {
-    background-image: url('https://i.ibb.co/zT8xn7Zm/ec58ebf2-79dd-4304-abf8-b46a854f20c3.jpg');
+     background: #000000a2;
+    background-image: url('https://i.ibb.co/DDmLYjS6/Untitled-design-82.png');
     background-repeat: no-repeat;
     background-size: cover;
-
-    
-    
+    background-blend-mode:multiply;
+    overflow: hidden;
 }
 
 .btn-settings {
@@ -12,5 +12,46 @@
     position: absolute;
     right: 1%;
     top: 1%
+}
+
+#btnStory, #btnPlayGame {
+    background-image: url('https://i.ibb.co/0jS0k20P/fa4c0ce4-6ed5-4622-b685-84092d408c58.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 10em;
+    height: 5em;
+    font-size: 2em;
+    font-weight: 1000;
+    border: 3px solid white;
+    position: relative;
+}
+
+#btnStory:hover, #btnPlayGame:hover{
+    background-blend-mode:multiply;
+    font-size: 2em;
+    transform: scale(1.2);
+}
+
+#btnPlayGame {
+    background: #000000b8;
+    background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    
+}
+
+
+/* Laptop screens */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  
+}
+
+/* Desktop screens */
+@media (min-width: 1440px) {
+  .your-class {
+    font-size: 1.4rem;
+  }
 }
 

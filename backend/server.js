@@ -12,7 +12,7 @@ require('dotenv').config();
 const app = express();
 app.use(cookieParser())
 app.use(cors({
-  origin: 'http://localhost:5173', // ✅ Your frontend URL
+ origin: ['http://localhost:5173', 'http://192.168.100.10:5173', 'http://10.0.13.135:5173', 'http://192.168.1.118:5173', 'http://10.227.212.234:5173', 'http://172.26.57.234:5173'], // ✅ Your frontend URL
   credentials: true                // ✅ Allow cookies
 }));
 app.use(express.json())
@@ -49,7 +49,8 @@ const UserSchema = new mongoose.Schema({
     totalPoints: { type: Number },
     maps: { type: Object, default: {} },
     collection: { type: Object, default: {}},
-    currentInstrument: { type: String, required: true }
+    currentInstrument: { type: String, required: true },
+    avatar: { type: String, required: true}
 
 });
 
@@ -57,10 +58,12 @@ const User = mongoose.model('User', UserSchema);
 
 app.post('/createUser', async (req, res) => {
     
-    const { id, username, password, userids, musicCoins, life, totalPoints, maps, currentInstrument } = req.body;
+    const { id, username, password, userids, musicCoins, life, totalPoints, maps, currentInstrument, avatar } = req.body;
+   
     try {
         const hashedPassword = await bcrypt.hash(password, 10)
-        const newUser = new User({ id, username, password: hashedPassword, userids, musicCoins, life, totalPoints, maps, currentInstrument});
+        const newUser = new User({ id, username, password: hashedPassword, userids, 
+            musicCoins, life, totalPoints, maps, currentInstrument, avatar});
 
 
         const user = { id: 1, username}
@@ -77,7 +80,8 @@ app.post('/createUser', async (req, res) => {
         await newUser.save();
         res.status(201).json({ message: 'User added successfully', user: newUser });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to add user' });
+        const { id, username, password, userids, musicCoins, life, totalPoints, maps, currentInstrument, avatar } = req.body;
+        res.status(500).json({ error: 'Failed to add user', id, username, userids, musicCoins, life, totalPoints, maps, currentInstrument, avatar});
     }
 });
 
@@ -159,7 +163,6 @@ app.post('/authenticateToken', async (req, res) => {
                 return res.status(400).json({ message: 'unauthorized' });
             }
 
-            // Send only ONE response
             return res.status(200).json({ message: 'Token valid', user: decoded });
         });
     } catch (error) {
@@ -398,10 +401,10 @@ app.put('/api/change-instrument', async ( req, res)=> {
 })
 
 app.put('/unlockedCategory', async ( req, res)=> {
-    const { userids, catIndex } = req.body
+    const { userids, categoryKey } = req.body
 
     try {
-        const categoryKey = `maps.melody.isLocked`
+        
         
         const updateUser = await User.findOneAndUpdate(
             {userids}, 
@@ -419,6 +422,54 @@ app.put('/unlockedCategory', async ( req, res)=> {
         console.error('Error unlocking category:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
+
+})
+
+app.put('/update-avatar', async (req, res)=> {
+
+    const { userids, avatar } = req.body
+
+    console.log(userids, avatar)
+
+    try {
+        
+        const setAvatar = await User.findOneAndUpdate(
+            {userids},
+            {$set: {avatar: avatar}},
+            {new: true}
+        )
+
+        if(!setAvatar) res.send(404).json({message: `Can't add avatar`})
+
+        res.json({message: 'Avatar successfully set', user: setAvatar})
+
+    } catch (error) {
+        res.status(400).json({message: 'Invalid request'})
+    }
+
+})
+
+app.put('/update-map-level', async (req, res)=> {
+    const { userids, map, level } = req.body
+
+    try {
+
+        const updateMap = await User.findOneAndUpdate(
+            {userids},
+            { $addToSet: {[`maps.${map}.levels`]: level}},
+            { new: true}     
+        )
+
+    if(!updateMap){
+        return res.status(404).json({message: 'User not found'})
+    }
+
+    res.json(updateMap)
+
+    } catch(err){
+        res.status(500).json({message: 'Server error'})
+    }
+
 
 })
 

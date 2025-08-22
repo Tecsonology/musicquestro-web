@@ -12,11 +12,13 @@
 
 .leaderboard-wrapper {
     margin-top: 6em;
-    padding-top: 3em;
-  
+    padding: 3em 0 0 0;
     width: 85%;
     background-color: rgba(0, 0, 255, 0.418);
     border: 4px solid yellow;
+    overflow: auto;
+    margin-bottom: 4em;
+    
   
 }
 
@@ -36,7 +38,7 @@ table {
     width: 100%;
     table-layout: fixed;
     border-collapse: collapse;
-  
+    color: white;
 }
   
 td {
@@ -55,3 +57,17 @@ td {
     border-radius: 1em;
 
   }
+
+
+@media (min-width: 1024px) {
+     .leaderboard-wrapper {
+        width: 40%;
+        
+     
+    }
+}
+
+/* Desktop screens */
+@media (min-width: 1440px) {
+    
+}

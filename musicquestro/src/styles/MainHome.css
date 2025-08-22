@@ -1,0 +1,29 @@
+.main-home-button {
+    flex-direction: column;
+
+    button {
+        margin: 0.5em;
+    }
+}
+
+
+@media (min-width: 1024px) {
+    .main-home-button {
+    flex-direction: row;
+
+    button {
+        margin: 1em;
+    }
+}
+}
+
+/* Desktop screens */
+@media (min-width: 1440px) {
+    .nav-item {
+        margin: 0.4em 1em;
+    }
+
+    .nav-wrapper {
+        justify-content: center;
+    }
+}

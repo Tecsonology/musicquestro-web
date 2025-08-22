@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState, useContext } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 import '../styles/Maps.css'
 import ProtectedComponent from './ProtectedComponent'
 import axios from 'axios'
 import { token, userToken } from '../Token'
 import ButtonBack from '../mini-components/ButtonBack'
+import CurrentUserContext, { UserContext } from './CurrentUserContext'
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
+
+
 
 
 const mapNames = {
   rhythm: {
     imgLink: 'https://i.ibb.co/VWV4wcPV/Untitled-design-15.png',
-    location: '/rhythmGame'
+    location: '/h/rhythmLevels'
   },
   melody: {
     imgLink: 'https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png',
-    location: '/melodyGame'
+    location: '/h/melodyLevels'
   },
   harmony: {
     imgLink: 'https://i.ibb.co/FLZzsRfD/Untitled-design-61.png',
-    location: '/harmonyGame'
+    location: '/h/harmonyLevels'
   },
   pitch: {
     imgLink: 'https://i.ibb.co/W4bb6H3f/Untitled-design-79.png',
-    location: '/pitchGame'
+    location: '/h/pitchLevels'
   },
 
 }
@@ -36,6 +40,7 @@ function Maps() {
   const navigate = useNavigate()  
   const [ maps, setMaps ] = useState()
   const userids = userToken ? userToken.userids : '46546546'
+  const { currentUser } = useContext(UserContext)
   
 
     useEffect(() => {
@@ -45,7 +50,7 @@ function Maps() {
   async function getUserMap(userid) {
     try{
 
-      const response = await axios.get('http://localhost:5000/api/player/maps',
+      const response = await axios.get(`${VITE_NETWORK_HOST}/api/player/maps`,
         {
           params: {userids}
         }
@@ -67,9 +72,12 @@ function Maps() {
       }) : null
   }
 
+
+
   return (
-    <ProtectedComponent>
-        <div className='maps fpage'>
+   
+        <CurrentUserContext>
+            <div className='maps fpage'>
         <ButtonBack />
         <div className="maps-wrapper">
           <h1 className='title'>Category</h1>
@@ -86,12 +94,15 @@ function Maps() {
                 }   )
               }
               <br /><br /><br /><br /><br /><br /><br />
+              <Outlet />
           
           </div>
         </div>
 
       </div>
-    </ProtectedComponent>
+
+        </CurrentUserContext>
+  
   )
 }
 

@@ -15,7 +15,7 @@ function SecondPitchGame(props) {
     const [ pitchCard, setPitchCard ] = useState([])
     const [ secPitchCard, setSecPitchCard ] = useState([])
     const [ key, setKey ] = useState()
-    const { score, setScore } = useContext(PitchScore)
+    const { score, setScore, level, setLevel, userPoints, setUserPoints } = useContext(PitchScore)
     const [ lightOn, setLightOn ] = useState(false)
 
     let noteLength = 3
@@ -127,6 +127,8 @@ function SecondPitchGame(props) {
             console.log('ognrats')
             setMessage("Correct")
             setScore(score + 1)
+            setScore(prev => prev + 1)
+            setUserPoints(userPoints + 400)
             
         } else if(answer!=key){
             console.log('incorrect')
@@ -136,13 +138,16 @@ function SecondPitchGame(props) {
         setTimeout(()=> {
             playSequence()
         }, 2000)
+
+        setLevel(prev => prev + 1)
+        
     }
 
     if(score > 10){
-
         noteLength + 1
-        console.log("hoyyyyyyyyyyyyy")
     }
+
+   
 
 
   return (
@@ -152,7 +157,7 @@ function SecondPitchGame(props) {
                   {
         !start ? 
         <div className='flex fdc aic jc-c'>
-            <h1 style={{textAlign: 'center'}}>This is the second round game. Are you ready?</h1>   
+            <h3 style={{textAlign: 'center'}}>This is the second round game. Are you ready?</h3>   
             <button onClick={()=>       
                 {
                     setStart(true)

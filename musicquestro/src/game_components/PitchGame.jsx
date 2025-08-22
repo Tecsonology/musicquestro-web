@@ -8,8 +8,9 @@ import GamePrompt from '../mini-components/GamePrompt.jsx';
 export const PitchScore = createContext()
 
 const NOTES = [
-  300, 350, 400, 450, 500, 600
-]
+  300, 350, 400, 450, 500, 600, 650, 700, 750, 800,
+  850, 900, 950, 1000
+];
 
 function PitchGame() {
 
@@ -28,15 +29,21 @@ function PitchGame() {
   const [ time, setTime ] = useState(0)
   const [ level, setLevel ] = useState(0)
   const [ showKey, setShowKey ] = useState(false)
-  const [ showEqualBtn, setShowEqualBtn ] = useState(false)
   const [ status, setStatus ] = useState()
   const [ hidePlayButton , setHidePlayButton ] = useState(false)
+  const [ wait, setWait ] = useState(false)
+  
 
   useEffect(()=> {
-    if(score === 7 || score === 10){
+    if(score === 2 || score === 3 || score === 4 || score === 5 || score === 6 || score === 7 || score === 8 || score === 9){
       setNoteLength(noteLength + 1)
+      console.log(`note length increased to ${noteLength + 1} next level ` )
     }
   }, [score])
+
+  if(score === 10){
+    context = null
+  }
 
   const initializeAudio =()=> {
     if(!context || context.state === 'closed'){
@@ -58,143 +65,133 @@ function PitchGame() {
   const generateSequence =()=> {
     
     for(let x = noteLength -1; x >= 0; x--){
-      noteSequence.push(Math.floor(Math.random() * NOTES.length))
+      let rand = Math.floor(Math.random() * NOTES.length)
+      if(noteSequence.includes(rand)){
+        x++
+        continue
+      }
+      noteSequence.push(rand)
       
     }
-
+    
     return noteSequence
   }
   
-  const playNote =()=> {
-    setShowEqualBtn(false)
+  const playNote =async ()=> {
+    setWait(true)
+   
+      setStatus(false)
+     setLevel(level + 1)
     setHidePlayButton(true)
 
-    setMessage(`Which card has the ${generateQuestion()} pitch?`)
+    setMessage(`Which of this has the ${generateQuestion()} pitch?`)
     let delay = 0
     setPitchKey([])
     setPitchCards([])
     noteSequence = generateSequence()
-    for(let x = noteLength-1; x >= 0; x--){
+      for(let x = noteLength-1; x >= 0; x--){
+
+          setTimeout(()=> {
+            if(!context) initializeAudio()
+            const osc = context.createOscillator()
+            const gainNode = context.createGain()
+
+            osc.type = 'sawtooth'
+            osc.frequency.value = NOTES[noteSequence[x]]
+
+
+            gainNode.gain.setValueAtTime(1, context.currentTime)
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 5000);
+
+            osc.connect(gainNode)
+            gainNode.connect(context.destination)
+
+            osc.start()
+            osc.stop(context.currentTime + 600 / 1000)
+            setPitchCards(prev => [...prev, parseInt(NOTES[noteSequence[x]])])
+            
+          }, delay)
+          delay += 2000
+
+      }
+
       setTimeout(()=> {
-        if(!context) initializeAudio()
-        const osc = context.createOscillator()
-        const gainNode = context.createGain()
-
-        osc.type = 'square'
-        osc.frequency.value = NOTES[noteSequence[x]]
-
-
-        gainNode.gain.setValueAtTime(1, context.currentTime)
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 1000);
-
-        osc.connect(gainNode)
-        gainNode.connect(context.destination)
-
-        osc.start()
-        osc.stop(context.currentTime + 600 / 1000)
-        setPitchCards(prev => [...prev, parseInt(NOTES[noteSequence[x]])])
+        setWait(false) 
+        let noteCopy = noteSequence
+        noteCopy.reverse()
+        console.log(noteCopy)
+      
       }, delay)
-      delay += 2000
-    }
-
-    setTimeout(()=> {
-      setShowEqualBtn(true)
-    }, 3000)
+    
+      
   }
-
 
   const checkAnswer =(e, index)=> {
     switch(question){
       case 'highest' : 
-      console.log(pitchCards[index], Math.max(...pitchCards))
         if(pitchCards[index] === Math.max(...pitchCards)){
           console.log('Correct')
-          setStatus('✅')
+          setStatus('✅ Great!')
           setScore(score +1)
+          setUserPoints(userPoints + 400)
         } else {
           console.log('Incorrect')
-          setStatus('❌')
+          setStatus('❌ Wrong')
         }
         break
 
       case 'lowest' : 
         if(pitchCards[index] === Math.min(...pitchCards)){
           console.log('Correct')
-          setStatus('✅')
+          setStatus('✅ Correct')
           setScore(score +1)
+          setUserPoints(userPoints + 400)
 
         } else {
           console.log('Incorrect')
-          setStatus('❌')
+          setStatus('❌ Opppss')
         }
         break
     }
    
   }
 
-  
-
-  
-
   return (
     <div className='pitch-game-container fpage flex fdc aic jc-c'>
-      <GamePrompt gameName={'Pitchy pitchy'}/>
       <GameStatus score={score} userPoints={userPoints} level={level} />
-      <h3>Score: {score}</h3>
-
+      {status && status ? <h2 style={{textAlign: 'center'}}>{status}</h2> : null}
       {
-        score < 1 ? 
+        score < 10 ? 
         <div className='flex fdc'>
              <h2 style={{textAlign: 'center'}}>{message}</h2>
         <div>
-               <div className='flex fdr aic jc-c'>
-      {
-        pitchCards && pitchCards.length > 0 ? 
-        pitchCards.map((note, index)=> (
-          
-            <h1 className='pitchCards' key={index} style={{backgroundColor: 'white', color: 'black', padding: '1em', margin: '0 0.3em', borderRadius: '0.2em', cursor: 'pointer'}}  
+            <div className='pitches flex fdr aic jc-c'>
+              {
+                pitchCards && pitchCards.length > 0 ? 
+                pitchCards.map((note, index)=> (
 
-              onClick={(e)=> {
-                setShowEqualBtn(false)
-                checkAnswer(e, index)
-                setShowKey(true)
-                setTimeout(()=> {
-                  playNote()
-                  setShowKey(false)
-                }, 1500)
-              }}
-            
-            >{!showKey ? '?' : `${note} ${status}`}</h1>
-        
-        )) : null
-      }
-        
-     
-        </div>
+                  <div className='pitchcards-container' key={index}>
+                    <img className='pitchCards' width={100} src="https://i.ibb.co/QvndJW0S/R-1.png" alt="" 
+                      onClick={(e)=> {
+                        if(wait){
+                          return false
+                        }
 
-        <div className='flex fdc aic jc-c'>
-          {
-          showEqualBtn ? <button onClick={()=> {
-            if(pitchCards[0] === pitchCards[1]){
-              console.log('Correct')
-              setStatus('✅')
-              setScore(score +1)
+                        checkAnswer(e, index)
+                        setShowKey(true)
+                        setTimeout(()=> {
+                          playNote()
+                          setShowKey(false)
+                        }, 1500)
+                      }}
+                    />
+                  </div>
+                
+                )) : null
+              }
+          </div>
 
-            } else {
-              console.log('Incorrect')
-              setStatus('❌')
-            }
-
-            setShowKey(true)
-            setTimeout(()=> {
-                  playNote()
-                  setShowKey(false)
-                }, 1500)
-            
-            
-          }}>Or Same?</button> : null
-        }
-        </div>
+       
         </div>
 
       {
@@ -215,7 +212,7 @@ function PitchGame() {
         </div> : 
         
         <div>
-          <PitchScore.Provider value={{score, setScore}}><SecondPitchGame /></PitchScore.Provider>
+          <PitchScore.Provider value={{score, setScore, level, setLevel, userPoints, setUserPoints}}><SecondPitchGame /></PitchScore.Provider>
         </div>
       }
 

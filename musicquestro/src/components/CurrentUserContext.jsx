@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState }  from 'react'
 import { createContext } from 'react'
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 export const UserContext = React.createContext()
 
@@ -19,15 +20,12 @@ function CurrentUserContext({children}) {
         const userids = player.userids
 
         const getPlayer = async()=> {
-            const getUser = await axios.get('http://localhost:5000/player', {
+            const getUser = await axios.get(`${VITE_NETWORK_HOST}/player`, {
                 params: { userids }
             })
             const currUser = getUser.data.userWithoutPassword
             setCurrentUser(currUser)
         }
-
-        
-
 
         const interval = setInterval(()=> {
              getPlayer()
@@ -40,25 +38,6 @@ function CurrentUserContext({children}) {
      
 
     }, [])
-
-    
-
-
-    if(currentUser){
-        const mapUnlocker =async (mapIndex) => {
-        let userids = currentUser.userids
-        let catIndex = mapIndex
-        const updateUser = await axios.put('http://localhost:5000/unlockedCategory', { 
-            userids, 
-            catIndex 
-        })
-
-
-    }
-
-    mapUnlocker(1)
-    }
-
 
 
   return (

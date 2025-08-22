@@ -3,6 +3,8 @@ import { token } from '../Token'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { UserContext } from './CurrentUserContext'
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
+
 
 function ProtectedComponent(props) {
 
@@ -20,7 +22,7 @@ function ProtectedComponent(props) {
       const token = localStorage.getItem('token');
       const verifyUser = async () => {
         try {
-          const res = await axios.post('http://localhost:5000/authenticateToken', { token });
+          const res = await axios.post(`${VITE_NETWORK_HOST}/authenticateToken`, { token });
           
           setIsProtected(true);
         } catch (err) {

@@ -10,12 +10,12 @@ function GameStatus(props) {
             <div>
               <p> Score {props.score && props.score}</p>
             </div>
-            <div>
-              <img src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" />
+            <div style={{display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
+              <img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" />
               <p>Points: {props.userPoints}</p>
             </div>
             <div>
-              <p>Level: {props.level}/15</p>
+              <p>Level: {props.level}</p>
             </div>
         </div>
         

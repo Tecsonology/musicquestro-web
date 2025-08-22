@@ -6,6 +6,7 @@ import { useState, useContext } from 'react'
 import CollectionCard from '../mini-components/CollectionCard'
 import ButtonBack from '../mini-components/ButtonBack'
 import { UserContext } from './CurrentUserContext'
+import Loader from './Loader'
 
 function Collections() {
 
@@ -19,22 +20,24 @@ function Collections() {
 
 
   return (
-    <div className='flex fdc jc-c aic'>
+    <div className='collection-container fpage flex fdc aic' style={{paddingTop: '5em'}}>
+      <button style={{position: 'absolute', top: '1em', left: '1em', backgroundColor: 'transparent'}} 
+        onClick={()=> { window.location.href = 'store' }}>{`< Back to Store`}</button>
       
-      <h1>Collections</h1>
-      <p>Current Instrument: {currentUser ? currentUser.currentInstrument : null}</p>
+        <h2>Collections</h2>
+     
         {
             currentUser ? 
             <>
-                <CollectionCard itemName={`MusicLife X${currentUser && currentUser.life}`} />
-                <div className="collection-list flex fdr aic jc-c">
+                
+                <div className="collection-list glass-bg">
                     {
-                      currentUser && Object.values(currentUser.collection).map((item ,index)=> {
+                      currentUser.collection && currentUser.collection.length > 0 ? Object.values(currentUser.collection).map((item ,index)=> {
 
                         if(item==='Guitar'){
                           instrCode = 'sine'
                         } else if(item==='Game'){
-                           instrCode = 'sawtooth'
+                           instrCode = 'triangle'
                         } else if(item==='Flute'){
                            instrCode = 'sawtooth'
                         } else if(item==='Xylophone'){
@@ -42,13 +45,11 @@ function Collections() {
                         }
 
                           return <CollectionCard key={index} itemName={item} instrCode={instrCode}/>
-                        })
+                        }) : ( <p>No collections yet</p>)
                     }
                 </div>
-                <button onClick={()=> {
-                  window.location.href = '/store'
-                }}>Back to Store</button>
-            </> : <p>Getting your collections...</p>
+                
+            </> : <Loader />
         }
     </div>
   )

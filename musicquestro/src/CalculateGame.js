@@ -22,7 +22,7 @@ export default class CalculateGame {
 
         // Fair baseline ranges
         const maxScore = 15;
-        const maxPoints = 6500;
+        const maxPoints = 2000;
         const maxTime = 600; // 0 is fastest, 120s is slow
 
         const normalizedScore = this.normalize(this.score, 0, maxScore);
@@ -37,9 +37,9 @@ export default class CalculateGame {
 
         const finalPerformanceScore = scoreContribution + pointsContribution + timeContribution;
 
-        console.log("Score Contribution:", scoreContribution.toFixed(2));
-        console.log("Points Contribution:", pointsContribution.toFixed(2));
-        console.log("Time Bonus:", timeContribution.toFixed(2));
+        //console.log("Score Contribution:", scoreContribution.toFixed(2));
+       // console.log("Points Contribution:", pointsContribution.toFixed(2));
+        //console.log("Time Bonus:", timeContribution.toFixed(2));
 
         return finalPerformanceScore.toFixed(2);
     }

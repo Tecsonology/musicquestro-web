@@ -19,62 +19,128 @@ import HarmonyGame from './game_components/HarmonyGame.jsx';
 import PitchGame from './game_components/PitchGame.jsx';
 import CurrentUserContext from './components/CurrentUserContext.jsx';
 import HighPitch from './game_components/HighPitch.jsx';
+import LayoutComponent from './components/LayoutComponent.jsx';
+import ChildLayout from './components/ChildLayout.jsx';
+import ButtonBack from './mini-components/ButtonBack.jsx';
+import Register from './components/Register.jsx';
+import SetupAccount from './components/SetupAccount.jsx';
+import BottonNavigation from './components/BottonNavigation.jsx';
+import MainHome from './components/MainHome.jsx';
+import Story from './components/Story.jsx';
+import RhythmLevels from './components/RhythmLevels.jsx';
+import MelodyLevels from './components/MelodyLevels.jsx';
+import HarmonyLevels from './components/HarmonyLevels.jsx';
+import PitchLevels from './components/PitchLevels.jsx';
 
 <BackgroundMusic />
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />
+    element: <App />,
+    children: [
+      {
+        path: 'login',
+        element: <Login />
+      },
+
+      {
+        path: 'register',
+        element: <Register />,
+      }
+    ]
   }, 
 
   {
+    path: '/set-up-account',
+    element: <SetupAccount />
+  },
+
+  {
     path: '/h',
-    element: <CurrentUserContext><Homepage /></CurrentUserContext>
-  },
+    element: <CurrentUserContext><Homepage /></CurrentUserContext>,
+    children: [
 
-  {
-    path: '/m',
-    element: <CurrentUserContext><Maps /></CurrentUserContext>
-  },
+      {
+        path: '',
+        element: <MainHome  />
+      },
+    
 
-  {
-    path: '/leaderboards',
-    element: <Leaderboards />
-  },
+      {
+        path: 'm',
+        element: <CurrentUserContext><Maps /></CurrentUserContext>
+        
+      },
 
-  {
-    path: '/user',
-    element: <CurrentUserContext><Profile /></CurrentUserContext>
-  },
+      {
+        path: 'story',
+        element: <CurrentUserContext><Story /></CurrentUserContext>
+      },
 
-  {
-    path: '/collections',
-    element: <CurrentUserContext><Collections /></CurrentUserContext>
-  },
+      {
+        path: 'leaderboards',
+        element: <Leaderboards />
+      },
 
-  {
-    path: '/store',
-    element: <CurrentUserContext><Store /></CurrentUserContext>
+      {
+        path: 'user',
+        element: <CurrentUserContext><Profile /></CurrentUserContext>
+      },
+
+      
+      {
+        path: 'store',
+        element: <CurrentUserContext><Store /></CurrentUserContext>
+      },
+
+      {
+        path: 'collections',
+        element: <CurrentUserContext><Collections /></CurrentUserContext>
+      },
+
+      {
+        path: 'rhythmLevels',
+        element: <CurrentUserContext><RhythmLevels /></CurrentUserContext>
+      },
+
+      {
+        path: 'melodyLevels',
+        element: <CurrentUserContext><MelodyLevels /></CurrentUserContext>
+      },
+
+      {
+        path: 'harmonyLevels',
+        element: <CurrentUserContext><HarmonyLevels /></CurrentUserContext>
+      },
+
+      {
+        path: 'pitchLevels',
+        element: <CurrentUserContext><PitchLevels /></CurrentUserContext>
+      }
+
+
+    ]
+  
   },
 
    {
-    path: '/rhythmGame',
+    path: '/rhythmGame/:id',
     element: <CurrentUserContext><RhythmGame /></CurrentUserContext>
   },
 
   {
-    path: '/melodyGame',
+    path: '/melodyGame/:id',
     element: <CurrentUserContext><MelodyGame /></CurrentUserContext>
   },
 
    {
-    path: '/harmonyGame',
+    path: '/harmonyGame/:id',
     element: <CurrentUserContext><HarmonyGame /></CurrentUserContext>
   },
 
   {
-    path: '/pitchGame',
+    path: '/pitchGame/:id',
     element: <CurrentUserContext><PitchGame /></CurrentUserContext>
   },
 
@@ -93,15 +159,26 @@ const router = createBrowserRouter([
     element: <LoginGoogle />
   },
 
+  {
+    path: '/layout',
+    element: <LayoutComponent />,
+    children: [
+      {
+        path: 'child-layout',
+        element: <ButtonBack />
+      }
+    ]
+  }
+
 
 
 
 ])
 
 createRoot(document.getElementById('root')).render(
-  //<StrictMode>
+  <StrictMode>
     <RouterProvider router={router} />
-  //</StrictMode>,
+  </StrictMode>
 )
 
 

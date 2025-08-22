@@ -1,0 +1,29 @@
+.bottom-navigation {
+    background-color: rgb(0, 95, 178);
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    box-shadow: inset;
+    z-index: 10;
+    border: 2px solid black;
+}
+
+.nav-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.nav-item {
+    background-color: rgb(0, 37, 74);
+    padding: 0.7em;
+    margin: 0.4em;
+    border-radius: 0.6em;
+    cursor: pointer;
+}
+
+
+
+
+

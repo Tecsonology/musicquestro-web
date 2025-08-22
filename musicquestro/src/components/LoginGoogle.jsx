@@ -47,7 +47,10 @@ function LoginGoogle() {
         let totalPoints = 0
         let life = 5
         let maps = {
-            rhythm: {isLocked: 'false'}, 
+            rhythm: {
+                isLocked: 'false',
+                levels: [1,2,3,4,5]
+            }, 
             melody: {isLocked: 'true'},
             harmony: {isLocked: 'true'},
             pitch: {isLocked: 'true'},

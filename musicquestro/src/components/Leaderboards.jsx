@@ -5,7 +5,8 @@ import '../styles/Leaderboards.css'
 import axios from 'axios'
 import ButtonBack from '../mini-components/ButtonBack'
 import UserRank from '../mini-components/UserRank'
-
+import Loader from './Loader'
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 function Leaderboards() {
 
   const navigate = useNavigate()
@@ -17,7 +18,7 @@ function Leaderboards() {
     const getPlayers = async()=> {
         try{
 
-      const getPlayers = await axios.get('http://localhost:5000/api/get/leaderboards')
+      const getPlayers = await axios.get(`${VITE_NETWORK_HOST}/api/get/leaderboards`)
 
 
         setplayers(getPlayers.data)
@@ -34,7 +35,7 @@ function Leaderboards() {
 
 
   return (
-    <ProtectedComponent>
+ 
       <div className='leaderboard fpage flex fdc aic jc-c'>
         <div className="leaderboard-wrapper flex fdc aic">
             <img id='leaderboardBanner' width={350} src="https://i.ibb.co/xKsdRQH1/Untitled-design-64.png" alt="" />
@@ -57,7 +58,7 @@ function Leaderboards() {
        
         </div>
       </div>
-    </ProtectedComponent>
+   
   )
 }
 
