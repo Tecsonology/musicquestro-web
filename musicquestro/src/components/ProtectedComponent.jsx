@@ -3,7 +3,7 @@ import { token } from '../Token'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { UserContext } from './CurrentUserContext'
-const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
 function ProtectedComponent(props) {

@@ -6,7 +6,7 @@ import axios from 'axios'
 import { token, userToken } from '../Token'
 import ButtonBack from '../mini-components/ButtonBack'
 import CurrentUserContext, { UserContext } from './CurrentUserContext'
-const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
 
