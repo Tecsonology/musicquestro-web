@@ -10,7 +10,7 @@ import { token } from '../Token.js'
 import { UserContext } from './CurrentUserContext.jsx';
 import { Link } from 'react-router-dom';
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
-console.log("Network Host:", VITE_NETWORK_HOST, "dsadsadsadsadasd");    
+console.log("Network Host:", VITE_NETWORK_HOST, "dsadsadsadsadasdgit");    
 
 function Login() {
 
@@ -45,16 +45,15 @@ function Login() {
             const postData = async () => {
             try {
                 const response = await axios.post(
-                `${VITE_NETWORK_HOST}/auth`,
+                `${import.meta.env.VITE_NETWORK_HOST}/auth`,
                 { username: username, password: password },
                 {
                     headers: {
                     Authorization: `Bearer`,
                     },
-                },
-                {
                     withCredentials: true
-                }
+                },
+            
                 );
                 const user = response.data.userWithoutPassword;
                 console.log(response.data.token)
