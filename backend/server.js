@@ -12,7 +12,7 @@ require('dotenv').config();
 const app = express();
 app.use(cookieParser())
 app.use(cors({
- origin: ['https://musicquestro.com', 'https://musicquestro-web-zjrj.vercel.appgit' , 'http://localhost:5173', 'http://192.168.100.10:5173', 'http://10.0.13.135:5173', 'http://192.168.1.118:5173', 'http://10.227.212.234:5173', 'http://172.26.57.234:5173'], // ✅ Your frontend URL
+ origin: ['https://musicquestro.com', 'https://musicquestro-web-zjrj.vercel.app' , 'http://localhost:5173', 'http://192.168.100.10:5173', 'http://10.0.13.135:5173', 'http://192.168.1.118:5173', 'http://10.227.212.234:5173', 'http://172.26.57.234:5173'], // ✅ Your frontend URL
   credentials: true                // ✅ Allow cookies
 }));
 app.use(express.json())
