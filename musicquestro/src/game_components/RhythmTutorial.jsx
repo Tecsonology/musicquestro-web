@@ -113,7 +113,7 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
           <div className="flex fdc aic jc-c">
             <img style={{position: 'absolute', zIndex: '-1', bottom: '-15em'}} width={500} src="/assets/Maestro.png" alt="" />
 
-            <h3>Great! Now you can try to play a rhythm by clicking the button below</h3>
+            <h3>Great! Now you can try to play a rhythm by clicking the note buttons below</h3>
 
             <p style={{fontFamily: 'Arial', textWrap: 'wrap'}}>Click each music note to check its beats</p>
 
