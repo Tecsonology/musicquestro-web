@@ -47,7 +47,8 @@ function Login() {
                 const response = await axios.post(
                 `${import.meta.env.VITE_NETWORK_HOST}/auth`,
                 { username: username, password: password },
-               
+                { withCredentials: true}
+                 
             
                 );
                 const user = response.data.userWithoutPassword;
@@ -57,7 +58,7 @@ function Login() {
                 localStorage.setItem("userLogged", JSON.stringify(user))
 
 
-                window.location.href = '/h'
+                navigate('/h')
             } catch (error) {
                 setError(true)
                 console.error('Unauthorized:', error.response?.data || error.message);
