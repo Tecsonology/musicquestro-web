@@ -10,7 +10,7 @@ import { token } from '../Token.js'
 import { UserContext } from './CurrentUserContext.jsx';
 import { Link } from 'react-router-dom';
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
-console.log("Network Host:", VITE_NETWORK_HOST, "dsadsadsadsadasdgit");    
+console.log("Network Host:", VITE_NETWORK_HOST,);    
 
 function Login() {
 
