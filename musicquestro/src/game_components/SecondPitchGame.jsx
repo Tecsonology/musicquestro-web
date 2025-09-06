@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react'
 import { PitchScore } from './PitchGame'
 import HighPitch from './HighPitch'
-import cardImg from '../assets/sampleCardImg.png'
 import noteImg from '../assets/Note.png'
 
 const noteValues = [

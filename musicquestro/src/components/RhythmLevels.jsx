@@ -35,7 +35,7 @@ function RhythmLevels() {
         }
       </div>
       {
-        numberOfLevels.length >= 5 ? <p>You complete all of these levels <span><img width={20} src={star} alt="" /></span></p> : null
+        numberOfLevels.length >= 5 ? <p>Complete all of these levels <span><img width={20} src={star} alt="" /></span></p> : null
       }
     </div>
   )

@@ -8,19 +8,19 @@
         margin: 0;
         font-weight: 900;
      }
+
 }
 
 
 .profile-container {
     margin: 0 1em 0 0;
-
+ 
     
 }
 
 .profile-wrapper {
     box-sizing: border-box;
-    width: 93vw;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(22, 29, 50);
     border-radius: 16px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(5px);
@@ -28,6 +28,13 @@
     border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 1em;
     
+}
+
+.blackUI {
+    background: rgba(22, 29, 50);
+    width: 93vw;
+    box-sizing: border-box;
+    padding: 1em 1em 3em 1em;
 }
 
 .btnLogout {

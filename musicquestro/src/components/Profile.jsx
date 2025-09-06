@@ -9,11 +9,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPen } from '@fortawesome/free-solid-svg-icons'
 import { Suspense, lazy } from 'react'
 import Loader from './Loader'
+import EditProfile from '../mini-components/EditProfile'
 const lazzzy = lazy(()=> import('./Loader'))
 
 function Profile() {
   const [ userLogged, setUserLogged ] = useState()
   const { currentUser } = useContext(UserContext)
+  const [ edit, setEdit] = useState(false)
   const navigate = useNavigate()
       
   return (
@@ -50,19 +52,28 @@ function Profile() {
                     </div>
                  </div> 
               <div className="right">
-                <h1 style={{margin: '0.2em 0'}}>{currentUser ? currentUser.username : 'No data'}</h1>
-                <p>Player id: {currentUser ? currentUser.id : 'No data'}</p>
-                <p>User id: {currentUser ? currentUser.userids : 'No data'}</p>
-
-                <p className='flex fdr aic' style={{margin: '0.5em 0'}}><span><img src="https://i.ibb.co/N6w014ng/Currency.png" width={25}
+                <h1 style={{margin: '0.2em 0', borderBottom: '1px solid white'}}>{currentUser ? currentUser.username : 'No data'}</h1>
+                
+                <div style={{background: 'rgba(0, 0, 0, 0.212)'}} className='flex fdr aic jc-c'>
+                  <p className='flex fdr aic' style={{margin: '0.5em'}}><span><img src="https://i.ibb.co/N6w014ng/Currency.png" width={25}
                 style={{marginRight: '0.5em'}} alt="" /></span>{currentUser ? currentUser.musicCoins : 'No data'}</p>
                 <p><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>Points: {currentUser ? currentUser.totalPoints : 'No data'}</p>
-                <p>Current Rank: </p>
+                
+                </div>
+
+               {
+                /** <button onClick={()=> {
+                  setEdit(true)
+                }}>Edit Profile</button>
+                {
+                  edit && edit ? <EditProfile /> : null
+                } */
+               }
               </div>
                 </> : <p>Loading... please wait</p>
               }
           </div>
-          <div style={{margin: '1em 0'}} className='glass-bg'>
+          <div style={{margin: '1em 0'}} className='blackUI'>
             <h3>Progress</h3>
             
             <div className="progress">

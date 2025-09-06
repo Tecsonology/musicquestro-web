@@ -11,8 +11,8 @@
 
 .rhythm-game-container {
      background: #000000a2;
-    background-image: url('https://img.freepik.com/free-vector/gradient-karaoke-background_23-2150970007.jpg?semt=ais_hybrid&w=740');
-
+    background-image: url('https://i.ibb.co/C36XtfG1/Rhythm-game-BG.png');
+    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode:multiply;
@@ -53,9 +53,6 @@
     align-items: center;
     font-size: 2em;
     border: 2px solid white;
-    width: 4em;
-    height: 4em;
-    border-radius: 50%;
     background-color: rgba(255, 0, 0, 0.366);
 }
 

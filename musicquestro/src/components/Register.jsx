@@ -41,9 +41,9 @@ function Register() {
 
         const userids = idRandomizer.join('').toString()
         let id = 555
-        let musicCoins = 1000
+        let musicCoins = 30000
         let totalPoints = 0
-        let life = 5
+        let life = 1000
           let maps = {
             rhythm: {
                 isLocked: 'false',
@@ -97,6 +97,7 @@ function Register() {
 
   return (
     <div style={{margin: '1em 0'}} className="register flex fdc jc-c aic">
+        <h2>Register</h2>
         {
             !success && !success ?
             <>
@@ -117,7 +118,7 @@ function Register() {
                     <button id='btnRegister' disabled={disabled} onClick={handleSubmit}>Register</button>
 
 
-                    <p>Already have an account? <Link to={'/login'} style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
+                    <p style={{color: 'white'}}>Already have an account? <Link to={'/login'} style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                         }}>Click here</Link></p>
             </> : <Outlet />
         }

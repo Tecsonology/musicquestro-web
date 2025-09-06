@@ -294,7 +294,7 @@ function RhythmGame() {
 
         {inputSequence && inputSequence.length > 0 ? <button style={{margin: '0', backgroundColor: 'transparent'}} onClick={()=> { setInputSequence([])}}>Clear</button> : null}
       </div>
-      { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={playSequence}>Lez go!</button> : 'Loading...' }
+      { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={playSequence}>Im Ready. Lez go!</button> : 'Loading...' }
   
 
       {
@@ -334,9 +334,7 @@ function RhythmGame() {
 
       <div className='bottom-buttons flex fdr aic jc-c'>
             <button id='playRhythm' onClick={() => {
-            if (JSON.stringify(sequence) === JSON.stringify(inputSequence)) {
-              console.log('correct');
-              
+            if (JSON.stringify(sequence) === JSON.stringify(inputSequence)) {              
               increaseScoreAndPoints()
               
 

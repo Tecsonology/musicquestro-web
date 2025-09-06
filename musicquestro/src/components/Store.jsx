@@ -140,7 +140,7 @@ function Store() {
                   </div>
 
                 <div className="menu-items flex fdr aic jc-c">
-                  <h3>Instrumetnsxz</h3>
+                  <h3>Instrument</h3>
                   {
                   Object.values(ITEMS).map((item, index)=> (
                     <StoreCard key={index} imgItem={item.imgItem}  itemName={item.itemName} itemPrice={item.price}

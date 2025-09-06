@@ -20,10 +20,7 @@ const mapNames = {
     imgLink: 'https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png',
     location: '/h/melodyLevels'
   },
-  harmony: {
-    imgLink: 'https://i.ibb.co/FLZzsRfD/Untitled-design-61.png',
-    location: '/h/harmonyLevels'
-  },
+
   pitch: {
     imgLink: 'https://i.ibb.co/W4bb6H3f/Untitled-design-79.png',
     location: '/h/pitchLevels'

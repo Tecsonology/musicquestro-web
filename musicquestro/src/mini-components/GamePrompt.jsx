@@ -28,8 +28,6 @@ function GamePrompt({ gameName, instr }) {
                 }
             )
 
-            console.log(action.status)
-
         } catch (error) {
             setShowError(true)
         }

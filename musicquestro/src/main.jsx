@@ -63,7 +63,7 @@ const router = createBrowserRouter([
 
       {
         path: '',
-        element: <MainHome  />
+        element: <CurrentUserContext><MainHome  /></CurrentUserContext>
       },
     
 

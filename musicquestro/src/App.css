@@ -4,6 +4,15 @@
 }
 
 
+.user {
+  background: rgb(17, 17, 17);
+  width: 3em;
+  height: 3em;
+  border-radius: 50%;
+  position: absolute;
+  right: 1em;
+  top: 2em;
+}
 
 
 
@@ -165,11 +174,14 @@ button {
   text-decoration: none;
   font-weight: bolder;
   font-size: 1.5em;
+  text-align: center;
+  width: 6em;
 }
 
 .backHome {
   background-color: #ffffff61;
-  border-radius: 50%;
+  font-size: 1em
+  
 }
 
 
@@ -226,9 +238,35 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
    background-image: url('https://i.ibb.co/DDmLYjS6/Untitled-design-82.png');
 }
 
+
+.game-preview-imgs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.game-preview-imgs img {
+  
+  margin: 0.3em 0.5em;
+}
+
+#preview-section {
+  color: white;
+  text-align: center;
+  margin: 4em 0 0 0;
+  padding: 1em;
+  border-radius: 1em;
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+
 @media (max-width: 767px) {
     .btn-back {
-         width: 6em;
+        width: 6em;
         position: absolute;
         left: 0;
         top: 1%;
@@ -240,6 +278,21 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
     }
 }
 
+@media (min-width: 700px) {
+   .game-preview-imgs {
+      flex-direction: row;
+  }
+
+  .game-preview-imgs img {
+    width: 10em;
+  }
+
+  #preview-section {
+    width: 70%;
+    background: rgba(22, 29, 50);
+  }
+}
+
 
 .rhythm-levels-container {
   background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
@@ -248,3 +301,5 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 .melody-levels-container {
   background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
 }
+
+

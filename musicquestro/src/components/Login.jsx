@@ -9,8 +9,9 @@ import BackgroundMusic from '../BackgroundMusic';
 import { token } from '../Token.js'
 import { UserContext } from './CurrentUserContext.jsx';
 import { Link } from 'react-router-dom';
+import PilotTestingPrompt from './PilotTestingPrompt.jsx';
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
-console.log("Network Host:", VITE_NETWORK_HOST,);    
+
 
 function Login() {
 
@@ -80,8 +81,8 @@ function Login() {
   return (
     <div className='flex jc-c fdc'>
         <div className='flex fdc jc-c aic'>
-                 
-                     
+            
+                <h2>Login</h2>
                <div className="login flex fdc jc-c aic">
                         <input
                         type="text"
@@ -108,7 +109,7 @@ function Login() {
                             <hr />
                         </div>
                       { /** <GoogleLoginButton />  */}
-                        <p>Need an account? <Link to={'/register'} style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
+                        <p style={{color: 'white'}}>Need an account? <Link to={'/register'} style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(false)
                         }}>Click here</Link></p>
                     </div>

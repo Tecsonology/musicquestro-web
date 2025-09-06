@@ -1,9 +1,13 @@
 .log {
 
-
+    background: rgba(22, 29, 50, 0.842);
     background-image: url('https://i.ibb.co/0jS0k20P/fa4c0ce4-6ed5-4622-b685-84092d408c58.jpg');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
+    background-blend-mode: multiply;
+    justify-content: flex-start;
+    padding: 15em 0;
 
     input {
         border-radius: 0.7em;
@@ -35,6 +39,7 @@
         box-shadow: 0 5px #666d66;
     }
 
+
 }
 
 #btnRegister {
@@ -42,4 +47,8 @@
         font-weight: 900;
         background-color: rgb(223, 149, 2);
         box-shadow: 0 5px #666d66;
+}
+
+#beta-version {
+    color: rgba(255, 255, 255, 0.463);
 }

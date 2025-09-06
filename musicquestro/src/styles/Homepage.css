@@ -1,6 +1,6 @@
 .homepage {
-     background: #000000a2;
-    background-image: url('https://i.ibb.co/DDmLYjS6/Untitled-design-82.png');
+     background: #000000c6;
+    background-image: url('../assets/bg-assets/HomeBG.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode:multiply;
@@ -20,7 +20,6 @@
     background-position: center;
     background-size: cover;
     width: 10em;
-    height: 5em;
     font-size: 2em;
     font-weight: 1000;
     border: 3px solid white;
