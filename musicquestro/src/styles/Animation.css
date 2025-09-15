@@ -1,0 +1,90 @@
+.floating {
+
+            animation: float 3s ease-in-out infinite;
+}
+
+.scaling {
+    animation: scaling 3s ease-in-out infinite;
+}
+
+.rotating {
+    animation: rotating 5s ease-in-out infinite;
+}
+
+.scaleWithLight {
+    animation: scaleWithLight 2s ease-in-out infinite;
+}
+
+.rotatingBG {
+    animation: rotatingBG 10s ease-in-out infinite;
+}
+
+@keyframes float {
+            0% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+
+            100% {
+                transform: translateY(0);
+            }
+}
+
+@keyframes scaling {
+    0% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 1.2;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+
+@keyframes scaleWithLight {
+     0% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 1.2;
+        filter: drop-shadow(0 0 5px yellow);
+    }
+
+    70% {
+        filter: drop-shadow(0 0 0px rgb(74, 74, 57));
+    }
+
+
+
+    100% {
+        scale: 1;
+        filter: drop-shadow(0 0 3px rgb(223, 223, 4));
+    }
+}
+
+@keyframes rotatingBG {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

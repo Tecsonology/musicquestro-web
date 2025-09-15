@@ -77,14 +77,14 @@ function Maps() {
             <div className='maps fpage'>
         <ButtonBack />
         <div className="maps-wrapper">
-          <h1 className='title'>Category</h1>
+          <h1 className='title'>Map</h1>
           <div className="map-selection">
               {
                  Object.values(mapNames).map((value, index)=> {
                     
                   return <img key={index} src={mapAvailability[index] == 'true' ? lockImgLink : value.imgLink} alt='' className='cat-card' 
                     onClick={()=> {
-                        mapAvailability[index] == 'true' ? null : window.location.href = `${value.location}`
+                        mapAvailability[index] == 'true' ? null : navigate(`${value.location}`)
                     }}
                    />
         

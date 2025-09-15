@@ -11,6 +11,8 @@ import { Suspense, lazy } from 'react'
 import Loader from './Loader'
 import EditProfile from '../mini-components/EditProfile'
 const lazzzy = lazy(()=> import('./Loader'))
+import musLife from '../assets/store-assets/MusicLife.png'
+import muscoins from '../assets/store-assets/musicoins.png'
 
 function Profile() {
   const [ userLogged, setUserLogged ] = useState()
@@ -20,7 +22,7 @@ function Profile() {
       
   return (
     <>
-      <div className='profile fpage flex fdc jc-c aic'>
+      <div className='profile fpage flex fdc'>
         {
           /**<Suspense fallback={<Loader/>}>
           <h1>dasds</h1>
@@ -41,48 +43,32 @@ function Profile() {
               }}>Logout</button>
               {
                 currentUser && currentUser ?
-                <>
-                  <div className="profile-container fdc flex jc-c aic">
+                <div style={{margin: '2em 0', justifyContent: 'flex-start'}} className='flex fdc aic'>
+                  <div className="profile-container fdr flex">
                     <img width={100} src={currentUser ? currentUser.avatar : null} alt="" />
-                    <div onClick={()=> {
-                      navigate('/set-up-account')
-                    }}  style={{borderRadius: '50%', position: 'relative', right: '-2em', top: '-1.5em', 
-                      backgroundColor: 'white', width: '1.5em', height: '1.5em', cursor: 'pointer'}} className='edit-avatar flex fdc aic jc-c'>
-                      <span><FontAwesomeIcon icon={faPen}/></span>
+                 
+                    <div>
+                      <h1 style={{margin: '0.2em 0'}}>{currentUser ? currentUser.username : 'No data'}</h1>
+                      <p>@dsfdsfds</p>
                     </div>
                  </div> 
-              <div className="right">
-                <h1 style={{margin: '0.2em 0', borderBottom: '1px solid white'}}>{currentUser ? currentUser.username : 'No data'}</h1>
-                
-                <div style={{background: 'rgba(0, 0, 0, 0.212)'}} className='flex fdr aic jc-c'>
-                  <p className='flex fdr aic' style={{margin: '0.5em'}}><span><img src="https://i.ibb.co/N6w014ng/Currency.png" width={25}
-                style={{marginRight: '0.5em'}} alt="" /></span>{currentUser ? currentUser.musicCoins : 'No data'}</p>
-                <p><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>Points: {currentUser ? currentUser.totalPoints : 'No data'}</p>
-                
-                </div>
-
-               {
-                /** <button onClick={()=> {
-                  setEdit(true)
-                }}>Edit Profile</button>
-                {
-                  edit && edit ? <EditProfile /> : null
-                } */
-               }
-              </div>
-                </> : <p>Loading... please wait</p>
+                 
+                </div> : <p>Loading... please wait</p>
               }
           </div>
-          <div style={{margin: '1em 0'}} className='blackUI'>
-            <h3>Progress</h3>
-            
-            <div className="progress">
-              <p>Levels</p>
-            </div>
-            <div >
-              <h3>AWARDS / BADGES</h3>
-            </div>
-          </div>
+              <div style={{margin: '0.7em 0'}} className="atts-container flex fdr aic jc-c">
+                <div className="life flex fdr aic jc-c">
+                  <img width={30} src={musLife} alt="" />
+                  <p>{currentUser.life}</p>
+                </div>
+
+                <div className="coins flex fdr aic jc-c">
+                  <img width={30} src={muscoins} alt="" />
+                  <p>{currentUser.musicCoins}</p>
+                </div>
+                <button style={{backgroundColor: 'black', margin: '0'}} onClick={()=> {navigate('/h/collections')}}>My Collections</button>
+              </div>
+
             </> : <Loader/>
            }
         </div>

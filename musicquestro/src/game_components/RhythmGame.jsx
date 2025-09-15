@@ -6,6 +6,7 @@ import GameSummary from './GameSummary';
 import CurrentUserContext, { UserContext } from '../components/CurrentUserContext';
 import '../styles/RhythmGame.css'
 import RhythmTutorial from './RhythmTutorial';
+import CountdownCircle from '../components/CountdownCircle.jsx'
 
 const durations = [
   { name: "rest", beats: 1, duration: 600, freq: 0, img: 'https://i.ibb.co/67NSSxxn/Untitled-design-74.png' },
@@ -44,7 +45,8 @@ function RhythmGame() {
   const [inputSequence, setInputSequence] = useState([]);
   const [score, setScore] = useState(0);  
   const [userPoints, setUserPoints] = useState(0);
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(10);
+  const [ running, setRunning ] = useState(false)
   const [level, setLevel] = useState(0);
   const [currentBeat, setCurrentBeat] = useState(0);
   const [ wait, setWait ] = useState(false)
@@ -58,6 +60,18 @@ function RhythmGame() {
   const intervalRef = useRef(null);
   let oscType;
 
+  
+useEffect(() => {
+    let timer;
+
+    if (running && time > 0) {
+      timer = setInterval(() => {
+        setTime((prev) => (prev > 0 ? prev - 1 : 0));
+      }, 1000);
+    }
+
+    return () => clearInterval(timer);
+  }, [running]); // ✅ only restart when running changes
 
   useEffect(()=> {
 
@@ -107,19 +121,7 @@ function RhythmGame() {
     intervalRef.current = null;
   };
 
-  useEffect(() => {
-      const handleBeforeUnload = (e) => {
-        e.preventDefault();
-        e.returnValue = '';
-      };
-  
-      window.addEventListener('beforeunload', handleBeforeUnload);
-      return () => {
-        window.removeEventListener('beforeunload', handleBeforeUnload);
-        stopTime();
-        if (audioCtxRef.current) audioCtxRef.current.close();
-      };
-    }, []);
+
 
 
   const playNote = (freq, duration) => {
@@ -153,6 +155,7 @@ function RhythmGame() {
   const generateRandomSequence = () => {
   let totalBeats = 0;
   const selected = [];
+
 
 
   const nonRestOptions = durations.filter(note => note.name !== "rest" && note.beats <= (4 - totalBeats));
@@ -245,7 +248,7 @@ function RhythmGame() {
             setCurrentBeat(0);
             setIsPlaying(false);
             setCurrentNote('');
-          }, 600);
+          }, 600);  
           setWait(true)
         }
       }, 400);
@@ -266,12 +269,15 @@ function RhythmGame() {
   return (
     <div className='rhythm-game-container fpage flex fdc jc-c aic'>
       { showTutorial ? (<RhythmTutorial setShowTutorial={setShowTutorial}/>) : <GamePrompt gameName={'Rhythm Idol'}/>}
+       
+      <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} running={running} />
+      <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Fill the musical staff"}</strong></h2>
       
-      <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} />
-      <p><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Listen to the beat"}</strong></p>
 
 
       <div className="beat-indicator flex fdr jc-c aic" style={{ margin: '0' }}>
+      {inputSequence && inputSequence.length > 0 ? <button style={{margin: '0', backgroundColor: 'transparent'}} onClick={()=> { setInputSequence([])}}>Clear</button> : null}
+
         {[1, 2, 3, 4].map((beat) => (
           <div
           className='flex fdr aic jc-c'  
@@ -282,7 +288,8 @@ function RhythmGame() {
               borderRadius: '50%',
               margin: '0 10px',
               backgroundColor: beat === currentBeat ? 'green' : '#ccc',
-              transition: 'background-color 0.2s ease'
+              transition: 'background-color 0.2s ease',
+              animation: beat === currentBeat ? "bounce 0.6s ease-out infinite" : "none",
             }}
           >
             <span style={{ color: 'black', fontWeight: 'bold', textAlign: 'center' }}>
@@ -292,9 +299,11 @@ function RhythmGame() {
         ))}
 
 
-        {inputSequence && inputSequence.length > 0 ? <button style={{margin: '0', backgroundColor: 'transparent'}} onClick={()=> { setInputSequence([])}}>Clear</button> : null}
       </div>
-      { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={playSequence}>Im Ready. Lez go!</button> : 'Loading...' }
+      { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={()=>{
+        playSequence()
+        setRunning(true)
+      }}>I'm Ready. Lez go!</button> : 'Loading...' }
   
 
       {
@@ -302,7 +311,7 @@ function RhythmGame() {
         <div className="input-notes">
         <hr /><hr /><hr /><hr /><hr />
         <div className='input-overlay flex fdr aic'>
-          {
+          { 
             inputSequence.map((note, index) => (
               <img key={index} className='inputNote' width={20} src={note.img} alt="" />
             ))

@@ -11,15 +11,25 @@ import LeaderboardIcon from '../assets/nav-icons/podium.png'
 import CurrentUserContext from './CurrentUserContext'
 import { UserContext } from './CurrentUserContext'
 import MusicLife from '../assets/store-assets/MusicLife.png'
+import BGMusic from './BGMusic'
+import mainVisual from '../assets/game-assets/Assets/Logo&Menu/Menu.png'
+import logo from '../assets/game-assets/Assets/Logo&Menu/Logo.png'
+
+import '../styles/Animation.css'
+import { useState } from 'react'
+
 
 function MainHome() {
 
   const navigate = useNavigate() 
   const { currentUser } = useContext(UserContext)
+      const [ audioActive, setAudioACtive ] = useState(true)
+  
 
   return (
     <div className='mainhome-container fpage flex fdc aic jc-c' style={{marginBottom: '3em'}}>
-         <img width={100} src="https://i.ibb.co/MkgK8X5q/MUSIC-QUESTRO-NEW-LOGO-NO-STARS.png" alt="" 
+         
+         <img width={100} className='scaling' src={logo} alt="" 
           style={{position: 'fixed', top: '1em', left: '1em', zIndex: '3', cursor: 'pointer'}}
           onClick={()=> {
             navigate('/')
@@ -28,12 +38,12 @@ function MainHome() {
 
          <div className="user-attributes flex fdr aic jc-c">
 
-            <div style={{marginRight: '1em'}} className='flex fdr aic jc-c'>
-              <img width={30} src={MusicLife} alt="" />
+            <div  style={{marginRight: '1em'}} className='flex fdr aic jc-c'>
+              <img className='scaleWithLight' style={{color: 'white', marginRight: '0.7em'}} width={30} src={MusicLife} alt="" />
               { currentUser ? <h2>{currentUser.life}</h2> : 'Loading...'}
             </div>
 
-            <img width={30} src={musicoins} alt="" style={{marginRight: '0.5em'}} />
+            <img className='rotating'  width={30} src={musicoins} alt="" style={{marginRight: '0.5em', color: 'white'}} />
             { currentUser ? <h2>{currentUser.musicCoins}</h2> : 'Loading'}
          </div>
 

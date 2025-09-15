@@ -117,7 +117,12 @@ const router = createBrowserRouter([
       {
         path: 'pitchLevels',
         element: <CurrentUserContext><PitchLevels /></CurrentUserContext>
-      }
+      },
+
+       {
+        path: 'settings',
+        element: <CurrentUserContext><Settings  /></CurrentUserContext>
+      },
 
 
     ]

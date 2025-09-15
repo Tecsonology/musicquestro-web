@@ -1,13 +1,17 @@
 import axios from 'axios'
 import React, { useEffect, useState }  from 'react'
+import { useNavigate } from 'react-router-dom';
 import { createContext } from 'react'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
+import BGMusic from './BGMusic';
 
 export const UserContext = React.createContext()
 
 function CurrentUserContext({children}) {
 
     const [ currentUser, setCurrentUser ] = useState()
+    const [ audioActive, setAudioACtive ] = useState(true)
+    const navigate = useNavigate()
 
     useEffect(()=> {
 
@@ -15,6 +19,7 @@ function CurrentUserContext({children}) {
 
         if(!player){
             console.log("Cant find userids")
+            navigate('/login')
             
         }
         const userids = player.userids
@@ -42,6 +47,7 @@ function CurrentUserContext({children}) {
 
   return (
     <UserContext.Provider value={{currentUser, setCurrentUser}}>
+       
         {children}
     </UserContext.Provider>
   )

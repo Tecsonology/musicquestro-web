@@ -208,6 +208,31 @@ button {
   transform: translate(-50%, 50%);
   border-radius: 50%;
 }
+
+
+
+.pause-prompt {
+
+  background-color: #1b263b;
+  justify-content: flex-start;
+  position: fixed;
+  width: 90%;
+  height: 90vh;
+  border-radius: 2em;
+ 
+
+  button {
+    background-color: rgb(39, 155, 6);
+    font-size: 2em;
+    width: 10em;
+  }
+
+  div {
+    background-color: rgb(74, 58, 111);
+    width: 100%;
+  }
+  
+}
     
 @keyframes rotation {
   0% {
@@ -262,6 +287,10 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
   align-items: center;
   justify-content: center;
   width: 100vw;
+}
+
+.pilot-prompt {
+  width: 20em;
 }
 
 @media (max-width: 767px) {

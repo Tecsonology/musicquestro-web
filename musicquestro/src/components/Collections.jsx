@@ -7,9 +7,12 @@ import CollectionCard from '../mini-components/CollectionCard'
 import ButtonBack from '../mini-components/ButtonBack'
 import { UserContext } from './CurrentUserContext'
 import Loader from './Loader'
+import { useNavigate } from 'react-router-dom'
+import '../styles/Animation.css'
 
 function Collections() {
 
+  const navigate = useNavigate()
   const [ collections, setCollections ] = useState()
   const { currentUser, setCurrentUser } = useContext(UserContext)
   let instrCode;
@@ -20,9 +23,9 @@ function Collections() {
 
 
   return (
-    <div className='collection-container fpage flex fdc aic' style={{paddingTop: '5em'}}>
+    <div className='collection-container fpage flex fdc aic' style={{paddingTop: '5em',}}>
       <button style={{position: 'absolute', top: '1em', left: '1em', backgroundColor: 'transparent'}} 
-        onClick={()=> { window.location.href = 'store' }}>{`< Back to Store`}</button>
+        onClick={()=> { navigate(-1)}}>{`< Back to Profile`}</button>
       
         <h2>Collections</h2>
      

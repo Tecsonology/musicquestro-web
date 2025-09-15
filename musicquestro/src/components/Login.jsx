@@ -53,10 +53,11 @@ function Login() {
             
                 );
                 const user = response.data.userWithoutPassword;
-                console.log(response.data.token)
+                console.log(user.avatar)
 
                 localStorage.setItem('token', response.data.token)
                 localStorage.setItem("userLogged", JSON.stringify(user))
+                localStorage.setItem("avatar", user.avatar)
 
 
                 navigate('/h')
@@ -103,11 +104,7 @@ function Login() {
                       
                         <button disabled={disabled} onClick={handleLogin}>Login</button>
 
-                        <div id='or'>
-                            <hr />
-                            <p>or</p>
-                            <hr />
-                        </div>
+                       
                       { /** <GoogleLoginButton />  */}
                         <p style={{color: 'white'}}>Need an account? <Link to={'/register'} style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(false)

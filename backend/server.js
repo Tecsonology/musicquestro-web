@@ -12,7 +12,7 @@ require('dotenv').config();
 const app = express();
 app.use(cookieParser())
 app.use(cors({
- origin: ['musicquestro-backend-production.up.railway.app','https://musicquestro-web-zjrj.vercel.app' , 'http://localhost:5173',  'http://10.227.212.234:5173', 'http://172.26.57.234:5173'], 
+ origin: ['https://musicquestro-web.vercel.app/'], 
   credentials: true                // ✅ Allow cookies
 }));
 app.use(express.json())
@@ -101,7 +101,7 @@ app.get('/getUserCount', async (req, res)=> {
 app.post('/auth', async (req, res)=> {
     const { username, password } = req.body;
 
-    try{
+    try{ 
         
         const checkUser = await User.findOne({username});
 

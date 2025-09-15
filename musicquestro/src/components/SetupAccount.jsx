@@ -6,19 +6,20 @@ import { lazy, Suspense } from 'react'
 import Loader from './Loader'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
+import avatar1 from '../assets/game-assets/ProfilePics/Brim.png'
+import avatar2 from '../assets/game-assets/ProfilePics/Iso.png'
+import avatar3 from '../assets/game-assets/ProfilePics/Neon.png'
+import avatar4 from '../assets/game-assets/ProfilePics/Pink.png'
+import avatar5 from '../assets/game-assets/ProfilePics/Skye.png'
+import avatar6 from '../assets/game-assets/ProfilePics/Tejo.png'
+
 
 function SetupAccount() {
 
     const navigate = useNavigate()
     
     const avatars = [
-
-        "https://i.ibb.co/20TQFdqK/Untitled-design-2025-07-23-T010047-710.png",
-        "https://i.ibb.co/PGqHJmVV/Untitled-design-2025-07-23-T004756-525.png",
-        "https://i.ibb.co/7tVHp34s/Avatar-4.png",
-        "https://i.ibb.co/JWkg854C/Untitled-design-2025-07-23-T000122-120.png",
-        "https://i.ibb.co/KjXh2nkC/Untitled-design-2025-07-22-T234147-568.png",
-        "https://i.ibb.co/ZRqxcJhc/Untitled-design-2025-07-22-T233822-647.png"
+        avatar1, avatar2, avatar3, avatar4, avatar5, avatar6
     ]
 
     const [ selected, setSelected ] = useState("https://i.ibb.co/7tVHp34s/Avatar-4.png")
@@ -41,6 +42,7 @@ function SetupAccount() {
 
 
           if(setUpAvatar){
+            localStorage.setItem('avatar', selected)
             setTimeout(()=> {
               navigate('/h')
             }, 1000)
@@ -56,7 +58,7 @@ function SetupAccount() {
   return (
     <div className='set-up-container fpage flex  fdc aic jc-c'>
         <Suspense fallback={<Loader/>}>
-          <h4>Choose your AVatar</h4>
+          <h1 style={{textAlign: 'center'}}>Choose your Profile Avatar</h1>
        
         <img style={{margin: '0.5em'}} width={140} src={selected} alt="" />
 
@@ -72,8 +74,8 @@ function SetupAccount() {
         
 
        </div>
-       <button style={{backgroundColor: 'red', color: 'white', fontWeight: '1000', width: '20em'}} 
-       onClick={finishSettingUp}>Finish</button>
+       <button style={{backgroundColor: 'green', color: 'white', fontWeight: '1000', width: '20em'}} 
+       onClick={finishSettingUp}>Choose this avatar</button>
         </Suspense>
     </div>
   )

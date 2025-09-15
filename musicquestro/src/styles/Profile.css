@@ -3,10 +3,25 @@
      background-repeat: no-repeat;
      background-size: cover;
      overflow: auto;
+     background: rgb(15, 20, 35);
+     align-items: center;
+     justify-content: flex-start;
+     padding: 4em;
+
      
      p {
         margin: 0;
         font-weight: 900;
+        
+     }
+
+     img {
+        margin-right: 1em;
+     }
+
+     h1 {
+        text-overflow:ellipsis;
+        
      }
 
 }
@@ -14,20 +29,22 @@
 
 .profile-container {
     margin: 0 1em 0 0;
+    justify-content: flex-start;
+
+}
+
+.profile-wrapper {
+    background: rgba(22, 29, 50);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    padding: 1em;
  
     
 }
 
-.profile-wrapper {
-    box-sizing: border-box;
-    background: rgba(22, 29, 50);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 1em;
-    
+.atts-container div{
+    margin-right: 1em;
 }
 
 .blackUI {
@@ -38,10 +55,11 @@
 }
 
 .btnLogout {
-    position: relative;
-    right: -9em; 
-    top: -1em; 
+    position: absolute;
+    right: 1.3em; 
+    top: 0; 
     font-size: 0.7em;
+    margin: em;
 }
 
 

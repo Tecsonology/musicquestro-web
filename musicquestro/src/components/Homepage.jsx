@@ -16,6 +16,7 @@ import Maps from './Maps'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHouse } from '@fortawesome/free-solid-svg-icons'
+import BGMusic from './BGMusic'
 function Homepage() {
 
     const navigate = useNavigate()
@@ -50,7 +51,7 @@ function Homepage() {
 
       <div className='homepage flex jc-c aic fdc fpage'>
 
-         
+      <BGMusic />
       <Outlet />
       <BottonNavigation />
     </div>

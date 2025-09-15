@@ -47,7 +47,7 @@ function Leaderboards() {
                   players && [...players].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 10).map((user, index)=> (
                     user.totalPoints > 0 ? 
                     
-                      <UserRank key={index} rank={index+1} username={user.username} userPoints={user.totalPoints}/>
+                      <UserRank key={index} avatar={user.avatar} rank={index+1} username={user.username} userPoints={user.totalPoints.toFixed(0)}/>
                     : null
                   ))
               }

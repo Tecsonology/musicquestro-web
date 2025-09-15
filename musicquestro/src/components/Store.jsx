@@ -13,6 +13,10 @@ import ShopStatus from '../mini-components/ShopStatus'
 import { UserContext } from './CurrentUserContext'
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
+
+import flute  from '../assets/game-assets/Assets/Instrument/Flute.png'
+import guitar  from '../assets/game-assets/Assets/Instrument/Guitar.png'
+import xylo  from '../assets/game-assets/Assets/Instrument/Xylo.png'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 
@@ -20,25 +24,31 @@ const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost
 const ITEMS = {
   guitar: {
     itemName: 'Guitar',
-    imgItem: 'https://i.ibb.co/LhDmcNDy/Untitled-design-2025-07-31-T003054-923.png',
-    price: 300
+    imgItem: guitar,
+    description: 'Strum your way to rhythm.',
+    price: 300,
+    itemCode: "acoustic_guitar_nylon"
   },
 
   xylophone: {
     itemName: 'Xylophone',
-    imgItem: 'https://i.ibb.co/XrPv0k6K/Untitled-design-2025-07-31-T003239-927.png',
+    imgItem: xylo,
+    description: 'Bright and colorful tones.',
     price: 600
   },
 
   flute: {
     itemName: 'Flute',
-    imgItem: 'https://i.ibb.co/Fkh3850k/Untitled-design-2025-07-31-T003603-716.png',
-    price: 1000
+    imgItem: flute,
+    description: 'Play smooth and airy notes.',
+    price: 1000,
+    itemCode: 'flute'
   },
 
   game: {
     itemName: 'Game',
     imgItem: 'https://i.ibb.co/Fkh3850k/Untitled-design-2025-07-31-T003603-716.png',
+    description: 'Lead the music with style.',
     price: 1300
   },
 
@@ -127,13 +137,14 @@ function Store() {
                   <span><img style={{width: '1em', marginRight: '0.5em'}} src="https://i.ibb.co/N6w014ng/Currency.png" alt="" /></span>
                   {currentUser && currentUser.musicCoins}</h3>
               </div>
-              <button style={{backgroundColor: 'green'}} onClick={()=> {navigate('../collections')}}>My Collections</button>
+              
               </div>
               {
                 currentUser && currentUser ?
                 <div>
                   <div className='flex fdr aic jc-c'>
                       <StoreCard imgItem='https://i.ibb.co/BVq668JC/Untitled-design-30.png' itemName={'MusicLife'} itemPrice={50}
+                      description={'Boosts your music energy!'}
                     children={
                       <span><button onClick={handleAddLife}>Buy</button></span>
                   } />
@@ -143,14 +154,19 @@ function Store() {
                   <h3>Instrument</h3>
                   {
                   Object.values(ITEMS).map((item, index)=> (
-                    <StoreCard key={index} imgItem={item.imgItem}  itemName={item.itemName} itemPrice={item.price}
+                    <StoreCard sound={item.itemCode} key={index} imgItem={item.imgItem}  itemName={item.itemName} itemPrice={item.price}
+                      description={item.description}
                       children={
-                        !userCollection.includes(item.itemName) ? <span><button onClick={(e)=> handleBuyItem(e, item.price, item.itemName)}>Buy</button></span>
+                        !userCollection.includes(item.itemName) ? <span><button 
+                        onClick={(e)=> handleBuyItem(e, item.price, item.itemName)}>
+                          Buy</button></span>
                         : <span><button disabled>Buy</button></span>
                       }
                     />
                   ))
                 }
+
+                <p>-End-</p>
                 </div>
                 </div> : <Loader />
                  

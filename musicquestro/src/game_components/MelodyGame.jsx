@@ -5,6 +5,7 @@ import GameStatus from './GameStatus';
 import GamePrompt from '../mini-components/GamePrompt';
 import CurrentUserContext, { UserContext } from '../components/CurrentUserContext';
 import { useParams } from 'react-router-dom';
+import PauseGame from '../mini-components/PauseGame';
 
 const notesMap = {
   DO: 261.63,
@@ -49,19 +50,7 @@ function MelodyGame() {
     intervalRef.current = null;
   };
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      e.preventDefault();
-      e.returnValue = '';
-    };
-
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => {
-      window.removeEventListener('beforeunload', handleBeforeUnload);
-      stopTime();
-      if (audioCtxRef.current) audioCtxRef.current.close();
-    };
-  }, []);
+    
 
   useEffect(() => {
     if(id == 0){

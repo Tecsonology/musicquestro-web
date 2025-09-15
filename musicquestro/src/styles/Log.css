@@ -7,7 +7,7 @@
     background-position: center;
     background-blend-mode: multiply;
     justify-content: flex-start;
-    padding: 15em 0;
+    padding: 8em 0;
 
     input {
         border-radius: 0.7em;
@@ -19,6 +19,8 @@
 
     p {
         color: black;
+        width: 95vw;
+        text-align: center;
     }
 
     .errorM {
@@ -50,5 +52,25 @@
 }
 
 #beta-version {
-    color: rgba(255, 255, 255, 0.463);
+    color: rgb(134, 134, 134);
+    text-align: center;
+}
+
+#preview-section {
+    p {
+        width: 80%;
+        font-size: 1.2em;
+        color: rgb(188, 188, 188);
+    }
+
+    h1 {
+        width: 80%;
+    }
+}
+
+@media (min-width: 778px) {
+    .explore {
+        position: relative;
+        top: 0.69em;
+    }
 }
