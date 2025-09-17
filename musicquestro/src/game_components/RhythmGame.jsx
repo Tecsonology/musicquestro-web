@@ -52,6 +52,8 @@ function RhythmGame() {
   const [ wait, setWait ] = useState(false)
   const [ showTutorial, setShowTutorial ] = useState(true);
   const [ gameRound, setGameRound ] = useState(0)
+  const [ showCorrection, setShowCorrection ] = useState(false)
+  const [ showNextButton, setShowNextButton ] = useState(false)
   
   let currentLevel = 0
   const targetPoint = 0;
@@ -175,6 +177,7 @@ useEffect(() => {
 };
 
   const playSequence = (seq) => {
+    setShowCorrection(false)
     startTime();
     const rhythm = generateRandomSequence();
     setSequence(rhythm);
@@ -266,16 +269,22 @@ useEffect(() => {
     
   }
 
+
+  const showCorrectAnswer =()=> {
+    setShowCorrection(true)
+   
+  }
+
   return (
     <div className='rhythm-game-container fpage flex fdc jc-c aic'>
       { showTutorial ? (<RhythmTutorial setShowTutorial={setShowTutorial}/>) : <GamePrompt gameName={'Rhythm Idol'}/>}
        
       <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} running={running} />
       <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Fill the musical staff"}</strong></h2>
-      
 
-
-      <div className="beat-indicator flex fdr jc-c aic" style={{ margin: '0' }}>
+     {
+        !showCorrection ? 
+         <div className="beat-indicator flex fdr jc-c aic" style={{ margin: '0' }}>
       {inputSequence && inputSequence.length > 0 ? <button style={{margin: '0', backgroundColor: 'transparent'}} onClick={()=> { setInputSequence([])}}>Clear</button> : null}
 
         {[1, 2, 3, 4].map((beat) => (
@@ -299,7 +308,10 @@ useEffect(() => {
         ))}
 
 
-      </div>
+      </div> : null
+     }
+
+
       { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={()=>{
         playSequence()
         setRunning(true)
@@ -321,9 +333,57 @@ useEffect(() => {
       }
 
       { message && message ? <h1 style={{textAlign: 'center'}}>{message && message ? message : null}</h1> : null}
+      
+      {
+        showCorrection ? 
+        <div style={{backgroundColor: 'white', color: 'black', padding: '1em', width: '80%'}} className='flex fdc aic jc-c'>
+          <h2>Correct Answer</h2>
+          <div className='flex fdr aic jc-c'>
+            {
+              level  && showCorrection ? 
+              sequence.map((note, index)=> {
+                return (
+                
+                    <img key={index} width={30} src={note.img} alt="" />
+                  
+                )
+              }) : null
+            }
+          </div>
+
+          
+            
+            <button disabled={showNextButton} className='nextBtn' onClick={()=> {
+              setTimeout(()=> {
+              playSequence();
+              setMessage()
+            }, 2000)
+            
+            setInputSequence([]);
+            setWait(false)
+          }}>Next</button> 
+          
+
+      </div> : 
+        null
+
+      }
 
       {
-        wait && wait ? 
+        showNextButton ? 
+         <button  className='nextBtn' onClick={()=> {
+              playSequence();
+              setMessage()
+        
+            
+            setInputSequence([]);
+            setWait(false)
+            setShowNextButton(false)
+          }}>Next</button> : null
+      }
+        
+      {
+        wait && !showCorrection  ? 
         <div className='flex fdc aic jc-c'>
          
       <div className="beat-buttons flex fdr jc-c aic">
@@ -341,28 +401,29 @@ useEffect(() => {
         }
       </div>
 
-      <div className='bottom-buttons flex fdr aic jc-c'>
-            <button id='playRhythm' onClick={() => {
+      <div className='bottom-buttons flex fdc aic jc-c'>
+            <button id='playRhythm'
+            style={{
+              width: '10em',
+              backgroundColor: 'orange',
+              fontSize: '1.4em',
+              padding:'0.6em 1em'
+            }}
+            onClick={() => {
             if (JSON.stringify(sequence) === JSON.stringify(inputSequence)) {              
               increaseScoreAndPoints()
               
-
               setWait(false)
               setMessage('✅ Great')
+              setShowNextButton(true)
             } else {
               console.log('incorrect');
               setMessage(`❌ Oppss`)
+              showCorrectAnswer()
             }
 
-            setTimeout(()=> {
-              playSequence();
-              setMessage()
-            }, 2000)
-            
-            setInputSequence([]);
-            setWait(false)
           }}>
-            <span><img width={150} src="https://i.ibb.co/m5QnVrFn/Untitled-design-2025-07-13-T070644-029.png" alt="" /></span>
+            Compose
           </button>
 
           <button id='btnRhythmReplay' onClick={playBeatAgain}>

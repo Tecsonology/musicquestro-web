@@ -126,7 +126,7 @@ function Store() {
         <img className='store-banner' src="https://i.ibb.co/nN9KC0dr/Untitled-design-83.png" alt="Untitled-design-83" border="0"/>
         { status && status ? <ShopStatus message={status} /> : null}
         <div className='flex fdc aic jc-c' style={{position: 'absolute', zIndex: '3'}}>
-          <h1 style={{textAlign: 'center', backgroundColor: 'orange', padding: '0.1em 1em', borderRadius: '1em', border: '3px dotted yellow'}}>Store</h1>
+          <h1 className='animateBlingkingLights ' style={{textAlign: 'center', backgroundColor: 'orange', padding: '0.1em 1em', borderRadius: '1em', border: '3px dotted yellow'}}>Store</h1>
         <div className="item-lists flex fdc">
             
             <div className="survival-items flex fdc aic jc-c">
@@ -151,7 +151,7 @@ function Store() {
                   </div>
 
                 <div className="menu-items flex fdr aic jc-c">
-                  <h3>Instrument</h3>
+                  <h2 style={{fontWeight: 'bolder'}}>Instrument</h2>
                   {
                   Object.values(ITEMS).map((item, index)=> (
                     <StoreCard sound={item.itemCode} key={index} imgItem={item.imgItem}  itemName={item.itemName} itemPrice={item.price}

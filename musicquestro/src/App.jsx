@@ -10,6 +10,7 @@ import { BrowserRouter, Link } from 'react-router-dom';
 import CurrentUserContext from './components/CurrentUserContext';
 import RhythmGame from './game_components/RhythmGame';
 
+
 import logo from '../src/assets/game-assets/Assets/Logo&Menu/Logo.png'
 
 import img1 from '../src/assets/main-home/1.png'
@@ -35,16 +36,17 @@ function App() {
   const navigate = useNavigate()
   const [ name, setName ] = useState()
   const [ logingIn, setLoggingIn ] = useState(false)
+  const [ showPrompt, setShowPrompt ] = useState(true)
 
 
   return (
     <>
     
-    <PilotTestingPrompt />
+    <PilotTestingPrompt showPrompt={showPrompt} setShowPrompt={setShowPrompt}/>
       
     
       <div id='main-app' className='log fpage flex fdc jc-c aic'>
-        <h4 style={{position: 'absolute', background: 'transparent', padding: '1em', top: '0em', right: '1em', border: '1px solid #708993'}}><span><img style={{marginRight: '1em'}} width={20} src={headset} alt="" /></span>Best played with Headset</h4>
+        <h4 style={{position: 'absolute', background: 'transparent', padding: '1em', top: '0em', right: '1em', border: '1px solid #708993', color: 'white'}}><span><img style={{marginRight: '1em'}} width={20} src={headset} alt="" /></span>Best played with Headset</h4>
 
         {/**<ClickEffect play={true}/> */}
     
@@ -75,8 +77,9 @@ function App() {
             background: 'transparent',
             position: 'relative',
             bottom: '-4em',
-            cursor: 'pointer'
-          }} className='explore flex fdr aic jc-c'><span><img src={arrowDown} alt="" /></span>Explore</h3>
+            cursor: 'pointer',
+            color: 'white'
+          }} className='explore flex fdr aic jc-c'><span><img className='animateGoingUp ' style={{marginRight: '0.5em'}} src={arrowDown} alt="" /></span >Explore</h3>
 
 
         <Outlet />
@@ -84,9 +87,9 @@ function App() {
        </div>
 
         <section id='preview-section'>
-          <h1>✨ Discover the magic of music in a creative and engaging way!</h1>
-          <p style={{textAlign: 'center'}}>MusicQuestro is a fun and interactive music & rhythm game that blends storytelling with gamified challenges. Designed for youth, it introduces the basics of rhythm, melody, harmony, and pitch through exciting activities, 
-            helping players learn while they play. 🎶🎮</p>
+          <h1 style={{textAlign: 'center'}}>✨ Discover the magic of music in a creative and engaging way!</h1>
+          <p style={{textAlign: 'justify'}}>MusicQuestro is a fun and interactive music & rhythm game that blends storytelling with gamified challenges. Designed for youth, it introduces the basics of rhythm, melody, harmony, and pitch through exciting activities, 
+            helping players know the basics of music. 🎶🎮</p>
             <img width={500} style={{margin: '1em'}} src={StoryPrev} alt="" />
           <div className="game-preview-imgs">
             
@@ -106,7 +109,7 @@ function App() {
             position: 'relative',
             bottom: '-4em',
             cursor: 'pointer'
-          }} className='flex fdr aic jc-c'><span><img src={arrowUp} alt="" /></span>Back to top</h3>
+          }} className='flex fdr aic jc-c'><span><img className='animateGoingDown' style={{marginRight: '0.5em '}} src={arrowUp} alt="" /></span>Back to top</h3>
         </section>
       
     </div>

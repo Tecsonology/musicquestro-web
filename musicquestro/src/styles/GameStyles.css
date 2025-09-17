@@ -228,11 +228,11 @@ button:disabled {
     max-width: 8em;
     border-radius: 1em;
     margin: 0.7em;
-    border: 2px solid black;
+    border-bottom: 0.7em solid rgb(54, 2, 85);
 
     h3, h4, p, img, button {
         margin: 0;
-    }
+    }   
 
     img {
         width: 3em;

@@ -38,6 +38,12 @@
     }
 }
 
+.nextBtn {
+  width: 90%;
+  background-color: green;
+  margin-top: 2em;
+}
+
 @keyframes borderLights {
    
 }

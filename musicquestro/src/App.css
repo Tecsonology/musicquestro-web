@@ -277,16 +277,17 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 }
 
 #preview-section {
+  text-align: justify;
   color: white;
-  text-align: center;
   margin: 4em 0 0 0;
-  padding: 1em;
+  padding: 0 0.5em;
   border-radius: 1em;
     display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100vw;
+
 }
 
 .pilot-prompt {
@@ -332,3 +333,54 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 }
 
 
+.animateGoingUp {
+  animation: goingUp 2s ease-in-out infinite;
+}
+
+.animateGoingDown {
+  animation: goingDown 2s ease-in-out infinite;
+}
+
+.animateBlingkingLights {
+  animation: blinkingLights 2s ease-in-out infinite;
+  position: re;
+}
+
+
+@keyframes goingUp {
+  from {
+    transform: translateY(0);
+  
+  }
+
+  to {
+    transform: translateY(10px);
+  }
+
+} 
+
+@keyframes goingDown {
+  from {
+    transform: translateY(0);
+  
+  }
+
+  to {
+    transform: translateY(-10px);
+  }
+
+} 
+
+@keyframes blinkingLights {
+  0% {
+    border: 3px dotted yellow;
+  }
+
+  80% {
+    border: 3px dotted rgb(255, 255, 255);
+  }
+
+  100% {
+    border: 3px dotted yellow; /* optional to loop smoothly */
+  }
+}
