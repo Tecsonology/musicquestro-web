@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import backBtn from '../assets/game-assets/Assets/Buttons/Back.png'
+import backBtn from '/src/assets/game-assets/Assets/Buttons/Back.png'
 import arrowDown from '../assets/game-assets/AppAssets/arrowDown.png'
 
 import '../styles/Story.css'
