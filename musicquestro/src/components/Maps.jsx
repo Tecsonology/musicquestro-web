@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState, useContext, lazy } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import '../styles/Maps.css'
 import ProtectedComponent from './ProtectedComponent'
@@ -10,19 +10,22 @@ const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
 
+const main = lazy(()=> import('https://i.ibb.co/VWV4wcPV/Untitled-design-15.png'))
+
+
 
 const mapNames = {
   rhythm: {
-    imgLink: 'https://i.ibb.co/VWV4wcPV/Untitled-design-15.png',
+    imgLink: '/assets/Maps/Rhythm.png',
     location: '/h/rhythmLevels'
   },
   melody: {
-    imgLink: 'https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png',
+    imgLink: '/assets/Maps/Melody-2.png',
     location: '/h/melodyLevels'
   },
 
   pitch: {
-    imgLink: 'https://i.ibb.co/W4bb6H3f/Untitled-design-79.png',
+    imgLink: '/assets/Maps/Pitch.png',
     location: '/h/pitchLevels'
   },
 
@@ -82,7 +85,7 @@ function Maps() {
               {
                  Object.values(mapNames).map((value, index)=> {
                     
-                  return <img key={index} src={mapAvailability[index] == 'true' ? lockImgLink : value.imgLink} alt='' className='cat-card' 
+                  return <img  key={index} src={mapAvailability[index] == 'true' ? lockImgLink : value.imgLink} alt='' className='cat-card' 
                     onClick={()=> {
                         mapAvailability[index] == 'true' ? null : navigate(`${value.location}`)
                     }}

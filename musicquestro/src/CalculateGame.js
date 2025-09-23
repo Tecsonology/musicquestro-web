@@ -1,3 +1,4 @@
+
 export default class CalculateGame {
     constructor(score, points, time) {
         this.score = score;   // Total correct levels or tasks completed (0–15)
@@ -37,9 +38,9 @@ export default class CalculateGame {
 
         const finalPerformanceScore = scoreContribution + pointsContribution + timeContribution;
 
-        //console.log("Score Contribution:", scoreContribution.toFixed(2));
-       // console.log("Points Contribution:", pointsContribution.toFixed(2));
-        //console.log("Time Bonus:", timeContribution.toFixed(2));
+        console.log("Score Contribution:", scoreContribution.toFixed(2));
+       console.log("Points Contribution:", pointsContribution.toFixed(2));
+    console.log("Time Bonus:", timeContribution.toFixed(2));
 
         return finalPerformanceScore.toFixed(2);
     }
@@ -56,3 +57,6 @@ export default class CalculateGame {
         return `${minutes}:${seconds.toString().padStart(2, '0')}`;
     }
 }
+
+
+

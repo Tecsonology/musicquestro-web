@@ -1,9 +1,9 @@
 import axios from 'axios'
-import React, { useEffect, useState }  from 'react'
+import React, { useEffect, useState, lazy, Suspense }  from 'react'
 import { useNavigate } from 'react-router-dom';
 import { createContext } from 'react'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
-import BGMusic from './BGMusic';
+import LoadingPage from './LoadingPage';
 
 export const UserContext = React.createContext()
 
@@ -46,10 +46,12 @@ function CurrentUserContext({children}) {
 
 
   return (
-    <UserContext.Provider value={{currentUser, setCurrentUser}}>
+    <Suspense fallback={<LoadingPage />}>
+        <UserContext.Provider value={{currentUser, setCurrentUser}}>
        
         {children}
     </UserContext.Provider>
+    </Suspense>
   )
 }
 

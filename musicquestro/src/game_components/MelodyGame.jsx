@@ -6,6 +6,7 @@ import GamePrompt from '../mini-components/GamePrompt';
 import CurrentUserContext, { UserContext } from '../components/CurrentUserContext';
 import { useParams } from 'react-router-dom';
 import PauseGame from '../mini-components/PauseGame';
+import ItemHolder from '../components/ItemHolder.jsx';
 
 const notesMap = {
   DO: 261.63,
@@ -27,7 +28,7 @@ function MelodyGame() {
   const [result, setResult] = useState('');
   const [noteLength, setNoteLength] = useState(1);
   const [score, setScore] = useState(0);
-  const [userPoints, setUserPoints] = useState(0);
+  const [userPoints, setUserPoints] = useState(5000);
   const [time, setTime] = useState(0);
   const [level, setLevel] = useState(null);
   const [message, setMessage] = useState('Listen to the melody and match the notes!');
@@ -35,23 +36,10 @@ function MelodyGame() {
   const [ gameRound, setGameRound ] = useState()
   const intervalRef = useRef(null);
   const audioCtxRef = useRef(null);
-  const targetPoint = 85.0;
+  const targetPoint = 70;
 
 
-  const startTime = () => {
-    if (intervalRef.current) return;
-    intervalRef.current = setInterval(() => {
-      setTime(prev => prev + 1);
-    }, 1000);
-  };
-
-  const stopTime = () => {
-    clearInterval(intervalRef.current);
-    intervalRef.current = null;
-  };
-
-    
-
+  
   useEffect(() => {
     if(id == 0){
       setNoteLength(1)
@@ -63,6 +51,10 @@ function MelodyGame() {
       setNoteLength(4)
     } else if(id == 4){
       setNoteLength(5)
+    }
+
+    if(level > 5){
+      stopTime()
     }
   }, [id]);
 
@@ -98,7 +90,6 @@ function MelodyGame() {
 
   const playMelody = async () => {
     setWait(false);
-    startTime();
 
     const newMelody = Array.from({ length: noteLength }, () =>
       noteNames[Math.floor(Math.random() * noteNames.length)]
@@ -117,7 +108,7 @@ function MelodyGame() {
     }
 
     setWait(true);
-    setMessage('???');
+    setMessage('Show what you listen');
   };
 
   const handleNoteClick = (note) => {
@@ -134,6 +125,7 @@ function MelodyGame() {
       setMessage("✅ Correct");
     } else {
       setMessage(`❌ Wrong, it's ${melody.join(' ')}`);
+      setUserPoints(prev => (prev >= 200 ? prev - 10 : 0));
     }
 
     setTimeout(() => {
@@ -160,17 +152,34 @@ function MelodyGame() {
     return !wait ? <img width={300} src='https://i.ibb.co/rRvk4jHQ/Untitled-design-4-removebg-preview.png' alt="Listen mode" /> : null;
   };
 
+
+  //Item Functions
+
+  const useHint =()=> {
+     playAgain();
+    setUserPoints(prev => prev - 150);
+     setMessage(melody.join(' '));
+  }
+
+  const useReplay =()=> {
+       playAgain();
+      setUserPoints(prev => prev - 50);
+  }
+
   return (
     <CurrentUserContext>
       <div className='melody-game-container fpage flex fdc aic jc-c'>
         <GamePrompt gameName={'Pitchy pitchy'}/>
         <GameStatus score={score} userPoints={userPoints} level={level} time={time} />
+        { wait ? <ItemHolder useHint={useHint} useReplay={useReplay}/> : null}
 
-        <h2 style={{textAlign: 'center'}}>{message}</h2>
+          <div className='flex fdc aic jc-c' style={{marginTop: '5em',}}>
+            <h2 style={{textAlign: 'center', position: 'relative'}}>{message}</h2>
         {listenMode()}
 
-        { level < 1 ? <button onClick={playMelody} style={{ marginBottom: 20 }}>▶️ Play Melody</button> : null}
-        <h1>{userInput.join(' ')}</h1>
+        { level < 1 ? <button onClick={playMelody} style={{fontSize: '1.5em', background: 'green' }}>Let's Begin!</button> : null}
+        <h1 style={{margin: '0 0 0.4em 0', textAlign: 'center', 
+          backgroundColor: userInput.length > 0 ? '#0000005c' : 'transparent', border: userInput.length > 0 ? '3px solid white' : '0px solid white', borderRadius: '3em', padding: '0.2em 0.4em'}}>{userInput.join(' ')}</h1>
  
         {wait && (
           <div className='m-btn-container glass-bg'>
@@ -195,7 +204,7 @@ function MelodyGame() {
             </div>
 
             <div className="lower-buttons">
-              <button onClick={releaseNotes}>Release Melody</button>
+              <button style={{width: '10em', backgroundColor: 'orange'}} onClick={releaseNotes}>Compose</button>
               <button onClick={() => {
                 setUserInput([]);
                 if (userPoints > 0) setUserPoints(prev => prev - 5);
@@ -203,30 +212,13 @@ function MelodyGame() {
             </div>
           </div>
         )}
-
-        {wait && userPoints > 50 && (
-          <div className="btom-spells">
-            <button className='btnPlayAgain' onClick={() => {
-              playAgain();
-              setUserPoints(prev => prev - 50);
-            }}>
-              <span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="Replay" /></span> 50 <br />
-              <span>Play Melody</span>
-            </button>
-
-            {userPoints > 150 && (
-              <button onClick={() => {
-                playAgain();
-                setUserPoints(prev => prev - 150);
-                setMessage(melody.join(' '));
-              }}>Hint</button>
-            )}
-          </div>
-        )}
-
+        {
+          level > 5 
+        }
         {level > 5 && (
           <GameSummary userids={currentUser.userids} level={parseInt(id)} gameName={'melody'} score={score} points={userPoints} time={time} targetPoint={targetPoint} nextGameIndex={2} />
         )}
+          </div>
       </div>
     </CurrentUserContext>
   );

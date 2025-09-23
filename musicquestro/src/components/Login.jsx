@@ -5,7 +5,6 @@ import { use } from 'react';
 import App from '../App';
 import '../styles/Log.css'
 import GoogleLoginButton, { userids } from './GoogleLoginButton';
-import BackgroundMusic from '../BackgroundMusic';
 import { token } from '../Token.js'
 import { UserContext } from './CurrentUserContext.jsx';
 import { Link } from 'react-router-dom';
@@ -100,7 +99,7 @@ function Login() {
                             required
                         />
 
-                         { error && error ? <p className='errorM'>Invalid username or password</p> : null}
+                         { error && error ? <p style={{textAlign: 'center'}} className='errorM'>Invalid username or password</p> : null}
                       
                         <button disabled={disabled} onClick={handleLogin}>Login</button>
 

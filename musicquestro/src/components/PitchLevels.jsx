@@ -21,7 +21,7 @@ function PitchLevels() {
     
   return (
     <div className='rhythm-levels-container fpage flex fdc aic jc-c' style={{position: 'absolute'}}>
-      <h1>Levels</h1>
+      <h1>Echoing Cliffs</h1>
       <div className="level-button-wrapper flex fdr aic jc-c flex-wrap">
         {
             levels ? 
@@ -35,7 +35,7 @@ function PitchLevels() {
         }
       </div>
       {
-        numberOfLevels.length >= 5 ? <p>Complete all of these levels <span><img width={20} src={star} alt="" /></span></p> : null
+        numberOfLevels.length >= 5 ? <p style={{color: 'white'}}>Complete all of these levels <span><img width={20} src={star} alt="" /></span></p> : null
       }
     </div>
   )

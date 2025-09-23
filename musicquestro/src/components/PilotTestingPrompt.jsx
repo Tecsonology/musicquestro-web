@@ -12,7 +12,6 @@ function PilotTestingPrompt({showPrompt, setShowPrompt}) {
 
     useEffect(()=> {
         if(localStorage.getItem('agreedToTerms')){
-            console.log('dsadsadsadsad')
             setShowPrompt(false)
         } else {
             setShowPrompt(true)

@@ -2,9 +2,6 @@ import React from 'react'
 
 function ClickEffect({play, type}) {
 
-    
-
-
    const playMelody = (type = type)=> {
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 

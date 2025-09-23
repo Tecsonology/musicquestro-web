@@ -10,7 +10,7 @@ import settings from '../assets/game-assets/Assets/Buttons/settings.png'
 function GameStatus(props) {
 
     const [rotate, setRotate] = useState(false)
-    const [ pause, setPause ]= useState(false)
+    const [ isOpen, setIsOpen ]= useState(false)
     
 
 
@@ -42,10 +42,10 @@ function GameStatus(props) {
             </div>
             {/*<CountdownCircle time={10} running={props.running} onComplete={()=>console.log('done')} />*/}
            
-           <div>
-            <img onClick={()=> {
-              setPause(true)
-            }} width={40} src={settings} alt="" />
+           <div style={{padding: '0.2em', backgroundColor: 'gray', borderRadius: '50%'}}>
+              <img onClick={()=> {
+                setIsOpen(true)
+              }} width={40} src={settings} alt="" />
            </div>
           
 
@@ -56,8 +56,8 @@ function GameStatus(props) {
    
     </div>
       {
-        pause ? 
-        <PauseGame setPause={setPause} /> : null
+        isOpen ? 
+        <PauseGame isOpen={isOpen}  setIsOpen={setIsOpen} setRunning={props.setRunning}/> : null
       }
     </>
   )

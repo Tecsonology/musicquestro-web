@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate, } from 'react-router-dom'
-import { useContext } from 'react'
+import { useContext, Suspense, lazy } from 'react'
 import '../styles/MainHome.css'
 import MainHomeVisual from '../assets/MainHomeVisual.png'
 import { Link } from 'react-router-dom'
@@ -14,9 +14,15 @@ import MusicLife from '../assets/store-assets/MusicLife.png'
 import BGMusic from './BGMusic'
 import mainVisual from '../assets/game-assets/Assets/Logo&Menu/Menu.png'
 import logo from '../assets/game-assets/Assets/Logo&Menu/Logo.png'
+import mainHome2 from '../assets/mainHome2.jpg'
+
+const MainBG = lazy(()=> import('../assets/game-assets/Assets/BackGround/NormalBG/MainBG.png'))
 
 import '../styles/Animation.css'
 import { useState } from 'react'
+import LoadingPage from './LoadingPage'
+
+
 
 
 function MainHome() {
@@ -27,8 +33,12 @@ function MainHome() {
   
 
   return (
-    <div className='mainhome-container fpage flex fdc aic jc-c' style={{marginBottom: '3em'}}>
-         
+    <div className='mainhome-container fpage flex fdc aic jc-c' style={{
+      marginBottom: '3em',
+      backgroundImage: {MainBG}
+      }}>
+      
+
          <img width={100} className='scaling' src={logo} alt="" 
           style={{position: 'fixed', top: '1em', left: '1em', zIndex: '3', cursor: 'pointer'}}
           onClick={()=> {

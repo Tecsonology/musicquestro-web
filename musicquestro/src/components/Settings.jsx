@@ -11,7 +11,6 @@ function Settings() {
   return (
     <div className='settings-container fpage flex fdc jc-c aic'>
       <ButtonBack />
-      <BGMusic volume={volume} />
       <h1>Settings</h1>
       <input type="range" name="" id="" value={volume} />
 

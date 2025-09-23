@@ -7,6 +7,7 @@ import CurrentUserContext, { UserContext } from '../components/CurrentUserContex
 import '../styles/RhythmGame.css'
 import RhythmTutorial from './RhythmTutorial';
 import CountdownCircle from '../components/CountdownCircle.jsx'
+import ItemHolder from '../components/ItemHolder.jsx';
 
 const durations = [
   { name: "rest", beats: 1, duration: 600, freq: 0, img: 'https://i.ibb.co/67NSSxxn/Untitled-design-74.png' },
@@ -37,6 +38,7 @@ const sample = durations.filter(note => note.name !== 'rest' && note.beats <= (4
 function RhythmGame() {
   const { id} = useParams()
   const { currentUser } = useContext(UserContext)
+  const [ gameEnd, setGameEnd ] = useState(false)
   const [ state, dispatch ] = useReducer(reducer, inititalState)
   const [currentNote, setCurrentNote] = useState('');
   const [ message, setMessage ] = useState()
@@ -45,7 +47,7 @@ function RhythmGame() {
   const [inputSequence, setInputSequence] = useState([]);
   const [score, setScore] = useState(0);  
   const [userPoints, setUserPoints] = useState(0);
-  const [time, setTime] = useState(10);
+  const [time, setTime] = useState(0);
   const [ running, setRunning ] = useState(false)
   const [level, setLevel] = useState(0);
   const [currentBeat, setCurrentBeat] = useState(0);
@@ -56,7 +58,8 @@ function RhythmGame() {
   const [ showNextButton, setShowNextButton ] = useState(false)
   
   let currentLevel = 0
-  const targetPoint = 0;
+  let countdownTimer = 30
+  const targetPoint = 55;
 
     const audioCtxRef = useRef(null);
   const intervalRef = useRef(null);
@@ -177,6 +180,7 @@ useEffect(() => {
 };
 
   const playSequence = (seq) => {
+    setRunning(true)
     setShowCorrection(false)
     startTime();
     const rhythm = generateRandomSequence();
@@ -269,18 +273,36 @@ useEffect(() => {
     
   }
 
+  function setGameOver() {
+    setGameEnd(true)
+  }
 
-  const showCorrectAnswer =()=> {
-    setShowCorrection(true)
-   
+
+  const useHint =()=> {
+     setShowCorrection(true)
+  }
+
+  const useReplay =()=> {
+      playBeatAgain()
   }
 
   return (
     <div className='rhythm-game-container fpage flex fdc jc-c aic'>
       { showTutorial ? (<RhythmTutorial setShowTutorial={setShowTutorial}/>) : <GamePrompt gameName={'Rhythm Idol'}/>}
        
-      <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} running={running} />
-      <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Fill the musical staff"}</strong></h2>
+      <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} running={running} setRunning={setRunning} />
+      {
+        wait && !showCorrection ?
+        <div style={{margin: '5em'}}>
+        <ItemHolder useHint={useHint} useReplay={useReplay} running={running} setGameOver={setGameOver} setRunning={setRunning} children={
+          <div>
+            <CountdownCircle time={countdownTimer} running={running} setRunning={setRunning} onComplete={setGameOver}/>
+          </div>
+        }/>
+      </div> : ""
+      }
+
+      <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Listen carefully..."}</strong></h2>
 
      {
         !showCorrection ? 
@@ -336,7 +358,7 @@ useEffect(() => {
       
       {
         showCorrection ? 
-        <div style={{backgroundColor: 'white', color: 'black', padding: '1em', width: '80%'}} className='flex fdc aic jc-c'>
+        <div style={{position:'absolute', zIndex: '0', backgroundColor: 'white', color: 'black', padding: '0.5em 1em', width: '80%'}} className='flex fdc aic jc-c'>
           <h2>Correct Answer</h2>
           <div className='flex fdr aic jc-c'>
             {
@@ -419,21 +441,20 @@ useEffect(() => {
             } else {
               console.log('incorrect');
               setMessage(`❌ Oppss`)
-              showCorrectAnswer()
+              setRunning(false)
+              setUserPoints(userPoints - 50)
+              setShowCorrection(true)
             }
 
           }}>
             Compose
           </button>
 
-          <button id='btnRhythmReplay' onClick={playBeatAgain}>
-            <span><img width={150} src="https://i.ibb.co/bgqmfLmZ/Untitled-design-2025-07-13-T070706-735.png" alt="" /></span>
-          </button>
           
       </div>
         </div> : null
       }
-        {level > gameRound ? 
+        {level > gameRound || gameEnd ? 
         
         <CurrentUserContext>
           <GameSummary userids={currentUser.userids} level={parseInt(id)} gameName={'rhythm'} score={score} points={userPoints} time={time} targetPoint={targetPoint} nextGameIndex={1}/>

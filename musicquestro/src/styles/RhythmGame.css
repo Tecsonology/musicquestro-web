@@ -59,3 +59,11 @@
     transform: translateY(0);
   }
 }
+
+@media (min-width: 335px) {
+    .beat-buttons button {
+      width: 5.5em;
+      font-size: small;
+      height: 10em;
+    }
+}

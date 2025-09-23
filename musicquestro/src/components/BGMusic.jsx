@@ -1,31 +1,32 @@
-import React, { useEffect, useRef } from 'react'
-import bgmusic from '../assets/musics/bgmusic2.mp3'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
+import bgmusic from "../assets/musics/bgmusic2.mp3";
 
 function BGMusic() {
-  const location = useLocation()
-  const audioRef = useRef(null)
+  const location = useLocation();
+  const audioRef = useRef(null);
 
   useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.1 // ✅ set volume here once
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    if (location.pathname.includes("/h")) {
+      audio.play().catch(err => {
+        console.warn("Autoplay blocked until user interacts:", err);
+      });
+    } else {
+      audio.pause();
+      audio.currentTime = 0; // reset if you want
     }
 
-    if (location.pathname.includes('/h')) {
-      audioRef.current?.play()
-    } else {
-      audioRef.current?.pause()
-    }
-  }, [location])
+    return () => {
+      audio.pause(); // stop on unmount
+    };
+  }, [location]);
 
   return (
-    <audio
-      ref={audioRef}
-      src={bgmusic}
-      autoPlay
-      loop
-    />
-  )
+    <audio ref={audioRef} src={bgmusic} loop />
+  );
 }
 
-export default BGMusic
+export default BGMusic;

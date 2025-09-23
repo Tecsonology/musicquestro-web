@@ -18,12 +18,13 @@ import React, { useEffect, useRef, useState } from "react";
  */
 
 export default function CountdownCircle({
-  time = 60,
-  running = false,
+  time = 30,
+  running,
   size = 50,
   strokeWidth = 5,
   onComplete,
   className = "",
+  setTime
 }) {
   const initialMsRef = useRef(Math.max(0, Math.floor(time * 1000)));
   const [remainingMs, setRemainingMs] = useState(initialMsRef.current);

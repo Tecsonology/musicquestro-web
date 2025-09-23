@@ -1,11 +1,12 @@
 .melody-game-container {
      background: #000000a2;
-    background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+    background-image: url('../assets/game-assets/Assets//BackGround/NormalBG/melody.png');
     background-repeat: no-repeat;
     background-size: cover;
+    background-position: center;
     background-blend-mode:multiply;
     overflow:hidden;
-    color: white
+    color: white;
     
 }
 
@@ -22,14 +23,14 @@
 }
 
 .pitch-game-container {
-    /**background: #000000cb;
-    background-image: url(../assets/bg-assets/Cave.png);
-    
+    background: #000000cb;
+    background-image: url('../assets/game-assets/Assets/BackGround/NormalBG/pitch.png');
+    background-position: center;
      background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode:multiply;
     overflow:hidden;
-    color: white**/
+    color: white;
     background-color: rgb(86, 84, 81);
 }
 
@@ -68,21 +69,18 @@
 }
 
 .pitchcards-container {
-    background-color: rgba(4, 0, 8, 0.63);
     margin: 0.5em;
     border-radius: 1em;
-    border: 2px solid white;
 }
 
 
 .inputNote {
- 
     margin: 1em;
 }
 
 .input-overlay {
      position: relative;
-    z-index: 10;
+    z-index: 0;
     top: -4.5em ;
     left: 1em;
     justify-content: space-evenly;
@@ -106,9 +104,12 @@ button#playRhythm :hover {
 }
 
 .game-summary {
+    position: fixed;
+    top: 0;
     background-color: rgba(0, 0, 0, 0.63);
     width: 100vw;
     height: 100vh;
+    z-index: 3;
 }
 
 .game-summary-wrapper {
@@ -130,7 +131,26 @@ button#playRhythm :hover {
 }
 
 
+.item-wrapper {
+    padding: 0.3em;
+    margin: 0 0.6em;
+    border-radius: 50%;
+    box-shadow: 0px 0px 1em 0px rgba(227, 227, 227, 0.193);
+}
 
+.item-quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 1em;
+    height: 1em;
+    left: 2em;
+    top: 0.9em;
+    background-color: red;
+    border-radius: 50%;
+    padding: 0.2em;
+}
 
 
 
@@ -245,6 +265,17 @@ button:disabled {
 }
 
 .collection-list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: auto;
+    width: 90%;
+    margin-top: 3em;
+}
+
+.collection-cards {
+    
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

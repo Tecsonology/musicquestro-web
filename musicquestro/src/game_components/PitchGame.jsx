@@ -4,6 +4,9 @@ import SecondPitchGame from './SecondPitchGame';
 import HighPitch from './HighPitch';
 import GameStatus from '../game_components/GameStatus.jsx'
 import GamePrompt from '../mini-components/GamePrompt.jsx';
+import lavaBtn from '../assets/game-assets/Assets/Buttons/LavaBtn.png'
+
+
 
 export const PitchScore = createContext()
 
@@ -171,7 +174,7 @@ function PitchGame() {
                 pitchCards.map((note, index)=> (
 
                   <div className='pitchcards-container' key={index}>
-                    <img className='pitchCards' width={100} src="https://i.ibb.co/QvndJW0S/R-1.png" alt="" 
+                    <img className='pitchCards' width={100} src={lavaBtn} alt="" 
                       onClick={(e)=> {
                         if(wait){
                           return false

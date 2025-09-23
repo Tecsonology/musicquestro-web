@@ -9,6 +9,8 @@ import { UserContext } from './CurrentUserContext'
 import Loader from './Loader'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Animation.css'
+import close from '../assets/game-assets/Prompts/Close.png'
+
 
 function Collections() {
 
@@ -23,18 +25,17 @@ function Collections() {
 
 
   return (
-    <div className='collection-container fpage flex fdc aic' style={{paddingTop: '5em',}}>
-      <button style={{position: 'absolute', top: '1em', left: '1em', backgroundColor: 'transparent'}} 
-        onClick={()=> { navigate(-1)}}>{`< Back to Profile`}</button>
+    <div className='collection-container fpage flex fdc aic'>
       
-        <h2>Collections</h2>
-     
         {
             currentUser ? 
             <>
                 
-                <div className="collection-list glass-bg">
-                    {
+                <div className="collection-list glass-bg flex fdc aic jc-c">
+                   <h3>My Collections</h3>
+                    <img onClick={()=> navigate(-1)} style={{position: 'absolute', right: '0em', top: '0.2em', cursor: 'pointer', zIndex: '9'}} width={40} src={close} alt="" />
+                    <div className='collection-cards'>
+                       {
                       currentUser.collection && currentUser.collection.length > 0 ? Object.values(currentUser.collection).map((item ,index)=> {
 
                         if(item==='Guitar'){
@@ -50,6 +51,10 @@ function Collections() {
                           return <CollectionCard key={index} itemName={item} instrCode={instrCode}/>
                         }) : ( <p>No collections yet</p>)
                     }
+                    </div>
+                  
+
+                   
                 </div>
                 
             </> : <Loader />

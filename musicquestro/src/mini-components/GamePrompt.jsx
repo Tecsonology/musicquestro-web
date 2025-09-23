@@ -46,11 +46,13 @@ function GamePrompt({ gameName, instr }) {
     <>
         {
             showPrompt && showPrompt ? 
-            <div className='fpage flex fdc jc-c aic' style={{position: 'fixed', zIndex: '10', backgroundColor: 'rgba(0, 0, 0, 0.63)', height: '100%'}}>
+            <div className='fpage flex fdc jc-c aic' style={{position: 'absolute', zIndex: '10', backgroundColor: 'rgba(0, 0, 0, 0.63)', height: '100%'}}>
             <div className='flex fdc aic jc-c' style={{backgroundColor: 'white', color: 'black', padding: '1em', width: '17em', borderRadius: '1em'}}>
                 {/**<h3 onClick={hidePrompt} style={{position: 'relative', right: '-7em', top: '-1.5em', color: 'red'}}>x</h3> */}
-                <h3>{ gameName && gameName }</h3>
+                <h3>{ gameName && gameName }</h3><br />
+                <p>This game needs</p>
                 <span><span><img width={15} src="https://i.ibb.co/BVq668JC/Untitled-design-30.png" alt="" /></span> -5 </span>
+                <p>musiclife deduction</p>
                 { currentUser ? <button disabled={begin} onClick={hidePrompt}>Alright!</button> : null}
             </div>
             </div> : null

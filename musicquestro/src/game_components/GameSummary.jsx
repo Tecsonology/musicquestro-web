@@ -42,9 +42,7 @@ function GameSummary(props) {
   
 
     
-    const mapUnlocker =async (mapIndex) => {
-
-
+    const mapUnlocker = async (mapIndex) => {
 
       console.log('unlocking next game...')
         let userids = props.userids
@@ -162,31 +160,42 @@ function GameSummary(props) {
       
   }
 
+  
+
   return (
       <div className='game-summary fpage flex fdc jc-c aic' style={{position: 'fixed'}}>
       {
         !nextMapPrompt ?
         <div className="game-summary-wrapper flex fdc aic jc-c">
         
-        <h1>{gamePoints >= props.targetPoint.toFixed(2) ? 'Congrats' : 'Better Luck Next Time'}</h1>
+        <h1 style={{textAlign: 'center'}}>{gamePoints >= props.targetPoint.toFixed(2) ? 'Congrats' : 'Better Luck Next Time'}</h1>
 
         <div className='flex fdr aic jc-c'>
+          
           <p>Score: {props.score}</p>
           <p>Points: {props.points}</p>
           <p>Time: {calculate.getTime()}</p>
         </div>
-        <p>{calculate.calculateGame()}</p>
-        <p>{props.targetPoint}</p>
+        
+      
+        <div className='flex fdr aic jc-c'><span><img width={25} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>
+        <span><progress value={gamePoints} max={props.targetPoint.toFixed(2)}></progress></span>
+        <span>{gamePoints >= props.targetPoint.toFixed(2) ? <p>✅</p> : <p>❌</p>}</span></div>
+        <div className='flex fdr aic jc-c'>
+          <p><span>YOU: </span>{calculate.calculateGame()}</p>
+          <p><span>Target: </span>{props.targetPoint}</p>
 
-        <h3>Rewards</h3>
+          
+
+          
+        
+        </div>
+
+          <h3>Rewards</h3>
         <div style={{backgroundColor: '#E8E8E8', padding: '0.5em 1em', borderRadius: '1em'}} className='flex fdr aic jc-c'>
           <h4 style={{marginRight: '1em'}}><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
           <h4><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
         </div>
-
-        <div className='flex fdr aic jc-c'><span><img width={25} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>
-        <span><progress value={gamePoints} max={props.targetPoint.toFixed(2)}></progress></span>
-        <span>{gamePoints >= props.targetPoint.toFixed(2) ? <p>✅</p> : <p>❌</p>}</span></div>
 
         {gamePoints >= props.targetPoint.toFixed(2) ? <button onClick={()=> {  
                 setBtnOk('Game uploading, please wait...')
@@ -195,10 +204,11 @@ function GameSummary(props) {
             }}>{btnOk}</button> : 
 
             <div> 
-                    <button onClick={()=> {
+                    <button style={{marginRight: '0.5em', backgroundColor: 'red'}} onClick={()=> {
                   window.location.reload()
                 }}>Retry</button>
-                <button onClick={()=> {
+
+                <button style={{backgroundColor: 'blue'}} onClick={()=> {
                   window.location.href = '/h/m'
                 }}>Back to map</button>
             </div>

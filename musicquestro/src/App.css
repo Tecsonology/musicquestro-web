@@ -4,6 +4,8 @@
 }
 
 
+
+
 .user {
   background: rgb(17, 17, 17);
   width: 3em;
@@ -136,6 +138,18 @@ button {
   transition: all 0.2s ease;
 }
 
+.game-preview-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 3em;
+
+  h2 {
+    text-align: center;
+  }
+
+}
+
 
 
 @keyframes logo-spin {
@@ -217,19 +231,28 @@ button {
   justify-content: flex-start;
   position: fixed;
   width: 90%;
-  height: 90vh;
   border-radius: 2em;
+  padding: 1em 2em;
+  z-index: 4;
  
 
   button {
     background-color: rgb(39, 155, 6);
-    font-size: 2em;
-    width: 10em;
+    font-size: 1.5em;
+    width: 14em;
   }
 
+ 
+
   div {
-    background-color: rgb(74, 58, 111);
+    border-radius: 2em;
     width: 100%;
+  }
+
+  h1 {
+    margin: 0.2em 0;
+    width: 100%;
+    text-align: center;
   }
   
 }
@@ -266,14 +289,17 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 
 .game-preview-imgs {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: column;
+  margin-top: 3em;
 }
 
 .game-preview-imgs img {
-  
-  margin: 0.3em 0.5em;
+  margin: 0;
+  width: 90%;
+  height: 40em;
+
 }
 
 #preview-section {
@@ -288,10 +314,69 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
   justify-content: center;
   width: 100vw;
 
+  
 }
+
+#story-desc {
+    width: 20em;
+  }
 
 .pilot-prompt {
   width: 20em;
+}
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loaderPage {
+  width: 4px;
+  color: #f2ff00;
+  aspect-ratio: 6;
+  border-radius: 50%;
+  box-shadow: 
+    19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 0px,
+    19px 0     0 5px, 38px 0     0 5px, 57px 0     0 5px,
+    19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 0px;
+  transform: translateX(-38px);
+  animation: l26 2s infinite linear;
+}
+@keyframes l26 {
+  12.5% {box-shadow: 
+    19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 5px,
+    19px 0     0 5px, 38px 0     0 0px, 57px 0     0 5px,
+    19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 0px}
+  25%   {box-shadow: 
+    19px -19px 0 5px, 38px -19px 0 0px, 57px -19px 0 5px,
+    19px 0     0 0px, 38px 0     0 0px, 57px 0     0 0px,
+    19px 19px  0 0px, 38px 19px  0 5px, 57px 19px  0 0px}
+  50%   {box-shadow: 
+    19px -19px 0 5px, 38px -19px 0 5px, 57px -19px 0 0px,
+    19px 0     0 0px, 38px 0     0 0px, 57px 0     0 0px,
+    19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 5px}
+  62.5% {box-shadow: 
+    19px -19px 0 0px, 38px -19px 0 0px, 57px -19px 0 0px,
+    19px 0     0 5px, 38px 0     0 0px, 57px 0     0 0px,
+    19px 19px  0 0px, 38px 19px  0 5px, 57px 19px  0 5px}
+  75%   {box-shadow: 
+    19px -19px 0 0px, 38px -19px 0 5px, 57px -19px 0 0px,
+    19px 0     0 0px, 38px 0     0 0px, 57px 0     0 5px,
+    19px 19px  0 0px, 38px 19px  0 0px, 57px 19px  0 5px}
+  87.5% {box-shadow: 
+    19px -19px 0 0px, 38px -19px 0 5px, 57px -19px 0 0px,
+    19px 0     0 0px, 38px 0     0 5px, 57px 0     0 0px,
+    19px 19px  0 5px, 38px 19px  0 0px, 57px 19px  0 0px}
+}
+
+.loadingBg {
+  background-color: rgb(17, 17, 17);
+  overflow: hidden;
+
+  h1 {
+    color: red;
+  }
+}
+
+@keyframes l27 {
+  100% {transform: rotate(1turn)}
 }
 
 @media (max-width: 767px) {
@@ -308,28 +393,19 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
     }
 }
 
-@media (min-width: 700px) {
-   .game-preview-imgs {
-      flex-direction: row;
-  }
-
-  .game-preview-imgs img {
-    width: 10em;
-  }
-
-  #preview-section {
-    width: 70%;
-    background: rgba(22, 29, 50);
-  }
-}
-
 
 .rhythm-levels-container {
+  background: #1b263bf5;
   background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+  background-position: center;
+  background-blend-mode: multiply;
 }
 
 .melody-levels-container {
+  background: #1b263bf5;
   background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+  background-position: center;
+  background-blend-mode: multiply;
 }
 
 
@@ -382,5 +458,33 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 
   100% {
     border: 3px dotted yellow; /* optional to loop smoothly */
+  }
+}
+
+
+@media (min-width: 700px) {
+   .game-preview-imgs {
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+  }
+
+  .game-preview-imgs img {
+    width: 10em;
+    height: 20em;
+  }
+
+  .game-preview-wrapper {
+    margin: 0 1em;
+  }
+
+  #preview-section {
+    width: 70%;
+    background: rgba(22, 29, 50);
+  }
+
+  #story-desc {
+    width: 45em;
+    
   }
 }

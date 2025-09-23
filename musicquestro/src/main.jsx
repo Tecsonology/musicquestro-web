@@ -1,38 +1,50 @@
 import { StrictMode } from 'react'
+import { lazy, Suspense } from 'react';
+
 import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css'
-import App from './App.jsx'
-import Login from './components/Login.jsx';
-import Homepage from './components/Homepage.jsx';
-import Maps from './components/Maps.jsx';
-import Leaderboards from './components/Leaderboards.jsx';
-import Profile from './components/Profile.jsx';
-import Collections from './components/Collections.jsx';
-import Store from './components/Store.jsx';
-import RhythmGame from './game_components/RhythmGame.jsx';
-import Settings from './components/Settings.jsx';
-import LoginGoogle from './components/LoginGoogle.jsx';
-import BackgroundMusic from './BackgroundMusic.jsx';
-import MelodyGame from './game_components/MelodyGame.jsx';
-import HarmonyGame from './game_components/HarmonyGame.jsx';
-import PitchGame from './game_components/PitchGame.jsx';
-import CurrentUserContext from './components/CurrentUserContext.jsx';
-import HighPitch from './game_components/HighPitch.jsx';
-import LayoutComponent from './components/LayoutComponent.jsx';
-import ChildLayout from './components/ChildLayout.jsx';
-import ButtonBack from './mini-components/ButtonBack.jsx';
-import Register from './components/Register.jsx';
-import SetupAccount from './components/SetupAccount.jsx';
-import BottonNavigation from './components/BottonNavigation.jsx';
-import MainHome from './components/MainHome.jsx';
-import Story from './components/Story.jsx';
-import RhythmLevels from './components/RhythmLevels.jsx';
-import MelodyLevels from './components/MelodyLevels.jsx';
-import HarmonyLevels from './components/HarmonyLevels.jsx';
-import PitchLevels from './components/PitchLevels.jsx';
+import './App.css'
+import '../src/styles/GameStyles.css'
+import Loader from './components/Loader.jsx';
+import LoadingPage from './components/LoadingPage.jsx';
 
-<BackgroundMusic />
+const Homepage = lazy(()=> import('./components/Homepage.jsx'));
+
+
+const Leaderboards = lazy(() => import('./components/Leaderboards.jsx'));
+const Profile = lazy(() => import('./components/Profile.jsx'));
+const Collections = lazy(() => import('./components/Collections.jsx'));
+const Store = lazy(() => import('./components/Store.jsx'));
+const Settings = lazy(() => import('./components/Settings.jsx'));
+const LoginGoogle = lazy(() => import('./components/LoginGoogle.jsx'));
+const CurrentUserContext = lazy(() => import('./components/CurrentUserContext.jsx'));
+const LayoutComponent = lazy(() => import('./components/LayoutComponent.jsx'));
+const ButtonBack = lazy(() => import('./mini-components/ButtonBack.jsx'));
+const Register = lazy(() => import('./components/Register.jsx'));
+const SetupAccount = lazy(() => import('./components/SetupAccount.jsx'));
+const Story = lazy(() => import('./components/Story.jsx'));
+
+// Game Components
+const RhythmGame = lazy(() => import('./game_components/RhythmGame.jsx'));
+const MelodyGame = lazy(() => import('./game_components/MelodyGame.jsx'));
+const HarmonyGame = lazy(() => import('./game_components/HarmonyGame.jsx'));
+const PitchGame = lazy(() => import('./game_components/PitchGame.jsx'));
+const HighPitch = lazy(() => import('./game_components/HighPitch.jsx'));
+
+// Levels
+const RhythmLevels = lazy(() => import('./components/RhythmLevels.jsx'));
+const MelodyLevels = lazy(() => import('./components/MelodyLevels.jsx'));
+const HarmonyLevels = lazy(() => import('./components/HarmonyLevels.jsx'));
+const PitchLevels = lazy(() => import('./components/PitchLevels.jsx'));
+
+const App = lazy(()=> import('./App.jsx')); 
+const Maps = lazy(()=> import('./components/Maps.jsx')) ;
+
+const Login = lazy(()=> import('./components/Login.jsx'));
+const MainHome = lazy(()=> import('./components/MainHome.jsx'));
+
+
 
 const router = createBrowserRouter([
   {
@@ -63,13 +75,21 @@ const router = createBrowserRouter([
 
       {
         path: '',
-        element: <CurrentUserContext><MainHome  /></CurrentUserContext>
+        element: <CurrentUserContext>
+          <Suspense fallback={<LoadingPage />}>
+            <MainHome  />
+          </Suspense>
+        </CurrentUserContext>
       },
     
 
       {
         path: 'm',
-        element: <CurrentUserContext><Maps /></CurrentUserContext>
+        element: <CurrentUserContext>
+          <Suspense fallback={<Loader />}>
+            <Maps />
+          </Suspense>
+        </CurrentUserContext>
         
       },
 
