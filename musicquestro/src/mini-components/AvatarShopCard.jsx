@@ -1,0 +1,67 @@
+import React from 'react'
+import musicoins from '../assets/store-assets/musicoins.png'
+import axios from 'axios'
+import { useContext } from 'react'
+import { UserContext } from '../components/CurrentUserContext'
+
+function AvatarShopCard({image, name, price, setStatus}) {
+
+  const { currentUser, setCurrentUser } = useContext(UserContext)
+  const [ avatarItems, setAvatarItems ] = React.useState(currentUser ? currentUser.items.avatars : null)
+
+  React.useEffect(()=> {
+    currentUser ? setAvatarItems(currentUser.items.avatars) : null
+  }, [currentUser])
+
+
+  const purchaseItem = async () => {
+      try {
+        const response = await axios.put(`${import.meta.env.VITE_NETWORK_HOST}/add-avatar-item`, {
+          userids: "50593370411377618421",
+          newItem: name,
+          price: price
+        })
+        console.log(response.data)  
+
+        if(response){
+           setStatus('Item Purchased!') 
+          setTimeout(()=> {
+            setStatus(false)
+          }, 3000)
+        }
+
+
+        if(!response){
+           setStatus('Not enougn coins') 
+          setTimeout(()=> {
+            setStatus(false)
+          }, 3000)
+        }
+
+      } catch (error) {
+        console.log(error)
+      }
+  }
+
+  return (
+    <div 
+     
+    className='flex fdc aic jc-c' style={{backgroundColor: '#7F03F3', borderRadius: '5px', padding: '0.3em 0.5em', 
+    margin: '1em', textAlign: 'center', width: '100px', borderBottom: '0.7em solid rgb(54, 2, 85)'
+    }}>
+        <img width='100%' style={{border: '1px solid #6800c9ff', marginBottom: '1em', backgroundColor: '#38026aff'}} src={image} alt={name} />
+        <h3 style={{margin: '0', color: 'white'}}>{name}</h3>
+      <button
+        disabled={avatarItems && avatarItems.includes(name) ? true : false}
+       onClick={()=> {
+        purchaseItem()
+      }}
+      className='flex fdr aic jc-c'  style={{width: '100%', margin: '0.5em', 
+        backgroundColor: avatarItems && avatarItems.includes(name) ? 'blue' : 'green' }}><span>
+           {avatarItems && avatarItems.includes(name) ? null : <img style={{marginRight: '0.2em'}} width='20px' src={musicoins} alt="musicoins" />}
+        </span> {avatarItems && avatarItems.includes(name) ? 'OWNED' : price}</button>
+    </div>
+  )
+}
+
+export default AvatarShopCard

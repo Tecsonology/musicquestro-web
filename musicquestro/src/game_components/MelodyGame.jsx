@@ -28,7 +28,7 @@ function MelodyGame() {
   const [result, setResult] = useState('');
   const [noteLength, setNoteLength] = useState(1);
   const [score, setScore] = useState(0);
-  const [userPoints, setUserPoints] = useState(5000);
+  const [userPoints, setUserPoints] = useState(0);
   const [time, setTime] = useState(0);
   const [level, setLevel] = useState(null);
   const [message, setMessage] = useState('Listen to the melody and match the notes!');
@@ -169,7 +169,7 @@ function MelodyGame() {
   return (
     <CurrentUserContext>
       <div className='melody-game-container fpage flex fdc aic jc-c'>
-        <GamePrompt gameName={'Pitchy pitchy'}/>
+        <GamePrompt gameName={'MELODIC PEAK'}/>
         <GameStatus score={score} userPoints={userPoints} level={level} time={time} />
         { wait ? <ItemHolder useHint={useHint} useReplay={useReplay}/> : null}
 

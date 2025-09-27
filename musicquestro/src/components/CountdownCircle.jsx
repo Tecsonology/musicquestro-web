@@ -18,7 +18,7 @@ import React, { useEffect, useRef, useState } from "react";
  */
 
 export default function CountdownCircle({
-  time = 30,
+  time,
   running,
   size = 50,
   strokeWidth = 5,

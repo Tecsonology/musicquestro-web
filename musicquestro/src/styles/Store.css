@@ -1,14 +1,16 @@
-.shop {
+.store-container {
     background: #000000a2;
     background-image: url('https://i.ibb.co/DDmLYjS6/Untitled-design-82.png');
     background-repeat: no-repeat;
-    background-size: cover;
     background-blend-mode:multiply;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    height: 100%;
+    position: absolute;
     overflow: hidden;
+    z-index: 1;
 }
 
 .item-lists button {
@@ -29,6 +31,22 @@
     overflow: hidden;
 }
 
+.cat-items-wrapper button {
+    margin:  0 0.6em;
+    font-size: 0.8em;
+    background-color: transparent;
+    border: 1px solid white;
+}
+
+.avatar-items {
+    width: 40em;
+  
+}
+
+
+.store-wrapper{
+    overflow-y: hidden;
+}
 
 @media (max-width: 767px) {
     .menu-items {
@@ -36,11 +54,21 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        overflow-y: auto;    
-        overflow-x: hidden;    
-        max-height: 30vh;        
+        overflow-y: scroll;    
+        max-height: 35vh;        
         border-bottom: 2px solid white;
+        padding-bottom: 5em;
+        width: 90vw;
 
+    }
+
+    .avatar-items {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        width: 90vw;
     }
 
 }

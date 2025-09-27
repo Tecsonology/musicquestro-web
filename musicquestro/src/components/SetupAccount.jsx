@@ -58,7 +58,8 @@ function SetupAccount() {
   return (
     <div className='set-up-container fpage flex  fdc aic jc-c'>
         <Suspense fallback={<Loader/>}>
-          <h1 style={{textAlign: 'center'}}>Choose your Profile Avatar</h1>
+        <h2>Hi, welcome!</h2>
+          <p style={{textAlign: 'center'}}>Please choose your profile avatar</p>
        
         <img style={{margin: '0.5em'}} width={140} src={selected} alt="" />
 

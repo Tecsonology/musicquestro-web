@@ -9,7 +9,7 @@ function Register() {
   const [username, setName] = useState("");
   const [password, setPassword] = useState("");
   const [disabled, setDisabled] = useState(true);
-  const [error, setError] = useState("");
+  const [error, setError] = useState("edfdfdsf");
   const [success, setSuccess] = useState(false);
 
   const validatePassword = (pwd) => {
@@ -58,55 +58,93 @@ function Register() {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    
+       const userNameValidation = await axios.get(
+      `${VITE_NETWORK_HOST}/users`,
+      {
+        params: { username },
+      })
 
-    const idRandomizer = [];
-    for (let x = 0; x < 20; x++) {
-      idRandomizer.push(Math.floor(Math.random() * 10));
-    }
-    const userids = idRandomizer.join("").toString();
+      if(userNameValidation.data.message === "User exists") {
+        setError("Username already exists. Please choose another one.");
+        return;
+      } else {
+          e.preventDefault();
 
-    let id = 555;
-    let musicCoins = 3000.0;
-    let totalPoints = 0;
-    let life = 1000.0;
-    let maps = {
-      rhythm: { isLocked: "false", levels: [1] },
-      melody: { isLocked: "true", levels: [1] },
-      harmony: { isLocked: "true", levels: [1] },
-      pitch: { isLocked: "true", levels: [1] },
-    };
-    let currentInstrument = "sine";
-    let avatar = "https://i.ibb.co/8455cZ4G/Untitled-design-59.png";
+          const idRandomizer = [];
+          for (let x = 0; x < 20; x++) {
+            idRandomizer.push(Math.floor(Math.random() * 10));
+          }
+          const userids = idRandomizer.join("").toString();
 
-    try {
-      const response = await axios.post(`${VITE_NETWORK_HOST}/createUser`, {
-        id,
-        username,
-        password,
-        userids,
-        musicCoins,
-        life,
-        totalPoints,
-        maps,
-        currentInstrument,
-        avatar,
-      });
+          let id = 555;
+          let musicCoins = 3000.0;
+          let totalPoints = 0;
+          let life = 1000.0;
+          let maps = {
+            rhythm: { isLocked: "false", levels: [1] },
+            melody: { isLocked: "true", levels: [1] },
+            harmony: { isLocked: "true", levels: [1] },
+            pitch: { isLocked: "true", levels: [1] },
+          };
+          let story = {
+            chapter1: { isLocked: "false"},
+            chapter2: { isLocked: "true"},
+            chapter3: { isLocked: "true"},
+            chapter4: { isLocked: "true"},
+           
+          }
 
-      if (response) {
-        setDisabled(true);
-        await getUser(userids);
+
+          let items = {
+            spells: [
+              ["Hint", 10, '../assets/game-assets/ItemAssets/hint.png'],
+              ["Heart", 15 , '../assets/game-assets/ItemAssets/heart.png'],
+              ["Replay", 10, '../assets/game-assets/ItemAssets/replay.png']
+            ],
+            
+            avatars: [],
+            instruments: [],
+            badges: []
+          }
+          let currentInstrument = "sine";
+          let avatar = "https://i.ibb.co/8455cZ4G/Untitled-design-59.png";
+
+          try {
+            const response = await axios.post(`${VITE_NETWORK_HOST}/createUser`, {
+              id,
+              username,
+              password,
+              userids,
+              musicCoins,
+              life,
+              totalPoints,
+              maps,
+              currentInstrument,
+              avatar,
+              story,
+              items
+            });
+
+            if (response) {
+              setDisabled(true);
+              await getUser(userids);
+            }
+            setSuccess(true);
+          } catch (error) {
+            alert("Failed to add user. Please try again.");
+            console.error("Failed to add user:", error);
+          }
       }
-      setSuccess(true);
-    } catch (error) {
-      alert("Failed to add user. Please try again.");
-      console.error("Failed to add user:", error);
-    }
-  };
+                    
+    
+   
+
+  }
 
   return (
     <div style={{ margin: "1em 0" }} className="register flex fdc jc-c aic">
-      <h2>Register</h2>
+      <h2>REGISTER</h2>
       {!success ? (
         <>
           <input

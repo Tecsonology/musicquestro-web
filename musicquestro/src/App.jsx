@@ -63,7 +63,8 @@ function App() {
           style={{
             background: 'transparent',
             cursor: 'pointer',
-          }} className='explore flex fdr aic jc-c'><span><img className='animateGoingUp ' style={{marginRight: '0.5em'}} src={arrowDown} alt="" /></span >Scroll down for more</h3> : null
+            color: 'white'
+          }} className='explore flex fdr aic jc-c'><span><img className='animateGoingUp ' style={{marginRight: '0.5em'}} src={arrowDown} alt="" /></span>Scroll down for more</h3> : null
         }
 
 
@@ -79,7 +80,7 @@ function App() {
 
             <div className='flex fdc aic jc-c'>
               <img width={500} style={{margin: '1em'}} src={StoryPrev} alt="" />
-              <h3 id='story-desc' style={{textAlign: 'center'}}>✨ Uncover the magical origins of MusicQuestro Land. Follow the story, meet new characters, and unlock the secrets hidden within the world of music.</h3>
+              <h3 id='story-desc' style={{textAlign: 'center', color: 'white'}}>✨ Uncover the magical origins of MusicQuestro Land. Follow the story, meet new characters, and unlock the secrets hidden within the world of music.</h3>
             </div>
 
 
@@ -123,7 +124,8 @@ function App() {
             background: 'transparent',
             position: 'relative',
             bottom: '-4em',
-            cursor: 'pointer'
+            cursor: 'pointer',
+            color: 'white'
           }} className='flex fdr aic jc-c'><span><img className='animateGoingDown' style={{marginRight: '0.5em '}} src={arrowUp} alt="" /></span>Back to top</h3>
         </section>
       

@@ -4,7 +4,9 @@
 }
 
 
-
+* {
+  color: white;
+}
 
 .user {
   background: rgb(17, 17, 17);
@@ -14,6 +16,10 @@
   position: absolute;
   right: 1em;
   top: 2em;
+}
+
+option {
+  width: 1em;
 }
 
 
@@ -375,6 +381,10 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
   }
 }
 
+#activeNav {
+  background-color: rgba(1, 26, 136, 0.314);
+}
+
 @keyframes l27 {
   100% {transform: rotate(1turn)}
 }
@@ -402,9 +412,10 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 }
 
 .melody-levels-container {
-  background: #1b263bf5;
-  background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+  background: #000000b6;
+  background-image: url('https://i.ibb.co/hRPDwzZM/Melody-Stage-Select.png');
   background-position: center;
+  background-repeat: no-repeat;
   background-blend-mode: multiply;
 }
 

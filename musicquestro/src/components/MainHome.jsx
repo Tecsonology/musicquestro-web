@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useContext, Suspense, lazy } from 'react'
 import '../styles/MainHome.css'
 import MainHomeVisual from '../assets/MainHomeVisual.png'
@@ -46,7 +46,10 @@ function MainHome() {
           }}
          />
 
-         <div className="user-attributes flex fdr aic jc-c">
+         {
+           currentUser ? 
+           <>
+            <div className="user-attributes flex fdr aic jc-c">
 
             <div  style={{marginRight: '1em'}} className='flex fdr aic jc-c'>
               <img className='scaleWithLight' style={{color: 'white', marginRight: '0.7em'}} width={30} src={MusicLife} alt="" />
@@ -91,6 +94,8 @@ function MainHome() {
          </div>
 
          </div>
+           </> : <LoadingPage />
+         }
 
     </div>
   )

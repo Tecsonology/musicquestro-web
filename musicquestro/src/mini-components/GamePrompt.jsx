@@ -46,14 +46,14 @@ function GamePrompt({ gameName, instr }) {
     <>
         {
             showPrompt && showPrompt ? 
-            <div className='fpage flex fdc jc-c aic' style={{position: 'absolute', zIndex: '10', backgroundColor: 'rgba(0, 0, 0, 0.63)', height: '100%'}}>
+            <div className='game-prompt-container fpage flex fdc jc-c aic' style={{position: 'absolute', zIndex: '10', backgroundColor: 'rgba(0, 0, 0, 0.63)', height: '100%'}}>
             <div className='flex fdc aic jc-c' style={{backgroundColor: 'white', color: 'black', padding: '1em', width: '17em', borderRadius: '1em'}}>
                 {/**<h3 onClick={hidePrompt} style={{position: 'relative', right: '-7em', top: '-1.5em', color: 'red'}}>x</h3> */}
                 <h3>{ gameName && gameName }</h3><br />
-                <p>This game needs</p>
-                <span><span><img width={15} src="https://i.ibb.co/BVq668JC/Untitled-design-30.png" alt="" /></span> -5 </span>
-                <p>musiclife deduction</p>
-                { currentUser ? <button disabled={begin} onClick={hidePrompt}>Alright!</button> : null}
+                <span style={{background: '#00154F', padding: '1em', borderRadius: '2em 0 2em 0', border: '3px solid yellow'}} className='flex fdr aic jc-c'><span><img width={20} src="https://i.ibb.co/BVq668JC/Untitled-design-30.png" alt="" />
+                </span><p style={{color: 'white'}}>-5</p></span>
+                <p>Music energy exchange</p>
+                { currentUser ? <button style={{width: '100%'}} disabled={begin} onClick={hidePrompt}>Alright!</button> : null}
             </div>
             </div> : null
         }

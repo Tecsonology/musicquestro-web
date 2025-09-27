@@ -49,6 +49,12 @@
     
 }
 
+
+.game-prompt-container p, h3 {
+    color: black;
+    
+}
+
 #btnStartRhythm {
     display: flex;
     justify-content: center;
@@ -103,7 +109,8 @@ button#playRhythm :hover {
     margin: 1em 0.5em;
 }
 
-.game-summary {
+.game-summary  {
+    color: black;
     position: fixed;
     top: 0;
     background-color: rgba(0, 0, 0, 0.63);
@@ -111,6 +118,8 @@ button#playRhythm :hover {
     height: 100vh;
     z-index: 3;
 }
+
+
 
 .game-summary-wrapper {
     box-sizing: border-box;
@@ -123,7 +132,14 @@ button#playRhythm :hover {
     p {
         margin: 1em;
         font-weight: bold;
+        color: #000;
     }
+
+    span {
+        color: rgb(1, 101, 40);
+    }
+
+    
 }
 
 .cardLightOn {

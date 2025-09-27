@@ -8,7 +8,7 @@ function StoreCard({sound, imgItem, itemName, itemPrice, children, description})
         onClick={()=> {
           playInstrument(sound)
         }}/>
-        <h3 style={{fontWeight: 'bolder'}}>{itemName}</h3>
+        <h3 style={{fontWeight: 'bolder', color: 'white'}}>{itemName}</h3>
 
         <p style={{textAlign: 'center', marginTop: '1.5em', color: '#F5F5F5'}}>{description}</p>
         <h4 className='flex fdr aic jc-c'><span><img style={{width: '1.3em', marginRight: '0.5em'}} src="https://i.ibb.co/N6w014ng/Currency.png" alt="" /></span>

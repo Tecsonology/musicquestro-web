@@ -58,7 +58,7 @@ function RhythmGame() {
   const [ showNextButton, setShowNextButton ] = useState(false)
   
   let currentLevel = 0
-  let countdownTimer = 30
+  let countdownTimer = 1000
   const targetPoint = 55;
 
     const audioCtxRef = useRef(null);
@@ -294,7 +294,7 @@ useEffect(() => {
       {
         wait && !showCorrection ?
         <div style={{margin: '5em'}}>
-        <ItemHolder useHint={useHint} useReplay={useReplay} running={running} setGameOver={setGameOver} setRunning={setRunning} children={
+        <ItemHolder userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setGameOver={setGameOver} setRunning={setRunning} children={
           <div>
             <CountdownCircle time={countdownTimer} running={running} setRunning={setRunning} onComplete={setGameOver}/>
           </div>

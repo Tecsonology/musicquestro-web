@@ -44,6 +44,8 @@ const Maps = lazy(()=> import('./components/Maps.jsx')) ;
 const Login = lazy(()=> import('./components/Login.jsx'));
 const MainHome = lazy(()=> import('./components/MainHome.jsx'));
 
+const EditProfile = lazy(()=> import('./mini-components/EditProfile.jsx'));
+
 
 
 const router = createBrowserRouter([
@@ -105,7 +107,13 @@ const router = createBrowserRouter([
 
       {
         path: 'user',
-        element: <CurrentUserContext><Profile /></CurrentUserContext>
+        element: <CurrentUserContext><Profile /></CurrentUserContext>,
+        children: [
+            {
+              path: 'edit',
+              element: <EditProfile />
+            }
+          ]
       },
 
       

@@ -82,7 +82,7 @@ function Login() {
     <div className='flex jc-c fdc'>
         <div className='flex fdc jc-c aic'>
             
-                <h2>Login</h2>
+                <h2>LOGIN</h2>
                <div className="login flex fdc jc-c aic">
                         <input
                         type="text"

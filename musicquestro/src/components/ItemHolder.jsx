@@ -1,23 +1,73 @@
-import React from 'react'
+import React, { useContext, useState} from 'react'
 import heart from '../assets/game-assets/ItemAssets/heart.png'
 import replay from '../assets/game-assets/ItemAssets/replay.png'
 import hint from '../assets/game-assets/ItemAssets/hint.png'
 import CountdownCircle from './CountdownCircle'
+import axios from 'axios'
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
-function ItemHolder({useHint, useReplay, running, setRunning, setGameOver, children }) {
+
+function ItemHolder({useHint, useReplay, running, setRunning, setGameOver, children, userContext }) {
+
+  const tempHintQty = userContext ? userContext.items.spells[0][1] : 0
+  const tempHeartQty = userContext ? userContext.items.spells[1][1] : 0
+  const tempReplayQty = userContext ? userContext.items.spells[2][1] : 0
+
+  const [ spells, setSpells ] = useState(userContext ? userContext.items.spells : null)
+
+  const [ hintQty, setHintQty ] = useState()
+  const [ heartQty, setHeartQty ] = useState()
+  const [ replayQty, setReplayQty ] = useState()
+
+  useState(() => {
+    setHintQty(spells ? spells[0][1] : 0)
+    setHeartQty(spells ? spells[1][1] : 0)
+    setReplayQty(spells ? spells[2][1] : 0)
+  }, [userContext])
+
+  const updateQty = async (index) => {
+    try {
+
+      const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
+        userids: "50593370411377618421",
+        operator: -1,
+        index: index
+      })
+
+      console.log(response.data)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
   return (
     <div className='flex fdr' style={{position: 'fixed', left: '0', top: '5em'}}>
-      <div onClick={()=> useHint()} className='item-wrapper glass-bg'>
+      <div onClick={()=> {
+        if (hintQty > 0) {
+          useHint()
+          updateQty(0)
+          setHintQty(hintQty - 1)
+        }
+      }} className='item-wrapper glass-bg'>
         <img width={40} src={hint} alt="" />
-        <h4 className='item-quantity'>1</h4>
+        <h4 className='item-quantity'>{tempHintQty}</h4>
       </div>
+
       <div onClick={()=> setGameOver()} className='item-wrapper glass-bg'>
         <img width={40} src={heart} alt="" />
-        <h4 className='item-quantity'>1</h4>
+        <h4 className='item-quantity'>{heartQty}</h4>
       </div>
       <div className='item-wrapper glass-bg'>
-        <img onClick={()=> useReplay()} width={40} src={replay} alt="" />
-        <h4 className='item-quantity'>1</h4>
+        <img onClick={()=> {
+          if (replayQty > 0) {
+            useReplay()
+            updateQty(2)
+            setReplayQty(replayQty - 1)
+          }
+        }} width={40} src={replay} alt="" />
+        <h4 className='item-quantity'>{tempReplayQty}</h4>
       </div>
       {children}
       

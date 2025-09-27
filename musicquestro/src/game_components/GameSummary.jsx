@@ -168,7 +168,7 @@ function GameSummary(props) {
         !nextMapPrompt ?
         <div className="game-summary-wrapper flex fdc aic jc-c">
         
-        <h1 style={{textAlign: 'center'}}>{gamePoints >= props.targetPoint.toFixed(2) ? 'Congrats' : 'Better Luck Next Time'}</h1>
+        <h1 style={{textAlign: 'center', color: 'black'}}>{gamePoints >= props.targetPoint.toFixed(2) ? 'Congrats' : 'Better Luck Next Time'}</h1>
 
         <div className='flex fdr aic jc-c'>
           
@@ -186,13 +186,11 @@ function GameSummary(props) {
           <p><span>Target: </span>{props.targetPoint}</p>
 
           
-
-          
         
         </div>
 
           <h3>Rewards</h3>
-        <div style={{backgroundColor: '#E8E8E8', padding: '0.5em 1em', borderRadius: '1em'}} className='flex fdr aic jc-c'>
+        <div style={{backgroundColor: '#E8E8E8', padding: '0.5em 1em', borderRadius: '1em', color: 'black'}} className='flex fdr aic jc-c'>
           <h4 style={{marginRight: '1em'}}><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
           <h4><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
         </div>
