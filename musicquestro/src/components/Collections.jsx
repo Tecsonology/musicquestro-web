@@ -12,7 +12,6 @@ import close from '../assets/game-assets/Prompts/Close.png'
 import AvatarShopCard from '../mini-components/AvatarShopCard'
 import SpellCard from '../mini-components/SpellCard'
 
-import friend from '../assets/AvatarShopItems/friend.png'
 import devil from '../assets/AvatarShopItems/devil.png'
 import dog from '../assets/AvatarShopItems/Dog.png'
 import cat from '../assets/AvatarShopItems/Cat.png'
