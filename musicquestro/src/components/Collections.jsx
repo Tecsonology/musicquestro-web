@@ -75,7 +75,7 @@ function Collections() {
             <>
                 
                 <div className="collection-list glass-bg flex fdc aic jc-c">
-                   <h3>My Collections</h3>
+                   <h3 style={{color: 'white'}}>My Collections</h3>
                     <div style={{marginBottom: '1em'}} className='cat-items-wrapper flex fdr aic jc-c'>
                         <button onClick={()=> {setActiveShow('instrument')}}>Instrument</button>
                         <button onClick={()=> {setActiveShow('spells')}}>Spells</button>
