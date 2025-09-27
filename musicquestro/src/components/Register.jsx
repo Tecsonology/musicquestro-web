@@ -88,7 +88,7 @@ function Register() {
             pitch: { isLocked: "true", levels: [1] },
           };
           let story = {
-            chapter1: { isLocked: "false"},
+            chapter1: { isLocked: "true"},
             chapter2: { isLocked: "true"},
             chapter3: { isLocked: "true"},
             chapter4: { isLocked: "true"},
@@ -107,6 +107,7 @@ function Register() {
             instruments: [],
             badges: []
           }
+          let bio = ''
           let currentInstrument = "sine";
           let avatar = "https://i.ibb.co/8455cZ4G/Untitled-design-59.png";
 
@@ -123,7 +124,8 @@ function Register() {
               currentInstrument,
               avatar,
               story,
-              items
+              items,
+              bio,
             });
 
             if (response) {

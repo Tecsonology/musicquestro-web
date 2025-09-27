@@ -14,6 +14,7 @@ const lazzzy = lazy(()=> import('./Loader'))
 import musLife from '../assets/store-assets/MusicLife.png'
 import muscoins from '../assets/store-assets/musicoins.png'
 import EditIcon from '../assets/EditIcon.png'
+import logout from '../assets/logout.png'
 
 import star from '../assets/star.png'
 
@@ -55,6 +56,16 @@ function Profile() {
                 currentUser && currentUser ?
                 <div style={{margin: '2em 0', justifyContent: 'flex-start'}} className='flex fdc aic'>
                   <div className="profile-container fdr flex">
+                    <div onClick={()=> {
+                        localStorage.clear()
+                        window.location.href = '/'
+                        
+                    }} className='flex fdc aic jc-c' 
+                      style={{backgroundColor: 'rgba(59, 61, 59, 0.9)', height: '2.5em', border: '1px solid rgba(170, 170, 170, 0.9)',
+                      width: '2.5em', borderRadius: '1em', position: 'absolute', top: '-1em', right: '1em'}}>
+                      <img style={{margin: 0}} width={20} height={20} src={logout} alt="" />
+                    </div>
+
                     <img width={80} src={currentUser ? currentUser.avatar : null} alt="" />
                  
                     <div>
@@ -93,10 +104,7 @@ function Profile() {
                 
               </div>
 
-              <div style={{padding: '0 0.5em', margin: '1em', backgroundColor: 'rgba(22, 29, 50)',}} className="items">
-                <h5>AVATARS: {currentUser ? currentUser.items.avatars.length : 'No data'}</h5>
-                <h5>INSTRUMENTS: {currentUser ? currentUser.collection.length : 'No data'}</h5>               
-              </div>
+    
 
               <div style={{backgroundColor: 'rgba(22, 29, 50)'}} className='flex fdc aic jc-c glass-bg '>
                 <h4>BADGES</h4>

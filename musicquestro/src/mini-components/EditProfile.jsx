@@ -14,15 +14,16 @@ function EditProfile() {
   const [ newUsername, setNewUsername ] = useState()
   const [ bio, setBio ] = React.useState()
 
-
+console.log(currentUser ? currentUser.username : null)
   const updateProfile = async()=> {
-        console.log(newUsername)
+        
+        
 
     try {
       
       const updateUser = await axios.put(`${VITE_NETWORK_HOST}/update-user-profile`,
           {
-            userids: "50593370411377618421",
+            userids: currentUser ? currentUser.userids : null,
             newUsername: newUsername,
             bio: bio
           }

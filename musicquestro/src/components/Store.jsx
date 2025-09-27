@@ -135,7 +135,7 @@ function Store() {
     try {
 
       const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
-        userids: "50593370411377618421",
+        userids: currentUser ? currentUser.userids : null,
         operator: 1,
         index: index
       })
@@ -150,7 +150,7 @@ function Store() {
     try {
       const response = await axios.put(`${VITE_NETWORK_HOST}/deduct-coins`, 
         {
-        userids: "50593370411377618421",
+        userids: currentUser ? currentUser.userids : null,
         coinsDeduct: coins
       })
 

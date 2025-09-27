@@ -33,7 +33,7 @@ function MainHome() {
   
 
   return (
-    <div className='mainhome-container fpage flex fdc aic jc-c' style={{
+    <div className='mainhome-container fpage flex fdc' style={{
       marginBottom: '3em',
       backgroundImage: {MainBG}
       }}>
@@ -80,6 +80,7 @@ function MainHome() {
          <div className="main-content flex fdc aic jc-c">
           <div className="main-left">
             <img src={MainHomeVisual} alt="" />
+            <h4 style={{textAlign: 'center', margin: 0}}>"{currentUser ? currentUser.bio : null}"</h4>
          </div>
          <div className="main-right flex fdc aic jc-c">
             <div className='main-home-button flex fdc aic jc-c'>

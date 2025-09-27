@@ -11,6 +11,7 @@ import '../styles/Animation.css'
 import close from '../assets/game-assets/Prompts/Close.png'
 import AvatarShopCard from '../mini-components/AvatarShopCard'
 import SpellCard from '../mini-components/SpellCard'
+import '../styles/Store.css'
 
 import friend from '../assets/AvatarShopItems/Friend.png'
 import devil from '../assets/AvatarShopItems/Devil.png'
@@ -75,7 +76,8 @@ function Collections() {
             <>
                 
                 <div className="collection-list glass-bg flex fdc aic jc-c">
-                   <h3 style={{color: 'white'}}>My Collections</h3>
+                  <div style={{position: 'sticky'}}>
+                     <h3 style={{color: 'white'}}>My Collections</h3>
                     <div style={{marginBottom: '1em'}} className='cat-items-wrapper flex fdr aic jc-c'>
                         <button onClick={()=> {setActiveShow('instrument')}}>Instrument</button>
                         <button onClick={()=> {setActiveShow('spells')}}>Spells</button>
@@ -83,7 +85,10 @@ function Collections() {
                       </div>
                  
                     <img onClick={()=> navigate(-1)} style={{position: 'absolute', right: '0em', top: '0.2em', cursor: 'pointer', zIndex: '9'}} width={40} src={close} alt="" />
-                    {
+                    
+                  </div>
+
+                  {
                       activeShow === 'instrument' ?
                       <div className='collection-cards'>
                        {
@@ -117,7 +122,7 @@ function Collections() {
 
                     {
                       activeShow === 'avatars' ?
-                      <div className='flex fdr aic jc-c' style={{flexWrap: 'wrap',}}>
+                      <div className='flex fdr aic jc-c' style={{flexWrap: 'wrap', overflow: 'scroll'}}>
                         {userItems && userItems.avatars.map((avatar, index) => (
                             
                           

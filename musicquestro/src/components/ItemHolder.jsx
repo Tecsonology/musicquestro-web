@@ -29,7 +29,7 @@ function ItemHolder({useHint, useReplay, running, setRunning, setGameOver, child
     try {
 
       const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
-        userids: "50593370411377618421",
+        userids: userContext.userids,
         operator: -1,
         index: index
       })
