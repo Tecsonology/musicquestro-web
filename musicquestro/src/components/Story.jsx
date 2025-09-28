@@ -3,7 +3,35 @@ import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import backBtn from '/src/assets/game-assets/Assets/Buttons/Back.png'
 import arrowDown from '../assets/game-assets/AppAssets/arrowDown.png'
-import CurrentUserContext, { UserContext } from './CurrentUserContext'
+import { UserContext } from './CurrentUserContext'
+
+import slide1 from "/src/assets/game-assets/Scenes(HQ)/1.png"
+import slide2 from "/src/assets/game-assets/Scenes(HQ)/2.png"
+import slide3 from "/src/assets/game-assets/Scenes(HQ)/3.png"
+import slide4 from "/src/assets/game-assets/Scenes(HQ)/4.png"
+import slide5 from "/src/assets/game-assets/Scenes(HQ)/5.png"
+import slide6 from "/src/assets/game-assets/Scenes(HQ)/6.png"
+import slide7 from "/src/assets/game-assets/Scenes(HQ)/7.png"
+import slide8 from "/src/assets/game-assets/Scenes(HQ)/8.png"
+import slide9 from "/src/assets/game-assets/Scenes(HQ)/9.png"
+import slide10 from "/src/assets/game-assets/Scenes(HQ)/10.png"
+import slide11 from "/src/assets/game-assets/Scenes(HQ)/11.png"
+import slide12 from "/src/assets/game-assets/Scenes(HQ)/12(Before Rhythm Game).png"
+
+import slide13 from "/src/assets/game-assets/Scenes(HQ)/13.png"
+import slide14 from "/src/assets/game-assets/Scenes(HQ)/14(After Rhythm Game).png"
+import slide15 from "/src/assets/game-assets/Scenes(HQ)/15.png"
+import slide16 from "/src/assets/game-assets/Scenes(HQ)/16.png"
+import slide17 from "/src/assets/game-assets/Scenes(HQ)/17.png"
+import slide18 from "/src/assets/game-assets/Scenes(HQ)/18.png"
+import slide19 from "/src/assets/game-assets/Scenes(HQ)/19.png"
+import slide20 from "/src/assets/game-assets/Scenes(HQ)/20.png"
+import slide21 from "/src/assets/game-assets/Scenes(HQ)/21.png"
+import slide22 from "/src/assets/game-assets/Scenes(HQ)/22(Before Melody Game).png"
+import slide23 from "/src/assets/game-assets/Scenes(HQ)/23.png"
+import slide24 from "/src/assets/game-assets/Scenes(HQ)/24(After Melody Game).png"
+
+
 
 
 import '../styles/Story.css'
@@ -53,40 +81,42 @@ function Story() {
           }} src={arrowDown} alt="" />
       </div>
       <div className="story-wrapper flex fdc aic jc-c">
-        <img src="/src/assets/game-assets/Scenes(HQ)/1.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/2.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/3.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/4.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/6.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/7.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/8.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/9.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/10.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/11.png" alt="" className="img-story" />
-        <img src="/src/assets/game-assets/Scenes(HQ)/12(Before Rhythm Game).png" alt="" className="img-story" />
+        <img src={slide1} alt="" className="img-story" />
+        <img src={slide2} alt="" className="img-story" />
+        <img src={slide3} alt="" className="img-story" />
+        <img src={slide4} alt="" className="img-story" />
+        <img src={slide5} alt="" className="img-story" />
+        <img src={slide6} alt="" className="img-story" />
+        <img src={slide7} alt="" className="img-story" />
+        <img src={slide8} alt="" className="img-story" />
+        <img src={slide9} alt="" className="img-story" />
+        <img src={slide10} alt="" className="img-story" />
+        <img src={slide11} alt="" className="img-story" />
+        <img src={slide12} alt="" className="img-story" />
 
         {
           storyLoaded && storyLoaded.chapter1.isLocked == 'false' ?
           <div>
-            <img src="/src/assets/game-assets/Scenes(HQ)/13.png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/14(After Rhythm Game).png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/15.png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/16.png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/17.png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/18.png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/19.png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/20.png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/21.png" alt="" className="img-story" />
+            <img src={slide12} alt="" className="img-story" />
+            <img src={slide13} alt="" className="img-story" />
+            <img src={slide14} alt="" className="img-story" />
+            <img src={slide15} alt="" className="img-story" />
+            <img src={slide16} alt="" className="img-story" />
+            <img src={slide17} alt="" className="img-story" />
+            <img src={slide18} alt="" className="img-story" />
+            <img src={slide19} alt="" className="img-story" />
+            <img src={slide20} alt="" className="img-story" />
+            <img src={slide21} alt="" className="img-story" />
+          
           </div> : <p>Chaper 2 Locked. Complete Rhythm Game first</p>
         }
 
          {
           storyLoaded && storyLoaded.chapter2.isLocked == 'false' ?
           <div>
-            <img src="/src/assets/game-assets/Scenes(HQ)/22(Before Melody Game).png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/23.png" alt="" className="img-story" />
-            <img src="/src/assets/game-assets/Scenes(HQ)/24(After Melody Game).png" alt="" className="img-story" />
+            <img src={slide22} alt="" className="img-story" />
+            <img src={slide23} alt="" className="img-story" />
+            <img src={slide24} alt="" className="img-story" />
            
           </div> : <p>Chaper 3 Locked. Complete Melody Game first</p>
         }

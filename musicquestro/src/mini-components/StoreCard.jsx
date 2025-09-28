@@ -1,7 +1,7 @@
 import React from 'react'
 import { playInstrument} from '../components/IntstrumentPlayer'
 
-function StoreCard({sound, imgItem, itemName, itemPrice, children, description}) {
+function StoreCard({sound, imgItem, itemName, itemPrice, children, description, setStatus }) {
   return (
     <div className='store-card flex fdc jc-c aic'>
         <img width={50} height={40} style={{margin: '0.4em 0'}} src={imgItem} alt="Untitled-design-85" border="0"
