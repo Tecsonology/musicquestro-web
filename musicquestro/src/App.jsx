@@ -40,7 +40,7 @@ function App() {
        <div  className="main-log flex fdc aic jc-c">
         
         <img width={!logingIn ? 300 : 200} className='main-logo' src={logo} alt="" />
-        <p id='beta-version'>Beta Version: 1.000.0.004</p>
+        <p id='beta-version'>Beta Version: 1.000.0.004.1</p>
         {
           !logingIn ? 
           <>

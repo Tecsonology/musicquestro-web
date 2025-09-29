@@ -22,8 +22,6 @@ import heart from '../assets/game-assets/ItemAssets/heart.png'
 import replay from '../assets/game-assets/ItemAssets/replay.png'
 import hint from '../assets/game-assets/ItemAssets/hint.png'
 
-
-
 import flute  from '../assets/game-assets/Assets/Instrument/Flute.png'
 import guitar  from '../assets/game-assets/Assets/Instrument/Guitar.png'
 import xylo  from '../assets/game-assets/Assets/Instrument/Xylo.png'
@@ -226,7 +224,15 @@ function Store() {
                       <StoreCard imgItem='https://i.ibb.co/BVq668JC/Untitled-design-30.png' itemName={'Music Energy'} itemPrice={50}
                             description={'Boosts your music energy!'}
                           children={
-                            <span><button onClick={handleAddLife}>Buy</button></span>
+                            <span><button onClick={()=> {
+                              handleAddLife()
+
+                                setStatus('Item purchased!') 
+                                  setApproved(true)
+                                    setTimeout(()=> {
+                                      setStatus(false)
+                                    }, 3000)
+                            }}>Buy</button></span>
                         } />
 
                         <StoreCard imgItem={hint} itemName={'Hint'} itemPrice={50}

@@ -29,7 +29,7 @@ function CollectionCard({image, itemName, instrCode}) {
   return (
     <CurrentUserContext>
       <div className='collection-card flex fdc jc-c aic'>
-          <img src={image} alt="" />
+          <img width={100} src={image} alt="" />
           <h3 style={{color: 'white'}}>{itemName}</h3>
           <button
             style={{

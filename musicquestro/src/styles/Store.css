@@ -40,9 +40,8 @@
 }
 
 .avatar-items {
-    width: 47em;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
   
 }
@@ -62,6 +61,10 @@
         max-height: 35vh;        
         border-bottom: 2px solid white;
         padding-bottom: 5em;
+
+        button {
+            margin: 0 0.5em;
+        }
 
     }
 
@@ -85,8 +88,13 @@
     }
 
     .menu-items, .avatar-items {
-      
+        flex-direction: row;
     }
 
     
 }
+
+@media (min-width: 1500px){
+    
+}
+

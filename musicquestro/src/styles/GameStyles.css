@@ -262,9 +262,7 @@ button:disabled {
     background-color: #7F03F3;
     color: #FAFAEF;
     padding: 0.5em;
-    min-width: 8em;
-    max-width: 8em;
-
+    min-width: 5em;
     border-radius: 1em;
     margin: 0.7em;
     justify-content: space-between;
@@ -274,12 +272,8 @@ button:disabled {
         margin: 0;
     }   
 
-    img {
-        width: 5em;
-    }
-
     button {
-        margin-top: 1em;
+        margin: 0;
         background-color: green;
     }
 }
@@ -362,8 +356,7 @@ input[type='range'] {
 
 @media (max-width: 767px){
     .store-card {
-        min-width: 20em;
-        max-width: 15em;
+
     }
 
     #gamecanvas {
@@ -398,8 +391,7 @@ input[type='range'] {
     }
 
      .store-card {
-        min-width: 13em;
-        min-height: 15em;
+       
     }
 
     .collection-list {

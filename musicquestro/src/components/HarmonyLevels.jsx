@@ -21,7 +21,7 @@ function HarmonyLevels() {
     
   return (
     <div className='rhythm-levels-container fpage flex fdc aic jc-c' style={{position: 'absolute'}}>
-      <h1>Levels</h1>
+      <h1 style={{textAlign: 'center'}}>Echoic Highlands</h1>
       <div className="level-button-wrapper flex fdr aic jc-c flex-wrap">
         {
             levels ? 

@@ -1,0 +1,181 @@
+/* -- HarmonyGame.css -- */
+
+/* === Base Styles: Mobile-First Approach (for devices up to ~600px) === */
+
+.harmony-game-container {
+
+  font-family: sans-serif;
+  text-align: center;
+  padding-top: 6em;
+  background: rgba(13, 0, 0, 0.771);
+  box-sizing: border-box; /* Ensures padding is included in total width */
+  background-image: url(../assets/game-assets/Assets/BackGround/NormalBG/Harmony.png);
+  background-size: cover; /* Ensures the image covers the entire container */
+  background-position: center; /* Centers the background image */
+  background-blend-mode: multiply;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+h1 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 0.9rem;
+}
+
+.notes-library {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px; /* Provides consistent spacing between notes */
+  margin-top: 20px;
+}
+
+.note {
+  width: 50px;
+  height: 50px;
+  background-color: #007bff;
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: grab;
+  font-size: 1rem;
+  font-weight: bold;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+}
+
+.note:active {
+  cursor: grabbing;
+}
+
+.chord-box {
+  border: 2px dashed #6c757d;
+  border-radius: 10px;
+  width: 90%;
+  min-height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin-top: 30px;
+  background-color: rgba(248, 249, 250, 0.7); /* Added transparency for background */
+  transition: all 0.3s ease-in-out;
+  box-sizing: border-box;
+}
+
+.note-in-box {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 12px;
+  margin: 4px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: column; /* Stacks buttons on mobile */
+  gap: 10px;
+  margin-top: 15px;
+  width: 100%;
+  max-width: 300px;
+}
+
+.action-buttons button,
+.reset-button {
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.action-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.reset-button {
+  margin-top: 20px;
+  background-color: #dc3545;
+}
+
+.reset-button:hover {
+  background-color: #c82333;
+}
+
+/* === Tablet Styles (min-width: 600px) === */
+@media (min-width: 600px) {
+  .harmony-game-container {
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+  }
+
+  .notes-library {
+    margin-top: 30px;
+    gap: 15px;
+  }
+
+  .note {
+    width: 60px;
+    height: 60px;
+    font-size: 1.2rem;
+  }
+
+  .chord-box {
+    min-height: 150px;
+    padding: 20px;
+    max-width: 600px;
+  }
+
+  .note-in-box {
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 1rem;
+  }
+
+  .action-buttons {
+    flex-direction: row; /* Arranges buttons side-by-side on tablet */
+    max-width: none;
+    justify-content: center;
+  }
+}
+
+/* === Desktop Styles (min-width: 1024px) === */
+@media (min-width: 1024px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+  }
+
+  .note {
+    width: 70px;
+    height: 70px;
+    font-size: 1.5rem;
+  }
+
+  .chord-box {
+    max-width: 700px;
+  }
+}

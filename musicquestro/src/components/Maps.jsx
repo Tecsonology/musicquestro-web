@@ -24,6 +24,11 @@ const mapNames = {
     location: '/h/melodyLevels'
   },
 
+  harmony: {
+    imgLink: '/assets/Maps/Harmony.png',
+    location: '/h/harmonyLevels'
+  },
+
   pitch: {
     imgLink: '/assets/Maps/Pitch.png',
     location: '/h/pitchLevels'

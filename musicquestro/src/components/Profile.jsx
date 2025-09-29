@@ -24,6 +24,7 @@ function Profile() {
   const { currentUser } = useContext(UserContext)
   const [ edit, setEdit] = useState(false)
   const navigate = useNavigate()
+
       
   return (
     <>
@@ -90,19 +91,19 @@ function Profile() {
                 <h6 style={{margin: 0}}>STATS</h6>
                 <div>
                   <label htmlFor="rhythmStat">Rhythm: </label>
-                  <progress id='rhythmStat' value={2} max={5}></progress>
+                  <progress id='rhythmStat' value={currentUser && currentUser.maps.rhythm.levels.length} max={5}></progress>
                 </div>
                 <div>
                   <label htmlFor="rhythmStat">Melody: </label>
-                  <progress id='rhythmStat' value={2} max={5}></progress>
+                  <progress id='rhythmStat' value={currentUser && currentUser.maps.melody.levels.length} max={5}></progress>
                 </div>
                 <div>
                   <label htmlFor="rhythmStat">Harmony: </label>
-                  <progress id='rhythmStat' value={2} max={5}></progress>
+                  <progress id='rhythmStat' value={currentUser && currentUser.maps.harmony.levels.length} max={5}></progress>
                 </div>
                 <div>
                   <label htmlFor="rhythmStat">Pitch: </label>
-                  <progress id='rhythmStat' value={2} max={5}></progress>
+                  <progress id='rhythmStat' value={currentUser && currentUser.maps.pitch.levels.length} max={5}></progress>
                 </div>
               </div>
 
@@ -112,9 +113,14 @@ function Profile() {
                 padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}} className='badges flex fdr aic'>
                 <h4>BADGES</h4>
                   <div style={{ backgroundColor: '#53535348', padding: '0.5em', flexWrap: 'wrap'}} className="badges-container flex fdr aic jc-c">
-                    <img style={{margin: '0 0.3em'}}  width={50} src={image} alt="" />
-                    <img style={{margin: '0 0.3em'}}  width={50} src={image} alt="" />
-                    <img style={{margin: '0 0.3em'}}  width={50} src={image} alt="" />
+                    {
+                      currentUser ? currentUser.items.badges.map((item, index)=> {
+                        console.log("dsadsa")
+                        return(
+                          <p>dsadsadas</p>
+                        ) 
+                      }) : <p>No Badges yet</p>
+                    }
                   </div>
               </div>
 

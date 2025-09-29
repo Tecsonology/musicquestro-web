@@ -165,12 +165,25 @@
         width: 15em;
     }
 
-
-
     #bio-text {
         font-size: 2em;
         color: white;
     }
 
         
+}
+
+@media (min-width: 1900px){
+     #main-home-visual {
+        width: 55em;
+    }
+
+    .main-content {
+        flex-direction: column;
+    }
+
+    #btnStory, #btnPlayGame {
+        width: 60vw;
+        height: 3em;
+    }
 }

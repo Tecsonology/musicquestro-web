@@ -295,6 +295,15 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
    background-image: url('https://i.ibb.co/DDmLYjS6/Untitled-design-82.png');
 }
 
+.tut-btn {
+  background-color: #0D1DFF;
+  width: 4em;
+  height: 4em;
+  margin: 0.6em;
+  padding: 0;
+  font-weight: bold;
+}
+
 
 .game-preview-imgs {
   display: flex;
