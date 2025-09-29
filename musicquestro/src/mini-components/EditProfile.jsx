@@ -1,7 +1,8 @@
-import React, {useContext, useState,} from 'react'
+import React, {useContext, useEffect, useState,} from 'react'
 import { UserContext } from '../components/CurrentUserContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import '../styles/Profile.css'
 
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
@@ -12,34 +13,53 @@ function EditProfile() {
   const navigate = useNavigate()
   const [ username, setUsername ] = React.useState(currentUser ? currentUser.username : null)
   const [ newUsername, setNewUsername ] = useState()
-  const [ bio, setBio ] = React.useState()
+  const [ bio, setBio ] = React.useState(currentUser ? currentUser.bio : null)
+  const [ maxLength, setMaxLength ] = useState(false)
 
-console.log(currentUser ? currentUser.username : null)
-  const updateProfile = async()=> {
-        
-        
+  useEffect(()=> {
+    if(newUsername && newUsername.length >= 12){
+      setMaxLength("*Maxumum of 12 characters only")
+    } else if(newUsername && newUsername.length <= 12) {
+      setMaxLength(null)
+    }
+  }, [newUsername])
 
+
+  const checkUserAvail = async()=> {
     try {
-      
-      const updateUser = await axios.put(`${VITE_NETWORK_HOST}/update-user-profile`,
-          {
-            userids: currentUser ? currentUser.userids : null,
-            newUsername: newUsername,
-            bio: bio
-          }
-      )
-
-      if(updateUser){
-        console.log("User updated!")
+      const checkUser = await axios.get(`${VITE_NETWORK_HOST}/users`,{ params: { username: newUsername}})
+      if(checkUser.data.message === 'User exists'){
+        return false
+      } else {
         return true
       }
-
     } catch (error) {
-      console.log("Error")
+      
     }
   }
 
-  const handleUsernameChange = (e) => {
+  const updateProfile = async()=> {
+
+    const checker = await checkUserAvail()
+    console.log(checker)
+        
+    if(checker === true){
+          const updateUser = await axios.put(`${VITE_NETWORK_HOST}/update-user-profile`,
+              {
+                userids: currentUser ? currentUser.userids : null,
+                newUsername: newUsername,
+                bio: bio
+              }
+          )
+
+        alert("User updated")
+        navigate(-1)
+    } else if(checker === false){
+      alert("User exist, please try another one!")
+    }
+  }
+
+  const handleUsernameChange = (e) => { 
     if(e.target.value.length <= 0) {
       setUsername(currentUser.username)
     } else {
@@ -53,19 +73,32 @@ console.log(currentUser ? currentUser.username : null)
   }
 
   return (
-    <div style={{textAlign: 'center', overflow: 'hidden'}} className='edit-profile fpage flex fdc aic'>
-      <img style={{backgroundColor: '#38026aff'}}  width={80} src={currentUser ? currentUser.avatar : null} alt="" />
-      <button onClick={()=> {
-        navigate('/set-up-account')
-      }} style={{fontSize: '0.7em'}}>Change avatar</button>
-      <h2>{username}</h2>
-      <p style={{fontWeight: 'normal'}}>{bio}</p>
+    <div className='edit-profile fpage flex fdc aic jc-c'>
+      <div className="edit-section">
+        <h2>Avatar</h2>
+        <div className="flex fdc aic jc-c">
+        <img style={{backgroundColor: '#38026aff', margin: 0}}  width={80} src={currentUser ? currentUser.avatar : null} alt="" />
+        <button onClick={()=> {
+          navigate('/set-up-account')
+        }} style={{fontSize: '0.7em'}}>Change avatar</button>
+      </div>
+      </div>
 
-      <input style={{borderRadius: '1em'}} onChange={handleUsernameChange} type="text" placeholder={currentUser ? currentUser.username : null} />
+      <div className="edit-section">
+        <h2>Username</h2>
+          <h2 style={{ backgroundColor: '#191919ff', padding: '0.5em'}}>{username}</h2>
+      
 
-      <label>Choose your Bio:</label>
+      <input maxLength={12} style={{borderRadius: '1em'}} onChange={handleUsernameChange} type="text" placeholder={currentUser ? currentUser.username : null} />
+        <p style={{margin: '0', color: 'red',}}>{maxLength}</p>
+      </div>
+    
+      <div className="edit-section">
+        <h2>Bio</h2>
+        <p style={{fontWeight: 'normal', margin: '1em', backgroundColor: '#191919ff', padding: '0.5em 0'}}>{bio}</p>
+         <label >Choose your Bio:</label>
 
-        <select onChange={handleBioChange} className='flex fdc aic jc-c' style={{width: '90%', marginTop: '1em'}} name="bio-list" id="bio-list">
+        <select onChange={handleBioChange} className='flex fdc aic jc-c' style={{width: '90%', marginTop: '1em', }} name="bio-list" id="bio-list">
           <option value="Living life one beat at a time.">Living life one beat at a time.</option>
           <option value="Where words fail, music speaks.">Where words fail, music speaks.</option>
           <option value="Dancing through life’s melody.">Dancing through life’s melody.</option>
@@ -85,15 +118,13 @@ console.log(currentUser ? currentUser.username : null)
           <option value="Half human, half melody.">Half human, half melody.</option>
 
         
-        </select>
+        </select> 
+      </div>
 
-        <div style={{position: 'absolute', bottom: '7em', width: '80%'}} className="edit-buttons">
+        <div style={{width: '80%'}} className="edit-buttons flex fdr aic jc-c">
           <button onClick={()=> {
-          if(updateProfile()){
-            alert("User saved!")
-            window.location.href = '/h/user'
-          }
-        }} style={{width: '80%', backgroundColor: 'green'}}>SAVE</button>
+            updateProfile()
+        }} style={{width: '80%', backgroundColor: 'green', marginRight: '0.4em' }}>SAVE</button>
 
         <button style={{width: '80%', backgroundColor: 'red'}} onClick={()=> {
           navigate(-1)

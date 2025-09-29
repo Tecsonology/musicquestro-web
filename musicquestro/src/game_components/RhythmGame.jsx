@@ -54,11 +54,12 @@ function RhythmGame() {
   const [ wait, setWait ] = useState(false)
   const [ showTutorial, setShowTutorial ] = useState(true);
   const [ gameRound, setGameRound ] = useState(0)
+  const [ currentRound, setCurrentRound ] = useState(0)
   const [ showCorrection, setShowCorrection ] = useState(false)
   const [ showNextButton, setShowNextButton ] = useState(false)
   
   let currentLevel = 0
-  let countdownTimer = 1000
+  let countdownTimer = 5
   const targetPoint = 55;
 
     const audioCtxRef = useRef(null);
@@ -101,6 +102,14 @@ useEffect(() => {
     }
 
   }, [id, level, gameRound])
+
+  useEffect(()=> {
+    if(level >= gameRound || gameEnd){
+      stopTime()
+    }
+
+  
+  }, [level] )
 
 
 
@@ -180,6 +189,7 @@ useEffect(() => {
 };
 
   const playSequence = (seq) => {
+    
     setRunning(true)
     setShowCorrection(false)
     startTime();
@@ -221,6 +231,7 @@ useEffect(() => {
     }, 2000);
 
     setLevel(prev => prev + 1);
+    setCurrentRound( prev => prev + 1)
     
     
   };
@@ -275,6 +286,7 @@ useEffect(() => {
 
   function setGameOver() {
     setGameEnd(true)
+    stopTime()
   }
 
 
@@ -290,7 +302,7 @@ useEffect(() => {
     <div className='rhythm-game-container fpage flex fdc jc-c aic'>
       { showTutorial ? (<RhythmTutorial setShowTutorial={setShowTutorial}/>) : <GamePrompt gameName={'Rhythm Idol'}/>}
        
-      <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} running={running} setRunning={setRunning} />
+      <GameStatus score={score} userPoints={userPoints} currentRound={currentRound} level={gameRound} time={time} running={running} setRunning={setRunning} />
       {
         wait && !showCorrection ?
         <div style={{margin: '5em'}}>
@@ -301,8 +313,8 @@ useEffect(() => {
         }/>
       </div> : ""
       }
-
-      <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Listen carefully..."}</strong></h2>
+       { message && message ? <h1 style={{textAlign: 'center'}}>{message && message ? message : null}</h1> : null}
+      { !showCorrection ? <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Listen carefully..."}</strong></h2> : null}
 
      {
         !showCorrection ? 
@@ -337,7 +349,7 @@ useEffect(() => {
       { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={()=>{
         playSequence()
         setRunning(true)
-      }}>I'm Ready. Lez go!</button> : 'Loading...' }
+      }}>START</button> : 'Loading...' }
   
 
       {
@@ -354,12 +366,12 @@ useEffect(() => {
       </div> : null
       }
 
-      { message && message ? <h1 style={{textAlign: 'center'}}>{message && message ? message : null}</h1> : null}
+     
       
       {
         showCorrection ? 
-        <div style={{position:'absolute', zIndex: '0', backgroundColor: 'white', color: 'black', padding: '0.5em 1em', width: '80%'}} className='flex fdc aic jc-c'>
-          <h2>Correct Answer</h2>
+        <div style={{backgroundColor: 'white', color: 'black', padding: '0.5em 1em', width: '25em'}} className='flex fdc aic jc-c'>
+          <h2 style={{color: 'black'}}>Correct Answer</h2>
           <div className='flex fdr aic jc-c'>
             {
               level  && showCorrection ? 
@@ -376,10 +388,10 @@ useEffect(() => {
           
             
             <button disabled={showNextButton} className='nextBtn' onClick={()=> {
-              setTimeout(()=> {
+              
               playSequence();
               setMessage()
-            }, 2000)
+            
             
             setInputSequence([]);
             setWait(false)
@@ -411,13 +423,13 @@ useEffect(() => {
       <div className="beat-buttons flex fdr jc-c aic">
         {
           durations.map((note, index) => (
-            <button className='btnButton' key={index} onClick={() => {
+            <button  className='btnButton' key={index} onClick={() => {
               pushInput(note);
               playNote(note.freq, note.duration);
             }}>
               <span><img width={15} src={note.img} alt="" /></span>
-              <h4 style={{margin: 0}}>{note.name}</h4>
-               <p>{note.beats} beats</p>
+              <h4 style={{margin: 0, color: 'black'}}>{note.name}</h4>
+               <p style={{color: 'black'}}>{note.beats} beats</p>
             </button>
           ))
         }
@@ -426,6 +438,7 @@ useEffect(() => {
       <div className='bottom-buttons flex fdc aic jc-c'>
             <button id='playRhythm'
             style={{
+              
               width: '10em',
               backgroundColor: 'orange',
               fontSize: '1.4em',
@@ -442,7 +455,9 @@ useEffect(() => {
               console.log('incorrect');
               setMessage(`❌ Oppss`)
               setRunning(false)
-              setUserPoints(userPoints - 50)
+              if(userPoints >= 50){
+                setUserPoints(userPoints - 50)
+              }
               setShowCorrection(true)
             }
 
@@ -457,6 +472,7 @@ useEffect(() => {
         {level > gameRound || gameEnd ? 
         
         <CurrentUserContext>
+
           <GameSummary userids={currentUser.userids} level={parseInt(id)} gameName={'rhythm'} score={score} points={userPoints} time={time} targetPoint={targetPoint} nextGameIndex={1}/>
         </CurrentUserContext> : null}
     </div>

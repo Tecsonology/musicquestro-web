@@ -23,7 +23,9 @@ option {
 }
 
 
-
+.border-box {
+  box-sizing: border-box;
+}
 
 .flex {
   display: flex;
@@ -281,7 +283,8 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 }
 
 
-.tutorial p, h3 {
+.tutorial p, .tutorial h3, .tutorial h4, .tutorial span {
+  color: black;
   text-align: center;
   padding: 0 0.2em;
   font-family: Arial, Helvetica, sans-serif;

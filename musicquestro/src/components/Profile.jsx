@@ -27,8 +27,8 @@ function Profile() {
       
   return (
     <>
-      <div className='profile fpage flex fdc'>
-        <Outlet />
+      <div className='profile fpage flex fdc aic jc-c'>
+        
         {
           /**<Suspense fallback={<Loader/>}>
           <h1>dasds</h1>
@@ -43,28 +43,10 @@ function Profile() {
       }} className='btn-back' src="https://i.ibb.co/KzBKmLC3/Untitled-design-2.png" alt="" />
           <div className="profile-wrapper flex fdr jc-c aic">
               {
-                /**
-                 * <button className='btnLogout'
-                  onClick={()=> {
-                  localStorage.clear()
-                  window.location.href = '/'
-              }}>Logout</button>
-                 */
-              }
-
-              {
                 currentUser && currentUser ?
-                <div style={{margin: '2em 0', justifyContent: 'flex-start'}} className='flex fdc aic'>
+                <div style={{margin: '2em 0', justifyContent: 'flex-start'}} className=' flex fdc aic'>
                   <div className="profile-container fdr flex">
-                    <div onClick={()=> {
-                        localStorage.clear()
-                        window.location.href = '/'
-                        
-                    }} className='flex fdc aic jc-c' 
-                      style={{backgroundColor: 'rgba(59, 61, 59, 0.9)', height: '2.5em', border: '1px solid rgba(170, 170, 170, 0.9)',
-                      width: '2.5em', borderRadius: '1em', position: 'absolute', top: '-1em', right: '1em'}}>
-                      <img style={{margin: 0}} width={20} height={20} src={logout} alt="" />
-                    </div>
+                    
 
                     <img width={80} src={currentUser ? currentUser.avatar : null} alt="" />
                  
@@ -98,27 +80,82 @@ function Profile() {
                   <img width={30} src={muscoins} alt="" />
                   <p>{currentUser.musicCoins}</p>
                 </div>
-                <button style={{backgroundColor: '#6EADFF', margin: '0', color: 'white'}} onClick={()=> {navigate('/h/collections')}}>My Collections</button>
+                <button style={{backgroundColor: '#00306fff', margin: '0', color: 'white'}} onClick={()=> {navigate('/h/collections')}}>My Collections</button>
 
 
                 
               </div>
 
+              <div style={{backgroundColor: '#33333348', padding: '1em', boxSizing: 'border-box'}} className="stats flex fdc aic jc-c">
+                <h6 style={{margin: 0}}>STATS</h6>
+                <div>
+                  <label htmlFor="rhythmStat">Rhythm: </label>
+                  <progress id='rhythmStat' value={2} max={5}></progress>
+                </div>
+                <div>
+                  <label htmlFor="rhythmStat">Melody: </label>
+                  <progress id='rhythmStat' value={2} max={5}></progress>
+                </div>
+                <div>
+                  <label htmlFor="rhythmStat">Harmony: </label>
+                  <progress id='rhythmStat' value={2} max={5}></progress>
+                </div>
+                <div>
+                  <label htmlFor="rhythmStat">Pitch: </label>
+                  <progress id='rhythmStat' value={2} max={5}></progress>
+                </div>
+              </div>
+
     
 
-              <div style={{backgroundColor: 'rgba(22, 29, 50)'}} className='flex fdc aic jc-c glass-bg '>
+              <div style={{backgroundColor: '#33333348', justifyContent: 'space-between',
+                padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}} className='badges flex fdr aic'>
                 <h4>BADGES</h4>
-                  <div className="badges-container flex fdr aic jc-c">
-                    <img width={80} src={image} alt="" />
-                    <img width={80} src={image} alt="" />
-                    <img width={80} src={image} alt="" />
+                  <div style={{ backgroundColor: '#53535348', padding: '0.5em', flexWrap: 'wrap'}} className="badges-container flex fdr aic jc-c">
+                    <img style={{margin: '0 0.3em'}}  width={50} src={image} alt="" />
+                    <img style={{margin: '0 0.3em'}}  width={50} src={image} alt="" />
+                    <img style={{margin: '0 0.3em'}}  width={50} src={image} alt="" />
                   </div>
               </div>
 
-              <div style={{backgroundColor: 'rgba(22, 29, 50)', marginTop: '1em'}} className="current-rank glass-bg">
+              <div style={{backgroundColor: '#33333348', justifyContent: 'space-between',
+                padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}}  className="current-rank flex fdr aic jc-c">
                 <h4>Current Rank: </h4>
                 <h2>+100</h2>
               </div>
+
+               <div className='item-count' style={{backgroundColor: '#33333348', justifyContent: 'space-between',
+                padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}}>
+                  <table>
+                    <tbody>
+                      <tr>
+                        <td>dsfds</td>
+                        <td>dsfds</td>
+                        <td>dsfds</td>
+                      </tr>
+                      <tr>
+                        <td>dsfds</td>
+                        <td>dsfds</td>
+                        <td>dsfds</td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+
+              <div style={{alignItems: 'end',
+                position: 'relative', bottom: '-4em',}} className="bottom-buttons flex fdr">
+                <div onClick={()=> {
+                        localStorage.clear()
+                        window.location.href = '/'
+                        
+                    }} className='flex fdc aic jc-c' 
+                      style={{backgroundColor: 'rgba(59, 61, 59, 0.9)', height: '2.5em', border: '1px solid rgba(170, 170, 170, 0.9)',
+                      width: '2.5em', borderRadius: '1em', }}>
+                      <img style={{margin: 0}} width={20} height={20} src={logout} alt="" />
+                </div>  
+              </div>
+
+             
 
             </> : <Loader/>
            }

@@ -94,12 +94,12 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
         <>
           <h3 style={{textAlign: 'center'}}>Each note symbol has corresponding beats that fills the measure</h3>
           {durations.map((item, index) => (
-            <div key={index} className='flex fdr aic glass-bg' style={{margin: '0.3em', width: '95vw', justifyContent: 'space-between'}}>
-              <img style={{ padding: '0.5em 1em', margin: '1em', borderRadius: '1em' }} width={20} src={item.img} alt={item.name} />
-              <h4>{item.name} - {item.beats}</h4>
-              <div>
+            <div key={index} className='flex fdr aic glass-bg' style={{margin: '0.3em', width: '20em', justifyContent: 'space-between'}}>
+              <img style={{ padding: '0.5em 1em', margin: '1em', borderRadius: '1em', backgroundColor: 'red' }} width={20} src={item.img} alt={item.name} />
+              <h4 style={{width: '10em'}}>{item.name} - {item.beats}</h4>
+              <div className='flex fdr aic jc-c'>
                 {[...Array(item.beats)].map((_, beatIndex) => (
-                  <span key={beatIndex} style={{ width: '1em', height: '1em', backgroundColor: 'green', borderRadius: '50%', display: 'inline-block', margin: '0 0.1em' }}></span>
+                  <span key={beatIndex} style={{ width: '0.3em', height: '0.3em', backgroundColor: 'green', borderRadius: '50%', display: 'inline-block', margin: '0 0.1em' }}></span>
                 ))}
                 <span style={{marginLeft: '0.5em'}}>beat/s</span>
               </div>
@@ -175,7 +175,7 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
               Skip tutorial &gt;&gt;
             </button>
           </div>
-          <div style={{position: 'absolute', bottom: '3em', width: '15em', justifyContent: 'space-between'}} className="tutorial-buttons flex fdr aic">
+          <div style={{width: '15em', justifyContent: 'space-between'}} className="tutorial-buttons flex fdr aic">
             {page > 0 && <button onClick={() => setPage(page - 1)}>Previous</button>}
             <button onClick={() => setPage(page + 1)}>Next</button>
           </div>

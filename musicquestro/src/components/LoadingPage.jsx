@@ -6,7 +6,8 @@ function LoadingPage() {
         background: '#140394',
         backgroundImage: `url(${bg})`,
         backgroundPosition: 'center',
-        backgroundBlendMode: 'multiply'
+        backgroundBlendMode: 'multiply',
+        position: 'fixed'
       }} 
     
     className='loadingBg fpage flex fdc aic jc-c'>

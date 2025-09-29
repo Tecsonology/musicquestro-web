@@ -43,7 +43,7 @@ function ItemHolder({useHint, useReplay, running, setRunning, setGameOver, child
 
 
   return (
-    <div className='flex fdr' style={{position: 'fixed', left: '0', top: '5em'}}>
+    <div className='flex fdr' style={{position: 'absolute', top: '5em'}}>
       <div onClick={()=> {
         if (hintQty > 0) {
           useHint()

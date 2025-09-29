@@ -5,7 +5,9 @@ import CurrentUserContext, { UserContext } from '../components/CurrentUserContex
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 
-function CollectionCard({itemName, instrCode}) {
+
+
+function CollectionCard({image, itemName, instrCode}) {
 
   const { currentUser } = useContext(UserContext)
 
@@ -27,10 +29,14 @@ function CollectionCard({itemName, instrCode}) {
   return (
     <CurrentUserContext>
       <div className='collection-card flex fdc jc-c aic'>
-          <img src="https://i.ibb.co/BVq668JC/Untitled-design-30.png" alt="" />
-          <h3>{itemName}</h3>
-          <button disabled={currentUser.currentInstrument === instrCode} onClick={updateCurrentInstrument}>
-            {currentUser.currentInstrument === instrCode ? 'Already used' : 'Use this'}
+          <img src={image} alt="" />
+          <h3 style={{color: 'white'}}>{itemName}</h3>
+          <button
+            style={{
+              backgroundColor: currentUser.currentInstrument === instrCode ? '#43005ebe' : '#c55708ff'
+            }}
+          disabled={currentUser.currentInstrument === instrCode} onClick={updateCurrentInstrument}>
+            {currentUser.currentInstrument === instrCode ? 'Currently used' : 'Use this'}
           </button>
       </div>
     </CurrentUserContext>

@@ -182,7 +182,7 @@ function GameSummary(props) {
         <span><progress value={gamePoints} max={props.targetPoint.toFixed(2)}></progress></span>
         <span>{gamePoints >= props.targetPoint.toFixed(2) ? <p>✅</p> : <p>❌</p>}</span></div>
         <div className='flex fdr aic jc-c'>
-          <p><span>YOU: </span>{calculate.calculateGame()}</p>
+          <p><span>Accumulated Points: </span>{calculate.calculateGame()}</p>
           <p><span>Target: </span>{props.targetPoint}</p>
 
           
@@ -191,8 +191,8 @@ function GameSummary(props) {
 
           <h3>Rewards</h3>
         <div style={{backgroundColor: '#E8E8E8', padding: '0.5em 1em', borderRadius: '1em', color: 'black'}} className='flex fdr aic jc-c'>
-          <h4 style={{marginRight: '1em'}}><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
-          <h4><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
+          <h4 style={{marginRight: '1em', color: 'black'}}><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
+          <h4 style={{color: 'black'}}><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
         </div>
 
         {gamePoints >= props.targetPoint.toFixed(2) ? <button onClick={()=> {  

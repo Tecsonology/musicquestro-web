@@ -108,12 +108,11 @@ const router = createBrowserRouter([
       {
         path: 'user',
         element: <CurrentUserContext><Profile /></CurrentUserContext>,
-        children: [
-            {
-              path: 'edit',
-              element: <EditProfile />
-            }
-          ]
+      },
+
+      {
+        path: 'user/edit',
+        element: <CurrentUserContext><EditProfile /></CurrentUserContext>,
       },
 
       

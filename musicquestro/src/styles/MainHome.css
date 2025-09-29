@@ -1,5 +1,6 @@
 .mainhome-container {
-    overflow: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 
@@ -13,9 +14,6 @@
       
     }
 }
-
-
-
 
 .main-nav {
     position: fixed;
@@ -62,6 +60,7 @@
 }
 
 
+
 @media (min-width: 1024px) {
     .main-home-button {
 
@@ -75,12 +74,16 @@
         margin: 0.4em 1em;
     }
 
+    #main-home-visual {
+        width: 30em;
+    }
+
     .nav-wrapper {
         justify-content: center;
     }
 
     .main-content {
-        flex-direction: row;
+        flex-direction: column;
     }
 
     .main-left img {
@@ -90,4 +93,84 @@
     .main-nav {
         display: block;
     }
+}
+
+@media (min-width: 800px) and (min-width: 1200px) {
+    .nav-item {
+        margin: 0.4em 1em;
+    }
+
+    #main-home-visual {
+        width: 30em;
+    }
+
+    .nav-wrapper {
+        justify-content: center;
+    }
+
+    .main-content {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .main-left img {
+        width: 50em;
+    }
+
+    .main-nav {
+        display: block;
+    }
+}
+
+@media (min-width: 800px) and (min-width: 1200px){
+     #main-home-visual {
+        width: 50em;
+    }
+
+    .main-home-logo {
+        width: 8em;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .main-content {
+        flex-direction: column;
+    }
+
+    .main-home-button {
+    }
+
+    #main-home-visual {
+        width: 30em;
+    }
+
+    .main-content {
+        
+    }
+
+    #btnStory, #btnPlayGame {
+        width: 25em;
+    }
+
+
+}
+
+@media (min-width: 1440px) {
+    .main-content {
+        margin-top: 3em;
+    }
+
+    #btnStory, #btnPlayGame {
+        height: 5em;
+        width: 15em;
+    }
+
+
+
+    #bio-text {
+        font-size: 2em;
+        color: white;
+    }
+
+        
 }

@@ -60,8 +60,10 @@
     justify-content: center;
     align-items: center;
     font-size: 2em;
+    font-weight: bolder;
     border: 2px solid white;
-    background-color: rgba(255, 0, 0, 0.366);
+    background-color: rgb(255, 0, 0);
+    border-radius: 1em;
 }
 
 
@@ -262,8 +264,10 @@ button:disabled {
     padding: 0.5em;
     min-width: 8em;
     max-width: 8em;
+
     border-radius: 1em;
     margin: 0.7em;
+    justify-content: space-between;
     border-bottom: 0.7em solid rgb(54, 2, 85);
 
     h3, h4, p, img, button {
@@ -271,7 +275,7 @@ button:disabled {
     }   
 
     img {
-        width: 3em;
+        width: 5em;
     }
 
     button {
@@ -395,8 +399,12 @@ input[type='range'] {
 
      .store-card {
         min-width: 13em;
+        min-height: 15em;
     }
 
+    .collection-list {
+        width: 60vw;
+    }
     
 
  

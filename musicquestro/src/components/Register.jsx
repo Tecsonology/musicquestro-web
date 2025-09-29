@@ -6,36 +6,56 @@ const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 function Register() {
   const navigate = useNavigate();
-  const [username, setName] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setName] = useState();
+  const [password, setPassword] = useState();
   const [disabled, setDisabled] = useState(true);
-  const [error, setError] = useState("edfdfdsf");
+  const [error, setError] = useState();
+  const [ userNameError, setUsernameError ] = useState()
   const [success, setSuccess] = useState(false);
 
   const validatePassword = (pwd) => {
-    const minLength = /.{8,}/;
-    const upper = /[A-Z]/;
-    const lower = /[a-z]/;
-    const number = /[0-9]/;
-    const special = /[!@#$%^&*(),.?":{}|<>]/;
+    if(password && password.length >= 0){
+      const minLength = /.{8,}/;
+      const upper = /[A-Z]/;
+      const lower = /[a-z]/;
+      const number = /[0-9]/;
+      const special = /[!@#$%^&*(),.?":{}|<>]/;
 
-    if (!minLength.test(pwd))
-      return "Password must be at least 8 characters long.";
-    if (!upper.test(pwd))
-      return "Password must contain at least one uppercase letter.";
-    if (!lower.test(pwd))
-      return "Password must contain at least one lowercase letter.";
-    if (!number.test(pwd))
-      return "Password must contain at least one number.";
-    if (!special.test(pwd))
-      return "Password must contain at least one special character.";
-    return "";
+      if (!minLength.test(pwd))
+        return "Password must be at least 8 characters long.";
+      if (!upper.test(pwd))
+        return "Password must contain at least one uppercase letter.";
+      if (!lower.test(pwd))
+        return "Password must contain at least one lowercase letter.";
+      if (!number.test(pwd))
+        return "Password must contain at least one number.";
+      if (!special.test(pwd))
+        return "Password must contain at least one special character.";
+      return "";
+    } 
   };
 
+  useEffect(()=> {
+
+    if(username && username.length >= 12){
+      setUsernameError("*Username must not exceed in 12 characters")
+    } else if(username && username.length <= 12){
+      setUsernameError()
+    }
+
+  },[username])
+
   useEffect(() => {
-    const validationError = validatePassword(password);
-    setError(validationError);
-    setDisabled(validationError !== "");
+
+    if(password && password.length >= 0){
+      const validationError = validatePassword(password);
+      setError(validationError);
+      setDisabled(validationError !== "");
+    } else if(password && password.length <= 0){
+      
+    }
+
+    
   }, [password]);
 
   const getUser = async (userids) => {
@@ -151,10 +171,13 @@ function Register() {
         <>
           <input
             type="text"
+            maxLength={12}
             onChange={(e) => setName(e.target.value)}
             placeholder="Create your username"
             required
           />
+          { userNameError ? 
+          <p style={{ color: "red", fontSize: "0.9em", marginTop: "0.5em" }}>{userNameError}</p> : null}
 
           <input
             type="password"
@@ -165,11 +188,11 @@ function Register() {
             required
           />
 
-          {error && (
+          {error ? 
             <p style={{ color: "red", fontSize: "0.9em", marginTop: "0.5em" }}>
               {error}
-            </p>
-          )}
+            </p> : null
+          }
 
           <button id="btnRegister" disabled={disabled} onClick={handleSubmit}>
             Register

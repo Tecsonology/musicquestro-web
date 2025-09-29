@@ -7,7 +7,8 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    height: 100%;
+    background-position: center;
+  
     position: absolute;
     overflow: hidden;
     z-index: 1;
@@ -39,7 +40,10 @@
 }
 
 .avatar-items {
-    width: 40em;
+    width: 47em;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   
 }
 
@@ -54,11 +58,10 @@
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
-        overflow-y: scroll;    
+        overflow-y: auto;    
         max-height: 35vh;        
         border-bottom: 2px solid white;
         padding-bottom: 5em;
-        width: 90vw;
 
     }
 
@@ -68,7 +71,7 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-        width: 90vw;
+        
     }
 
 }
@@ -79,6 +82,10 @@
         position: relative;
         top: -1em;
         overflow: hidden;
+    }
+
+    .menu-items, .avatar-items {
+      
     }
 
     

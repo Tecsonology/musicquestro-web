@@ -19,6 +19,11 @@ import dog from '../assets/AvatarShopItems/Dog.png'
 import cat from '../assets/AvatarShopItems/Cat.png'
 import bunny from '../assets/AvatarShopItems/Bunny.png'
 
+import Flute from '../assets/game-assets/Assets/Instrument/Flute.png'
+import Guitar from '../assets/game-assets/Assets/Instrument/Guitar.png'
+import Xylo from '../assets/game-assets/Assets/Instrument/Flute.png'
+import AvatarChangePrompt from '../mini-components/AvatarChangePrompt'
+
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 function Collections() {
@@ -28,6 +33,12 @@ function Collections() {
   const [ userItems, setUserItems ] = useState()
   const [ activeShow, setActiveShow ] = useState('instrument')
   const { currentUser, setCurrentUser } = useContext(UserContext)
+  const [ showPrompt, setShowPrompt ] = useState(false)
+
+  const [ selectedImage, setSelectedImage ] = useState()
+  const [ selectedName, setSelectedName ] = useState()
+
+
   let instrCode;
 
   useEffect(()=> {
@@ -45,8 +56,6 @@ function Collections() {
             image === 'Bunny' ? bunny : null
 
      const userid = currentUser ? currentUser.userids : null
-
-     console.log(this)
 
     try {
       
@@ -67,9 +76,26 @@ function Collections() {
     }
   }
 
+  const setSelectItem = (image, name)=> {
+    setSelectedImage(image)
+    setSelectedName(name)
+    localStorage.setItem('avatar', image)
+  }
+
+  const showAvatarChangePrompt =()=> {
+    
+    setShowPrompt(true)
+    setTimeout(()=> {
+      console.log("Dasdsad")
+      setShowPrompt(false)
+    }, 3000)
+  }
+
 
   return (
     <div className='collection-container fpage flex fdc aic'>
+
+      { showPrompt ? <AvatarChangePrompt showPrompt={showPrompt} image={selectedImage} name={selectedName} /> : null}
       
         {
             currentUser ? 
@@ -104,7 +130,16 @@ function Collections() {
                               instrCode = 'square'
                             }
 
-                              return <CollectionCard key={index} itemName={item} instrCode={instrCode}/>
+                              return <CollectionCard
+                              image={
+                                instrCode === 'sine' ? Guitar : 
+                                instrCode === 'triangle' ? Guitar : 
+                                instrCode === 'sawtooth' ? Flute : 
+                                instrCode === 'square' ? Xylo : ''
+                               
+                              }
+                              
+                              key={index} itemName={item} instrCode={instrCode}/>
                             }) : ( <p>No collections yet</p>)
                         }
                     </div> : null
@@ -122,7 +157,7 @@ function Collections() {
 
                     {
                       activeShow === 'avatars' ?
-                      <div className='flex fdr aic jc-c' style={{flexWrap: 'wrap', overflow: 'scroll'}}>
+                      <div className='flex fdr aic jc-c' style={{flexWrap: 'wrap',}}>
                         {userItems && userItems.avatars.map((avatar, index) => (
                             
                           
@@ -140,6 +175,23 @@ function Collections() {
                               />
                               <button 
                               onClick={()=> {
+
+                                const image = 
+                                 avatar === 'Friend' ? friend :
+                                avatar === 'Devil' ? devil :
+                                avatar === 'Doggie' ? dog :
+                                avatar === 'Cat' ? cat :
+                                avatar === 'Bunny' ? bunny : null
+
+                                const name = 
+                                 avatar === 'Friend' ? 'Friend' :
+                                avatar === 'Devil' ? 'Devil' :
+                                avatar === 'Doggie' ? 'Doggie' :
+                                avatar === 'Cat' ? 'Cat' :
+                                avatar === 'Bunny' ? 'Bunny' : null
+
+                                setSelectItem(image, name)
+                                showAvatarChangePrompt()
                                 changeAvatar(avatar)
                               }}
                               style={{margin: 0, backgroundColor: 'green'}}>USE</button>

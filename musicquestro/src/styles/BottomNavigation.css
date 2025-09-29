@@ -7,6 +7,13 @@
     z-index: 10;
     border-top: 2px solid rgb(141, 141, 141);
 }
+.icon-label {
+    display: none;
+    color: white;
+    text-decoration: none;
+    
+  
+}
 
 .nav-wrapper {
     display: flex;
@@ -24,6 +31,21 @@
     align-items: center;
     justify-content: center;
     border-radius: 1em;
+
+
+}
+
+.link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+   
+}
+
+.link h3 {
+    text-decoration: none;
+    margin: 0;
 }
 
 .nav-item img, .user-menu-icon {
@@ -33,8 +55,16 @@
 
 
 @media (min-width: 700px) {
-    .bottom-navigation {
-        display: none;
+    .icon-label {
+        display: block;
+    }
+
+    .nav-item {
+        width: 10em;
+    }
+
+    .nav-item img {
+        width: 2em;
     }
 }
 

@@ -1,10 +1,10 @@
 .homepage {
-     background: #000000c6;
+    background: #000000c6;
     background-image: url('../assets/bg-assets/HomeBG.png');
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode:multiply;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .btn-settings {
@@ -29,8 +29,11 @@
 #btnStory:hover, #btnPlayGame:hover{
     background-blend-mode:multiply;
     font-size: 2em;
-    transform: scale(1.2);
+    transform: scale(1.1);
+
 }
+
+
 
 #btnPlayGame {
     background: #000000b8;
@@ -44,7 +47,7 @@
 
 /* Laptop screens */
 @media (min-width: 1024px) and (max-width: 1439px) {
-  
+
 }
 
 /* Desktop screens */

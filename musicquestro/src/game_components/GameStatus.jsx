@@ -38,7 +38,7 @@ function GameStatus(props) {
               <p>Points: {props.userPoints}</p>
             </div>
             <div>
-              <p>Level: {props.level}</p>
+              <p>Round: {props.currentRound}/{props.level}</p>
             </div>
             {/*<CountdownCircle time={10} running={props.running} onComplete={()=>console.log('done')} />*/}
            
