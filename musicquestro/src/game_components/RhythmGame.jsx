@@ -110,12 +110,11 @@ useEffect(() => {
       stopTime()
     }
 
-    if(isOpen){
-      console.log("Paused Time")
-    }
+
+    
 
   
-  }, [level, isOpen] )
+  }, [level] )
 
 
   useEffect(() => {
