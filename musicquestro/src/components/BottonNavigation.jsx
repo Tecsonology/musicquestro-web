@@ -12,7 +12,11 @@ function BottonNavigation() {
 
   const location = useLocation();
   
-  const [ avatar, setAvatar ] = useState(localStorage.getItem('avatar'))
+  const [ avatar, setAvatar ] = useState()
+
+  useState(()=> {
+    localStorage.getItem('avatar') ? setAvatar(localStorage.getItem('avatar')) : setAvatar(Leaderborad)
+  }, [localStorage.getItem('avatar')])
 
   return (
     <div className='bottom-navigation'>

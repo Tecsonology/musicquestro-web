@@ -55,7 +55,7 @@ function Story() {
 
   return (
     <div className='story-container fpage flex fdc aic jc-c'>
-      <div className='flex aic jc-c' style={{position: 'relative', width: '100%'}}  >
+      <div className='flex fdc aic jc-c' style={{position: 'relative', width: '100%'}}  >
           <h1>Story</h1>
           <div className='flex fdc aic jc-c' style={{backgroundColor: 'white', borderRadius: '50%', position: 'fixed', right: '1em', top: '1em',  }}>
             <img onClick={()=> navigate(-1)} width={40} src={backBtn} alt="" />

@@ -5,6 +5,7 @@ import SecondPitchGame from './SecondPitchGame';
 import HighPitch from './HighPitch';
 import GameStatus from '../game_components/GameStatus.jsx'
 import lavaBtn from '../assets/game-assets/Assets/Buttons/LavaBtn.png'
+import '../styles/PitchGame.css'
 
 import ItemHolder from '../components/ItemHolder.jsx';
 import CountdownCircle from '../components/CountdownCircle.jsx';
@@ -25,7 +26,7 @@ function PitchGame() {
   const [start, setStart] = useState(false);
     const [ gameStatus, setGameStatus ] = useState("")
   
-  const [showTutorial, setShowTutorial] = useState(true);
+    const [showTutorial, setShowTutorial] = useState(true);
     const [life, setLife] = useState(5);
     const [savedSequence, setSavedSequence] = useState([]);
     const [correctIndex, setCorrectIndex] = useState(null);
@@ -241,7 +242,7 @@ function PitchGame() {
       const osc = context.createOscillator();
       const gainNode = context.createGain();
 
-      osc.type = "sawtooth";
+      osc.type = currentUser ? currentUser.currentInstrument : 'sine';
       osc.frequency.value = NOTES[savedSequence[x]];
 
       gainNode.gain.setValueAtTime(1, context.currentTime);
@@ -458,7 +459,8 @@ function PitchGame() {
                 
               
               }
-          </div> : <button onClick={()=> {
+          </div> : 
+          <button className='pitch-start-btn' onClick={()=> {
             setStart(true)
             setShowAnswer(false)
             playNote()

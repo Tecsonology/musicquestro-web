@@ -169,7 +169,7 @@ function HarmonyGame() {
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
 
-      oscillator.type = 'sawtooth';
+      oscillator.type = currentUser ? currentUser.currentInstrument : 'sine';
       oscillator.frequency.value = freq;
 
       gainNode.gain.setValueAtTime(0, now);
@@ -188,6 +188,8 @@ function HarmonyGame() {
   };
 
   const handlePlayTargetChord = () => {
+    setRunning(true);
+
     if(currentChord < gameRound){
       setCurrentRound(prev => prev + 1)
       if (targetChord) {
@@ -196,7 +198,6 @@ function HarmonyGame() {
         );
         playFrequencies(targetFrequencies);
       }
-      setRunning(true);
       setShowCorrection(false);
     } else {
       setMessage("Calculating game...")
@@ -502,7 +503,7 @@ function HarmonyGame() {
           ) : null}
         </>
       ) : (
-        <div>
+        <div className='flex fdc aic jc-c'>
           <img width={150} src={HarmonyPic} alt="" />
           <button
             onClick={() => {

@@ -31,9 +31,7 @@ function CurrentUserContext({children}) {
                 params: { userids }
             })
 
-        
-            console.log("Response: ", getUser.data.message)
-
+    
             if(getUser.data.message === 'No player found'){
                 console.log("Cant find userids")
                 localStorage.clear()

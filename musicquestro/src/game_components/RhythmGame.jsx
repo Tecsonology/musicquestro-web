@@ -25,6 +25,7 @@ const sample = durations.filter(note => note.name !== 'rest' && note.beats <= (4
 function RhythmGame() {
 
   const [ start, setStart ] = useState(false)
+  const [ gameStatus, setGameStatus ] = useState("")
  
   const [ life, setLife ] = useState(5)
   const [showSummary, setShowSummary] = useState(false);
@@ -344,6 +345,8 @@ useEffect(() => {
   function setGameOver() {
     console.log("Game over!!!!")
     setShowSummary(true)
+    setGameStatus("Game Over")
+    
   }
 
 
@@ -382,18 +385,19 @@ useEffect(() => {
           : ""
       }
        
-      <GameStatus showSummary={showSummary} score={score} userPoints={userPoints} currentRound={currentRound} level={gameRound} time={time} running={running} setRunning={setRunning} />
+      <GameStatus showSummary={showSummary} score={score} userPoints={userPoints} 
+      currentRound={currentRound} level={gameRound} time={time} 
+      running={running} setRunning={setRunning} gameStatus={gameStatus} setGameStatus={setGameStatus}/>
      
        {
         start ?
-        <>
+        <div style={{justifyContent: 'flex-start', marginTop: '5em'}} className='flex fdc aic'>
           { message && message ? <h1 style={{textAlign: 'center', marginTop: '2em'}}>{message && message ? message : null}</h1> : null}
       { !showCorrection && inputSequence.length <= 0 ? <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Listen carefully..."}</strong></h2> : null}
 
      {
         !showCorrection ? 
          <div className="beat-indicator flex fdr jc-c aic" style={{ margin: '1em 0 0 0' }}>
-      {inputSequence && inputSequence.length > 0 ? <button style={{margin: '0', backgroundColor: 'transparent'}} onClick={()=> { setInputSequence([])}}>Clear</button> : null}
 
         {[1, 2, 3, 4].map((beat) => (
           <div
@@ -419,10 +423,6 @@ useEffect(() => {
       </div> : null
      }
 
-
-     
-  
-
       {
         inputSequence && inputSequence.length > 0 && !showCorrection?
         <div className="input-notes">
@@ -430,13 +430,25 @@ useEffect(() => {
         <div className='input-overlay flex fdr aic'>
           { 
             inputSequence.map((note, index) => (
-              <img key={index} className='inputNote' width={20} src={note.img} alt="" />
+              <img 
+              style={{
+                width: note.name === 'whole' ? '3em' : '1.2em'
+              }}
+              key={index} className='inputNote'  src={note.img} alt="" />
             ))
           }
+        {inputSequence && inputSequence.length > 0 ? 
+          <button style={{
+            margin: '0', backgroundColor: 'black', position: 'absolute', top: '4.5em', left: '15em',
+            border: '1px solid white', padding: '0.4em'
+            }} onClick={()=> { setInputSequence([])}}>Reset</button> : null}
+
         </div>
 
       </div> : null
       }
+
+      
 
      
       
@@ -560,7 +572,7 @@ useEffect(() => {
         </div> : null
       }
 
-        </> :
+        </div> :
         <>
            { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={()=>{
               playSequence()

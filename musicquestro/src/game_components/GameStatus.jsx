@@ -23,9 +23,6 @@ function GameStatus(props) {
   }, [props.score])
 
 
-
-
-
   return (
     <>
       <div style={{
@@ -51,6 +48,8 @@ function GameStatus(props) {
            <div style={{padding: '0.2em', backgroundColor: 'gray', borderRadius: '50%'}}>
               <img onClick={()=> {
                 setIsOpen(true)
+                props.setRunning(false)
+                
               }} width={40} src={settings} alt="" />
            </div>
         </div> : 

@@ -41,7 +41,7 @@ function MelodyGame() {
   const [ showTutorial, setShowTutorial ] = useState(true);
   
   
-
+  const [ gameStatus, setGameStatus ] = useState("")
   const [ life, setLife ] = useState(5)
   const [ running, setRunning ] = useState(false)
   const [ gameEnd, setGameEnd ] = useState(false)
@@ -50,7 +50,7 @@ function MelodyGame() {
   
 
   let currentLevel = 0
-  let countdownTimer = 120
+  let countdownTimer = 5
   const targetPoint = 30;
 
   useEffect(() => {
@@ -65,8 +65,8 @@ function MelodyGame() {
   }, [gameRound, currentRound]);
 
   function setGameOver() {
-    setGameEnd(true)
-    stopTime()
+    setShowSummary(true)
+    setGameStatus("Game Over")
   }
 
   const stopTime = () => {
@@ -253,7 +253,9 @@ function MelodyGame() {
     <CurrentUserContext>
       <div className='melody-game-container fpage flex fdc aic jc-c'>
         <GamePrompt gameName={'MELODIC PEAK'}/>
-        <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} currentRound={currentRound} />
+        <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} 
+        currentRound={currentRound} running={running} 
+        setRunning={setRunning} gameStatus={gameStatus} setGameStatus={setGameStatus}/>
         { wait ? 
         <ItemHolder life={life} userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setRunning={setRunning} children={
           <div>

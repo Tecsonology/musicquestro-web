@@ -138,17 +138,21 @@ function Store() {
   }
 
   const updateQty = async (index) => {
-    try {
+    if(approved){
+      try {
 
-      const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
-        userids: currentUser ? currentUser.userids : null,
-        operator: 1,
-        index: index
-      })
+        const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
+          userids: currentUser ? currentUser.userids : null,
+          operator: 1,
+          index: index
+        })
 
 
-    } catch (error) {
-      console.log(error)
+      } catch (error) {
+        console.log(error)
+      }
+    } else {
+      console.log("Purchase unsuccessful")
     }
   }
 
@@ -239,8 +243,9 @@ function Store() {
                             description={'Get a spark of inspiration when the notes get tricky!'}
                           children={
                             <span><button onClick={()=> {
-                              updateQty(0)
                               deductCoins(50)
+                              updateQty(0)
+                              
                             }}>Buy</button></span>
                         } />
 
@@ -248,8 +253,8 @@ function Store() {
                             description={'Rewind the performance and try again without missing a beat!'}
                           children={
                             <span><button onClick={()=> {
-                              updateQty(2)
                               deductCoins(50)
+                              updateQty(2)
                             }}>Buy</button></span>
                         } />
 
@@ -257,8 +262,8 @@ function Store() {
                             description={'Keep the music alive—restore your hearts and play on!'}
                           children={
                             <span><button onClick={()=> {
-                              updateQty(1)
                               deductCoins(50)
+                              updateQty(1)
                             }}>Buy</button></span>
                         } />
                                  

@@ -25,19 +25,32 @@ function PauseGame({isOpen, setIsOpen, setRunning}) {
       >
         <div className='flex fdr aic jc-c'>
           <h1>Settings</h1>
-          <img onClick={()=> setIsOpen(false)} style={{position: 'absolute', right: '0em', top: '-1em', cursor: 'pointer'}} width={60} src={close} alt="" />
+          <img onClick={()=> {
+            setIsOpen(false)
+            setRunning(true)
+          }} style={{position: 'absolute', right: '0em', top: '-1em', cursor: 'pointer'}} width={60} src={close} alt="" />
         </div>
-        <button onClick={()=> {
+        <button style={{border: '2px solid white'}} onClick={()=> {
           setIsOpen(false)
+          setRunning(true)
         }}>Resume</button>
-        <button className='flex fdr aic jc-c' style={{background: 'red',}} onClick={()=> {
-          window.location.reload()
+        <button className='flex fdr aic jc-c' style={{background: 'rgba(161, 53, 11, 1)', border: '2px solid white'}} 
+          onClick={()=> {
+            const userConfirm  = confirm("Are you sure you want to retry?")
+
+            if(userConfirm){
+              window.location.reload()
+            }
+
         }}><span><img style={{marginRight: '0.5em'}} width={40} src={retry} alt="" /></span>Retry</button>
-        <button style={{backgroundColor: 'transparent', border: '2px solid white'}}>
+        <button style={{backgroundColor: 'rgba(71, 5, 195, 1)', border: '2px solid white'}}>
           Back to Levels
         </button>
-        <button style={{background: 'blue', padding: '0', width: '8em', marginTop: '4em'}} onClick={()=> {
-          window.location.href = '/h'
+        <button style={{background: '#454', padding: '0', width: '8em', marginTop: '4em'}} onClick={()=> {
+          const userConfirm = confirm("Are you sure you want to leave the game?")
+          if(userConfirm){
+            window.location.href = '/h'
+          }
         }}><span><img src={home} width={50} alt="" style={{background: 'transparent'}}/></span></button>
 
       </Modal>
