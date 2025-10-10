@@ -1,8 +1,26 @@
 .btnButton {
-    background-image: url('https://i.ibb.co/2YHn0n2b/Untitled-design-86.png');
-    background-size: cover;
-    background-repeat: no-repeat;
+    animation: pulseBeat 0.6s ease-in-out;
 
+}
+
+@keyframes pulseBeat {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+  50% {
+    transform: scale(1.08);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+}
+
+/* === Add .beat class dynamically for pulsing === */
+.rhythm-button.beat {
+  animation: pulseBeat 0.6s infinite;
 }
 
 .beat-buttons {
@@ -17,7 +35,7 @@
     width: 7em;
     height: 8em;
     margin: 0.4em;
-    border: 0.2em solid rgb(0, 0, 0);
+    border: 0.2em solid rgb(209, 179, 8);
     -webkit-box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 1);
     -moz-box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 1);
     box-shadow: 3px 8px 24px 0px rgba(255, 255, 255, 0.234);

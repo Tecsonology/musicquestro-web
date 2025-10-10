@@ -6,7 +6,7 @@
 
   font-family: sans-serif;
   text-align: center;
-  padding-top: 6em;
+  
   background: rgba(13, 0, 0, 0.771);
   box-sizing: border-box; /* Ensures padding is included in total width */
   background-image: url(../assets/game-assets/Assets/BackGround/NormalBG/Harmony.png);
@@ -56,6 +56,7 @@ p {
 }
 
 .chord-box {
+  position: relative;
   border: 2px dashed #6c757d;
   border-radius: 10px;
   width: 90%;

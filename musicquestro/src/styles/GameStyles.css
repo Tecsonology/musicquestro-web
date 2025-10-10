@@ -18,7 +18,7 @@
     background-size: cover;
     background-blend-mode:multiply;
     overflow:hidden;
-    color: white
+    color: white;
 
 }
 
@@ -50,6 +50,13 @@
 }
 
 
+.game-prompt-wrapper {
+    color: white;
+    background: #000;
+    background-image: url(../assets/game-assets/Prompts/EnergyPrompt.png);
+    background-position: center;
+}
+
 .game-prompt-container p, h3 {
     color: black;
     
@@ -77,9 +84,22 @@
 }
 
 .pitchcards-container {
+    box-sizing: border-box;
     margin: 0.5em;
     border-radius: 1em;
+    background-color: red;
+    padding: 1em;
+    border: 2px solid yellow;
+    min-width: 4em;
+    font-size: large;
 }
+
+.pitchcards-container.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 
 
 .inputNote {
@@ -146,6 +166,22 @@ button#playRhythm :hover {
 
 .cardLightOn {
     border: 0.1em solid #050085;
+}
+
+
+.item-holder-container {
+    position: fixed;
+    top: 5em;
+    width: 90%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.right-items {
+    background-color: rgba(0, 0, 0, 0.29);
+    border: 1px solid rgba(255, 255, 255, 0.273);
+    padding: 0.5em 0.3em;
+    border-radius: 1em;
 }
 
 
@@ -329,9 +365,12 @@ input[type='range'] {
 }
 
 .next-game-container {
-    background-color: rgb(3, 22, 170);
-    padding: 1em;
+    background-color: rgb(14, 21, 71);
+    padding: 1em 1em 2.5em 1em;
     border-radius: 1em;
+    box-shadow: -7px -2px 42px 0px rgba(244,244,244,0.58);
+    -webkit-box-shadow: -7px -2px 42px 0px rgba(244,244,244,0.58);
+    -moz-box-shadow: -7px -2px 42px 0px rgba(244,244,244,0.58);
 }
 
 @keyframes rotateOnce {

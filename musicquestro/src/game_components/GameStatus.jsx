@@ -11,8 +11,6 @@ function GameStatus(props) {
 
     const [rotate, setRotate] = useState(false)
     const [ isOpen, setIsOpen ]= useState(false)
-    
-
 
   useEffect(()=> {
     if (props.score) {
@@ -27,9 +25,14 @@ function GameStatus(props) {
 
   return (
     <>
-      <div className='game-status-container flex aic jc-c fdr'>
-      {props.level <= 15 ? (
-        <div className='game-status-wrapper flex fdr aic jc-c'>
+      <div style={{
+        backgroundColor: props.gameStatus === "Game Over" ? 'red' : '',
+      }} className='game-status-container flex aic jc-c fdr'>
+      
+        <>
+          {
+            !props.gameStatus  ?
+            <div className='game-status-wrapper flex fdr aic jc-c'>
             <div>
               <p> Score: {props.score && props.score}</p>
             </div>
@@ -47,12 +50,21 @@ function GameStatus(props) {
                 setIsOpen(true)
               }} width={40} src={settings} alt="" />
            </div>
-          
+        </div> : 
+          <div className='flex fdr aic jc-c'>
+              <h1 style={{
+                textAlign: 'center',
+                color: props.gameStatus === "Game Over" ? 'white': 'yellow' 
+                }}>{props.gameStatus}</h1>
+            </div>
+
+        }
 
             
-        </div>
+        </>
         
-      ) : null}
+        
+      
    
     </div>
       {

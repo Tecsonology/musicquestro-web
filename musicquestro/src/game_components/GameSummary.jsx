@@ -3,8 +3,12 @@ import { useNavigate } from 'react-router-dom'
 import CalculateGame from '../CalculateGame.js'
 import axios from 'axios'
 import { token, userToken} from '../Token.js'
+
+
 import CurrentUserContext, { UserContext } from '../components/CurrentUserContext.jsx'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
+
+import MelodyCard from '../assets/game-assets/Assets/Categories/Melody.png'
 
 const mapNames = {
   rhythm: {
@@ -12,7 +16,7 @@ const mapNames = {
     location: '/rhythmGame'
   },
   melody: {
-    imgLink: 'https://i.ibb.co/yFrnh25k/Untitled-design-24-1.png',
+    imgLink: MelodyCard,
     location: '/melodyGame'
   },
   harmony: {
@@ -30,7 +34,7 @@ function GameSummary(props) {
 
   const navigate = useNavigate()
   const calculate = new CalculateGame(props.score, props.points, props.time)
-  const gamePoints = calculate.calculateGame()
+  const gamePoints = Math.floor(calculate.calculateGame())
   const coinedGained = calculate.getCoins()
 
   const userids = userToken.userids
@@ -39,6 +43,7 @@ function GameSummary(props) {
   const [ btnOk, setBtnOk ] = useState('Okay')
   const [ nextMapPrompt, setNextMapPrompt ] = useState(false)
   const [ nextGameImg, setNextGameImg ] = useState()
+
   
 
     
@@ -82,7 +87,7 @@ function GameSummary(props) {
 
 
     const unlockNextLevel = async()=> {
-        console.log(props.level+1)
+        console.log("Current Level: ", props.level+1)
         try {
 
             const nextMapLevel = await axios.put(`${VITE_NETWORK_HOST}/update-map-level`,
@@ -167,14 +172,12 @@ function GameSummary(props) {
       {
         !nextMapPrompt ?
         <div className="game-summary-wrapper flex fdc aic jc-c">
-        
-        <h1 style={{textAlign: 'center', color: 'black'}}>{gamePoints >= props.targetPoint.toFixed(2) ? 'Congrats' : 'Better Luck Next Time'}</h1>
+        <h1 style={{textAlign: 'center', color: 'black'}}>{gamePoints > props.targetPoint.toFixed(2) ? 'Congrats' : 'Better Luck Next Time'}</h1>
 
         <div className='flex fdr aic jc-c'>
           
           <p>Score: {props.score}</p>
           <p>Points: {props.points}</p>
-          <p>Time: {calculate.getTime()}</p>
         </div>
         
       
@@ -218,15 +221,19 @@ function GameSummary(props) {
       {
         nextMapPrompt ?
         <>
-          <div className=' next-game-container flex fdc aic jc-c'>
-              <h3>Congratulations</h3>
-              <h2 style={{textAlign: 'center'}}>You unlocked the next game</h2>
+          <div style={{backgroundColor: 'rgba(1, 19, 37, 1)'}} className='fpage flex gdc aic jc-c'>
+            <div className=' next-game-container flex fdc aic jc-c'>
+              <h3 style={{color: 'yellow'}}>Congratulations</h3>
+              
 
               <img width={200} src={nextGameImg} alt="" />
-              <button onClick={()=> {
+              <h2 style={{textAlign: 'center'}}>You unlocked the next game</h2>
+              <button style={{width: '10em', borderRadius: '2em'}} className='navLink' onClick={()=> {
                 window.location.href = '/h/m'
               }}>Go to Maps</button>
           </div>
+          </div>
+          
         </> : null
       }
     </div>

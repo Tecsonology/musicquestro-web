@@ -6,6 +6,7 @@ import axios from 'axios'
 import { token, userToken } from '../Token'
 import ButtonBack from '../mini-components/ButtonBack'
 import CurrentUserContext, { UserContext } from './CurrentUserContext'
+import Loader from '../components/Loader.jsx'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
@@ -45,8 +46,7 @@ function Maps() {
   const navigate = useNavigate()  
   const [ maps, setMaps ] = useState()
   const userids = userToken ? userToken.userids : '46546546'
-  const { currentUser } = useContext(UserContext)
-  
+  const { currentUser } = useContext(UserContext)  
 
     useEffect(() => {
       getUserMap(userids);
@@ -86,13 +86,15 @@ function Maps() {
         <ButtonBack />
         <div className="maps-wrapper">
           <h1 className='title'>Map</h1>
-          <div className="map-selection">
+          {
+            currentUser ?
+            <div className="map-selection">
               {
                  Object.values(mapNames).map((value, index)=> {
                     
-                  return <img  key={index} src={mapAvailability[index] == 'true' ? lockImgLink : value.imgLink} alt='' className='cat-card' 
+                  return <img  key={index} src={mapAvailability[index] == true ? lockImgLink : value.imgLink} alt='' className='cat-card' 
                     onClick={()=> {
-                        mapAvailability[index] == 'true' ? null : navigate(`${value.location}`)
+                        mapAvailability[index] == true ? null : navigate(`${value.location}`)
                     }}
                    />
         
@@ -101,7 +103,8 @@ function Maps() {
               <br /><br /><br /><br /><br /><br /><br />
               <Outlet />
           
-          </div>
+          </div> : <Loader />
+          }
         </div>
 
       </div>

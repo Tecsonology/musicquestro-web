@@ -21,13 +21,16 @@ const MainBG = lazy(()=> import('../assets/game-assets/Assets/BackGround/NormalB
 import '../styles/Animation.css'
 import { useState } from 'react'
 import LoadingPage from './LoadingPage'
+import DailyReward from './DailyReward'
+import gift from '../assets/main-home/free-gift.gif'
+
 
 
 function MainHome() {
 
   const navigate = useNavigate() 
   const { currentUser } = useContext(UserContext)
-      const [ audioActive, setAudioACtive ] = useState(true)
+  const [ openReward, setOpenReward ] = useState(false)
   
 
   return (
@@ -36,7 +39,7 @@ function MainHome() {
       backgroundImage: {MainBG}
       }}>
       
-
+          <DailyReward open={openReward} />
          <img width={100} className='scaling main-home-logo' src={logo} alt="" 
           style={{position: 'fixed', top: '1em', left: '1em', zIndex: '3', cursor: 'pointer'}}
           onClick={()=> {
@@ -59,7 +62,10 @@ function MainHome() {
          </div>
 
           
-         
+         <img
+          onClick={()=> openReward === false ? setOpenReward(true) : setOpenReward(false)}
+         style={{position: 'absolute', bottom: '6em', border: '4px solid rgba(238, 255, 0, 1)',
+         right: '1em', zIndex: '5', borderRadius: '50%'}} width={60} src={gift} alt="" />
          <div className="main-content flex fdc aic jc-c">
           <div className="main-left">
             <img id='main-home-visual' src={MainHomeVisual} alt="" />

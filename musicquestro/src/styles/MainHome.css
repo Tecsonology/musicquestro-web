@@ -1,189 +1,171 @@
+/* ========== BASE (MOBILE FIRST) ========== */
+
 .mainhome-container {
   margin: 0;
   padding: 0;
 }
 
-
+/* Buttons */
 .main-home-button {
-    flex-direction: column;
-
-    button {
-        margin: 0.5em;
-        color: rgb(255, 255, 255);
-        text-shadow: -1px 5px black, 0 1px black, 1px 0 black, 0 -1px rgb(255, 255, 255);
-      
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+.main-home-button button {
+  margin: 0.5em;
+  color: #fff;
+  text-shadow: -1px 5px black, 0 1px black, 1px 0 black, 0 -1px white;
+  width: 80%;
+  font-size: 1em;
+  padding: 0.8em;
+  border: none;
+  border-radius: 0.5em;
+  background-color: #222;
+}
+
+/* Navigation */
 .main-nav {
-    position: fixed;
-    bottom: 0;
-    background: rgb(40, 40, 40);
-    width: 100%;
-    z-index: 0;
-    display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  background: rgb(40, 40, 40);
+  width: 100%;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0.5em 0;
 }
 
 .main-nav ul {
-    list-style: none;
-    text-decoration: none;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .main-nav ul li {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    border-left: 1px solid rgb(100, 100, 100);
-    padding: 0.5em 1em;
-    border-radius: 1em;
-   
+  flex: 1;
+  text-align: center;
 }
 
-.main-nav ul li a{
-    text-decoration: none;
-    margin: 0 1em;
-    color: white;
-    font-size: 1.3em;
-    font-weight: bolder;
-    
+.main-nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-size: 1em;
+  font-weight: bold;
 }
 
+/* Main visual (scales with screen size) */
 .main-left img {
-    width: 30em;
-    
+  width: 90%;
+  max-width: 400px;
+  height: auto;
+  display: block;
+  margin: 2em auto;
+  object-fit: contain;
 }
+
+/* User attributes */
 .user-attributes {
-    position: fixed;
-    top: 0em;
-    right: 1em;
+  position: fixed;
+  top: 0.5em;
+  right: 1em;
 }
 
-
-
-@media (min-width: 1024px) {
-    .main-home-button {
-
-
-}
+/* Daily Reward */
+.daily-reward {
+  color: black;
+  background-color: rgba(59, 2, 2, 0.196);
 }
 
-/* Desktop screens */
+/* ========== TABLET (min-width: 700px) ========== */
 @media (min-width: 700px) {
-    .nav-item {
-        margin: 0.4em 1em;
-    }
+  .main-left img {
+    width: 80%;
+    max-width: 500px;
+  }
 
-    #main-home-visual {
-        width: 30em;
-    }
+  .main-home-button button {
+    width: 60%;
+    font-size: 1.2em;
+  }
 
-    .nav-wrapper {
-        justify-content: center;
-    }
+  .main-nav {
+    padding: 0.8em 0;
+  }
 
-    .main-content {
-        flex-direction: column;
-    }
-
-    .main-left img {
-        width: 50em;
-    }
-
-    .main-nav {
-        display: block;
-    }
+  .main-nav ul li a {
+    font-size: 1.1em;
+  }
 }
 
-@media (min-width: 800px) and (min-width: 1200px) {
-    .nav-item {
-        margin: 0.4em 1em;
-    }
-
-    #main-home-visual {
-        width: 30em;
-    }
-
-    .nav-wrapper {
-        justify-content: center;
-    }
-
-    .main-content {
-        flex-direction: row;
-        flex-wrap: wrap;
-    }
-
-    .main-left img {
-        width: 50em;
-    }
-
-    .main-nav {
-        display: block;
-    }
-}
-
-@media (min-width: 800px) and (min-width: 1200px){
-     #main-home-visual {
-        width: 50em;
-    }
-
-    .main-home-logo {
-        width: 8em;
-    }
-}
-
-@media (min-width: 1024px) and (max-width: 1439px) {
+/* ========== SMALL DESKTOP (min-width: 1024px) ========== */
+@media (min-width: 1024px) {
   .main-content {
-        flex-direction: column;
-    }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .main-home-button {
-    }
+  .main-left img {
+    width: 60%;
+    max-width: 600px;
+  }
 
-    #main-home-visual {
-        width: 30em;
-    }
+  #btnStory, #btnPlayGame {
+    width: 25em;
+    font-size: 1.3em;
+  }
 
-    .main-content {
-        
-    }
-
-    #btnStory, #btnPlayGame {
-        width: 25em;
-    }
-
-
+  .main-nav {
+    position: static;
+    display: block;
+    background: none;
+  }
 }
 
+/* ========== LARGE DESKTOP (min-width: 1440px) ========== */
 @media (min-width: 1440px) {
-    .main-content {
-        margin-top: 3em;
-    }
+  .main-content {
+    margin-top: 3em;
+    flex-direction: row;
+    justify-content: center;
+  }
 
-    #btnStory, #btnPlayGame {
-        height: 5em;
-        width: 15em;
-    }
+  .main-left img {
+    width: 50%;
+    max-width: 700px;
+  }
 
-    #bio-text {
-        font-size: 2em;
-        color: white;
-    }
+  #btnStory, #btnPlayGame {
+    width: 15em;
+    height: 5em;
+  }
 
-        
+  #bio-text {
+    font-size: 2em;
+    color: white;
+  }
 }
 
-@media (min-width: 1900px){
-     #main-home-visual {
-        width: 55em;
-    }
+/* ========== ULTRA-WIDE (min-width: 1900px) ========== */
+@media (min-width: 1900px) {
+  .main-left img {
+    width: 45%;
+    max-width: 1000px;
+  }
 
-    .main-content {
-        flex-direction: column;
-    }
+  .main-content {
+    flex-direction: column;
+  }
 
-    #btnStory, #btnPlayGame {
-        width: 60vw;
-        height: 3em;
-    }
+  #btnStory, #btnPlayGame {
+    width: 50%;
+    height: 3em;
+  }
 }

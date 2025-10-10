@@ -1,13 +1,18 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,  } from 'react'
+import { useParams } from 'react-router-dom';
 import { useState, useContext, createContext} from 'react';
 import SecondPitchGame from './SecondPitchGame';
 import HighPitch from './HighPitch';
 import GameStatus from '../game_components/GameStatus.jsx'
-import GamePrompt from '../mini-components/GamePrompt.jsx';
 import lavaBtn from '../assets/game-assets/Assets/Buttons/LavaBtn.png'
 
-
-
+import ItemHolder from '../components/ItemHolder.jsx';
+import CountdownCircle from '../components/CountdownCircle.jsx';
+import GamePrompt from '../mini-components/GamePrompt.jsx';
+import { UserContext } from '../components/CurrentUserContext.jsx';
+import CurrentUserContext from '../components/CurrentUserContext.jsx';
+import PitchTutorial from './PitchTutorial.jsx';
+import GameSummary from './GameSummary.jsx';
 export const PitchScore = createContext()
 
 const NOTES = [
@@ -17,10 +22,39 @@ const NOTES = [
 
 function PitchGame() {
 
+  const [start, setStart] = useState(false);
+    const [ gameStatus, setGameStatus ] = useState("")
+  
+  const [showTutorial, setShowTutorial] = useState(true);
+    const [life, setLife] = useState(5);
+    const [savedSequence, setSavedSequence] = useState([]);
+    const [correctIndex, setCorrectIndex] = useState(null);
+
+    const [showSummary, setShowSummary] = useState(false);
+  
+    const { id } = useParams();
+    const { currentUser } = useContext(UserContext);
+    const [gameEnd, setGameEnd] = useState(false);
+    const [currentNote, setCurrentNote] = useState('');
+    const [sequence, setSequence] = useState([]);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const [currentBeat, setCurrentBeat] = useState(0);
+    const [showCorrection, setShowCorrection] = useState(false);
+    const [showNextButton, setShowNextButton] = useState(false);
+  
+    let countdownTimer = 30;
+  
+    const [currentRound, setCurrentRound] = useState(0);
+    const [gameRound, setGameRound] = useState(0);
+    const [running, setRunning] = useState();
+
+  
+    const [showAnswer, setShowAnswer] = useState(false);
+
   let context;
   let noteSequence = []
 
-  const [ noteLength, setNoteLength ] = useState(2)
+  const [ noteLength, setNoteLength ] = useState(0)
   const [ prevSequence, setPrevSequence ] = useState()
   const [ question, setQuestion ] = useState()
   const [ inputSequence, setInputSequence ] = useState([])
@@ -35,14 +69,62 @@ function PitchGame() {
   const [ status, setStatus ] = useState()
   const [ hidePlayButton , setHidePlayButton ] = useState(false)
   const [ wait, setWait ] = useState(false)
+
+    const targetPoint = 55;
+
+
+  useEffect(() => {
+    if (currentRound > gameRound || gameEnd) {
+      const timer = setTimeout(() => {
+        setShowSummary(true);
+        setGameStatus("Game Over")
+      }, 4000);
+  
+      return () => clearTimeout(timer);
+    }
+  }, [gameRound, currentRound]);
+
+  useEffect(() => {
+    let answerKey = ""
+      if(savedSequence){
+        savedSequence.forEach((note, index)=> {
+          answerKey += note + " ";
+        })
+      }
+      
+        if (answerKey.trim()) {
+          currentRound > 0 ? console.log("Round", currentRound + " answer: ", answerKey.trim()) : null
+      }
+
+    }, [savedSequence]);
   
 
-  useEffect(()=> {
-    if(score === 2 || score === 3 || score === 4 || score === 5 || score === 6 || score === 7 || score === 8 || score === 9){
-      setNoteLength(noteLength + 1)
-      console.log(`note length increased to ${noteLength + 1} next level ` )
-    }
-  }, [score])
+  useEffect(() => {
+      if (id == 0) {
+        setGameRound(5);
+        setNoteLength(2)
+      } else if (id == 1) {
+        setShowTutorial(false);
+        setGameRound(7);
+        setNoteLength(2)
+      } else if (id == 2) {
+        setGameRound(10);
+        setShowTutorial(false);
+        setNoteLength(2)
+      } else if (id == 3) {
+        setGameRound(13);
+        setNoteLength(2)
+        setShowTutorial(false);
+      } else if (id == 4) {
+        setGameRound(2);
+        setShowTutorial(false);
+        setNoteLength(2)
+      }
+  
+      if (level > gameRound) {
+        stopTime();
+      }
+    }, [id, level, gameRound]);
 
   if(score === 10){
     context = null
@@ -81,13 +163,14 @@ function PitchGame() {
   }
   
   const playNote =async ()=> {
-    setWait(true)
+    if(currentRound < gameRound ){
+      setWait(true)
    
       setStatus(false)
-     setLevel(level + 1)
+    setCurrentRound(prev => prev + 1)
     setHidePlayButton(true)
 
-    setMessage(`Which of this has the ${generateQuestion()} pitch?`)
+    setMessage(`Which of these has the ${generateQuestion()} pitch?`)
     let delay = 0
     setPitchKey([])
     setPitchCards([])
@@ -120,104 +203,322 @@ function PitchGame() {
 
       setTimeout(()=> {
         setWait(false) 
-        let noteCopy = noteSequence
-        noteCopy.reverse()
+        let noteCopy = [...noteSequence].reverse()
+        setSavedSequence(noteCopy)
         console.log(noteCopy)
+
+        setRunning(true)
+        
+
       
       }, delay)
-    
-      
+
+     
+    } else {
+      setMessage("Calculating game results...")
+      setCurrentRound(prev => prev + 1)
+    }
   }
 
+  const replayNotes = async () => {
+  if (!savedSequence || savedSequence.length === 0) {
+    console.log("No notes to replay yet!");
+    return;
+  }
+
+
+  console.log(savedSequence)
+  setWait(true);
+  setStatus(false);
+  setMessage("🎵 Replaying notes...");
+
+  let delay = 0;
+
+  for (let x = savedSequence.length - 1; x >= 0; x--) {
+    setTimeout(() => {
+      if (!context) initializeAudio();
+
+      const osc = context.createOscillator();
+      const gainNode = context.createGain();
+
+      osc.type = "sawtooth";
+      osc.frequency.value = NOTES[savedSequence[x]];
+
+      gainNode.gain.setValueAtTime(1, context.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + 5000);
+
+      osc.connect(gainNode);
+      gainNode.connect(context.destination);
+
+      osc.start();
+      osc.stop(context.currentTime + 600 / 1000);
+        }, delay);
+
+        delay += 2000;
+      }
+
+      setTimeout(() => {
+        setWait(false);
+        setMessage(`Which of this has the ${question} pitch?`);
+      }, delay);
+    };
+
+
+
+
+
+
+  //Answer checker
   const checkAnswer =(e, index)=> {
-    switch(question){
-      case 'highest' : 
-        if(pitchCards[index] === Math.max(...pitchCards)){
-          console.log('Correct')
-          setStatus('✅ Great!')
-          setScore(score +1)
-          setUserPoints(userPoints + 400)
-        } else {
-          console.log('Incorrect')
-          setStatus('❌ Wrong')
-        }
-        break
+    let correctIdx;
+    if(!wait){
+      switch(question){
+        case 'highest' : 
+          correctIdx = pitchCards.indexOf(Math.max(...pitchCards));
+          if(pitchCards[index] === Math.max(...pitchCards)){
+            setStatus('✅ Great!')
+            increaseScoreAndPoints()
+          } else {
+            setStatus('❌ Wrong')
+            penalty()
+          }
+          break
 
-      case 'lowest' : 
-        if(pitchCards[index] === Math.min(...pitchCards)){
-          console.log('Correct')
-          setStatus('✅ Correct')
-          setScore(score +1)
-          setUserPoints(userPoints + 400)
+        case 'lowest' : 
+          correctIdx = pitchCards.indexOf(Math.max(...pitchCards));
+          if(pitchCards[index] === Math.min(...pitchCards)){
+            setStatus('✅ Correct')
+            increaseScoreAndPoints()
 
-        } else {
-          console.log('Incorrect')
-          setStatus('❌ Opppss')
-        }
-        break
+          } else {
+            setStatus('❌ Opppss')
+            penalty()
+          }
+          break
+      }
+    } else if(wait) {
+      console.log("waiting...")
     }
+
+    setCorrectIndex(correctIdx);
+
    
+  }
+
+  
+  
+
+
+  //Game stats and status functions
+  const increaseScoreAndPoints =()=> {
+    setScore(score + 1)
+    setUserPoints(userPoints + 400)
+    
+  }
+
+  function setGameOver() {
+
+    setShowSummary(true)
+    setGameStatus("Game Over")
+  }
+
+
+  const useHint =()=> {
+      checkAnswer()
+     setShowCorrection(true)
+     increaseScoreAndPoints()
+  }
+
+  const useReplay =()=> {
+    console.log("Dasdsad")
+      replayNotes()
+  }
+
+  const penalty =()=> {
+    console.log('incorrect');
+    setMessage(`💔 -1`)
+    setLife(prev => prev - 1)
+    setRunning(false)
+    if(userPoints >= 50){
+      setUserPoints(userPoints - 50)
+    }
+    
   }
 
   return (
     <div className='pitch-game-container fpage flex fdc aic jc-c'>
-      <GameStatus score={score} userPoints={userPoints} level={level} />
+            <GameStatus gameStatus={gameStatus} score={score} userPoints={userPoints} currentRound={currentRound} level={gameRound} time={time} running={running} setRunning={setRunning} />
+      {showTutorial ? (
+        <PitchTutorial
+          showTutorial={showTutorial}
+          setShowTutorial={setShowTutorial}
+
+        />
+      ) : (
+        <GamePrompt gameName={'Echoic Cliff'} />
+      )}
       {status && status ? <h2 style={{textAlign: 'center'}}>{status}</h2> : null}
       {
-        score < 10 ? 
-        <div className='flex fdc'>
-             <h2 style={{textAlign: 'center'}}>{message}</h2>
-        <div>
-            <div className='pitches flex fdr aic jc-c'>
-              {
-                pitchCards && pitchCards.length > 0 ? 
-                pitchCards.map((note, index)=> (
-
-                  <div className='pitchcards-container' key={index}>
-                    <img className='pitchCards' width={100} src={lavaBtn} alt="" 
-                      onClick={(e)=> {
-                        if(wait){
-                          return false
-                        }
-
-                        checkAnswer(e, index)
-                        setShowKey(true)
-                        setTimeout(()=> {
-                          playNote()
-                          setShowKey(false)
-                        }, 1500)
-                      }}
-                    />
+        start ?
+            <div>
+                {
+                !showAnswer && !showCorrection ?
+                <div className='flex fdc aic jc-c'>
+                  <ItemHolder life={life} userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setRunning={setRunning} children={
+                  <div>
+                    <CountdownCircle time={countdownTimer} running={running} setRunning={setRunning} onComplete={setGameOver}/>
                   </div>
-                
-                )) : null
-              }
-          </div>
+                }/>
+                    <h2 style={{textAlign: 'center'}}>{message}</h2>
+                <div>
+                    <div className='pitches flex fdr aic jc-c'>
+                      {
+                        pitchCards && pitchCards.length > 0 ? 
+                        pitchCards.map((note, index)=> (
 
-       
-        </div>
+                          <button
+                            style={{ pointerEvents: !wait ? 'auto' : 'none', opacity: !wait ? 1 : 0.5 }}
+                            onClick={(e) => {
+                              checkAnswer(e, index);
+                              setShowKey(true);
+                              setShowAnswer(true)
+                              
+                            }}
+                            className='pitchcards-container flex fdc aic jc-c'
+                            key={index}
+                          >
+                            <h2>?</h2>
+                          </button>
+
+                        
+                        )) : <h1></h1>
+                      }
+                  </div>
+
+              
+                </div>
+
+              
+                { inputSequence && inputSequence.length >= 0?
+                  inputSequence.map((note, index)=> (
+                    <span key={index}>{note}</span>
+                  ))
+                  : null
+                }
+              
+
+                </div> : 
+                !showCorrection &&
+                (
+                   <>
+                  <div className="roundAnswer flex fdc aic jc-c">
+
+                            <div className='pitches flex fdr aic jc-c'>
+                              {
+                                pitchCards && pitchCards.length > 0 ? 
+                                pitchCards.map((note, index)=> (
+
+                                  <button
+                                    style={{ pointerEvents: !wait ? 'auto' : 'none', opacity: !wait ? 1 : 0.5 }}
+                                    onClick={(e) => {
+                                      
+                                      
+                                    }}
+                                    className='pitchcards-container flex fdc aic jc-c'
+                                    key={index}
+                                  >
+                                    <h2>{note}</h2>
+                                  </button>
+
+                                
+                                )) : null
+                              }
+                          </div>
+
+                            <button
+                              onClick={() => {
+                              setTimeout(() => {
+                                playNote();
+                                setShowKey(false);
+                              }, 0);
+
+                              setShowAnswer(false)
+
+                              }}
+                              
+                              className="reset-button"
+                            >
+                              Next
+                            </button>
+                          </div>
+                </>
+                )
+
+               
+                
+              
+              }
+          </div> : <button onClick={()=> {
+            setStart(true)
+            setShowAnswer(false)
+            playNote()
+          }}>Start</button>
+      }
 
       {
-        !hidePlayButton  ? 
-        <button style={{backgroundColor: 'red', borderRadius: '0', fontWeight: 'bold', height: ''}} onClick={()=> {
-            playNote()
-          }}>START
-        </button> : null
-      }
-      { inputSequence && inputSequence.length >= 0?
-        inputSequence.map((note, index)=> (
-          <span key={index}>{note}</span>
-        ))
-        : null
-      }
-      
+        showCorrection &&
+        (
+          <>
+            <h2>Answer Reveal</h2>
+            <h2>{correctIndex+1 }</h2>
+            <div className='pitches flex fdr aic jc-c'>
+                              {
+                                pitchCards && pitchCards.length > 0 ? 
+                                pitchCards.map((note, index)=> (
 
-        </div> : 
-        
-        <div>
-          <PitchScore.Provider value={{score, setScore, level, setLevel, userPoints, setUserPoints}}><SecondPitchGame /></PitchScore.Provider>
-        </div>
+                                  <button
+                                    style={{
+                                      backgroundColor: correctIndex == index  ?  'blue' : 'red',
+                                      fontSize: correctIndex == index  ?  '1em' : '0.5em',
+                                    }}
+                                    onClick={(e) => {
+                                      
+                                      
+                                    }}
+                                    className='pitchcards-container flex fdc aic jc-c'
+                                    key={index}
+                                  >
+                                    <h2>{note}</h2>
+                                  </button>
+
+                                
+                                )) : null
+                              }
+                          </div>
+              <button onClick={()=> {
+                    setShowAnswer(false)
+                    setShowCorrection(false)
+                    playNote()
+                  }
+                }>Next</button>
+          </>
+        )
       }
+
+      {showSummary ? (
+          <CurrentUserContext>
+            <GameSummary
+              userids={currentUser.userids}
+              level={parseInt(id)}
+              gameName={'pitch'}
+              score={score}
+              points={userPoints}
+              time={time}
+              targetPoint={targetPoint}
+              nextGameIndex={4}
+            />
+          </CurrentUserContext>
+        ) : null}
 
       
          

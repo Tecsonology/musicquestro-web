@@ -7,7 +7,7 @@ import axios from 'axios'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 
-function ItemHolder({useHint, useReplay, running, setRunning, setGameOver, children, userContext }) {
+function ItemHolder({life, useHint, useReplay, running, setRunning, children, userContext }) {
 
   const tempHintQty = userContext ? userContext.items.spells[0][1] : 0
   const tempHeartQty = userContext ? userContext.items.spells[1][1] : 0
@@ -18,12 +18,14 @@ function ItemHolder({useHint, useReplay, running, setRunning, setGameOver, child
   const [ hintQty, setHintQty ] = useState()
   const [ heartQty, setHeartQty ] = useState()
   const [ replayQty, setReplayQty ] = useState()
+  const [ heartLeft, setHeartLeft ] = useState(5)
 
   useState(() => {
     setHintQty(spells ? spells[0][1] : 0)
     setHeartQty(spells ? spells[1][1] : 0)
     setReplayQty(spells ? spells[2][1] : 0)
   }, [userContext])
+
 
   const updateQty = async (index) => {
     try {
@@ -43,8 +45,9 @@ function ItemHolder({useHint, useReplay, running, setRunning, setGameOver, child
 
 
   return (
-    <div className='flex fdr' style={{position: 'absolute', top: '5em'}}>
-      <div onClick={()=> {
+    <div className='item-holder-container flex fdr'>
+      <div className="left-items flex fdr aic jc-c">
+        <div onClick={()=> {
         if (hintQty > 0) {
           useHint()
           updateQty(0)
@@ -55,21 +58,29 @@ function ItemHolder({useHint, useReplay, running, setRunning, setGameOver, child
         <h4 className='item-quantity'>{tempHintQty}</h4>
       </div>
 
-      <div onClick={()=> setGameOver()} className='item-wrapper glass-bg'>
-        <img width={40} src={heart} alt="" />
-        <h4 className='item-quantity'>{heartQty}</h4>
-      </div>
-      <div className='item-wrapper glass-bg'>
+    
+      {
+        replayQty >= 0 ?
+        <div className='item-wrapper glass-bg'>
         <img onClick={()=> {
-          if (replayQty > 0) {
+          if (replayQty >=  1) {
             useReplay()
             updateQty(2)
             setReplayQty(replayQty - 1)
           }
         }} width={40} src={replay} alt="" />
         <h4 className='item-quantity'>{tempReplayQty}</h4>
+      </div> : null
+      }
       </div>
-      {children}
+
+      <div className="right-items flex fdr aic jc-c">
+        <div className='item-wrapper glass-bg'>
+          <img width={40} src={heart} alt="" />
+          <h4 className='item-quantity'>{life}</h4>
+        </div>
+        {children}
+      </div>
       
     </div>
   )

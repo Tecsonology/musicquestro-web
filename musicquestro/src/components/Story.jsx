@@ -95,7 +95,7 @@ function Story() {
         <img src={slide12} alt="" className="img-story" />
 
         {
-          currentUser && currentUser.maps.melody.isLocked === 'false' ?
+          currentUser && currentUser.maps.melody.isLocked === false ?
           <div>
             <img src={slide12} alt="" className="img-story" />
             <img src={slide13} alt="" className="img-story" />
@@ -112,7 +112,7 @@ function Story() {
         }
 
          {
-          currentUser && currentUser.maps.harmony.isLocked === 'false' ?
+          currentUser && currentUser.maps.harmony.isLocked === false ?
           <div>
             <img src={slide22} alt="" className="img-story" />
             <img src={slide23} alt="" className="img-story" />

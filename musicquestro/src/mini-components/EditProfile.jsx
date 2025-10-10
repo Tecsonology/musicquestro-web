@@ -74,6 +74,9 @@ function EditProfile() {
 
   return (
     <div className='edit-profile fpage flex fdc aic jc-c'>
+      <div className="header">
+        <h2>Edit Profile</h2>
+      </div>
       <div className="edit-section">
         <h2>Avatar</h2>
         <div className="flex fdc aic jc-c">
@@ -124,9 +127,9 @@ function EditProfile() {
         <div style={{width: '80%'}} className="edit-buttons flex fdr aic jc-c">
           <button onClick={()=> {
             updateProfile()
-        }} style={{width: '80%', backgroundColor: 'green', marginRight: '0.4em' }}>SAVE</button>
+        }} style={{ backgroundColor: 'green', marginRight: '0.4em' }}>SAVE</button>
 
-        <button style={{width: '80%', backgroundColor: 'red'}} onClick={()=> {
+        <button style={{backgroundColor: 'red'}} onClick={()=> {
           navigate(-1)
         }} >CANCEL</button>
         </div>

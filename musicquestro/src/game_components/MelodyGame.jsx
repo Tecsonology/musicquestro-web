@@ -7,6 +7,7 @@ import CurrentUserContext, { UserContext } from '../components/CurrentUserContex
 import { useParams } from 'react-router-dom';
 import PauseGame from '../mini-components/PauseGame';
 import ItemHolder from '../components/ItemHolder.jsx';
+import CountdownCircle from '../components/CountdownCircle.jsx';
 
 const notesMap = {
   DO: 261.63,
@@ -22,6 +23,7 @@ const noteNames = Object.keys(notesMap);
 
 function MelodyGame() {
   const { id } = useParams()
+  const [showSummary, setShowSummary] = useState(false);
   const { currentUser } = useContext(UserContext);
   const [melody, setMelody] = useState([]);
   const [userInput, setUserInput] = useState([]);
@@ -30,15 +32,72 @@ function MelodyGame() {
   const [score, setScore] = useState(0);
   const [userPoints, setUserPoints] = useState(0);
   const [time, setTime] = useState(0);
-  const [level, setLevel] = useState(null);
+  const [level, setLevel] = useState(0);
   const [message, setMessage] = useState('Listen to the melody and match the notes!');
   const [wait, setWait] = useState(false);
   const [ gameRound, setGameRound ] = useState()
   const intervalRef = useRef(null);
   const audioCtxRef = useRef(null);
-  const targetPoint = 70;
+  const [ showTutorial, setShowTutorial ] = useState(true);
+  
+  
 
+  const [ life, setLife ] = useState(5)
+  const [ running, setRunning ] = useState(false)
+  const [ gameEnd, setGameEnd ] = useState(false)
+  const [ currentRound, setCurrentRound ] = useState(0)
+  
+  
 
+  let currentLevel = 0
+  let countdownTimer = 120
+  const targetPoint = 30;
+
+  useEffect(() => {
+        if (currentRound > gameRound || life <= 0) {
+          const timer = setTimeout(() => {
+            setShowSummary(true);
+            
+          }, 4000);
+      
+          return () => clearTimeout(timer);
+        }
+  }, [gameRound, currentRound]);
+
+  function setGameOver() {
+    setGameEnd(true)
+    stopTime()
+  }
+
+  const stopTime = () => {
+    clearInterval(intervalRef.current);
+    intervalRef.current = null;
+  };
+  
+
+  useEffect(()=> {
+  
+      if(id == 0){
+        setGameRound(5)
+      } else if(id == 1){
+        setShowTutorial(false)
+        setGameRound(7)
+      } else if(id == 2){
+        setGameRound(10)
+        setShowTutorial(false)
+      } else if(id == 3){
+        setGameRound(13)
+        setShowTutorial(false)
+      } else if(id == 4){
+        setGameRound(15)
+        setShowTutorial(false)
+      }
+  
+      if(level > gameRound){
+        stopTime()
+      }
+  
+    }, [id, level, gameRound])
   
   useEffect(() => {
     if(id == 0){
@@ -57,6 +116,17 @@ function MelodyGame() {
       stopTime()
     }
   }, [id]);
+
+  useEffect(()=> {
+      let answerKey = ""
+      if(melody){
+        melody.map((note, index)=> {
+          answerKey += note + " "
+        })
+      }
+      answerKey ? console.log("Round",currentRound +" answer: ", answerKey ) : null
+    }, [melody])
+
 
   useEffect(() => {
     if (userInput.length > 6) setUserInput([]);
@@ -89,6 +159,7 @@ function MelodyGame() {
   };
 
   const playMelody = async () => {
+    setCurrentRound(prev => prev + 1)
     setWait(false);
 
     const newMelody = Array.from({ length: noteLength }, () =>
@@ -102,13 +173,13 @@ function MelodyGame() {
     setLevel(prev => (prev !== null ? prev + 1 : 1));
 
     for (const note of newMelody) {
-      console.log(note)
       playNote(notesMap[note]);
       await new Promise(res => setTimeout(res, 700));
     }
 
     setWait(true);
     setMessage('Show what you listen');
+    setRunning(true)
   };
 
   const handleNoteClick = (note) => {
@@ -117,24 +188,19 @@ function MelodyGame() {
   };
 
   const releaseNotes = () => {
+    setWait(false)
     const isCorrect = userInput.length === melody.length && userInput.every((n, i) => n === melody[i]);
 
     if (isCorrect) {
-      setUserPoints(prev => prev + 400);
-      setScore(prev => prev + 1);
+      increaseScoreAndPoints()
       setMessage("✅ Correct");
     } else {
       setMessage(`❌ Wrong, it's ${melody.join(' ')}`);
-      setUserPoints(prev => (prev >= 200 ? prev - 10 : 0));
+      penalty()
     }
 
     setTimeout(() => {
-      if (level < 15) {
-        playMelody();
-      } else {
-        setLevel(prev => prev + 1);
-        stopTime();
-      }
+      playMelody()
     }, 3000);
   };
 
@@ -152,26 +218,49 @@ function MelodyGame() {
     return !wait ? <img width={300} src='https://i.ibb.co/rRvk4jHQ/Untitled-design-4-removebg-preview.png' alt="Listen mode" /> : null;
   };
 
+  const increaseScoreAndPoints =()=> {
+    setScore(score + 1)
+    setUserPoints(userPoints + 400)
+    
+  }
+
+  const penalty =()=> {
+    console.log('incorrect');
+    setMessage(`💔 -1`)
+    setLife(prev => prev - 1)
+    setRunning(false)
+    if(userPoints >= 50){
+      setUserPoints(userPoints - 50)
+    }
+  }
+
 
   //Item Functions
 
   const useHint =()=> {
      playAgain();
-    setUserPoints(prev => prev - 150);
+   
      setMessage(melody.join(' '));
   }
 
   const useReplay =()=> {
        playAgain();
-      setUserPoints(prev => prev - 50);
   }
+
+  
 
   return (
     <CurrentUserContext>
       <div className='melody-game-container fpage flex fdc aic jc-c'>
         <GamePrompt gameName={'MELODIC PEAK'}/>
-        <GameStatus score={score} userPoints={userPoints} level={level} time={time} />
-        { wait ? <ItemHolder useHint={useHint} useReplay={useReplay}/> : null}
+        <GameStatus score={score} userPoints={userPoints} level={gameRound} time={time} currentRound={currentRound} />
+        { wait ? 
+        <ItemHolder life={life} userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setRunning={setRunning} children={
+          <div>
+            <CountdownCircle time={countdownTimer} running={running} setRunning={setRunning} onComplete={setGameOver}/>
+          </div>
+        }/>
+         : null}
 
           <div className='flex fdc aic jc-c' style={{marginTop: '5em',}}>
             <h2 style={{textAlign: 'center', position: 'relative'}}>{message}</h2>
@@ -206,18 +295,27 @@ function MelodyGame() {
             <div className="lower-buttons">
               <button style={{width: '10em', backgroundColor: 'orange'}} onClick={releaseNotes}>Compose</button>
               <button onClick={() => {
-                setUserInput([]);
+                setUserInput([])
                 if (userPoints > 0) setUserPoints(prev => prev - 5);
               }} style={{ marginLeft: '1em' }}>Clear</button>
             </div>
           </div>
         )}
-        {
-          level > 5 
-        }
-        {level > 5 && (
-          <GameSummary userids={currentUser.userids} level={parseInt(id)} gameName={'melody'} score={score} points={userPoints} time={time} targetPoint={targetPoint} nextGameIndex={2} />
-        )}
+     
+       {showSummary ? (
+          <CurrentUserContext>
+            <GameSummary
+              userids={currentUser.userids}
+              level={parseInt(id)}
+              gameName={'melody'}
+              score={score}
+              points={userPoints}
+              time={time}
+              targetPoint={targetPoint}
+              nextGameIndex={2}
+            />
+          </CurrentUserContext>
+        ) : null}
           </div>
       </div>
     </CurrentUserContext>

@@ -29,7 +29,7 @@
 
 
 .edit-profile {
-    background: rgb(90, 90, 90);    
+    background: rgb(21, 24, 67);    
     overflow: scroll;
     padding-bottom: 2em;
     z-index: 20;
@@ -46,6 +46,10 @@
     padding: 1em;
     border-radius: 1em;
     margin: 0.7em 0;
+}
+
+.edit-buttons button {
+    width: 80%;
 }
 
 .profile-container {
@@ -107,6 +111,16 @@
     .profile-wrapper, .stats, .badges, .current-rank, .item-count, .bottom-buttons {
        width: 40vw;
     }   
+
+    .edit-section {
+        width: 40%;
+    }
+
+    .edit-buttons button {
+        width: 25%;
+    }
+
+
 }
 
 /* Desktop screens */

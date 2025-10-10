@@ -11,7 +11,7 @@ function Homepage() {
       <div className='homepage flex jc-c aic fdc fpage'>
         <BGMusic />
           <Suspense fallback={<h1>Loadong pa po...</h1>}>
-          
+            
             <Outlet />
           </Suspense>
           

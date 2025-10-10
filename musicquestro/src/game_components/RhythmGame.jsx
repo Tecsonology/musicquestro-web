@@ -17,29 +17,21 @@ const durations = [
   
 ];
 
-const inititalState = {
-  score: 0,
-  userPoints: 0,
-  level: 0
-}
-
-const reducer = (state, action) => {
-  switch(action.type) { 
-    case 'increase-score': return {score: state.score + 1}
-    case 'increase-level': return { level: state.level + 1}
-    case 'add-user-points': return { userPoints: state.userPoints + action.points}
-  }
-}
 
 let totalBeats = 0
 const sample = durations.filter(note => note.name !== 'rest' && note.beats <= (4 - totalBeats))
 
 
 function RhythmGame() {
+
+  const [ start, setStart ] = useState(false)
+ 
+  const [ life, setLife ] = useState(5)
+  const [showSummary, setShowSummary] = useState(false);
+
   const { id} = useParams()
   const { currentUser } = useContext(UserContext)
   const [ gameEnd, setGameEnd ] = useState(false)
-  const [ state, dispatch ] = useReducer(reducer, inititalState)
   const [currentNote, setCurrentNote] = useState('');
   const [ message, setMessage ] = useState()
   const [sequence, setSequence] = useState([]);
@@ -59,12 +51,22 @@ function RhythmGame() {
   const [ showNextButton, setShowNextButton ] = useState(false)
   
   let currentLevel = 0
-  let countdownTimer = 5
+  let countdownTimer = 30
   const targetPoint = 55;
 
     const audioCtxRef = useRef(null);
   const intervalRef = useRef(null);
   let oscType;
+
+  useEffect(() => {
+      if (currentRound > gameRound || gameEnd) {
+        const timer = setTimeout(() => {
+          setShowSummary(true);
+        }, 4000);
+    
+        return () => clearTimeout(timer);
+      }
+    }, [gameRound, currentRound]);
 
   
 useEffect(() => {
@@ -93,7 +95,7 @@ useEffect(() => {
       setGameRound(13)
       setShowTutorial(false)
     } else if(id == 4){
-      setGameRound(2)
+      setGameRound(15)
       setShowTutorial(false)
     }
 
@@ -112,6 +114,23 @@ useEffect(() => {
   }, [level] )
 
 
+  useEffect(() => {
+    if (life <= 0) {
+      const timeout = setTimeout(setGameOver, 2000);
+      return () => clearTimeout(timeout);
+    }
+  }, [life]);
+
+
+  useEffect(()=> {
+    let answerKey = ""
+    if(sequence){
+      sequence.map((note, index)=> {
+        answerKey += note.name + " "
+      })
+    }
+    answerKey ? console.log("Round",currentRound +" answer: ", answerKey ) : null
+  }, [sequence])
 
 
 
@@ -188,9 +207,10 @@ useEffect(() => {
   return selected;
 };
 
-  const playSequence = (seq) => {
+  const playSequence = () => {
     
-    setRunning(true)
+    if(currentRound < gameRound){
+      setRunning(true)
     setShowCorrection(false)
     startTime();
     const rhythm = generateRandomSequence();
@@ -232,6 +252,13 @@ useEffect(() => {
 
     setLevel(prev => prev + 1);
     setCurrentRound( prev => prev + 1)
+    } else {
+      console.log("dasdsadsad")
+      setMessage("Game Complete")
+      setShowSummary(true)
+    }
+
+    
     
     
   };
@@ -274,6 +301,34 @@ useEffect(() => {
     
   }
 
+  const playInputSequence = () => {
+  if (!inputSequence || inputSequence.length === 0) {
+    setMessage('No notes to play!');
+    return;
+  }
+
+  let delay = 0;
+  let beat = 0;
+
+  inputSequence.forEach(note => {
+    setTimeout(() => {
+      playNote(note.freq, note.duration);
+    }, delay);
+    delay += note.duration;
+  });
+
+  const beatInterval = setInterval(() => {
+    beat += 1;
+    setCurrentBeat(beat);
+    if (beat >= 4) {
+      clearInterval(beatInterval);
+      setTimeout(() => {
+        setCurrentBeat(0);
+      }, 600);
+    }
+  }, 400);
+};
+
   if(inputSequence.length > 4){
     setInputSequence([])
   }
@@ -285,40 +340,57 @@ useEffect(() => {
   }
 
   function setGameOver() {
-    setGameEnd(true)
-    stopTime()
+    console.log("Game over!!!!")
+    setShowSummary(true)
   }
 
 
   const useHint =()=> {
      setShowCorrection(true)
+     increaseScoreAndPoints()
   }
 
   const useReplay =()=> {
       playBeatAgain()
   }
 
+  const penalty =()=> {
+    console.log('incorrect');
+    setMessage(`-1💔`)
+    setLife(prev => prev - 1)
+    setRunning(false)
+    if(userPoints >= 50){
+      setUserPoints(userPoints - 50)
+    }
+    setShowCorrection(true)
+  }
+
   return (
     <div className='rhythm-game-container fpage flex fdc jc-c aic'>
-      { showTutorial ? (<RhythmTutorial setShowTutorial={setShowTutorial}/>) : <GamePrompt gameName={'Rhythm Idol'}/>}
-       
-      <GameStatus score={score} userPoints={userPoints} currentRound={currentRound} level={gameRound} time={time} running={running} setRunning={setRunning} />
-      {
+      { showTutorial ? (<RhythmTutorial setShowTutorial={setShowTutorial}/>) : <GamePrompt gameName={'Rhythmic Ruins'}/>}
+
+       {
         wait && !showCorrection ?
-        <div style={{margin: '5em'}}>
-        <ItemHolder userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setGameOver={setGameOver} setRunning={setRunning} children={
+        
+        <ItemHolder life={life} userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setRunning={setRunning} children={
           <div>
             <CountdownCircle time={countdownTimer} running={running} setRunning={setRunning} onComplete={setGameOver}/>
           </div>
         }/>
-      </div> : ""
+          : ""
       }
-       { message && message ? <h1 style={{textAlign: 'center'}}>{message && message ? message : null}</h1> : null}
-      { !showCorrection ? <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Listen carefully..."}</strong></h2> : null}
+       
+      <GameStatus showSummary={showSummary} score={score} userPoints={userPoints} currentRound={currentRound} level={gameRound} time={time} running={running} setRunning={setRunning} />
+     
+       {
+        start ?
+        <>
+          { message && message ? <h1 style={{textAlign: 'center', marginTop: '2em'}}>{message && message ? message : null}</h1> : null}
+      { !showCorrection && inputSequence.length <= 0 ? <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Listen carefully..."}</strong></h2> : null}
 
      {
         !showCorrection ? 
-         <div className="beat-indicator flex fdr jc-c aic" style={{ margin: '0' }}>
+         <div className="beat-indicator flex fdr jc-c aic" style={{ margin: '1em 0 0 0' }}>
       {inputSequence && inputSequence.length > 0 ? <button style={{margin: '0', backgroundColor: 'transparent'}} onClick={()=> { setInputSequence([])}}>Clear</button> : null}
 
         {[1, 2, 3, 4].map((beat) => (
@@ -346,14 +418,11 @@ useEffect(() => {
      }
 
 
-      { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={()=>{
-        playSequence()
-        setRunning(true)
-      }}>START</button> : 'Loading...' }
+     
   
 
       {
-        inputSequence && inputSequence.length > 0 ?
+        inputSequence && inputSequence.length > 0 && !showCorrection?
         <div className="input-notes">
         <hr /><hr /><hr /><hr /><hr />
         <div className='input-overlay flex fdr aic'>
@@ -363,6 +432,7 @@ useEffect(() => {
             ))
           }
         </div>
+
       </div> : null
       }
 
@@ -370,19 +440,41 @@ useEffect(() => {
       
       {
         showCorrection ? 
-        <div style={{backgroundColor: 'white', color: 'black', padding: '0.5em 1em', width: '25em'}} className='flex fdc aic jc-c'>
+        <div style={{backgroundColor: 'white', color: 'black', padding: '0.5em 1em', width: '20em'}} className='flex fdc aic jc-c'>
           <h2 style={{color: 'black'}}>Correct Answer</h2>
           <div className='flex fdr aic jc-c'>
             {
               level  && showCorrection ? 
               sequence.map((note, index)=> {
+              
                 return (
                 
-                    <img key={index} width={30} src={note.img} alt="" />
+                    <img
+                      style={{
+                        backgroundColor: '#342',
+                        margin: '0 0.5em',
+                        padding: '0.3em',
+                        borderRadius: '1em',
+                        cursor: 'pointer'
+                      }}
+                    onClick={()=> { playBeatAgain()}} key={index} width={30} src={note.img} alt="" />
                   
                 )
               }) : null
             }
+          </div>
+
+          
+
+          <div className='flex fdc aic'>
+            <p style={{color: 'black'}}>Your answer:</p>
+            <div className='flex fdr aic jc-c'>
+              { 
+                inputSequence.map((note, index) => (
+                  <img style={{margin: '0.5em'}} key={index} width={15} src={note.img} alt="" />
+                ))
+              }
+            </div>
           </div>
 
           
@@ -429,7 +521,7 @@ useEffect(() => {
             }}>
               <span><img width={15} src={note.img} alt="" /></span>
               <h4 style={{margin: 0, color: 'black'}}>{note.name}</h4>
-               <p style={{color: 'black'}}>{note.beats} beats</p>
+              
             </button>
           ))
         }
@@ -442,7 +534,9 @@ useEffect(() => {
               width: '10em',
               backgroundColor: 'orange',
               fontSize: '1.4em',
-              padding:'0.6em 1em'
+              padding:'0.6em 1em',
+              borderBottom: '4px solid rgba(246, 7, 7, 1)',
+              fontWeight: 'bolder'
             }}
             onClick={() => {
             if (JSON.stringify(sequence) === JSON.stringify(inputSequence)) {              
@@ -452,13 +546,7 @@ useEffect(() => {
               setMessage('✅ Great')
               setShowNextButton(true)
             } else {
-              console.log('incorrect');
-              setMessage(`❌ Oppss`)
-              setRunning(false)
-              if(userPoints >= 50){
-                setUserPoints(userPoints - 50)
-              }
-              setShowCorrection(true)
+              penalty()
             }
 
           }}>
@@ -469,12 +557,33 @@ useEffect(() => {
       </div>
         </div> : null
       }
-        {level > gameRound || gameEnd ? 
-        
-        <CurrentUserContext>
 
-          <GameSummary userids={currentUser.userids} level={parseInt(id)} gameName={'rhythm'} score={score} points={userPoints} time={time} targetPoint={targetPoint} nextGameIndex={1}/>
-        </CurrentUserContext> : null}
+        </> :
+        <>
+           { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={()=>{
+              playSequence()
+              setRunning(true)
+              setStart(true)
+            }}>START</button> : 'Loading...' }
+        </>
+       }
+
+      {showSummary ? (
+          <CurrentUserContext>
+            <GameSummary
+              userids={currentUser.userids}
+              level={parseInt(id)}
+              gameName={'rhythm'}
+              score={score}
+              points={userPoints}
+              time={time}
+              targetPoint={targetPoint}
+              nextGameIndex={1}
+            />
+          </CurrentUserContext>
+        ) : null}
+       
+
     </div>
     
   );

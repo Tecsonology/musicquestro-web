@@ -102,10 +102,10 @@ function Register() {
           let totalPoints = 0;
           let life = 1000.0;
           let maps = {
-            rhythm: { isLocked: "false", levels: [1] },
-            melody: { isLocked: "true", levels: [1] },
-            harmony: { isLocked: "true", levels: [1] },
-            pitch: { isLocked: "true", levels: [1] },
+            rhythm: { isLocked: false, levels: [1] },
+            melody: { isLocked: true, levels: [1] },
+            harmony: { isLocked: true, levels: [1] },
+            pitch: { isLocked: true, levels: [1] },
           };
           let story = {
             chapter1: { isLocked: "true"},

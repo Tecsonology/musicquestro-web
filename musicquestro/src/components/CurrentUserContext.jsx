@@ -32,6 +32,7 @@ function CurrentUserContext({children}) {
             setCurrentUser(currUser)
         }
 
+
         const interval = setInterval(()=> {
              getPlayer()
         }, 3000)
