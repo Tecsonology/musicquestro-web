@@ -19,7 +19,10 @@ function GameStatus(props) {
       const timer = setTimeout(() => setRotate(false), 1000)
       return () => clearTimeout(timer)
     }
+    
   }, [props.score])
+
+
 
 
 

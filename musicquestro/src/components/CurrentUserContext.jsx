@@ -19,19 +19,34 @@ function CurrentUserContext({children}) {
 
         if(!player){
             console.log("Cant find userids")
+            localStorage.clear()
+            console.log("All local storage are deleted...")
             navigate('/login')
             
         }
         const userids = player.userids
+        
 
         const getPlayer = async()=> {
+            
             const getUser = await axios.get(`${VITE_NETWORK_HOST}/player`, {
                 params: { userids }
             })
+
+        
+            console.log("Response: ", getUser.data.message)
+
+            if(getUser.data.message === 'No player found'){
+                console.log("Cant find userids")
+                localStorage.clear()
+                console.log("All local storage are deleted...")
+                navigate('/login')
+            }
             const currUser = getUser.data.userWithoutPassword
             setCurrentUser(currUser)
-        }
 
+            
+        }
 
         const interval = setInterval(()=> {
              getPlayer()
@@ -41,7 +56,6 @@ function CurrentUserContext({children}) {
             clearInterval(interval)
         }
 
-     
 
     }, [])
 

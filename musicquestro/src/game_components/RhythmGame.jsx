@@ -110,8 +110,12 @@ useEffect(() => {
       stopTime()
     }
 
+    if(isOpen){
+      console.log("Paused Time")
+    }
+
   
-  }, [level] )
+  }, [level, isOpen] )
 
 
   useEffect(() => {
@@ -253,7 +257,6 @@ useEffect(() => {
     setLevel(prev => prev + 1);
     setCurrentRound( prev => prev + 1)
     } else {
-      console.log("dasdsadsad")
       setMessage("Game Complete")
       setShowSummary(true)
     }

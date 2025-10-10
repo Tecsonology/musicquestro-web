@@ -46,13 +46,15 @@
 }
 
 .input-notes {
-    background-color: rgba(169, 169, 169, 0.111);
+    background-color: rgba(254, 249, 249, 0.803);
+    
     width: 20em;
     height: 3em;
     margin: 1em 0;
 
     hr {
         background-color: rgba(255, 255, 255, 0.015);
+        color: black;
     }
 }
 
