@@ -18,9 +18,7 @@ function CurrentUserContext({children}) {
         const player = JSON.parse(localStorage.getItem('userLogged'))
 
         if(!player){
-            console.log("Cant find userids")
-            localStorage.clear()
-            console.log("All local storage are deleted...")
+           
             navigate('/login')
             
         }
