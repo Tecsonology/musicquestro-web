@@ -43,9 +43,9 @@ function PauseGame({isOpen, setIsOpen, setRunning}) {
             }
 
         }}><span><img style={{marginRight: '0.5em'}} width={40} src={retry} alt="" /></span>Retry</button>
-        <button style={{backgroundColor: 'rgba(71, 5, 195, 1)', border: '2px solid white'}}>
+       {/** <button style={{backgroundColor: 'rgba(71, 5, 195, 1)', border: '2px solid white'}}>
           Back to Levels
-        </button>
+        </button> */}
         <button style={{background: '#454', padding: '0', width: '8em', marginTop: '4em'}} onClick={()=> {
           const userConfirm = confirm("Are you sure you want to leave the game?")
           if(userConfirm){
