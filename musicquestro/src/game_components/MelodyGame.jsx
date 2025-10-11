@@ -50,7 +50,7 @@ function MelodyGame() {
   
 
   let currentLevel = 0
-  let countdownTimer = 5
+  let countdownTimer = 60
   const targetPoint = 30;
 
   useEffect(() => {
