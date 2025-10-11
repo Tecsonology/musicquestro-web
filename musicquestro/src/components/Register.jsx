@@ -16,7 +16,7 @@ function Register() {
   const validatePassword = (pwd) => {
     if(password && password.length >= 0){
       const minLength = /.{8,}/;
-      const upper = /[A-Z]/;
+      const upper = /[A-Z]/;  
       const lower = /[a-z]/;
       const number = /[0-9]/;
       const special = /[!@#$%^&*(),.?":{}|<>]/;

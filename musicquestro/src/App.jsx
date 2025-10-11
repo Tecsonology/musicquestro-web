@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import './styles/Log.css'
-import {  Link } from 'react-router-dom';
+import {  Link, useLocation } from 'react-router-dom';
+
 
 import logo from '../src/assets/game-assets/Assets/Logo&Menu/Logo.png'
 
@@ -13,7 +14,6 @@ import StoryPrev from '../src/assets/main-home/StoryPrev.png'
 
 import { Outlet } from 'react-router-dom';
 import PilotTestingPrompt from './components/PilotTestingPrompt'
-import BGMusic from './components/BGMusic'
 import arrowDown from './assets/game-assets/AppAssets/arrowDown.png'
 import arrowUp from './assets/game-assets/AppAssets/arrowUp.png'
 import headset from './assets/game-assets/AppAssets/headphone.png'
@@ -22,9 +22,10 @@ import headset from './assets/game-assets/AppAssets/headphone.png'
 
 function App() {
 
+  const loc = useLocation()
   const [ logingIn, setLoggingIn ] = useState(false)
   const [ showPrompt, setShowPrompt ] = useState(true)
-
+  
 
   return (
     <>
@@ -36,7 +37,7 @@ function App() {
 
         {/**<ClickEffect play={true}/> */}
     
-       { logingIn ? <Link onClick={()=> setLoggingIn(false)} className='navLink backHome'>X Cancel</Link> : null}
+       { loc.pathname != '/' ? <Link onClick={()=> setLoggingIn(false)} className='navLink backHome'>X Cancel</Link> : null}
        <div  className="main-log flex fdc aic jc-c">
         
         <img width={!logingIn ? 300 : 200} className='main-logo' src={logo} alt="" />
@@ -50,11 +51,11 @@ function App() {
           </> : null  
         }
         {
-          !logingIn && !logingIn ? <Link onClick={()=> setLoggingIn(true)} className='navLink' to={'login'}>PLAY</Link> : null
+          loc.pathname === '/' ? <Link onClick={()=> setLoggingIn(true)} className='navLink' to={'login'}>PLAY</Link> : null
         }
 
         {
-          !logingIn ? 
+          loc.pathname === '/' ? 
             <h3  onClick={() => {
             document.getElementById("preview-section")?.scrollIntoView({
               behavior: "smooth",
