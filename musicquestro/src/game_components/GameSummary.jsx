@@ -2,10 +2,9 @@ import React, { useState, useContext,  } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CalculateGame from '../CalculateGame.js'
 import axios from 'axios'
-import { token, userToken} from '../Token.js'
 
 
-import CurrentUserContext, { UserContext } from '../components/CurrentUserContext.jsx'
+import  { UserContext } from '../components/CurrentUserContext.jsx'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 import MelodyCard from '../assets/game-assets/Assets/Categories/Melody.png'
@@ -37,14 +36,14 @@ function GameSummary(props) {
   const gamePoints = Math.floor(calculate.calculateGame())
   const coinedGained = calculate.getCoins()
 
-  const userids = userToken.userids
 
   const  { currentUser }  = useContext(UserContext)
   const [ btnOk, setBtnOk ] = useState('Okay')
   const [ nextMapPrompt, setNextMapPrompt ] = useState(false)
   const [ nextGameImg, setNextGameImg ] = useState()
 
-  
+  const userids = currentUser ? currentUser.userids : null
+
 
     
     const mapUnlocker = async (mapIndex) => {

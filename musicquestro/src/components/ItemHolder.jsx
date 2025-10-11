@@ -47,7 +47,7 @@ function ItemHolder({life, useHint, useReplay, running, setRunning, children, us
   return (
     <div className='item-holder-container flex fdr'>
       <div className="left-items flex fdr aic jc-c">
-        <div onClick={()=> {
+        <div id='hint-spell' onClick={()=> {
         if (hintQty > 0) {
           useHint()
           updateQty(0)
@@ -61,7 +61,7 @@ function ItemHolder({life, useHint, useReplay, running, setRunning, children, us
     
       {
         replayQty >= 0 ?
-        <div className='item-wrapper glass-bg'>
+        <div id='replay-spell' className='item-wrapper glass-bg'>
         <img onClick={()=> {
           if (replayQty >=  1) {
             useReplay()
