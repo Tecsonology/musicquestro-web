@@ -1,16 +1,9 @@
 import React from 'react'
-import ProtectedComponent from './ProtectedComponent'
 import { useState, useEffect, useContext} from 'react'
-import { Outlet, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import '../styles/Profile.css'
-import CurrentUserContext from './CurrentUserContext'
 import { UserContext } from './CurrentUserContext'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPen } from '@fortawesome/free-solid-svg-icons'
-import { Suspense, lazy } from 'react'
 import Loader from './Loader'
-import EditProfile from '../mini-components/EditProfile'
-const lazzzy = lazy(()=> import('./Loader'))
 import musLife from '../assets/store-assets/MusicLife.png'
 import muscoins from '../assets/store-assets/musicoins.png'
 import EditIcon from '../assets/EditIcon.png'
@@ -22,22 +15,14 @@ import image from '../assets/game-assets/Badges/image.png'
 
 function Profile() {
   const { currentUser } = useContext(UserContext)
-  const [ edit, setEdit] = useState(false)
   const navigate = useNavigate()
 
       
   return (
     <>
       <div className='profile fpage flex fdc aic jc-c'>
-        
         {
-          /**<Suspense fallback={<Loader/>}>
-          <h1>dasds</h1>
-
-        </Suspense> */
-        }
-           {
-            currentUser ? 
+          currentUser ? 
             <>
               <img onClick={()=> {
         navigate(-1)
@@ -130,7 +115,9 @@ function Profile() {
                 <h2>+100</h2>
               </div>
 
-               <div className='item-count' style={{backgroundColor: '#33333348', justifyContent: 'space-between',
+               {
+                /**
+                 * <div className='item-count' style={{backgroundColor: '#33333348', justifyContent: 'space-between',
                 padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}}>
                   <table>
                     <tbody>
@@ -147,6 +134,8 @@ function Profile() {
                     </tbody>
                   </table>
               </div>
+                 */
+               }
 
               <div style={{alignItems: 'end',
                 position: 'relative', bottom: '-4em',}} className="bottom-buttons flex fdr">
