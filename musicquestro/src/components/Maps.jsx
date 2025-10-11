@@ -7,6 +7,7 @@ import { token, userToken } from '../Token'
 import ButtonBack from '../mini-components/ButtonBack'
 import CurrentUserContext, { UserContext } from './CurrentUserContext'
 import Loader from '../components/Loader.jsx'
+import LockCat from '../assets/game-assets/Assets/Categories/LockCat.png'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
@@ -78,7 +79,6 @@ function Maps() {
   }
 
 
-
   return (
    
         <CurrentUserContext>
@@ -92,7 +92,7 @@ function Maps() {
               {
                  Object.values(mapNames).map((value, index)=> {
                     
-                  return <img  key={index} src={mapAvailability[index] == true ? lockImgLink : value.imgLink} alt='' className='cat-card' 
+                  return <img  key={index} src={mapAvailability[index] == true ? LockCat : value.imgLink} alt='' className='cat-card' 
                     onClick={()=> {
                         mapAvailability[index] == true ? null : navigate(`${value.location}`)
                     }}
