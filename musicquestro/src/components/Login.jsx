@@ -1,14 +1,9 @@
-import React, { useEffect, useState, useContext} from 'react'
+import { useEffect, useState, useContext} from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { use } from 'react';
-import App from '../App';
 import '../styles/Log.css'
-import GoogleLoginButton, { userids } from './GoogleLoginButton';
 import { token } from '../Token.js'
-import { UserContext } from './CurrentUserContext.jsx';
 import { Link } from 'react-router-dom';
-import PilotTestingPrompt from './PilotTestingPrompt.jsx';
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
@@ -17,8 +12,6 @@ function Login() {
     const navigate = useNavigate();
     const [ username, setName ] = useState()
     const [ password, setPassword ] = useState();
-    const [ id, setId ] = useState(455);
-    const [ ready, setReady ] = useState(false)
     const [ log, setLog ] = useState(true);
     const [ error, setError ] = useState(false)
     const [ disabled, setDisabled ] = useState(true)
@@ -33,7 +26,6 @@ function Login() {
             setDisabled(true)
         }
 
-
         if(token){
             navigate('/h')
          }
@@ -45,7 +37,7 @@ function Login() {
             const postData = async () => {
             try {
                 const response = await axios.post(
-                `${import.meta.env.VITE_NETWORK_HOST}/auth`,
+                `${VITE_NETWORK_HOST}/auth`,
                 { username: username, password: password },
                 { withCredentials: true}
                  
