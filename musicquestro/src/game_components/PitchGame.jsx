@@ -74,7 +74,7 @@ function PitchGame() {
   const [ hidePlayButton , setHidePlayButton ] = useState(false)
   const [ wait, setWait ] = useState(false)
 
-    const targetPoint = 55;
+    const targetPoint = 30;
 
 
   useEffect(() => {
