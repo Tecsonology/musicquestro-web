@@ -2,3 +2,19 @@
     background-color: red;
     font-size: 2rem;
 }
+
+.pointing {
+    animation: pointingAnimate 1s ease-in-out 0s infinite alternate forwards;
+}
+
+@keyframes pointingAnimate {
+     0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}

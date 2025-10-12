@@ -394,7 +394,7 @@ useEffect(() => {
 
 
    return (
-     <div className='rhythm-game-container fpage flex fdc jc-c aic'>
+     <div className='rhythm-game-container fpage flex fdc aic'>
        { showTutorial ? (<RhythmTutorial setShowTutorial={setShowTutorial}/>) : <GamePrompt gameName={'Rhythmic Ruins'}/>}
 
         {

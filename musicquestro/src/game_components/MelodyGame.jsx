@@ -393,7 +393,7 @@ function MelodyGame() {
 
          { wait && revealedNotesCount > 0  && 
                 <div className='flex fdr aic' style={{position: 'relative', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
-                borderRadius: '10px', width: '90%', marginTop: '3em', justifyContent: 'space-evenly', }}>
+                borderRadius: '10px', width: '90%', marginTop: '31.000.0.005em', justifyContent: 'space-evenly', }}>
                   <div className='flex fdr aic jc-c' style={{position: 'absolute', 
                     top: '-2em', left: '1em', backgroundColor: '#344', padding: '0 1em', borderRadius: '1em', border: '2px solid yellow'}}>
                     <img style={{backgroundColor: 'rgba(68, 68, 85, 0.97)', padding: '0.5em', borderRadius: '50%', }} width={30} src={hint} alt="" />

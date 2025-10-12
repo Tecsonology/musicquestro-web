@@ -46,7 +46,7 @@ function PitchGame() {
     const [showCorrection, setShowCorrection] = useState(false);
     const [showNextButton, setShowNextButton] = useState(false);
   
-    let countdownTimer = 30;
+    let countdownTimer = 120;
   
     const [currentRound, setCurrentRound] = useState(0);
     const [gameRound, setGameRound] = useState(0);
@@ -347,7 +347,7 @@ function PitchGame() {
   }
 
   return (
-    <div className='pitch-game-container fpage flex fdc aic jc-c'>
+    <div style={{justifyContent: 'flex-start'}} className='pitch-game-container fpage flex fdc aic'>
             <GameStatus gameStatus={gameStatus} score={score} userPoints={userPoints} currentRound={currentRound} level={gameRound} time={time} running={running} setRunning={setRunning} />
       {showTutorial ? (
         <PitchTutorial
@@ -358,14 +358,7 @@ function PitchGame() {
       ) : (
         <GamePrompt gameName={'Echoic Cliff'} />
       )}
-      {status && status ? <h2 style={{textAlign: 'center'}}>{status}</h2> : null}
-      {
-        start ?
-            <div>
-                {
-                !showAnswer && !showCorrection ?
-                <div className='flex fdc aic jc-c'>
-                    {
+       {
                       !wait && 
                       (
                         <ItemHolder life={life} userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setRunning={setRunning} children={
@@ -374,7 +367,19 @@ function PitchGame() {
                           </div>
                         }/>
                       )
-                    }
+       }
+      
+      <div style={{justifyContent: 'flex-start', marginTop: '7em'}} className='flex fdc aic' >
+        {status && status ? <h2 style={{textAlign: 'center'}}>{status}</h2> : null}
+        {
+        start ?
+            <div>
+                {
+                !showAnswer && !showCorrection ?
+                <div style={{justifyContent: 'flex-start'}} className='flex fdc aic'>
+                  
+
+                    <h1 className='pointing' style={{margin: 0}}>{question == 'highest' ? '☝🏼' : '👇'}</h1>
                     <h2 style={{textAlign: 'center'}}>{message}</h2>
                 <div>
                     <div className='pitches flex fdr aic jc-c'>
@@ -477,6 +482,7 @@ function PitchGame() {
             playNote()
           }}>Start</button>
       }
+      </div>
 
       {
         showHint &&  
