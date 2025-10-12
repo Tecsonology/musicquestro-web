@@ -417,15 +417,9 @@ function HarmonyGame() {
                 gameStatus={gameStatus}
             />
 
-            <div style={{ marginTop: '6em' }} className='flex fdc aic jc-c'>
-                {start ? (
-                    <>
-                        {!showCorrection ? (
-                            <>
-                                {!showAnswer && !showCorrection ? (
-                                    <>
-                                        {/* ItemHolder (Replay/Hint buttons) stays visible during listening */}
-                                        <div style={{ marginTop: '6em' }} className="flex fdc aic jc-c">
+            {
+                !showAnswer && !showCorrection &&
+               
                                             <ItemHolder
                                                 life={life}
                                                 userContext={currentUser}
@@ -443,8 +437,19 @@ function HarmonyGame() {
                                                         />
                                                     </div>
                                                 }
-                                            />
-                                        </div>
+                    />
+              
+            }
+
+            <div style={{ marginTop: '6em' }} className='flex fdc aic jc-c'>
+                {start ? (
+                    <>
+                        {!showCorrection ? (
+                            <>
+                                {!showAnswer && !showCorrection ? (
+                                    <>
+                                        {/* ItemHolder (Replay/Hint buttons) stays visible during listening */}
+                                        
                                         
                                         {/* Conditional Rendering: Show input elements only AFTER the listening phase */}
                                         {!isListeningPhase ? (
@@ -537,7 +542,7 @@ function HarmonyGame() {
                                                 showAnswer ?
                                                     <>
                                                         {/* --- START OF CORRECTED BLOCK --- */}
-                                                        <div className='glass-bg' style={{ margin: '2em', padding: '1em' }}>
+                                                        <div className='glass-bg' style={{ margin: '1em', padding: '1em' }}>
                                                             <h2>{targetChord && targetChord.name}</h2>
                                                             <div className='flex fdr aic jc-c'>
                                                                 {targetChord && targetChord.notes.map((note, index) => {
@@ -549,7 +554,7 @@ function HarmonyGame() {
                                                                                 borderRadius: '1em',
                                                                                 margin: '1em 0.2em',
                                                                                 color: 'white',
-                                                                                fontSize: '2em',
+                                                                                fontSize: '1.5em',
                                                                                 // Use green if the note was correctly played by the user, red if missed
                                                                                 backgroundColor: isCorrectlyPlayed ? '#28a745' : '#dc3545', 
                                                                                 boxShadow: isCorrectlyPlayed 
@@ -589,6 +594,7 @@ function HarmonyGame() {
                                                     setShowCorrection(false)
                                                     // Note: Removed the redundant handlePlayTargetChord call
                                                 }}
+                                                style={{margin: 0, width: '15em'}}
                                                 className="reset-button"
                                             >
                                                 Next Chord
@@ -625,7 +631,7 @@ function HarmonyGame() {
                 <>
                     <h1>MAGIC REVEAL</h1>
                     {/* --- START OF IMPROVED CORRECTION BLOCK --- */}
-                    <div className='glass-bg' style={{ margin: '2em', padding: '1em' }}>
+                    <div className='glass-bg' style={{ margin: '0.4em', padding: '0' }}>
                         <h6>CORRECT ANSWER</h6>
                         <h2>{targetChord && targetChord.name}</h2>
                         <div className='flex fdr aic jc-c'>
@@ -656,9 +662,9 @@ function HarmonyGame() {
                 </>
             ) : null}
 
-            {hintedNotes.length > 0 && targetChord && (
-                <div className='flex fdr aic' style={{position: 'fixed', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
-                borderRadius: '10px', marginBottom: '1em', bottom: '1em', width: '90%', justifyContent: 'space-evenly', }}>
+            {hintedNotes.length > 0 && targetChord && !showAnswer && (
+                <div className='flex fdr aic' style={{position: 'absolute', bottom: '0', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
+                borderRadius: '10px', marginBottom: '1em', width: '90%', justifyContent: 'space-evenly', }}>
                     <div className='flex fdr aic jc-c' style={{position: 'absolute', 
                         top: '-2em', left: '1em', backgroundColor: '#344', padding: '0 1em', borderRadius: '1em', border: '2px solid yellow'}}>
                         <img style={{backgroundColor: 'rgba(68, 68, 85, 0.97)', padding: '0.5em', borderRadius: '50%', }} width={30} src={hint} alt="" />

@@ -197,7 +197,10 @@ function GameSummary(props) {
           <h4 style={{color: 'black'}}><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
         </div>
 
-        {gamePoints >= props.targetPoint.toFixed(2) ? <button onClick={()=> {  
+        {gamePoints >= props.targetPoint.toFixed(2) ? 
+        <button style={{
+          color: 'black'
+        }} onClick={()=> {  
                 setBtnOk('Game uploading, please wait...')
                  gameUpload()
                  
