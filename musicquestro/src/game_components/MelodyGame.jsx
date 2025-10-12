@@ -282,6 +282,7 @@ function MelodyGame() {
 
   const useReplay =()=> {
        playAgain();
+       
   }
 
   let answerKey
@@ -306,20 +307,20 @@ function MelodyGame() {
           
 
           <div className='flex fdc aic jc-c' style={{marginTop: '5em',}}>
-            <h2 style={{textAlign: 'center', position: 'relative'}}>{message}</h2>
+           { userInput.length <= 0 &&  <h2 style={{textAlign: 'center', position: 'relative'}}>{message}</h2>}
         {listenMode()}
 
         { level < 1 ? <button onClick={playMelody} style={{fontSize: '1.5em', background: 'green' }}>Let's Begin!</button> : null}
 
        {
           !showAnswer &&
-         <h1 style={{margin: '0 0 0.4em 0', textAlign: 'center', 
+         <h2 style={{margin: '0 0 0.4em 0', textAlign: 'center', 
           backgroundColor: userInput.length > 0 ? '#0000005c' : 'transparent', border: userInput.length > 0 ? '3px solid white' : '0px solid white', 
-          borderRadius: '3em', padding: '0.2em 0.4em'}}>{userInput.join(' ')}</h1>
+          borderRadius: '3em', padding: '0.2em 0.4em'}}>{userInput.join(' ')}</h2>
        }
  
         {wait && (
-          <div className='m-btn-container glass-bg'>
+          <div style={{position: 'relative'}} className='m-btn-container glass-bg'>
             <div className='melody-wrapper flex fdr jc-c aic'>
               {noteNames.map(note => (
                 <button
@@ -328,11 +329,11 @@ function MelodyGame() {
                   style={{
                     margin: '5px',
                     padding: '10px 20px',
-                    fontSize: '2em',
+                    fontSize: revealedNotesCount > 0  ? '1em' : '2em',
                     backgroundColor: 'black',
                     color: 'white',
                     borderRadius: '8px',
-                    cursor: 'pointer'
+                    cursor: 'pointer',
                   }}
                 >
                   {note}
@@ -391,8 +392,8 @@ function MelodyGame() {
         }
 
          { wait && revealedNotesCount > 0  && 
-                <div className='flex fdr aic' style={{position: 'fixed', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
-                borderRadius: '10px', marginBottom: '1em', bottom: '1em', width: '90%', justifyContent: 'space-evenly', }}>
+                <div className='flex fdr aic' style={{position: 'relative', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
+                borderRadius: '10px', width: '90%', marginTop: '3em', justifyContent: 'space-evenly', }}>
                   <div className='flex fdr aic jc-c' style={{position: 'absolute', 
                     top: '-2em', left: '1em', backgroundColor: '#344', padding: '0 1em', borderRadius: '1em', border: '2px solid yellow'}}>
                     <img style={{backgroundColor: 'rgba(68, 68, 85, 0.97)', padding: '0.5em', borderRadius: '50%', }} width={30} src={hint} alt="" />

@@ -171,8 +171,8 @@ button#playRhythm :hover {
 
 
 .item-holder-container {
-    position: fixed;
-    top: 5em;
+    position: relative;
+    top: 4em;
     width: 90%;
     align-items: center;
     justify-content: space-between;
