@@ -171,8 +171,10 @@ function PitchGame() {
       setStatus(false)
     setCurrentRound(prev => prev + 1)
     setHidePlayButton(true)
+    
 
-    setMessage(`Which of these has the ${generateQuestion()} pitch?`)
+    let roundQuestion = generateQuestion().toUpperCase()
+    setMessage(`Which of these has the ${roundQuestion === 'highest' ? `"☝🏼${roundQuestion}"` : `"👇${roundQuestion}"`} pitch?`)
     let delay = 0
     setPitchKey([])
     setPitchCards([])
@@ -262,7 +264,6 @@ function PitchGame() {
       setTimeout(() => {
         savedSequence.reverse()
         setWait(false);
-        setMessage(`Which of these has the ${question} pitch?`);
       }, delay);
     };
 
@@ -379,7 +380,13 @@ function PitchGame() {
                 <div style={{justifyContent: 'flex-start'}} className='flex fdc aic'>
                   
 
-                    <h1 className='pointing' style={{margin: 0}}>{question == 'highest' ? '☝🏼' : '👇'}</h1>
+                  <div style={{padding: '0.2em', backgroundColor: 'rgba(0, 54, 0, 0.97)', borderRadius: '50%'}}>
+                    <h1 className='pointing' 
+                    style={{
+                      margin: 0,
+                      }}>{question == 'highest' ? '☝🏼' : '👇'}</h1>
+                  </div>
+
                     <h2 style={{textAlign: 'center'}}>{message}</h2>
                 <div>
                     <div className='pitches flex fdr aic jc-c'>
@@ -388,7 +395,9 @@ function PitchGame() {
                         pitchCards.map((note, index)=> (
 
                           <button
-                            style={{ pointerEvents: !wait ? 'auto' : 'none', opacity: !wait ? 1 : 0.5 }}
+                            style={{ pointerEvents: !wait ? 'auto' : 'none', opacity: !wait ? 1 : 0.5,
+
+                             }}
                             onClick={(e) => {
                               checkAnswer(e, index);
                               setShowKey(true);
@@ -398,7 +407,13 @@ function PitchGame() {
                             className='pitchcards-container flex fdc aic jc-c'
                             key={index}
                           >
-                            <h2>?</h2>
+                            <h2 style={{
+                              padding: wait ? 0 : '0.2em',
+                              backgroundColor: wait ? 'transparent' : 'black',
+                              borderRadius: '50%',
+                              width: '1.2em',
+                              height: '1.2em',
+                            }}>{wait ? '🔊' : '?'}</h2>
                           </button>
 
                         
@@ -422,7 +437,7 @@ function PitchGame() {
                 !showCorrection &&
                 (
                    <>
-                  <div className="roundAnswer flex fdc aic jc-c">
+                  <div className="roundAnswer flex fdc aic jc-c glass-bg">
 
                             <div className='pitches flex fdr aic jc-c'>
                               {
@@ -465,7 +480,7 @@ function PitchGame() {
                               
                               className="reset-button"
                             >
-                              Next
+                              NEXT PITCHES
                             </button>
                           </div>
                 </>
