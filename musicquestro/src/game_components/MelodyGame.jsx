@@ -50,6 +50,8 @@ function MelodyGame() {
   const [ running, setRunning ] = useState(false)
   const [ gameEnd, setGameEnd ] = useState(false)
   const [ currentRound, setCurrentRound ] = useState(0)
+
+  const [ showAnswer, setShowAnswer ] = useState(false)
   
   
 
@@ -218,9 +220,7 @@ function MelodyGame() {
     // Reset hint state after composition attempt
     setRevealedNotesCount(0); 
 
-    setTimeout(() => {
-      playMelody()
-    }, 3000);
+   
   };
 
 
@@ -235,7 +235,7 @@ function MelodyGame() {
   };
 
   const listenMode = () => {
-    return !wait ? <img width={300} src='https://i.ibb.co/rRvk4jHQ/Untitled-design-4-removebg-preview.png' alt="Listen mode" /> : null;
+    return !wait && !showAnswer ? <img width={300} src='https://i.ibb.co/rRvk4jHQ/Untitled-design-4-removebg-preview.png' alt="Listen mode" /> : null;
   };
 
   const increaseScoreAndPoints =()=> {
@@ -284,6 +284,8 @@ function MelodyGame() {
        playAgain();
   }
 
+  let answerKey
+
   
 
   return (
@@ -308,8 +310,13 @@ function MelodyGame() {
         {listenMode()}
 
         { level < 1 ? <button onClick={playMelody} style={{fontSize: '1.5em', background: 'green' }}>Let's Begin!</button> : null}
-        <h1 style={{margin: '0 0 0.4em 0', textAlign: 'center', 
-          backgroundColor: userInput.length > 0 ? '#0000005c' : 'transparent', border: userInput.length > 0 ? '3px solid white' : '0px solid white', borderRadius: '3em', padding: '0.2em 0.4em'}}>{userInput.join(' ')}</h1>
+
+       {
+          !showAnswer &&
+         <h1 style={{margin: '0 0 0.4em 0', textAlign: 'center', 
+          backgroundColor: userInput.length > 0 ? '#0000005c' : 'transparent', border: userInput.length > 0 ? '3px solid white' : '0px solid white', 
+          borderRadius: '3em', padding: '0.2em 0.4em'}}>{userInput.join(' ')}</h1>
+       }
  
         {wait && (
           <div className='m-btn-container glass-bg'>
@@ -334,14 +341,54 @@ function MelodyGame() {
             </div>
 
             <div className="lower-buttons">
-              <button style={{width: '10em', backgroundColor: 'orange'}} onClick={releaseNotes}>Compose</button>
+              <button style={{width: '10em', backgroundColor: 'orange'}} onClick={
+                ()=> {
+                  setShowAnswer(true)
+                  setWait(false)
+                  releaseNotes()
+                  
+                }
+              }>Compose</button>
               <button onClick={() => {
                 setUserInput([])
                 if (userPoints > 0) setUserPoints(prev => prev - 5);
-              }} style={{ marginLeft: '1em' }}>Clear</button>
+              }} style={{ marginLeft: '1em', color: 'white' }}>Clear</button>
             </div>
           </div>
         )}
+
+        {
+          showAnswer ?
+          <>
+             
+            <div style={{padding: '1em'}} className='glass-bg flex fdc aic jc-c'>
+              <h3 style={{color: 'white'}}>Correct Answer</h3>
+              <div className="flex fdr aic jc-c">
+                 {
+               melody.map((note, index) => {
+                    answerKey += note + " ";
+                    return <div style={{
+                      padding: '1em',
+                      backgroundColor: 'rgba(1, 43, 1, 1)',
+                      margin: '0 0.5em'
+                    }} key={index}>
+                      <h4>{note}</h4>
+                    </div>;
+                  })
+                }
+              </div>
+
+              <p>Your Answer</p>
+                <h4 style={{color: 'black', margin: 0}}>{userInput.join(' ')}</h4>
+            </div>
+
+
+            <button style={{width: '100%', backgroundColor: 'green'}} onClick={()=> {
+              setShowAnswer(false)
+              playMelody()
+            }}>Next Melody</button>
+          </> : null
+        }
 
          { wait && revealedNotesCount > 0  && 
                 <div className='flex fdr aic' style={{position: 'fixed', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 

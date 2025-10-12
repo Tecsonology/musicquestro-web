@@ -63,7 +63,7 @@ function ItemHolder({life, useHint, useReplay, running, setRunning, children, us
         <img onClick={()=> {
           if (replayQty >=  1) {
             useReplay()
-            updateQty(2)
+            updateQty(1)
             setReplayQty(replayQty - 1)
           }
         }} width={40} src={replay} alt="" />
