@@ -25,6 +25,9 @@ import hint from '../assets/game-assets/ItemAssets/hint.png'
 import flute  from '../assets/game-assets/Assets/Instrument/Flute.png'
 import guitar  from '../assets/game-assets/Assets/Instrument/Guitar.png'
 import xylo  from '../assets/game-assets/Assets/Instrument/Xylo.png'
+import Clarinet from '../assets/game-assets/Assets/Instrument/Clarinet.png'
+import Trumpet from '../assets/game-assets/Assets/Instrument/Trumpet.png'
+import Violin from '../assets/game-assets/Assets/Instrument/Violin.png'
 import AvatarShopCard from '../mini-components/AvatarShopCard'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
@@ -32,34 +35,35 @@ import avatar from '../assets/game-assets/ProfilePics/Brim.png'
 
 
 const ITEMS = {
-  guitar: {
-    itemName: 'Guitar',
-    imgItem: guitar,
+  clarinet: {
+    itemName: 'Clarinet',
+    imgItem: Clarinet,
     description: 'Strum your way to rhythm.',
     price: 300,
     itemCode: "acoustic_guitar_nylon"
   },
 
-  xylophone: {
-    itemName: 'Xylophone',
-    imgItem: xylo,
+  flute: {
+    itemName: 'Flute',
+    imgItem: flute,
     description: 'Bright and colorful tones.',
     price: 600
   },
 
-  flute: {
-    itemName: 'Flute',
-    imgItem: flute,
+  trumpet: {
+    itemName: 'Trumpet',
+    imgItem: Trumpet,
     description: 'Play smooth and airy notes.',
     price: 1000,
-    itemCode: 'flute'
+    itemCode: 'trumpet'
   },
 
-  game: {
-    itemName: 'Game',
-    imgItem: 'https://i.ibb.co/Fkh3850k/Untitled-design-2025-07-31-T003603-716.png',
+  violin: {
+    itemName: 'Violin',
+    imgItem: Violin,
     description: 'Lead the music with style.',
-    price: 1300
+    price: 1300,
+    itemCode: 'violin'
   },
 
 }
@@ -258,14 +262,7 @@ function Store() {
                             }}>Buy</button></span>
                         } />
 
-                        <StoreCard imgItem={heart} itemName={'Life'} itemPrice={50}
-                            description={'Keep the music alive—restore your hearts and play on!'}
-                          children={
-                            <span><button onClick={()=> {
-                              deductCoins(50)
-                              updateQty(1)
-                            }}>Buy</button></span>
-                        } />
+                 
                                  
                   </div> : null
                   }

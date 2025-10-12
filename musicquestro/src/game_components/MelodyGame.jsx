@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 import PauseGame from '../mini-components/PauseGame';
 import ItemHolder from '../components/ItemHolder.jsx';
 import CountdownCircle from '../components/CountdownCircle.jsx';
+import hint from '../assets/game-assets/ItemAssets/hint.png'
+
 
 const notesMap = {
   DO: 261.63,
@@ -22,6 +24,8 @@ const notesMap = {
 const noteNames = Object.keys(notesMap);
 
 function MelodyGame() {
+
+  const [revealedNotesCount, setRevealedNotesCount] = useState(0);
   const { id } = useParams()
   const [showSummary, setShowSummary] = useState(false);
   const { currentUser } = useContext(UserContext);
@@ -50,7 +54,7 @@ function MelodyGame() {
   
 
   let currentLevel = 0
-  let countdownTimer = 60
+  let countdownTimer = 120
   const targetPoint = 30;
 
   useEffect(() => {
@@ -83,13 +87,13 @@ function MelodyGame() {
         setShowTutorial(false)
         setGameRound(7)
       } else if(id == 2){
-        setGameRound(10)
+        setGameRound(8)
         setShowTutorial(false)
       } else if(id == 3){
-        setGameRound(13)
+        setGameRound(9)
         setShowTutorial(false)
       } else if(id == 4){
-        setGameRound(15)
+        setGameRound(10)
         setShowTutorial(false)
       }
   
@@ -161,6 +165,8 @@ function MelodyGame() {
   const playMelody = async () => {
     setCurrentRound(prev => prev + 1)
     setWait(false);
+        setRevealedNotesCount(0); // Reset hint count for the new round
+
 
     const newMelody = Array.from({ length: noteLength }, () =>
       noteNames[Math.floor(Math.random() * noteNames.length)]
@@ -188,21 +194,35 @@ function MelodyGame() {
   };
 
   const releaseNotes = () => {
-    setWait(false)
-    const isCorrect = userInput.length === melody.length && userInput.every((n, i) => n === melody[i]);
+    setWait(false)
+    
+    // Adjusted logic to check for correctness while accounting for hints
+    const isCorrect = userInput.length === melody.length && 
+      userInput.every((n, i) => {
+        if (i < revealedNotesCount) {
+          // If the note was hinted, only check if the input matches
+          return n === melody[i];
+        }
+        // For non-hinted notes, check against the melody
+        return n === melody[i];
+      });
 
-    if (isCorrect) {
-      increaseScoreAndPoints()
-      setMessage("✅ Correct");
-    } else {
-      setMessage(`❌ Wrong, it's ${melody.join(' ')}`);
-      penalty()
-    }
+    if (isCorrect) {
+      increaseScoreAndPoints()
+      setMessage("✅ Correct");
+    } else {
+      setMessage(`❌ Wrong, it's ${melody.join(' ')}`);
+      penalty()
+    }
 
-    setTimeout(() => {
-      playMelody()
-    }, 3000);
-  };
+    // Reset hint state after composition attempt
+    setRevealedNotesCount(0); 
+
+    setTimeout(() => {
+      playMelody()
+    }, 3000);
+  };
+
 
   const playAgain = async () => {
     setWait(false);
@@ -238,10 +258,27 @@ function MelodyGame() {
   //Item Functions
 
   const useHint =()=> {
-     playAgain();
+     if (revealedNotesCount < melody.length) {
+        setRevealedNotesCount(prev => prev + 1);
+      } else {
+         alert("The hints are all in. Used them!")
+        document.getElementById("hint-spell").style.display = 'none' 
+        document.getElementById("replay-spell").style.display = 'none' 
+      }
    
-     setMessage(melody.join(' '));
   }
+
+  const displayedInput = () => {
+    if (revealedNotesCount > 0) {
+      const revealed = melody.slice(0, revealedNotesCount).join(' ');
+      const hiddenCount = melody.length - revealedNotesCount;
+      const hidden = Array(hiddenCount).fill('?').join(' ');
+      
+      return `${revealed} ${hidden}`.trim();
+
+    }
+    return userInput.join(' ');
+  };
 
   const useReplay =()=> {
        playAgain();
@@ -263,6 +300,8 @@ function MelodyGame() {
           </div>
         }/>
          : null}
+
+          
 
           <div className='flex fdc aic jc-c' style={{marginTop: '5em',}}>
             <h2 style={{textAlign: 'center', position: 'relative'}}>{message}</h2>
@@ -303,6 +342,26 @@ function MelodyGame() {
             </div>
           </div>
         )}
+
+         { wait && revealedNotesCount > 0  && 
+                <div className='flex fdr aic' style={{position: 'fixed', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
+                borderRadius: '10px', marginBottom: '1em', bottom: '1em', width: '90%', justifyContent: 'space-evenly', }}>
+                  <div className='flex fdr aic jc-c' style={{position: 'absolute', 
+                    top: '-2em', left: '1em', backgroundColor: '#344', padding: '0 1em', borderRadius: '1em', border: '2px solid yellow'}}>
+                    <img style={{backgroundColor: 'rgba(68, 68, 85, 0.97)', padding: '0.5em', borderRadius: '50%', }} width={30} src={hint} alt="" />
+                    <h3 style={{color: 'white'}}>Hint</h3>
+                  </div>
+                  <div className='flex fdr aic'>
+                     <h3 style={{margin: '0 0 0.4em 0', textAlign: 'center', 
+                        backgroundColor: (userInput.length > 0 || revealedNotesCount > 0) ? '#0000005c' : 'transparent', 
+                        padding: '1em',
+                        color: 'white'
+                        }}>
+                        {wait ? displayedInput() : userInput.join(' ')}
+                      </h3>
+                  </div>
+                </div>
+          }
      
        {showSummary ? (
           <CurrentUserContext>

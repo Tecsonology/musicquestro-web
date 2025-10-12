@@ -78,18 +78,27 @@ function Profile() {
                   <label htmlFor="rhythmStat">Rhythm: </label>
                   <progress id='rhythmStat' value={currentUser && currentUser.maps.rhythm.levels.length} max={5}></progress>
                 </div>
-                <div>
-                  <label htmlFor="rhythmStat">Melody: </label>
-                  <progress id='rhythmStat' value={currentUser && currentUser.maps.melody.levels.length} max={5}></progress>
-                </div>
-                <div>
-                  <label htmlFor="rhythmStat">Harmony: </label>
-                  <progress id='rhythmStat' value={currentUser && currentUser.maps.harmony.levels.length} max={5}></progress>
-                </div>
-                <div>
-                  <label htmlFor="rhythmStat">Pitch: </label>
-                  <progress id='rhythmStat' value={currentUser && currentUser.maps.pitch.levels.length} max={5}></progress>
-                </div>
+                {
+                  currentUser && currentUser.maps.melody.isLocked == false ?
+                  <div>
+                    <label htmlFor="rhythmStat">Melody: </label>
+                    <progress id='rhythmStat' value={currentUser && currentUser.maps.melody.levels.length} max={5}></progress>
+                  </div> : null
+                }
+                {
+                  currentUser && currentUser.maps.harmony.isLocked == false ?
+                  <div>
+                    <label htmlFor="rhythmStat">Harmony: </label>
+                    <progress id='rhythmStat' value={currentUser && currentUser.maps.harmony.levels.length} max={5}></progress>
+                  </div> : null
+                }
+                {
+                  currentUser && currentUser.maps.harmony.isLocked == false ?
+                    <div>
+                    <label htmlFor="rhythmStat">Pitch: </label>
+                    <progress id='rhythmStat' value={currentUser && currentUser.maps.pitch.levels.length} max={5}></progress>
+                  </div> : null
+                }
               </div>
 
     
@@ -99,12 +108,8 @@ function Profile() {
                 <h4>BADGES</h4>
                   <div style={{ backgroundColor: '#53535348', padding: '0.5em', flexWrap: 'wrap'}} className="badges-container flex fdr aic jc-c">
                     {
-                      currentUser ? currentUser.items.badges.map((item, index)=> {
-                        console.log("dsadsa")
-                        return(
-                          <p>dsadsadas</p>
-                        ) 
-                      }) : <p>No Badges yet</p>
+                      currentUser && currentUser.items.badges > 0 ?
+                      <div></div> : <>Coming soon...</>
                     }
                   </div>
               </div>
@@ -140,8 +145,14 @@ function Profile() {
               <div style={{alignItems: 'end',
                 position: 'relative', bottom: '-4em',}} className="bottom-buttons flex fdr">
                 <div onClick={()=> {
-                        localStorage.clear()
-                        window.location.href = '/'
+                        let userConfirm = confirm("Are you sure you want to log out?")
+
+                        if(userConfirm){
+                          localStorage.clear()
+                          window.location.href = '/'
+                        } else {
+                          
+                        }
                         
                     }} className='flex fdc aic jc-c' 
                       style={{backgroundColor: 'rgba(59, 61, 59, 0.9)', height: '2.5em', border: '1px solid rgba(170, 170, 170, 0.9)',

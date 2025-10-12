@@ -171,7 +171,7 @@ function GameSummary(props) {
       {
         !nextMapPrompt ?
         <div className="game-summary-wrapper flex fdc aic jc-c">
-        <h1 style={{textAlign: 'center', color: 'black'}}>{gamePoints > props.targetPoint.toFixed(2) ? 'Congrats' : 'Better Luck Next Time'}</h1>
+        <h1 style={{textAlign: 'center', color: 'black'}}>{gamePoints > props.targetPoint.toFixed(2) ? 'Congrats' : 'Keep practicing, try again next time!'}</h1>
 
         <div className='flex fdr aic jc-c'>
           

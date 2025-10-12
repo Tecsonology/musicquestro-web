@@ -6,6 +6,8 @@ import HighPitch from './HighPitch';
 import GameStatus from '../game_components/GameStatus.jsx'
 import lavaBtn from '../assets/game-assets/Assets/Buttons/LavaBtn.png'
 import '../styles/PitchGame.css'
+import hint from '../assets/game-assets/ItemAssets/hint.png'
+
 
 import ItemHolder from '../components/ItemHolder.jsx';
 import CountdownCircle from '../components/CountdownCircle.jsx';
@@ -25,6 +27,7 @@ function PitchGame() {
 
   const [start, setStart] = useState(false);
     const [ gameStatus, setGameStatus ] = useState("")
+    const [ showHint, setShowHint ] = useState(false)
   
     const [showTutorial, setShowTutorial] = useState(true);
     const [life, setLife] = useState(5);
@@ -107,24 +110,21 @@ function PitchGame() {
       } else if (id == 1) {
         setShowTutorial(false);
         setGameRound(7);
-        setNoteLength(2)
+        setNoteLength(3)
       } else if (id == 2) {
         setGameRound(10);
         setShowTutorial(false);
-        setNoteLength(2)
+        setNoteLength(4)
       } else if (id == 3) {
         setGameRound(13);
-        setNoteLength(2)
+        setNoteLength(5)
         setShowTutorial(false);
       } else if (id == 4) {
-        setGameRound(2);
+        setGameRound(10);
         setShowTutorial(false);
-        setNoteLength(2)
+        setNoteLength(6)
       }
-  
-      if (level > gameRound) {
-        stopTime();
-      }
+
     }, [id, level, gameRound]);
 
   if(score === 10){
@@ -164,6 +164,7 @@ function PitchGame() {
   }
   
   const playNote =async ()=> {
+    setShowHint(false)
     if(currentRound < gameRound ){
       setWait(true)
    
@@ -227,13 +228,12 @@ function PitchGame() {
     return;
   }
 
-
-  console.log(savedSequence)
   setWait(true);
   setStatus(false);
   setMessage("🎵 Replaying notes...");
 
   let delay = 0;
+  savedSequence.reverse()
 
   for (let x = savedSequence.length - 1; x >= 0; x--) {
     setTimeout(() => {
@@ -242,7 +242,7 @@ function PitchGame() {
       const osc = context.createOscillator();
       const gainNode = context.createGain();
 
-      osc.type = currentUser ? currentUser.currentInstrument : 'sine';
+      osc.type = 'sawtooth';
       osc.frequency.value = NOTES[savedSequence[x]];
 
       gainNode.gain.setValueAtTime(1, context.currentTime);
@@ -256,11 +256,13 @@ function PitchGame() {
         }, delay);
 
         delay += 2000;
+
       }
 
       setTimeout(() => {
+        savedSequence.reverse()
         setWait(false);
-        setMessage(`Which of this has the ${question} pitch?`);
+        setMessage(`Which of these has the ${question} pitch?`);
       }, delay);
     };
 
@@ -325,13 +327,11 @@ function PitchGame() {
 
 
   const useHint =()=> {
-      checkAnswer()
-     setShowCorrection(true)
-     increaseScoreAndPoints()
+    setShowHint(true)
   }
 
   const useReplay =()=> {
-    console.log("Dasdsad")
+    
       replayNotes()
   }
 
@@ -365,11 +365,16 @@ function PitchGame() {
                 {
                 !showAnswer && !showCorrection ?
                 <div className='flex fdc aic jc-c'>
-                  <ItemHolder life={life} userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setRunning={setRunning} children={
-                  <div>
-                    <CountdownCircle time={countdownTimer} running={running} setRunning={setRunning} onComplete={setGameOver}/>
-                  </div>
-                }/>
+                    {
+                      !wait && 
+                      (
+                        <ItemHolder life={life} userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setRunning={setRunning} children={
+                          <div>
+                            <CountdownCircle time={countdownTimer} running={running} setRunning={setRunning} onComplete={setGameOver}/>
+                          </div>
+                        }/>
+                      )
+                    }
                     <h2 style={{textAlign: 'center'}}>{message}</h2>
                 <div>
                     <div className='pitches flex fdr aic jc-c'>
@@ -446,6 +451,12 @@ function PitchGame() {
                               setShowAnswer(false)
 
                               }}
+
+                              style={{
+                                backgroundColor: 'red',
+                                fontSize: '1.5em',
+                                padding: '0.5em 1em'
+                              }}
                               
                               className="reset-button"
                             >
@@ -468,42 +479,27 @@ function PitchGame() {
       }
 
       {
-        showCorrection &&
+        showHint &&  
         (
-          <>
-            <h2>Answer Reveal</h2>
-            <h2>{correctIndex+1 }</h2>
-            <div className='pitches flex fdr aic jc-c'>
-                              {
-                                pitchCards && pitchCards.length > 0 ? 
-                                pitchCards.map((note, index)=> (
-
-                                  <button
-                                    style={{
-                                      backgroundColor: correctIndex == index  ?  'blue' : 'red',
-                                      fontSize: correctIndex == index  ?  '1em' : '0.5em',
-                                    }}
-                                    onClick={(e) => {
-                                      
-                                      
-                                    }}
-                                    className='pitchcards-container flex fdc aic jc-c'
-                                    key={index}
-                                  >
-                                    <h2>{note}</h2>
-                                  </button>
-
-                                
+          <div className='flex fdr aic' style={{position: 'fixed', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
+                  borderRadius: '10px', marginBottom: '1em', bottom: '1em', width: '90%', justifyContent: 'space-evenly', }}>
+                    <div className='flex fdr aic jc-c' style={{position: 'absolute', 
+                      top: '-2em', left: '1em', backgroundColor: '#344', padding: '0 1em', borderRadius: '1em', border: '2px solid yellow'}}>
+                      <img style={{backgroundColor: 'rgba(68, 68, 85, 0.97)', padding: '0.5em', borderRadius: '50%', }} width={30} src={hint} alt="" />
+                      <h3 style={{color: 'white'}}>Hint</h3>
+                    </div>
+                    <div className='flex fdc aic'>
+                      <h6>Corresponding frequency:</h6>
+                      <div className='flex fdr aic jc-c'>
+                        {
+                          pitchCards && pitchCards.length > 0 ? 
+                             pitchCards.map((note, index)=> (
+                                    <p key={index} style={{margin: '0 0.5em'}}>{note} hz</p>
                                 )) : null
                               }
-                          </div>
-              <button onClick={()=> {
-                    setShowAnswer(false)
-                    setShowCorrection(false)
-                    playNote()
-                  }
-                }>Next</button>
-          </>
+                      </div>
+                    </div>
+                  </div>
         )
       }
 

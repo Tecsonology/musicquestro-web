@@ -47,7 +47,7 @@ function PauseGame({isOpen, setIsOpen, setRunning}) {
           Back to Levels
         </button> */}
         <button style={{background: '#454', padding: '0', width: '8em', marginTop: '4em'}} onClick={()=> {
-          const userConfirm = confirm("Are you sure you want to leave the game?")
+          const userConfirm = confirm("The game won't saved. Are you sure you want to leave the game?")
           if(userConfirm){
             window.location.href = '/h'
           }

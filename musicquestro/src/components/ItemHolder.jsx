@@ -10,8 +10,7 @@ const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost
 function ItemHolder({life, useHint, useReplay, running, setRunning, children, userContext }) {
 
   const tempHintQty = userContext ? userContext.items.spells[0][1] : 0
-  const tempHeartQty = userContext ? userContext.items.spells[1][1] : 0
-  const tempReplayQty = userContext ? userContext.items.spells[2][1] : 0
+  const tempReplayQty = userContext ? userContext.items.spells[1][1] : 0
 
   const [ spells, setSpells ] = useState(userContext ? userContext.items.spells : null)
 
@@ -22,8 +21,7 @@ function ItemHolder({life, useHint, useReplay, running, setRunning, children, us
 
   useState(() => {
     setHintQty(spells ? spells[0][1] : 0)
-    setHeartQty(spells ? spells[1][1] : 0)
-    setReplayQty(spells ? spells[2][1] : 0)
+    setReplayQty(spells ? spells[1][1] : 0)
   }, [userContext])
 
 

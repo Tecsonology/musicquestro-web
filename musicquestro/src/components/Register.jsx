@@ -118,9 +118,8 @@ function Register() {
 
           let items = {
             spells: [
-              ["Hint", 10, '../assets/game-assets/ItemAssets/hint.png'],
-              ["Heart", 15 , '../assets/game-assets/ItemAssets/heart.png'],
-              ["Replay", 10, '../assets/game-assets/ItemAssets/replay.png']
+              ["Hint", 30, '../assets/game-assets/ItemAssets/hint.png'],
+              ["Replay", 50, '../assets/game-assets/ItemAssets/replay.png']
             ],
             
             avatars: [],

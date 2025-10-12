@@ -1,10 +1,17 @@
-import React, { useState } from 'react'
+import { useState, useContext } from 'react'
 import '../styles/BottomNavigation.css'
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router-dom';
 import HomeIcon from '../assets/game-assets/Navigation/Home.png';
 import Shop from '../assets/game-assets/Navigation/Shop.png';
 import Leaderborad from '../assets/game-assets/Navigation/Leader-Board.png';
+import { UserContext } from './CurrentUserContext';
+
+import friend from '../assets/AvatarShopItems/Friend.png'
+import devil from '../assets/AvatarShopItems/Devil.png'
+import dog from '../assets/AvatarShopItems/Dog.png'
+import cat from '../assets/AvatarShopItems/Cat.png'
+import bunny from '../assets/AvatarShopItems/Bunny.png'
 
 
 
@@ -12,11 +19,8 @@ function BottonNavigation() {
 
   const location = useLocation();
   
-  const [ avatar, setAvatar ] = useState()
+  const { currentUser } = useContext(UserContext)
 
-  useState(()=> {
-    localStorage.getItem('avatar') ? setAvatar(localStorage.getItem('avatar')) : setAvatar(Leaderborad)
-  }, [localStorage.getItem('avatar')])
 
   return (
     <div className='bottom-navigation'>
@@ -33,7 +37,7 @@ function BottonNavigation() {
         
   
          <div id={location.pathname === '/h/user' ? 'activeNav' : null} className="nav-item"> 
-            <Link className='link'  to={'user'}><span><img width={50} src={avatar} alt="" /></span><span><h3 style={{textDecoration: 'none'}} className='icon-label'>User</h3></span></Link>
+            <Link className='link'  to={'user'}><span><img loading='lazy' width={50} src={currentUser ? currentUser.avatar : null} alt="" /></span><span><h3 style={{textDecoration: 'none'}} className='icon-label'>User</h3></span></Link>
         </div>
 
         <div id={location.pathname === '/h/leaderboards' ? 'activeNav' : null} className="nav-item">

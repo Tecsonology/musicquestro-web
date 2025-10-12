@@ -5,10 +5,12 @@ import bgmusic from "../assets/musics/bgmusic2.mp3";
 function BGMusic() {
   const location = useLocation();
   const audioRef = useRef(null);
+  const volume = 0.1
 
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
+    audio.volume = volume;
 
     if (location.pathname.includes("/h")) {
       audio.play().catch(err => {
@@ -25,7 +27,7 @@ function BGMusic() {
   }, [location]);
 
   return (
-    <audio ref={audioRef} src={bgmusic} loop />
+    <audio ref={audioRef} src={bgmusic} loop volume={volume} />
   );
 }
 

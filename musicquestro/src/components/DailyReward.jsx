@@ -117,7 +117,7 @@ function DailyReward({open}) {
     ) : (
       <>
         <p style={{ color: "black", fontWeight: "bold" }}>✅ Claimed</p>
-        <p style={{color: '#343'}}>BACK AGAIN TOMMOROW</p>
+        <p style={{color: '#343'}}>See you again tommorow!</p>
       </>
     )}
   </div>

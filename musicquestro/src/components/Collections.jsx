@@ -22,6 +22,9 @@ import bunny from '../assets/AvatarShopItems/Bunny.png'
 import Flute from '../assets/game-assets/Assets/Instrument/Flute.png'
 import Guitar from '../assets/game-assets/Assets/Instrument/Guitar.png'
 import Xylo from '../assets/game-assets/Assets/Instrument/Flute.png'
+import Clarinet from '../assets/game-assets/Assets/Instrument/Clarinet.png'
+import Trumpet from '../assets/game-assets/Assets/Instrument/Trumpet.png'
+import Violin from '../assets/game-assets/Assets/Instrument/Violin.png'
 import AvatarChangePrompt from '../mini-components/AvatarChangePrompt'
 
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
@@ -120,22 +123,22 @@ function Collections() {
                        {
                           currentUser.collection && currentUser.collection.length > 0 ? Object.values(currentUser.collection).map((item ,index)=> {
 
-                            if(item==='Guitar'){
+                            if(item==='Flute'){
                               instrCode = 'sine'
-                            } else if(item==='Game'){
+                            } else if(item==='Clarinet'){
                               instrCode = 'triangle'
-                            } else if(item==='Flute'){
+                            } else if(item==='Trumpet'){
                               instrCode = 'sawtooth'
-                            } else if(item==='Xylophone'){
+                            } else if(item==='Violin'){
                               instrCode = 'square'
                             }
 
                               return <CollectionCard
                               image={
-                                instrCode === 'sine' ? Guitar : 
-                                instrCode === 'triangle' ? Guitar : 
-                                instrCode === 'sawtooth' ? Flute : 
-                                instrCode === 'square' ? Xylo : ''
+                                instrCode === 'sine' ? Flute : 
+                                instrCode === 'triangle' ? Clarinet : 
+                                instrCode === 'sawtooth' ? Trumpet : 
+                                instrCode === 'square' ? Violin : ''
                                
                               }
                               

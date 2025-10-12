@@ -463,7 +463,7 @@ useEffect(() => {
               key={index} className='inputNote'  src={note.img} alt="" />
             ))
           }
-        {inputSequence && inputSequence.length > 0 ? 
+        {inputSequence && inputSequence.length > 0  && wait ? 
           <button style={{
             margin: '0', backgroundColor: 'black', position: 'absolute', top: '4.5em', left: '15em',
             border: '1px solid white', padding: '0.4em'
@@ -528,7 +528,7 @@ useEffect(() => {
             
             setInputSequence([]);
             setWait(false)
-            }}>Next</button> 
+            }}>NEXT RHYTHM</button> 
           
 
         </div> : 
