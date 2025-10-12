@@ -27,7 +27,7 @@ function Login() {
         }
 
         if(token){
-            navigate('/h')
+            window.location.href = '/h'
          }
     }, [username])    
 

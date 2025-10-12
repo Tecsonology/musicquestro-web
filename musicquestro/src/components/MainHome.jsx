@@ -35,7 +35,6 @@ function MainHome() {
 
   return (
     <div className='mainhome-container fpage flex fdc' style={{
-     
       backgroundImage: {MainBG}
       }}>
       
@@ -43,7 +42,7 @@ function MainHome() {
          <img width={100} className='scaling main-home-logo' src={logo} alt="" 
           style={{position: 'fixed', top: '1em', left: '1em', zIndex: '3', cursor: 'pointer'}}
           onClick={()=> {
-            navigate('/')
+            window.location.href = '/'
           }}
          />
 
@@ -66,7 +65,7 @@ function MainHome() {
           onClick={()=> openReward === false ? setOpenReward(true) : setOpenReward(false)}
          style={{position: 'absolute', bottom: '6em', border: '4px solid rgba(238, 255, 0, 1)',
          right: '1em', zIndex: '5', borderRadius: '50%'}} width={60} src={gift} alt="" />
-         <div className="main-content flex fdc aic jc-c">
+         <div className="main-content fpage flex fdc aic">
           <div className="main-left">
             <img id='main-home-visual' src={MainHomeVisual} alt="" />
             <h4 id='bio-text' style={{textAlign: 'center', margin: 0, color: 'white'}}>"{currentUser ? currentUser.bio : null}"</h4>

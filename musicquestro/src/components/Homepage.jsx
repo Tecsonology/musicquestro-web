@@ -3,6 +3,7 @@ import {  useNavigate, Outlet } from 'react-router-dom'
 import '../styles/Homepage.css'
 import BottonNavigation from './BottonNavigation'
 import BGMusic from './BGMusic'
+import LoadingPage from './LoadingPage'
 
 function Homepage() {
 
@@ -10,7 +11,7 @@ function Homepage() {
       
       <div className='homepage flex jc-c aic fdc fpage'>
         <BGMusic />
-          <Suspense fallback={<h1>Loadong pa po...</h1>}>
+          <Suspense fallback={<LoadingPage />}>
             
             <Outlet />
           </Suspense>

@@ -1,98 +1,139 @@
+/* 🌍 Base Layout */
 .maps {
-    background: #000000a2;
-    background-image: url('https://i.ibb.co/zT8xn7Zm/ec58ebf2-79dd-4304-abf8-b46a854f20c3.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-blend-mode:multiply;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  background: rgba(0, 0, 0, 0.65);
+  background-image: url('https://i.ibb.co/zT8xn7Zm/ec58ebf2-79dd-4304-abf8-b46a854f20c3.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: multiply;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-x: hidden;
+  min-height: 100vh;
+  width: 100%;
+  padding: 1.5em;
 }
 
+/* Wrapper */
 .maps-wrapper {
-    margin-top: 3em;
-     display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
+  margin-top: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  text-align: center;
 }
 
+/* Title */
 .title {
-    font-size: 5em;
-    color: #ff8f25;
+  font-size: clamp(2rem, 5vw, 5em);
+  color: #ff8f25;
+  margin-bottom: 1em;
+  text-align: center;
+  text-shadow: 2px 2px 4px #000;
 }
 
+/* Map Selection Grid */
 .map-selection {
-   display: flex;
-   flex-direction: row;
-
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 1.5em;
+  padding: 2em 1em;
+  overflow: hidden;
 }
 
+/* Category Cards */
 .cat-card {
-    width: 20em;
-    margin: 0;
-    cursor: pointer;
-
-}
-
-.cat-card {
-  transition: transform 0.3s ease; 
-  color: #ff8e258f;
+  width: clamp(7rem, 20vw, 18rem);
+  transition: transform 0.3s ease;
+  color: #ff8e25;
+  cursor: pointer;
+  border-radius: 1em;
 }
 
 .cat-card:hover {
-  transform: scale(1.2); 
+  transform: scale(1.1);
 }
 
+/* Level Buttons */
 .level-buttons {
   width: 3em;
   height: 4em;
   margin: 1em 0.5em;
   font-size: 1.2em;
-  font-weight: bolder ;
+  font-weight: bolder;
   background-color: rgb(57, 2, 57);
   border: 3px solid gold;
+  color: gold;
+  border-radius: 0.5em;
+  transition: background-color 0.3s ease;
 }
 
+.level-buttons:hover {
+  background-color: rgb(90, 10, 90);
+}
 
-
-
+/* 📱 Small Devices (Phones) */
 @media (max-width: 767px) {
-    .map-selection {
-      display: flex;
-      flex-direction: column;
-      overflow-y: auto;        
-      max-height: 90vh;        
-      padding: 1em; 
-      margin-bottom: 3em;
-    
-    
-    }
+  .maps {
+    padding: 1em;
+    background-position: center top;
+  }
 
-    .cat-card {
-      width: 18em;
-    }
+  .map-selection {
+    flex-direction: column;
+    gap: 1em;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+    padding-bottom: 3em;
+    overflow-y: auto;
+    max-height: 85vh;
+  }
 
-    .maps {
-      overflow: hidden;
-    
-    }
+  .cat-card {
+    width: 80%;
+  }
 
-    .maps-wrapper {
-
-        
-        .title {
-          font-size: 2em;
-        }
-
-        
-    }
-
-
-  
- 
+  .title {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+  }
 }
 
+/* 💻 Medium Devices (Tablets & Small Laptops) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .cat-card {
+    width: clamp(12rem, 20vw, 15rem);
+  }
 
+  .title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+  }
+
+  .map-selection {
+    gap: 1em;
+  }
+}
+
+/* 🖥️ Large Screens (Desktops and Above) */
+@media (min-width: 1200px) {
+  .cat-card {
+    width: clamp(15rem, 20vw, 25rem);
+  }
+
+  .title {
+    font-size: clamp(3rem, 4vw, 5em);
+  }
+}
+
+/* 🖥️ Ultra-Wide Screens */
+@media (min-width: 1600px) {
+  .cat-card {
+    width: 28em;
+  }
+}

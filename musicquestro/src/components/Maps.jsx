@@ -84,7 +84,7 @@ function Maps() {
         <CurrentUserContext>
             <div className='maps fpage'>
         <ButtonBack />
-        <div className="maps-wrapper">
+        <div style={{position: 'sticky'}} className="maps-wrapper">
           <h1 className='title'>Map</h1>
           {
             currentUser ?

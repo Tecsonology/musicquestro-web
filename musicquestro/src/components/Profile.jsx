@@ -163,7 +163,11 @@ function Profile() {
 
              
 
-            </> : <Loader/>
+            </> : 
+            <div className='flex fdc aic jc-c'>
+
+              <div className='loaderPage'></div>
+            </div>
            }
         </div>
       

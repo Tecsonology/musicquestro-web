@@ -419,7 +419,7 @@ useEffect(() => {
         start ?
         <div style={{justifyContent: 'flex-start', marginTop: '5em'}} className='flex fdc aic'>
           { message && message ? <h1 style={{textAlign: 'center', marginTop: '2em'}}>{message && message ? message : null}</h1> : null}
-      { !showCorrection && inputSequence.length <= 0 && revealedNotesCount === 0 ? <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? 'Listen to the rhythm...' : null  || "Listen carefully..."}</strong></h2> : null}
+      { !showCorrection && inputSequence.length <= 0 && revealedNotesCount === 0 ? <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? '👂 Listen to the rhythm...' : null  || "🫵 Your turn"}</strong></h2> : null}
 
       {
         !showCorrection ? 

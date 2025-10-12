@@ -12,6 +12,7 @@ import devil from '../assets/AvatarShopItems/Devil.png'
 import dog from '../assets/AvatarShopItems/Dog.png'
 import cat from '../assets/AvatarShopItems/Cat.png'
 import bunny from '../assets/AvatarShopItems/Bunny.png'
+import Loader from './Loader';
 
 
 
@@ -36,8 +37,16 @@ function BottonNavigation() {
         </div>
         
   
-         <div id={location.pathname === '/h/user' ? 'activeNav' : null} className="nav-item"> 
-            <Link className='link'  to={'user'}><span><img loading='lazy' width={50} src={currentUser ? currentUser.avatar : null} alt="" /></span><span><h3 style={{textDecoration: 'none'}} className='icon-label'>User</h3></span></Link>
+         <div style={{
+          backgroundColor: currentUser ? '' : "transparent"
+         }} id={location.pathname === '/h/user' ? 'activeNav' : null} className="nav-item"> 
+            <Link className='link'  to={'user'}><span>
+              {
+                currentUser ? 
+                <img width={50} src={currentUser &&  currentUser.avatar} alt="" />
+                : <div className="loaderPage"></div>
+              }
+              </span><span><h3 style={{textDecoration: 'none'}} className='icon-label'>User</h3></span></Link>
         </div>
 
         <div id={location.pathname === '/h/leaderboards' ? 'activeNav' : null} className="nav-item">

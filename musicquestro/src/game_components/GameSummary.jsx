@@ -171,7 +171,7 @@ function GameSummary(props) {
       {
         !nextMapPrompt ?
         <div className="game-summary-wrapper flex fdc aic jc-c">
-        <h1 style={{textAlign: 'center', color: 'black'}}>{gamePoints > props.targetPoint.toFixed(2) ? 'Congrats' : 'Keep practicing, try again next time!'}</h1>
+        <h2 style={{textAlign: 'center', color: 'black'}}>{gamePoints > props.targetPoint.toFixed(2) ? 'Congrats' : 'Keep practicing, try again next time!'}</h2>
 
         <div className='flex fdr aic jc-c'>
           
@@ -183,7 +183,7 @@ function GameSummary(props) {
         <div className='flex fdr aic jc-c'><span><img width={25} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>
         <span><progress value={gamePoints} max={props.targetPoint.toFixed(2)}></progress></span>
         <span>{gamePoints >= props.targetPoint.toFixed(2) ? <p>✅</p> : <p>❌</p>}</span></div>
-        <div className='flex fdr aic jc-c'>
+        <div style={{backgroundColor: 'rgba(181, 186, 186, 0.14)', borderRadius: '1em'}} className='flex fdr aic jc-c'>
           <p><span>Accumulated Points: </span>{calculate.calculateGame()}</p>
           <p><span>Target: </span>{props.targetPoint}</p>
 
@@ -209,11 +209,11 @@ function GameSummary(props) {
             <div> 
                     <button style={{marginRight: '0.5em', backgroundColor: 'red'}} onClick={()=> {
                   window.location.reload()
-                }}>Retry</button>
+                }}>Try Again</button>
 
                 <button style={{backgroundColor: 'blue'}} onClick={()=> {
                   window.location.href = '/h/m'
-                }}>Back to map</button>
+                }}>Back to Map</button>
             </div>
               
         }

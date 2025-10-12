@@ -1,74 +1,133 @@
+/* 📱 Bottom Navigation Bar */
 .bottom-navigation {
-    background-color: rgba(17, 17, 17);
-    position: fixed;
-    bottom: 0;
-    width: 100vw;
-    box-shadow: inset;
-    z-index: 10;
-    border-top: 2px solid rgb(141, 141, 141);
-}
-.icon-label {
-    display: none;
-    color: white;
-    text-decoration: none;
-    
-  
+  background-color: rgba(17, 17, 17, 0.95);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
+  border-top: 2px solid rgb(141, 141, 141);
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
 }
 
+/* 🔗 Navigation Wrapper */
 .nav-wrapper {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0.3em 0;
 }
 
+/* 🧭 Navigation Items */
 .nav-item {
-    border-left: 3px solid rgb(68, 68, 68);
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-radius: 1em;
-
-
+  flex: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6em 0;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  border-left: 2px solid rgb(68, 68, 68);
 }
 
+.nav-item:first-child {
+  border-left: none;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 143, 37, 0.15);
+  transform: translateY(-3px);
+}
+
+/* 🧩 Link Styling */
 .link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-   
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-decoration: none;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  text-align: center;
 }
 
-.link h3 {
-    text-decoration: none;
-    margin: 0;
+/* 🖼️ Icons */
+.nav-item img,
+.user-menu-icon {
+  width: 1.8em;
+  height: auto;
+  margin: 0.3em 0;
 }
 
-.nav-item img, .user-menu-icon {
-    
-    margin: 0.3em 0;
+/* 🏷️ Label */
+.icon-label {
+  display: none;
+  color: white;
+  font-size: 0.8em;
+  margin-top: 0.2em;
+  text-decoration: none;
+  white-space: nowrap;
 }
 
-
-@media (min-width: 700px) {
-    .icon-label {
-        display: block;
-    }
-
-    .nav-item {
-        width: 10em;
-    }
-
-    .nav-item img {
-        width: 2em;
-    }
+/* ✨ Hover Text Color */
+.link:hover .icon-label {
+  color: #ff8f25;
 }
 
+/* 📱 Small Devices (Default) */
+@media (max-width: 699px) {
+  .nav-item img {
+    width: 2em;
+  }
 
+  .bottom-navigation {
+    height: auto;
+  }
 
+  .icon-label {
+    display: none; /* keep icons only on phones */
+  }
+}
 
+/* 💻 Medium Devices (Tablets and Small Laptops) */
+@media (min-width: 700px) and (max-width: 1199px) {
+  .icon-label {
+    display: block;
+    font-size: 0.9em;
+  }
 
+  .nav-item {
+    width: 8em;
+  }
+
+  .nav-item img {
+    width: 2.2em;
+  }
+}
+
+/* 🖥️ Large Screens (Desktops and Up) */
+@media (min-width: 1200px) {
+  .icon-label {
+    display: block;
+    font-size: 1em;
+  }
+
+  .nav-item {
+    width: 10em;
+    padding: 1em 0;
+  }
+
+  .nav-item img {
+    width: 2.5em;
+  }
+
+  .bottom-navigation {
+    padding: 0;
+  }
+}

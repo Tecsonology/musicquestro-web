@@ -137,7 +137,7 @@ button#playRhythm :hover {
     color: black;
     position: fixed;
     top: 0;
-    background-color: rgba(0, 0, 0, 0.63);
+    background-color: rgba(0, 0, 0, 0.836);
     width: 100vw;
     height: 100vh;
     z-index: 3;
@@ -146,9 +146,8 @@ button#playRhythm :hover {
 
 
 .game-summary-wrapper {
-    box-sizing: border-box;
     color: black;
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(244, 244, 244);
     width: 90%;
     border-radius: 1em;
     padding: 1em;
