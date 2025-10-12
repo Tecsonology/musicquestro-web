@@ -92,7 +92,7 @@ function EditProfile() {
           <h2 style={{ backgroundColor: '#191919ff', padding: '0.5em'}}>{username}</h2>
       
 
-      <input maxLength={12} style={{borderRadius: '1em'}} onChange={handleUsernameChange} type="text" placeholder={currentUser ? currentUser.username : null} />
+      <input maxLength={12} style={{borderRadius: '1em', color: 'black'}} onChange={handleUsernameChange} type="text" placeholder={currentUser ? currentUser.username : null} />
         <p style={{margin: '0', color: 'red',}}>{maxLength}</p>
       </div>
     
@@ -101,7 +101,7 @@ function EditProfile() {
         <p style={{fontWeight: 'normal', margin: '1em', backgroundColor: '#191919ff', padding: '0.5em 0'}}>{bio}</p>
          <label >Choose your Bio:</label>
 
-        <select onChange={handleBioChange} className='flex fdc aic jc-c' style={{width: '90%', marginTop: '1em', }} name="bio-list" id="bio-list">
+        <select onChange={handleBioChange} className='flex fdc aic jc-c' style={{width: '90%', marginTop: '1em', color: 'black'}} name="bio-list" id="bio-list">
           <option value="Living life one beat at a time.">Living life one beat at a time.</option>
           <option value="Where words fail, music speaks.">Where words fail, music speaks.</option>
           <option value="Dancing through life’s melody.">Dancing through life’s melody.</option>

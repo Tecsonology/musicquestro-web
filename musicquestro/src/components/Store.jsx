@@ -14,7 +14,7 @@ import { UserContext } from './CurrentUserContext'
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
 import friend from '../assets/AvatarShopItems/Friend.png'
-import devil from '../assets/AvatarShopItems/Devil.png'
+import monster from '../assets/AvatarShopItems/Devil.png'
 import dog from '../assets/AvatarShopItems/Dog.png'
 import cat from '../assets/AvatarShopItems/Cat.png'
 import bunny from '../assets/AvatarShopItems/Bunny.png'
@@ -292,7 +292,7 @@ function Store() {
                 <div className="menu-items ">
                   <div className='avatar-items'>
                     <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Friend'} image={friend} price={150} />
-                    <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Devil'} image={devil} price={200} />
+                    <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Monster'} image={monster} price={200} />
                     <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Doggie'} image={dog} price={250} />
                     <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Cat'} image={cat} price={250} />
                     <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Bunny'} image={bunny} price={250} />
