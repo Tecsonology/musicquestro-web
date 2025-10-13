@@ -39,23 +39,32 @@ function Leaderboards() {
         <div className="leaderboard-wrapper flex fdc aic">
             <img id='leaderboardBanner' width={350} src="https://i.ibb.co/xKsdRQH1/Untitled-design-64.png" alt="" />
             <ButtonBack />
-      
-          <table>
-            <tbody>
-             
-               {
+             <div style={{width: '20em'}}>
+             {
                   players && [...players].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 10).map((user, index)=> (
                     user.totalPoints > 0 ? 
-                    
-                      <UserRank key={index} avatar={user.avatar} rank={index+1} username={user.username} userPoints={user.totalPoints.toFixed(0)}/>
+                      <div 
+                      key={index}
+                      style={{
+                        justifyContent: 'space-between',  margin: '0.5em 0', boxSizing: 'border-box',
+                        padding: '1em', borderRadius: '1em'}} className='glass-bg flex fdr aic'>
+                        
+                        <div style={{width: '7em', boxSizing: 'border-box',}} className='flex fdr aic jc-c'> 
+                          <h2>{index+1}</h2>
+                          <img style={{marginLeft: '1em'}} width={50} src={user.avatar} alt="" />
+                        </div>
+                        <h2>{user.username}</h2>
+                        <p>{user.totalPoints.toFixed(0)}</p>
+
+                      </div>
                     : null
                   ))
               }
-            
-            </tbody>
-          </table>
+          </div>
+          
        
         </div>
+       
       </div>
    
   )

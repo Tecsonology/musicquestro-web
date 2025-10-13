@@ -697,8 +697,9 @@ function HarmonyGame() {
                         gameName={'harmony'}
                         score={score}
                         points={userPoints}
-                        time={time}
-                        targetPoint={targetPoint}
+                       MAX_SCORE={gameRound}
+                        MAX_POINTS={400*gameRound}
+                        VICTORY_THRESHOLD={targetPoint}
                         nextGameIndex={3}
                     />
                 </CurrentUserContext>

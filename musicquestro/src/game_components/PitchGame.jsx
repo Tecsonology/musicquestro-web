@@ -453,7 +453,7 @@ function PitchGame() {
                                     className='pitchcards-container flex fdc aic jc-c'
                                     key={index}
                                   >
-                                    <h2>{note}</h2>
+                                    <h2>{note} HZ</h2>
                                   </button>
 
                                 
@@ -532,8 +532,9 @@ function PitchGame() {
               gameName={'pitch'}
               score={score}
               points={userPoints}
-              time={time}
-              targetPoint={targetPoint}
+             MAX_SCORE={gameRound}
+              MAX_POINTS={400*gameRound}
+              VICTORY_THRESHOLD={targetPoint}
               nextGameIndex={4}
             />
           </CurrentUserContext>

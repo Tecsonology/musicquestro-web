@@ -1,14 +1,16 @@
-import React, { useState, useContext,  } from 'react'
-import { useNavigate } from 'react-router-dom'
-import CalculateGame from '../CalculateGame.js'
-import axios from 'axios'
+import React, { useState, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
+import CalculateGame from '../CalculateGame.js';
+import axios from 'axios';
+import { UserContext } from '../components/CurrentUserContext.jsx';
 
-
-import  { UserContext } from '../components/CurrentUserContext.jsx'
+// Environment variable for the host
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
-import MelodyCard from '../assets/game-assets/Assets/Categories/Melody.png'
+// Asset imports
+import MelodyCard from '../assets/game-assets/Assets/Categories/Melody.png';
 
+// Map metadata for navigation and unlocking
 const mapNames = {
   rhythm: {
     imgLink: 'https://i.ibb.co/VWV4wcPV/Untitled-design-15.png',
@@ -26,220 +28,233 @@ const mapNames = {
     imgLink: 'https://i.ibb.co/W4bb6H3f/Untitled-design-79.png',
     location: '/pitchGame'
   },
-
-}
+};
 
 function GameSummary(props) {
+  const navigate = useNavigate();
+  // Get both currentUser and the function to update it
+  const { currentUser, setCurrentUser } = useContext(UserContext); 
 
-  const navigate = useNavigate()
-  const calculate = new CalculateGame(props.score, props.points, props.time)
-  const gamePoints = Math.floor(calculate.calculateGame())
-  const coinedGained = calculate.getCoins()
+  // --- 1. GAME CALCULATION ---
+  // IMPORTANT: The CalculateGame constructor now only takes (score, points, MAX_SCORE, MAX_POINTS, VICTORY_THRESHOLD)
+  const calculate = new CalculateGame(
+    props.score,
+    props.points,
+    props.MAX_SCORE,
+    props.MAX_POINTS,
+    props.VICTORY_THRESHOLD
+  );
+
+  const finalRating = parseFloat(calculate.calculatePerformanceRating()); // Precise rating (e.g., 73.45)
+  const gamePoints = Math.floor(finalRating);                            // Rounded down for display (e.g., 73)
+  const coinedGained = calculate.getCoins();
+  const isVictory = finalRating >= props.VICTORY_THRESHOLD;               // Check against the threshold
+
+  // --- 2. STATE & USER DATA ---
+  const [btnText, setBtnText] = useState('Okay');
+  const [showNextMapPrompt, setShowNextMapPrompt] = useState(false);
+  const [nextGameImg, setNextGameImg] = useState(null);
+
+  // Safely get userids
+  const userids = currentUser?.userids || props.userids;
+
+  // --- 3. ASYNC HANDLERS ---
+
+  const mapUnlocker = async (mapIndex) => {
+    if (!userids) return false;
+
+    let categoryKey;
+    switch (mapIndex) {
+      case 1:
+        setNextGameImg(mapNames.melody.imgLink);
+        categoryKey = 'maps.melody.isLocked';
+        break;
+      case 2:
+        setNextGameImg(mapNames.harmony.imgLink);
+        categoryKey = 'maps.harmony.isLocked';
+        break;
+      case 3:
+        setNextGameImg(mapNames.pitch.imgLink);
+        categoryKey = 'maps.pitch.isLocked';
+        break;
+      default:
+        return false;
+    }
+
+    try {
+      const unlockMap = await axios.put(`${VITE_NETWORK_HOST}/unlockedCategory`, {
+        userids,
+        categoryKey,
+      });
+
+      // Assuming API returns a success indicator in its data
+      if (unlockMap.data.success) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Error unlocking map:', error);
+      return false;
+    }
+  };
 
 
-  const  { currentUser }  = useContext(UserContext)
-  const [ btnOk, setBtnOk ] = useState('Okay')
-  const [ nextMapPrompt, setNextMapPrompt ] = useState(false)
-  const [ nextGameImg, setNextGameImg ] = useState()
+  const unlockNextLevel = async () => {
+    if (!userids || props.level >= 4) {
+      return; // Stop if no user or already at max level (Level 4 is the last)
+    }
 
-  const userids = currentUser ? currentUser.userids : null
+    try {
+      await axios.put(`${VITE_NETWORK_HOST}/update-map-level`, {
+        userids: userids,
+        map: props.gameName,
+        level: props.level + 2, // e.g., current level 1 -> new level 3 unlocked
+      });
+      // console.log('Next level unlocked successfully.');
+    } catch (error) {
+      console.error('Error unlocking next level:', error);
+    }
+  };
 
 
-    
-    const mapUnlocker = async (mapIndex) => {
+  const gameUpload = async () => {
+    if (!userids) {
+      console.error("User ID not available. Cannot upload game results.");
+      return;
+    }
 
-      console.log('unlocking next game...')
-        let userids = props.userids
+    setBtnText('Game uploading, please wait...');
 
-
-        const getKey =()=> {
-          switch(mapIndex){
-            case 1: setNextGameImg(mapNames.melody.imgLink)
-            return 'maps.melody.isLocked' 
-
-            case 2: setNextGameImg(mapNames.harmony.imgLink)
-            return 'maps.harmony.isLocked'
-
-            case 3: setNextGameImg(mapNames.pitch.imgLink)
-            return 'maps.pitch.isLocked'
-          }
-        }
-
-        let categoryKey = getKey()
-        console.log(categoryKey)
-     
-        const unlockMap = await axios.put(`${VITE_NETWORK_HOST}/unlockedCategory`,
-          {
-            userids,
-            categoryKey
-          }
-        )
-
-        if(!unlockMap) return false
-
-        if(unlockMap){
-          console.log(unlockMap)
-          return true
-        }
-
+    // Only unlock the next level if the player won (isVictory)
+    if (isVictory) {
+      await unlockNextLevel();
     }
 
 
-    const unlockNextLevel = async()=> {
-        console.log("Current Level: ", props.level+1)
-        try {
+    try {
+      // 1. Calculate new user totals
+      const newCoins = (currentUser?.musicCoins || 0) + coinedGained;
+      const newTotalPoints = (currentUser?.totalPoints || 0) + finalRating; // Use precise rating
 
-            const nextMapLevel = await axios.put(`${VITE_NETWORK_HOST}/update-map-level`,
-              { userids: props.userids, 
-                map: props.gameName,
-                level: props.level+2
-              }
-            )
-            
-            if(!nextMapLevel){
-              console.log(error)
-            }
-            
-
-            console.log("Yey unlock next level")
-            console.log(nextMapLevel)
-
-          
-        } catch (error) {
-          console.log(error)
+      // 2. Update User Stats (Coins and Total Points)
+      const updateUser = await axios.put(`${VITE_NETWORK_HOST}/api/update-user`, {
+        userids: userids,
+        updates: {
+          musicCoins: newCoins,
+          totalPoints: newTotalPoints,
         }
+      });
+
+      // 3. Update the user context state locally immediately after success
+      if (updateUser.data.success && setCurrentUser) {
+        setCurrentUser(prevUser => ({
+          ...prevUser,
+          musicCoins: newCoins,
+          totalPoints: newTotalPoints,
+        }));
+      }
+
+      // 4. Handle Navigation/Map Unlock
+      if (props.level === 4 && isVictory) {
+        // If max level AND victory, attempt to unlock the next game category
+        const mapindex = props.nextGameIndex;
+        if (await mapUnlocker(mapindex)) {
+          setShowNextMapPrompt(true);
+        } else {
+          // Max level reached, no new map unlocked (e.g., last map), go to main map
+          navigate('/h/m'); 
+        }
+      } else {
+        // Otherwise, navigate to the level selection screen for the current game
+        const baseLocation = mapNames[props.gameName]?.location;
+
+        if (baseLocation) {
+          // Construct the route: /h/m + /rhythmLevels
+          const levelScreenPath = baseLocation.replace('Game', 'Levels');
+          window.location.href = `/h${levelScreenPath}`; 
+        } else {
+          // Fallback
+          navigate('/h/m'); 
+        }
+      }
+
+    } catch (err) {
+      console.error('Error during game upload or user update:', err);
+      setBtnText('Error uploading! Try again.');
     }
+  };
 
-  const gameUpload  = async ()=> {
-
-            await unlockNextLevel()
-   
-            try {
-              const updateUser = await axios.put(`${VITE_NETWORK_HOST}/api/update-user`,
-                { userids: userids,
-                  updates: {
-                    musicCoins: currentUser ? currentUser.musicCoins + parseInt(coinedGained) : null,
-                    totalPoints: currentUser ? currentUser.totalPoints + parseFloat(gamePoints) : null
-                  }
-                }
-              )
-
-              console.log("Updated User:", updateUser.data)
-
-              if(props.level === 4){
-                if(updateUser){
-                setTimeout(async()=> {
-              
-                  console.log("Game uploaded")
-                  const mapindex = props.nextGameIndex
-                  if(await mapUnlocker(mapindex)){
-                    console.log("map unlocked!!!!!!")
-                    setNextMapPrompt(true)
-                  }
-
-                  
-
-                  return () => {
-                      window.removeEventListener('beforeunload', handleBeforeUnload);
-                      stopTime(); 
-                  };
-                }, 2000)
-              }
-              } else {
-                if(props.gameName === 'rhythm'){
-                  navigate('/h/rhythmLevels')
-                } else if(props.gameName === 'melody'){
-                  navigate('/h/melodyLevels')
-                } else if(props.gameName === 'harmony'){
-                  navigate('/h/harmonyLevels')
-                } else if(props.gameName === 'pitch'){
-                  navigate('/h/pitchLevels')
-                }
-              }
-
-          } catch(err){
-            console.log('dasd')
-          }
- 
-      
-  }
-
-  
+  // --- 4. RENDER ---
 
   return (
-      <div className='game-summary fpage flex fdc jc-c aic' style={{position: 'fixed'}}>
-      {
-        !nextMapPrompt ?
+    <div className='game-summary fpage flex fdc jc-c aic' style={{ position: 'fixed' }}>
+      {!showNextMapPrompt ? (
         <div className="game-summary-wrapper flex fdc aic jc-c">
-        <h2 style={{textAlign: 'center', color: 'black'}}>{gamePoints > props.targetPoint.toFixed(2) ? 'Congrats' : 'Keep practicing, try again next time!'}</h2>
+          <h2 style={{ textAlign: 'center', color: 'black' }}>
+            {isVictory ? 'Congratulations! Level Complete!' : 'Keep practicing, try again next time!'}
+          </h2>
 
-        <div className='flex fdr aic jc-c'>
-          
-          <p>Score: {props.score}</p>
-          <p>Points: {props.points}</p>
-        </div>
-        
-      
-        <div className='flex fdr aic jc-c'><span><img width={25} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>
-        <span><progress value={gamePoints} max={props.targetPoint.toFixed(2)}></progress></span>
-        <span>{gamePoints >= props.targetPoint.toFixed(2) ? <p>✅</p> : <p>❌</p>}</span></div>
-        <div style={{backgroundColor: 'rgba(181, 186, 186, 0.14)', borderRadius: '1em'}} className='flex fdr aic jc-c'>
-          <p><span>Accumulated Points: </span>{calculate.calculateGame()}</p>
-          <p><span>Target: </span>{props.targetPoint}</p>
+          <div className='flex fdr aic jc-c'>
+            <p>Score: {props.score}</p>
+            <p>Points: {props.points}</p>
+          </div>
 
-          
-        
-        </div>
+          <div className='flex fdr aic jc-c'>
+            <span><img width={25} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>
+            <span style={{ margin: '0 10px' }}>
+                <progress value={finalRating} max={props.VICTORY_THRESHOLD}></progress>
+            </span>
+            <span>{isVictory ? <p>✅</p> : <p>❌</p>}</span>
+          </div>
+
+          <div style={{ backgroundColor: 'rgba(181, 186, 186, 0.14)', borderRadius: '1em' }} className='flex fdr aic jc-c'>
+            <p><span>Accumulated Points: </span>{finalRating.toFixed(2)}</p>
+            <p style={{marginLeft: '10px'}}><span>Target: </span>{props.VICTORY_THRESHOLD}</p>
+          </div>
 
           <h3>Rewards</h3>
-        <div style={{backgroundColor: '#E8E8E8', padding: '0.5em 1em', borderRadius: '1em', color: 'black'}} className='flex fdr aic jc-c'>
-          <h4 style={{marginRight: '1em', color: 'black'}}><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
-          <h4 style={{color: 'black'}}><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
-        </div>
+          <div style={{ backgroundColor: '#E8E8E8', padding: '0.5em 1em', borderRadius: '1em', color: 'black' }} className='flex fdr aic jc-c'>
+            <h4 style={{ marginRight: '1em', color: 'black' }}><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
+            <h4 style={{ color: 'black' }}><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
+          </div>
 
-        {gamePoints >= props.targetPoint.toFixed(2) ? 
-        <button style={{
-          color: 'black'
-        }} onClick={()=> {  
-                setBtnOk('Game uploading, please wait...')
-                 gameUpload()
-                 
-            }}>{btnOk}</button> : 
-
-            <div> 
-                    <button style={{marginRight: '0.5em', backgroundColor: 'red'}} onClick={()=> {
-                  window.location.reload()
-                }}>Try Again</button>
-
-                <button style={{backgroundColor: 'blue'}} onClick={()=> {
-                  window.location.href = '/h/m'
-                }}>Back to Map</button>
+          {/* Conditional Buttons based on Victory */}
+          {isVictory ? (
+            <button
+              style={{ color: 'white', backgroundColor: 'green', width: '60%',}}
+              onClick={gameUpload}
+              disabled={btnText === 'Game uploading, please wait...'}
+            >
+              {btnText}
+            </button>
+          ) : (
+            <div>
+              <button style={{ marginRight: '0.5em', backgroundColor: 'red' }} onClick={() => window.location.reload()}>
+                Try Again
+              </button>
+              <button style={{ backgroundColor: 'blue' }} onClick={() => navigate('/h/m')}>
+                Back to Map
+              </button>
             </div>
-              
-        }
-      </div> : null
-      }
+          )}
+        </div>
+      ) : null}
 
-      {
-        nextMapPrompt ?
-        <>
-          <div style={{backgroundColor: 'rgba(1, 19, 37, 1)'}} className='fpage flex gdc aic jc-c'>
-            <div className=' next-game-container flex fdc aic jc-c'>
-              <h3 style={{color: 'yellow'}}>Congratulations</h3>
-              
-
-              <img width={200} src={nextGameImg} alt="" />
-              <h2 style={{textAlign: 'center'}}>You unlocked the next game</h2>
-              <button style={{width: '10em', borderRadius: '2em'}} className='navLink' onClick={()=> {
-                window.location.href = '/h/m'
-              }}>Go to Maps</button>
+      {/* Next Map Prompt */}
+      {showNextMapPrompt ? (
+        <div style={{ backgroundColor: 'rgba(1, 19, 37, 1)' }} className='fpage flex gdc aic jc-c'>
+          <div className=' next-game-container flex fdc aic jc-c'>
+            <h3 style={{ color: 'yellow' }}>Congratulations</h3>
+            <img width={200} src={nextGameImg} alt="Next Game" />
+            <h2 style={{ textAlign: 'center' }}>You unlocked the next game!</h2>
+            <button style={{ width: '10em', borderRadius: '2em' }} className='navLink' onClick={() => navigate('/h/m')}>
+              Go to Maps
+            </button>
           </div>
-          </div>
-          
-        </> : null
-      }
+        </div>
+      ) : null}
     </div>
-  )
+  );
 }
 
-export default GameSummary
+export default GameSummary;

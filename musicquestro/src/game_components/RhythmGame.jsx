@@ -94,10 +94,10 @@ useEffect(() => {
       setGameRound(10)
       setShowTutorial(false)
     } else if(id == 3){
-      setGameRound(13)
+      setGameRound(12)
       setShowTutorial(false)
     } else if(id == 4){
-      setGameRound(15)
+      setGameRound(14)
       setShowTutorial(false)
     }
 
@@ -415,9 +415,10 @@ useEffect(() => {
        currentRound={currentRound} level={gameRound} time={time} 
        running={running} setRunning={setRunning} gameStatus={gameStatus} setGameStatus={setGameStatus}/>
        
-        {
+        <div className='flex fdc aic' style={{marginTop: '10em'}}>
+          {
         start ?
-        <div style={{justifyContent: 'flex-start', marginTop: '5em'}} className='flex fdc aic'>
+        <div style={{justifyContent: 'flex-start'}} className='flex fdc aic'>
           { message && message ? <h1 style={{textAlign: 'center', marginTop: '2em'}}>{message && message ? message : null}</h1> : null}
       { !showCorrection && inputSequence.length <= 0 && revealedNotesCount === 0 ? <h2 style={{fontWeight: 'bolder'}}><strong>{currentNote ? '👂 Listen to the rhythm...' : null  || "🫵 Your turn"}</strong></h2> : null}
 
@@ -616,6 +617,7 @@ useEffect(() => {
             }}>START</button> : 'Loading...' }
         </>
         }
+        </div>
 
       {showSummary ? (
           <CurrentUserContext>
@@ -625,8 +627,9 @@ useEffect(() => {
               gameName={'rhythm'}
               score={score}
               points={userPoints}
-              time={time}
-              targetPoint={targetPoint}
+              MAX_SCORE={gameRound}
+              MAX_POINTS={400*gameRound}
+              VICTORY_THRESHOLD={targetPoint}
               nextGameIndex={1}
             />
           </CurrentUserContext>

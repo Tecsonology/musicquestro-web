@@ -296,6 +296,11 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 
 }
 
+.control-page-button {
+  background-color: #01520f;
+  border: 3px solid rgb(203, 238, 3);
+}
+
 
 .tutorial p, .tutorial h3, .tutorial h4, .tutorial span {
   color: black;

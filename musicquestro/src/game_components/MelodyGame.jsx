@@ -57,7 +57,7 @@ function MelodyGame() {
 
   let currentLevel = 0
   let countdownTimer = 120
-  const targetPoint = 30;
+  const targetPoint = 60;
 
   useEffect(() => {
         if (currentRound > gameRound || life <= 0) {
@@ -87,15 +87,15 @@ function MelodyGame() {
         setGameRound(5)
       } else if(id == 1){
         setShowTutorial(false)
-        setGameRound(7)
+        setGameRound(5)
       } else if(id == 2){
-        setGameRound(8)
+        setGameRound(5)
         setShowTutorial(false)
       } else if(id == 3){
-        setGameRound(9)
+        setGameRound(5)
         setShowTutorial(false)
       } else if(id == 4){
-        setGameRound(10)
+        setGameRound(5)
         setShowTutorial(false)
       }
   
@@ -165,7 +165,8 @@ function MelodyGame() {
   };
 
   const playMelody = async () => {
-    setCurrentRound(prev => prev + 1)
+    if(currentRound < gameRound){
+      setCurrentRound(prev => prev + 1)
     setWait(false);
         setRevealedNotesCount(0); // Reset hint count for the new round
 
@@ -188,6 +189,10 @@ function MelodyGame() {
     setWait(true);
     setMessage('Show what you listen');
     setRunning(true)
+    } else {
+      setMessage("Game Complete")
+       setShowSummary(true)
+    }
   };
 
   const handleNoteClick = (note) => {
@@ -419,8 +424,9 @@ function MelodyGame() {
               gameName={'melody'}
               score={score}
               points={userPoints}
-              time={time}
-              targetPoint={targetPoint}
+               MAX_SCORE={gameRound}
+              MAX_POINTS={400*gameRound}
+              VICTORY_THRESHOLD={targetPoint}
               nextGameIndex={2}
             />
           </CurrentUserContext>

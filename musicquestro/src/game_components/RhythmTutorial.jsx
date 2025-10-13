@@ -1,9 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
+
 const durations = [
-  { name: "Rest (silent beat)", beats: 1, duration: 600, freq: 0, img: 'https://i.ibb.co/67NSSxxn/Untitled-design-74.png' },
-  { name: "Quarter", beats: 1, duration: 600, freq: 500, img: 'https://i.ibb.co/WqXZ1fd/Untitled-design-71.png' },
-  { name: "Half", beats: 2, duration: 1200, freq: 500, img: 'https://i.ibb.co/gnXRSb1/Untitled-design-75.png' },
-  { name: "Whole", beats: 4, duration: 2400, freq: 500, img: 'https://i.ibb.co/zC0gwgG/Untitled-design-77.png' },
+  { name: "Rest (silent beat)", beats: 1, duration: 600, freq: 0, img: 'https://i.ibb.co/67NSSxxn/Untitled-design-74.png',
+    desc: 'A rest is a musical symbol indicating a period of silence, just as a note indicates a period of sound.'
+   },
+  { name: "Quarter", beats: 1, duration: 600, freq: 500, img: 'https://i.ibb.co/WqXZ1fd/Untitled-design-71.png',
+    desc: 'A quarter note gets one beat, meaning it has a duration of one beat in musical time'
+   },
+  { name: "Half", beats: 2, duration: 1200, freq: 500, img: 'https://i.ibb.co/gnXRSb1/Untitled-design-75.png',
+    desc: 'This can refer to two things in music: a time signature of 2/2, where a half note gets the beat, or a 4/4 time signature where a single half note is held for two beats. '
+   },
+  { name: "Whole", beats: 4, duration: 2400, freq: 500, img: 'https://i.ibb.co/zC0gwgG/Untitled-design-77.png',
+    desc: 'A whole note has four beats in most common time signatures, like \(4/4\), meaning its sound is sustained for the entire duration of a measure.'
+   },
 ];
 
 function RhythmTutorial({ showTutorial, setShowTutorial }) {
@@ -11,23 +20,58 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
   const [currentBeat, setCurrentBeat] = useState(0);
   const [sampleBeat, setSampleBeat] = useState(0);
 
-  const playNote = (freq, duration) => {
-    const context = new (window.AudioContext || window.webkitAudioContext)();
+  // 1. Create a persistent AudioContext using useRef
+  const audioContextRef = useRef(null);
+
+  const getAudioContext = () => {
+    if (audioContextRef.current === null) {
+      // Initialize the AudioContext only once
+      audioContextRef.current = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    return audioContextRef.current;
+  };
+
+  // 2. Wrap playNote in useCallback to avoid recreating it on every render, 
+  // and use the persistent context.
+  const playNote = useCallback((freq, duration) => {
+    // Only play sound if frequency is > 0
+    if (freq === 0) return;
+    
+    const context = getAudioContext();
+    
+    // Resume context if it's suspended (common on initial user interaction)
+    if (context.state === 'suspended') {
+      context.resume();
+    }
+    
+    const now = context.currentTime;
     const osc = context.createOscillator();
     const gainNode = context.createGain();
 
     osc.type = 'sine';
     osc.frequency.value = freq;
 
-    gainNode.gain.setValueAtTime(1, context.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.0001, context.currentTime + duration / 1000);
-
+    // Connect nodes
     osc.connect(gainNode);
     gainNode.connect(context.destination);
 
-    osc.start();
-    osc.stop(context.currentTime + duration / 1000);
-  };
+    // Envelope for click prevention/smooth stop
+    gainNode.gain.setValueAtTime(1, now);
+    // Use linearRampToValueAtTime for a smooth, audible stop before 0
+    // exponentialRampToValueAtTime to 0.0001 can still cause clicks if it's too fast
+    gainNode.gain.linearRampToValueAtTime(0, now + duration / 1000); 
+
+    // Start and stop the oscillator
+    osc.start(now);
+    osc.stop(now + duration / 1000);
+    
+    // Clean up oscillator and gain node after they stop to free up resources
+    // This is less critical for short notes but good practice
+    osc.onended = () => {
+      osc.disconnect();
+      gainNode.disconnect();
+    };
+  }, []); // Empty dependency array means this function is only created once
 
   const lightBeatCircle = (beats, duration) => {
     setSampleBeat(0); 
@@ -40,16 +84,18 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
 
     setTimeout(() => {
       setSampleBeat(0);
-    }, beats * (duration / beats));
+    }, duration); // Total duration is beats * (duration / beats), which simplifies to just duration
   };
 
   return (
     <div style={{ position: 'absolute', zIndex: '10', backgroundColor: 'purple', color: 'black' ,}} className='tutorial tutorial-bg fpage flex fdc aic jc-c'>
+      {/* ... (Existing page 0, 1, 2, 4 components remain the same) ... */}
+
       {page === 0 && (
         <>
 
           <h3 style={{fontSize: '2em'}} className='gradient-text'>Welcome to Rhythm Idol!</h3>
-                          <img width={300} src="/assets/Maestro.png" alt="" />
+                    <img width={300} src="/assets/Maestro.png" alt="" />
 
           <p style={{ textAlign: 'center', padding: '0.2em', backgroundColor: 'white', fontWeight: 'bold'}}>Hi, im Maestro! I'll guide you about this Rhythm Game, so you can help me to bring back the old 
             MusicQuestro land!
@@ -59,7 +105,7 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
 
       {page === 1 && (
         <>
-        <img width={100}  src="/assets/Maestro.png" alt="" />
+        <img width={100}   src="/assets/Maestro.png" alt="" />
           <h3 style={{backgroundColor: 'white', padding: '1em'}}>This is the sample of a 1 Musical staff with 4 beats</h3>
           <div className='input-notes'>
             <hr /><hr /><hr /><hr /><hr />
@@ -92,11 +138,23 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
 
       {page === 2 && (
         <>
-          <h3 style={{textAlign: 'center'}}>Each note symbol has corresponding beats that fills the measure</h3>
-          {durations.map((item, index) => (
-            <div key={index} className='flex fdr aic glass-bg' style={{margin: '0.3em', width: '20em', justifyContent: 'space-between'}}>
-              <img style={{ padding: '0.5em 1em', margin: '1em', borderRadius: '1em', backgroundColor: 'red' }} width={20} src={item.img} alt={item.name} />
-              <h4 style={{width: '10em'}}>{item.name} - {item.beats}</h4>
+          <div className='flex fdr aic'>
+            <img width={100} src="/assets/Maestro.png" alt="" />
+            <h3 style={{textAlign: 'left'}}>Each note symbol has corresponding beats that fills the measure</h3>
+          </div>
+          <div className='flex fdr aic jc-c' style={{flexWrap: 'wrap'}}>
+            {durations.map((item, index) => (
+            <div key={index} className='flex fdc aic glass-bg' style={{margin: '0.3em', width: '12em', height: '17em', justifyContent: 'flex-start', boxSizing: 'border-box'}}>
+              <img
+              onClick={()=> {
+                playNote(item.freq, item.duration);
+              }}
+              
+              style={{ padding: '0.5em 1em', margin: '1em', borderRadius: '1em', backgroundColor: '#344', cursor: 'pointer' }} width={20} src={item.img} alt={item.name} />
+              <h4 style={{margin: 0}}>{item.name} - {item.beats}</h4>
+              <p style={{
+                fontSize: item.name === 'Half' ? '0.8em' : '1em'
+              }}>{item.desc}</p>
               <div className='flex fdr aic jc-c'>
                 {[...Array(item.beats)].map((_, beatIndex) => (
                   <span key={beatIndex} style={{ width: '0.3em', height: '0.3em', backgroundColor: 'green', borderRadius: '50%', display: 'inline-block', margin: '0 0.1em' }}></span>
@@ -105,6 +163,7 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
               </div>
             </div>
           ))}
+          </div>
         </>
       )}
 
@@ -158,10 +217,11 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
 
       {page === 4 && (
         <>
-            <img style={{position: 'absolute', zIndex: '-1', bottom: '-10em'}} width={500} src="/assets/Maestro.png" alt="" />
-
-          <h1>Good luck!</h1>
-          <button onClick={() => setShowTutorial(false)}>Thanks</button>
+          <img style={{position: 'absolute', zIndex: '-1', bottom: '-10em'}} width={500} src="/assets/Maestro.png" alt="" />
+          <h2 style={{color: 'black'}}>That's all for now.</h2>
+          <h1 style={{color: 'black', margin: 0}}>Good luck!</h1>
+          <button style={{width: '10em', backgroundColor: 'green'}} onClick={() => setShowTutorial(false)}>Got it</button>
+          <button onClick={()=> setPage(page -1)} style={{position: 'absolute', bottom: '2em', right: '3em'}}>{`<`}</button>
         </>
       )}
 
@@ -175,9 +235,9 @@ function RhythmTutorial({ showTutorial, setShowTutorial }) {
               Skip tutorial &gt;&gt;
             </button>
           </div>
-          <div style={{width: '15em', justifyContent: 'space-between'}} className="tutorial-buttons flex fdr aic">
-            {page > 0 && <button onClick={() => setPage(page - 1)}>Previous</button>}
-            <button onClick={() => setPage(page + 1)}>Next</button>
+          <div style={{width: '15em', justifyContent: 'space-between', position: 'absolute', bottom: '2em'}} className="tutorial-buttons flex fdr aic">
+            {page > 0 && <button className='control-page-button' onClick={() => setPage(page - 1)}>Previous</button>}
+            <button className='control-page-button' onClick={() => setPage(page + 1)}>Next</button>
           </div>
         </>
       )}
