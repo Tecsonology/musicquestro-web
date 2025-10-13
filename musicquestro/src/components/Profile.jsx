@@ -25,8 +25,8 @@ function Profile() {
           currentUser ? 
             <>
               <img onClick={()=> {
-        navigate(-1)
-      }} className='btn-back' src="https://i.ibb.co/KzBKmLC3/Untitled-design-2.png" alt="" />
+                navigate(-1)
+              }} className='btn-back' src="https://i.ibb.co/KzBKmLC3/Untitled-design-2.png" alt="" />
           <div className="profile-wrapper flex fdr jc-c aic">
               {
                 currentUser && currentUser ?
@@ -73,7 +73,7 @@ function Profile() {
               </div>
 
               <div style={{backgroundColor: '#33333348', padding: '1em', boxSizing: 'border-box'}} className="stats flex fdc aic jc-c">
-                <h6 style={{margin: 0}}>STATS</h6>
+                <h6 style={{margin: '1em'}}>STATS</h6>
                 <div>
                   <label htmlFor="rhythmStat">Rhythm: </label>
                   <progress id='rhythmStat' value={currentUser && currentUser.maps.rhythm.levels.length} max={5}></progress>
@@ -142,7 +142,7 @@ function Profile() {
                  */
                }
 
-              <div style={{alignItems: 'end',
+              <div style={{
                 position: 'relative', bottom: '-4em',}} className="bottom-buttons flex fdr">
                 <div onClick={()=> {
                         let userConfirm = confirm("Are you sure you want to log out?")
@@ -156,8 +156,13 @@ function Profile() {
                         
                     }} className='flex fdc aic jc-c' 
                       style={{backgroundColor: 'rgba(59, 61, 59, 0.9)', height: '2.5em', border: '1px solid rgba(170, 170, 170, 0.9)',
-                      width: '2.5em', borderRadius: '1em', }}>
+                     borderRadius: '1em', }}>
+                      <div className='flex fdr aic jc-c'>
+                        
                       <img style={{margin: 0}} width={20} height={20} src={logout} alt="" />
+
+                      <h4>Logout</h4>
+                      </div>
                 </div>  
               </div>
 

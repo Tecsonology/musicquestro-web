@@ -415,7 +415,7 @@ useEffect(() => {
        currentRound={currentRound} level={gameRound} time={time} 
        running={running} setRunning={setRunning} gameStatus={gameStatus} setGameStatus={setGameStatus}/>
        
-        <div className='flex fdc aic' style={{marginTop: '10em'}}>
+        <div className='flex fdc aic' style={{marginTop: '6em'}}>
           {
         start ?
         <div style={{justifyContent: 'flex-start'}} className='flex fdc aic'>
@@ -552,7 +552,7 @@ useEffect(() => {
         
       {
         wait && !showCorrection  ? 
-        <div className='flex fdc aic jc-c'>
+        <div style={{margin: 0, padding: 0}} className='flex fdc aic jc-c'>
           
       <div className="beat-buttons flex fdr jc-c aic">
         {

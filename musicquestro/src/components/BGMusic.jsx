@@ -12,7 +12,7 @@ function BGMusic() {
     if (!audio) return;
     audio.volume = volume;
 
-    if (location.pathname.includes("/h")) {
+    if (location.pathname.includes("/h") && !location.pathname.includes("/h/story")) {
       audio.play().catch(err => {
         console.warn("Autoplay blocked until user interacts:", err);
       });

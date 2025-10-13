@@ -1,5 +1,5 @@
 .story-container {
-    background-color: rgb(143, 140, 140);
+    background-color: rgba(143, 140, 140, 0.159);
 }
 
 .story-wrapper {
@@ -16,6 +16,6 @@
 
 @media (min-width: 767px) {
     .img-story {
-        width: 50vw;
+        width: 40vw;
     }
 }

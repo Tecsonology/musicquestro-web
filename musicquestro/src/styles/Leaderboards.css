@@ -13,10 +13,13 @@
 
 .leaderboard-wrapper {
     margin-top: 7.5em;
-    overflow: auto;
     margin-bottom: 10em;
     
   
+}
+
+.rank-container {
+    width: 85vw;
 }
 
 #leaderboardBanner {
@@ -25,43 +28,13 @@
     z-index: 2;
 }
 
-
-table {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    align-items: center;
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: collapse;
-    color: white;
+@media (min-width: 700px){
+    .rank-container {
+    width: 45vw;
 }
+}
+
+
+
   
-td {
-    width: 100vw;
-    text-align: center;
-    border-bottom: 1px solid white;
-
-    img {
-        margin: 0 1em;
-    }
-   
-    
-  }
-
  
-
-
-@media (min-width: 1024px) {
-     .leaderboard-wrapper {
-        width: 40%;
-        
-     
-    }
-}
-
-/* Desktop screens */
-@media (min-width: 1440px) {
-    
-}

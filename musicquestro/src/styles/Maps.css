@@ -111,6 +111,10 @@
     width: clamp(12rem, 20vw, 15rem);
   }
 
+  .cat-card {
+    width: 20em;
+  }
+
   .title {
     font-size: clamp(2rem, 4vw, 3.5rem);
   }
@@ -123,7 +127,7 @@
 /* 🖥️ Large Screens (Desktops and Above) */
 @media (min-width: 1200px) {
   .cat-card {
-    width: clamp(15rem, 20vw, 25rem);
+    width: clamp(10rem, 20vw, 20rem);
   }
 
   .title {
@@ -134,6 +138,6 @@
 /* 🖥️ Ultra-Wide Screens */
 @media (min-width: 1600px) {
   .cat-card {
-    width: 28em;
+    width: 20em;
   }
 }

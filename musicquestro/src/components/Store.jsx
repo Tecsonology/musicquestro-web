@@ -253,11 +253,11 @@ function Store() {
                             }}>Buy</button></span>
                         } />
 
-                        <StoreCard imgItem={replay} itemName={'Replay'} itemPrice={50}
+                        <StoreCard imgItem={replay} itemName={'Replay'} itemPrice={10}
                             description={'Rewind the performance and try again without missing a beat!'}
                           children={
                             <span><button onClick={()=> {
-                              deductCoins(50)
+                              deductCoins(10)
                               updateQty(2)
                             }}>Buy</button></span>
                         } />

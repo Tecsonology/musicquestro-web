@@ -12,7 +12,7 @@
 
 .rhythm-game-container {
      background: #000000a2;
-    background-image: url('https://i.ibb.co/C36XtfG1/Rhythm-game-BG.png');
+    background-image: url(../assets/game-assets/Assets/BackGround/NormalBG/Rhythm2.png);
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -135,6 +135,10 @@ button#playRhythm :hover {
 
 .game-summary  {
     color: black;
+    background-color: rgba(0, 0, 0, 0.341);
+    background-image: url(../assets/game-assets/Assets/BackGround/Summary.png);
+    background-size: cover;
+    background-repeat: no-repeat;
     position: fixed;
     top: 0;
     width: 100vw;
@@ -145,20 +149,24 @@ button#playRhythm :hover {
 
 
 .game-summary-wrapper {
-    color: black;
-    background-color: rgb(244, 244, 244);
-    width: 90%;
+    color: rgb(255, 255, 255);
+    background-color: #000000a2;
+    width: 100%;
     border-radius: 1em;
     padding: 1em;
 
     p {
         margin: 1em;
         font-weight: bold;
-        color: #000;
+        color: #ffffff;
     }
 
     span {
-        color: rgb(1, 101, 40);
+        color: rgb(4, 255, 100);
+    }
+
+    h3 {
+        color: white;
     }
 
     
@@ -417,9 +425,7 @@ input[type='range'] {
         width: 30em;
     }
 
-    .game-summary-wrapper {
-        width: 30em;
-    }
+    
 
     .btom-spells {
         width: 30em;

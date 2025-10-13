@@ -1,36 +1,202 @@
+/*
+|--------------------------------------------------------------------------
+| Base Styles (Mobile-First) - Default for screens up to 767px
+|--------------------------------------------------------------------------
+*/
+
 .profile {
-     background-image: url('https://i.ibb.co/s953MgvC/9d63ad53-169e-453e-9238-f46e3fa9c15e.jpg');
-     background-repeat: no-repeat;
-     background-size: cover;
-     overflow-x: scroll;
-     background: rgb(15, 20, 35);
-     padding-bottom: 10em;
-     display: flex;
-     justify-content: flex-start;
-     padding-top: 4em;
+    /* Retain background for visual flair, adjust for better fit */
+    background-image: url(../assets//game-assets/Assets/BackGround/UserProfile.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Optional: Makes the background scroll less jarringly */
+    background-color: rgb(0, 0, 0); /* Solid fallback color */
+    
+    /* Ensure content is visible and layout is clean */
+    min-height: 100vh; /* Full viewport height */
+    padding: 4em 1em 10em 1em; /* Top padding for content, generous bottom padding */
+    display: flex;
+    flex-direction: column; /* Stacks content vertically */
+    align-items: center; /* Centers items horizontally in the column */
+    overflow-x: hidden; /* Prevents horizontal scroll from accidental element overflows */
+}
 
-     
-     p {
-        margin: 0;
-        font-weight: 900;
-        
-     }
+/* Base style for elements inside .profile */
+.profile p {
+    margin: 0;
+    font-weight: 900;
+}
 
-     img {
-        margin-right: 1em;
-     }
+.profile img {
+    margin-right: 1em;
+}
 
-     h1 {
-        text-overflow:ellipsis;
-        
-     }
+/* Container for the main profile elements */
+.profile-wrapper, .stats, .badges, .current-rank, .item-count, .bottom-buttons {
+    width: 95%; /* Use a large percentage for better fit on small screens */
+    max-width: 500px; /* Limit max width for readability on very large screens */
+    margin: 0.5em 0;
+    box-sizing: border-box;
+}
+
+.profile-wrapper {
+    /* Blurry background effect */
+    background: rgba(22, 29, 50, 0.838);
+    background-image: url('https://i.ibb.co/s953MgvC/9d63ad53-169e-453e-9238-f46e3fa9c15e.jpg');
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    background-blend-mode: multiply;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    padding: 1.5em; /* Increased padding */
+    border-radius: 1em;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.profile-container {
+    position: relative; /* Essential for positioning the EditIcon */
+    width: 100%;
+}
+
+/* User attribute containers (Life, Coins, Collections Button) */
+.atts-container {
+    width: 95%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around; /* Spreads out the items */
+    margin: 0.7em 0;
+}
+
+.atts-container div {
+    margin-right: 0.5em; /* Smaller gap on mobile */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.atts-container button {
+    padding: 0.5em 1em;
+    flex-shrink: 0; /* Prevents button from shrinking too much */
+}
+
+/* Stats, Badges, Rank Sections */
+.stats, .badges, .current-rank {
+    background-color: #000000a6;
+    padding: 1em;
+    border-radius: 0.5em;
+    box-sizing: border-box;
 
 }
 
+.stats div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
 
+
+
+.badges h4 {
+    margin: 0 1em 0 0;
+}
+
+.badges-container {
+    flex-grow: 1; /* Allows container to take up available space */
+    background-color: #53535348;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    min-height: 50px; /* Ensures a minimum height even with "Coming soon..." */
+}
+
+/* Logout button positioning */
+.bottom-buttons {
+    position: relative; 
+    bottom: -4em; /* Adjust to move it off the bottom a bit, relative to its parent's flow */
+    justify-content: center; /* Center the logout button */
+}
+
+/* Specific logout button styling for clarity */
+.bottom-buttons > div {
+    /* This targets the clickable wrapper around the icon */
+    background-color: rgba(59, 61, 59, 0.9);
+    width: 20em;
+    border-radius: 50%; /* Changed to a perfect circle for a button */
+    border: 1px solid rgba(170, 170, 170, 0.9);
+    cursor: pointer;
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Tablet/Medium Screens (768px and up)
+|--------------------------------------------------------------------------
+*/
+@media (min-width: 768px) {
+    .profile-wrapper, .stats, .badges, .current-rank, .item-count, .bottom-buttons {
+        width: 60vw; /* Wider on tablet */
+    }
+
+    /* Move attribute buttons closer together in the center */
+    .atts-container {
+        justify-content: center;
+    }
+    .atts-container div {
+        margin-right: 1.5em;
+    }
+    .bottom-buttons > div {
+        margin-bottom: 4em;
+    }
+}
+
+
+/*
+|--------------------------------------------------------------------------
+| Desktop/Large Screens (1024px and up)
+|--------------------------------------------------------------------------
+*/
+@media (min-width: 1024px) {
+    .profile-wrapper, .stats, .badges, .current-rank, .item-count, .bottom-buttons {
+        width: 40vw; /* Smaller width for better central focus */
+        max-width: 700px; /* New, larger max-width for desktop */
+    }
+
+    /* Keep the stat progress bars readable */
+    .stats progress {
+        width: 70%;
+    }
+
+    /* Edit Profile styles (If this CSS is shared for the edit page) */
+    .edit-section {
+        width: 450px; /* Fixed width for form clarity */
+    }
+
+    .edit-buttons button {
+        width: 200px;
+    }
+}
+
+/*
+|--------------------------------------------------------------------------
+| Extra Large Screens (1440px and up)
+|--------------------------------------------------------------------------
+*/
+@media (min-width: 1440px) {
+    .profile-wrapper, .stats, .badges, .current-rank, .item-count, .bottom-buttons {
+        width: 30vw; /* Even narrower for a more focused central column */
+    }
+}
+
+/* Other less-used classes (keeping for completeness, but adjusted) */
 .edit-profile {
-    background: rgb(21, 24, 67);    
-    overflow: scroll;
+    background: rgb(21, 24, 67); 
+    overflow-y: scroll;
+    min-height: 100vh;
     padding-bottom: 2em;
     z-index: 20;
 }
@@ -43,87 +209,32 @@
     box-sizing: border-box;
     background-color: rgba(0, 0, 0, 0.514);
     width: 90%;
+    max-width: 500px;
     padding: 1em;
     border-radius: 1em;
-    margin: 0.7em 0;
-}
-
-.edit-buttons button {
-    width: 80%;
-}
-
-.profile-container {
-    margin: 0 1em 0 0;
-    justify-content: flex-start;
-    
-
-}
-
-.profile-banner {
-    
-}
-
-.profile-wrapper {
-    background: rgba(22, 29, 50, 0.838);
-    background-image: url('https://i.ibb.co/s953MgvC/9d63ad53-169e-453e-9238-f46e3fa9c15e.jpg');
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    background-blend-mode: multiply;
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
-    padding: 1em;
-    border-radius: 1em;
-    border: 1px solid white;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
- 
-    
-}
-
-.atts-container div{
-    margin-right: 1em;
+    margin: 0.7em auto; /* Center the edit section */
 }
 
 .blackUI {
     background: rgba(22, 29, 50);
-    width: 93vw;
+    width: 95%; /* Adjust to be more flexible */
+    max-width: 600px; /* Add max-width */
     box-sizing: border-box;
-    padding: 1em 1em 3em 1em;
+    padding: 1em;
 }
 
-.btnLogout {
+/* Assuming btn-back is your back button */
+.btn-back {
     position: absolute;
-    right: 1.3em; 
-    top: 0; 
-    font-size: 0.7em;
-    margin: em;
+    top: 1.5em;
+    left: 1.5em;
+    z-index: 10; /* Ensure it's above other elements */
+    width: 4em; /* Fixed size for easy tapping */
+    cursor: pointer;
 }
 
-
-@media (max-width: 767px) {
-    .profile-wrapper, .stats, .badges, .current-rank, .item-count, .bottom-buttons {
-        width: 80vw;
-    }
-
-}
-
-@media (min-width: 1024px) {
-    .profile-wrapper, .stats, .badges, .current-rank, .item-count, .bottom-buttons {
-       width: 40vw;
-    }   
-
-    .edit-section {
-        width: 40%;
-    }
-
-    .edit-buttons button {
-        width: 25%;
-    }
-
-
-}
-
-/* Desktop screens */
-@media (min-width: 1440px) {
-  
+.profile-container > img:first-child {
+    /* Style for the user avatar */
+    border-radius: 50%;
+    object-fit: cover;
 }

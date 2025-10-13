@@ -6,6 +6,8 @@ import axios from 'axios'
 import ButtonBack from '../mini-components/ButtonBack'
 import UserRank from '../mini-components/UserRank'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST
+import star from '../assets/star.png'
+
 function Leaderboards() {
 
   const navigate = useNavigate()
@@ -39,22 +41,25 @@ function Leaderboards() {
         <div className="leaderboard-wrapper flex fdc aic">
             <img id='leaderboardBanner' width={350} src="https://i.ibb.co/xKsdRQH1/Untitled-design-64.png" alt="" />
             <ButtonBack />
-             <div style={{width: '20em'}}>
+             <div>
              {
                   players && [...players].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 10).map((user, index)=> (
                     user.totalPoints > 0 ? 
                       <div 
                       key={index}
                       style={{
-                        justifyContent: 'space-between',  margin: '0.5em 0', boxSizing: 'border-box',
-                        padding: '1em', borderRadius: '1em'}} className='glass-bg flex fdr aic'>
+                        justifyContent: 'space-between',  margin: '0.5em 0',
+                        padding: '1em', borderRadius: '1em'}} className='rank-container glass-bg flex fdr aic'>
                         
-                        <div style={{width: '7em', boxSizing: 'border-box',}} className='flex fdr aic jc-c'> 
+                        <div className='flex fdr aic'> 
                           <h2>{index+1}</h2>
                           <img style={{marginLeft: '1em'}} width={50} src={user.avatar} alt="" />
                         </div>
                         <h2>{user.username}</h2>
-                        <p>{user.totalPoints.toFixed(0)}</p>
+                        <div className='flex fdc aic jc-c'>
+                          <img  width={20} src={star} alt="" />
+                          <p style={{margin: 0}}> {user.totalPoints.toFixed(0)}</p>
+                        </div>
 
                       </div>
                     : null

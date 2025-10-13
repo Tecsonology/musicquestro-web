@@ -45,21 +45,27 @@ function ItemHolder({life, useHint, useReplay, running, setRunning, children, us
   return (
     <div className='item-holder-container flex fdr'>
       <div className="left-items flex fdr aic jc-c">
-        <div id='hint-spell' onClick={()=> {
-        if (hintQty > 0) {
-          useHint()
-          updateQty(0)
-          setHintQty(hintQty - 1)
-        }
-      }} className='item-wrapper glass-bg'>
-        <img width={40} src={hint} alt="" />
-        <h4 className='item-quantity'>{tempHintQty}</h4>
+        <div style={{
+          opacity: hintQty == 0 ? 0.2 : 1
+        }} id='hint-spell' onClick={()=> {
+            if (hintQty > 0) {
+              useHint()
+              updateQty(0)
+              setHintQty(hintQty - 1)
+            } else {
+              return null
+            }
+          }} className='item-wrapper glass-bg'>
+            <img width={40} src={hint} alt="" />
+            <h4 className='item-quantity'>{tempHintQty}</h4>
       </div>
 
     
       {
         replayQty >= 0 ?
-        <div id='replay-spell' className='item-wrapper glass-bg'>
+        <div style={{
+          opacity: replayQty == 0 ? 0.2 : 1
+        }} id='replay-spell' className='item-wrapper glass-bg'>
         <img onClick={()=> {
           if (replayQty >=  1) {
             useReplay()

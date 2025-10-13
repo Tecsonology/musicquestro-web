@@ -73,7 +73,9 @@ function MainHome() {
          <div className="main-right flex fdc aic jc-c">
             <div className='main-home-button flex fdc aic jc-c'>
                 <button id='btnStory' onClick={()=> {
-                      navigate('story')
+                      console.log(localStorage.getItem('current-reading-page'))
+                      let currentPage = localStorage.getItem('current-reading-page')
+                      navigate(`story#${currentPage}`)
                     }}>STORY</button>
 
                   <button id='btnPlayGame' onClick={()=> {

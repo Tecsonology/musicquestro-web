@@ -11,8 +11,8 @@ export default class CalculateGame {
         this.points = points;
         
         // Define scoring constants (moved to class scope for clarity)
-        this.MAX_SCORE = MAX_SCORE   // Max number of levels/tasks
-        this.MAX_POINTS = MAX_POINTS; // Expected maximum achievable points
+        this.MAX_SCORE = MAX_SCORE      // Max number of levels/tasks
+        this.MAX_POINTS = MAX_POINTS;   // Expected maximum achievable points
         this.VICTORY_THRESHOLD = VICTORY_THRESHOLD // Performance Rating needed for Victory (out of 100)
     }
 
@@ -31,12 +31,9 @@ export default class CalculateGame {
 
     /**
      * Calculates a performance rating from 0 to 100 based on Score and Points.
-     * @returns {string} - The final performance rating as a string with 2 decimal places.
+     * @returns {number} - The final performance rating as a number (for internal use).
      */
-    calculatePerformanceRating() {
-        // Early exit for minimal performance
-      
-
+    _calculatePerformanceRatingNumber() {
         // Weights now total 1.0 (100% of the rating)
         const scoreWeight = 0.5;
         const pointsWeight = 0.5;
@@ -52,16 +49,21 @@ export default class CalculateGame {
 
         const finalPerformanceScore = scoreContribution + pointsContribution;
 
-        console.log('Score contribution: ', scoreContribution)
-        console.log('Points Contribution: ', pointsContribution)
-        console.log('final Points: ', finalPerformanceScore)
+        // Ensure the score does not exceed 100
+        return Math.min(100, finalPerformanceScore);
+    }
 
-        // Optional: Include a small bonus for perfect/near-perfect play (e.g., if score is maxed)
-        // if (this.score === this.MAX_SCORE) {
-        //     finalPerformanceScore += 5; // Adds up to 5 points bonus
-        // }
+    /**
+     * Calculates a performance rating from 0 to 100 based on Score and Points.
+     * @returns {string} - The final performance rating as a string with 2 decimal places.
+     */
+    calculatePerformanceRating() {
+        const rating = this._calculatePerformanceRatingNumber();
 
-        return Math.min(100, finalPerformanceScore).toFixed(2);
+        // Logging for debugging (optional, can be removed in production)
+        // console.log('Final Rating: ', rating)
+        
+        return rating.toFixed(2);
     }
     
     /**
@@ -69,7 +71,8 @@ export default class CalculateGame {
      * @returns {string} - 'Victory' or 'Defeat'.
      */
     getGameOutcome() {
-        const rating = parseFloat(this.calculatePerformanceRating());
+        // Use the internal number calculation for comparison
+        const rating = this._calculatePerformanceRatingNumber(); 
         
         if (rating >= this.VICTORY_THRESHOLD) {
             return 'Victory';
@@ -80,17 +83,19 @@ export default class CalculateGame {
 
     /**
      * Calculates the number of coins earned based on the performance rating.
+     * Coins are only awarded upon 'Victory'.
      * @returns {number} - The total coins earned.
      */
     getCoins() {
-        const rating = parseFloat(this.calculatePerformanceRating());
+        // Check for 'Defeat' outcome and award 0 coins immediately
+        if (this.getGameOutcome() === 'Defeat') {
+            return 0;
+        }
+
+        const rating = this._calculatePerformanceRatingNumber();
         // Simple coin formula: e.g., 1 coin for every 5 rating points
+        // You may want to slightly adjust this formula to only reward above the threshold
         const coins = Math.floor(rating / 5); 
         return coins;
     }
-
-    // Removed getTime() method as it's no longer used or tracked.
 }
-
-// Example Usage (for testing the revision):
-                    // e.g., 14

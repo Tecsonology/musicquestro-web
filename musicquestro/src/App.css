@@ -66,6 +66,10 @@ option {
 
 }
 
+.jc-fs {
+  justify-content: flex-start;
+}
+
 .flex-wrap {
   flex-wrap: wrap
 }

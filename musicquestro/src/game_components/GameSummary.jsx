@@ -189,34 +189,41 @@ function GameSummary(props) {
   return (
     <div className='game-summary fpage flex fdc jc-c aic' style={{ position: 'fixed' }}>
       {!showNextMapPrompt ? (
-        <div className="game-summary-wrapper flex fdc aic jc-c">
-          <h2 style={{ textAlign: 'center', color: 'black' }}>
+        <div className="game-summary-wrapper fpage flex fdc aic jc-c">
+          <h1 style={{ textAlign: 'center', color: '#6ac3ffff' }}>
             {isVictory ? 'Congratulations! Level Complete!' : 'Keep practicing, try again next time!'}
-          </h2>
+          </h1>
 
-          <div className='flex fdr aic jc-c'>
+         
+
+        
+
+          <div style={{ backgroundColor: 'rgba(132, 134, 134, 0.49)', borderRadius: '1em' }} className='flex fdr aic jc-c'>
+             <div className='flex fdr aic jc-c'>
             <p>Score: {props.score}</p>
             <p>Points: {props.points}</p>
           </div>
-
-          <div className='flex fdr aic jc-c'>
-            <span><img width={25} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span>
-            <span style={{ margin: '0 10px' }}>
-                <progress value={finalRating} max={props.VICTORY_THRESHOLD}></progress>
-            </span>
-            <span>{isVictory ? <p>✅</p> : <p>❌</p>}</span>
-          </div>
-
-          <div style={{ backgroundColor: 'rgba(181, 186, 186, 0.14)', borderRadius: '1em' }} className='flex fdr aic jc-c'>
-            <p><span>Accumulated Points: </span>{finalRating.toFixed(2)}</p>
+            <p><span>Overall: </span>{finalRating.toFixed(2)}</p>
             <p style={{marginLeft: '10px'}}><span>Target: </span>{props.VICTORY_THRESHOLD}</p>
           </div>
 
-          <h3>Rewards</h3>
-          <div style={{ backgroundColor: '#E8E8E8', padding: '0.5em 1em', borderRadius: '1em', color: 'black' }} className='flex fdr aic jc-c'>
-            <h4 style={{ marginRight: '1em', color: 'black' }}><span><img width={20} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
+            <div className='flex fdr aic jc-c'>
+            <span>{isVictory ? <p>✅</p> : <p>❌</p>}</span>
+
+            
+            <span style={{ margin: '0 10px' }}>
+                <progress value={finalRating} max={props.VICTORY_THRESHOLD}></progress>
+            </span>
+            <span><p>Next Level</p></span>
+          </div>
+
+       
+          <div style={{border: '1px solid white', padding: '0.5em', borderRadius: '1em', color: 'black' }} className='flex fdr aic jc-c'>
+               <h3>Rewards</h3>
+            <h4 style={{ marginRight: '1em', color: 'black' }}><span><img width={20}  style={{margin: 0}} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
             <h4 style={{ color: 'black' }}><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
           </div>
+          
 
           {/* Conditional Buttons based on Victory */}
           {isVictory ? (
