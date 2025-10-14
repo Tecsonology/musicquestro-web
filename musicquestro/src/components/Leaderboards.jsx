@@ -39,7 +39,7 @@ function Leaderboards() {
  
       <div className='leaderboard fpage flex fdc aic jc-c'>
         <div className="leaderboard-wrapper flex fdc aic">
-            <img id='leaderboardBanner' width={350} src="https://i.ibb.co/xKsdRQH1/Untitled-design-64.png" alt="" />
+            <img id='leaderboardBanner' src="https://i.ibb.co/xKsdRQH1/Untitled-design-64.png" alt="" />
             <ButtonBack />
              <div>
              {

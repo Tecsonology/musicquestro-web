@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
-
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 export let userids;
 
@@ -23,7 +23,7 @@ function GoogleLoginButton() {
 
   const getUser = async () => {
       try {
-          const response = await axios.get('http://localhost:5000/player', {
+          const response = await axios.get(`${VITE_NETWORK_HOST}/player`, {
               params: { userids }
           });
         
@@ -53,7 +53,7 @@ function GoogleLoginButton() {
       const postData = async () => {
         try {
           const result = await axios.post(
-            'http://localhost:5000/authCheck',
+            `${VITE_NETWORK_HOST}/authCheck`,
             {  userids },
             {
               headers: {

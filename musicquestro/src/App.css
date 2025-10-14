@@ -133,7 +133,7 @@ button {
 
 .btn-back {
   width: 8em;
-    position: absolute;
+    position: fixed;
     z-index: 5;
     left: 1%;
     top: 1%;
@@ -427,7 +427,7 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 @media (max-width: 767px) {
     .btn-back {
         width: 6em;
-        position: absolute;
+        position: fixed;
         left: 0;
         top: 1%;
         cursor: pointer;

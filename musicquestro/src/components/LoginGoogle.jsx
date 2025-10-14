@@ -1,8 +1,7 @@
-import React from 'react'
 import { useState } from 'react';
 import { userids } from './GoogleLoginButton';
 import axios from 'axios';
-import { token } from '../Token';
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 
 const AVATARS = [
@@ -28,7 +27,7 @@ function LoginGoogle() {
 
    const getUser = async () => {
       try {
-          const response = await axios.get('http://localhost:5000/player', {
+          const response = await axios.get(`${VITE_NETWORK_HOST}/player`, {
               params: { userids }
           });
           const user = response.data;
@@ -43,47 +42,74 @@ function LoginGoogle() {
 
 
     const handleSubmit = async (e) => {
-         let musicCoins = 1000
-        let totalPoints = 0
-        let life = 5
-        let maps = {
-            rhythm: {
-                isLocked: 'false',
-                levels: [1,2,3,4,5]
-            }, 
-            melody: {isLocked: 'true'},
-            harmony: {isLocked: 'true'},
-            pitch: {isLocked: 'true'},
-            
-        }
-        let currentInstrument = 'sine'
-        e.preventDefault();
-        try {
-            const response = await axios.post('http://localhost:5000/createUser', 
-                 { 
-                    id, 
-                    username, 
-                    password,
-                    userids: userids,
-                    musicCoins,
-                    life,
-                    totalPoints,
-                    maps,
-                    currentInstrument,
+        const idRandomizer = [];
+          for (let x = 0; x < 20; x++) {
+            idRandomizer.push(Math.floor(Math.random() * 10));
+          }
+          const userids = idRandomizer.join("").toString();
 
-                });
+        let id = 555;
+          let musicCoins = 3000.0;
+          let totalPoints = 0;
+          let life = 1000.0;
+          let maps = {
+            rhythm: { isLocked: false, levels: [1] },
+            melody: { isLocked: true, levels: [1] },
+            harmony: { isLocked: true, levels: [1] },
+            pitch: { isLocked: true, levels: [1] },
+          };
+          let story = {
+            chapter1: { isLocked: "true"},
+            chapter2: { isLocked: "true"},
+            chapter3: { isLocked: "true"},
+            chapter4: { isLocked: "true"},
+           
+          }
+
+
+          let items = {
+            spells: [
+              ["Hint", 30, '../assets/game-assets/ItemAssets/hint.png'],
+              ["Replay", 50, '../assets/game-assets/ItemAssets/replay.png']
+            ],
+            
+            avatars: [],
+            instruments: [],
+            badges: []
+          }
+          let bio = ''
+          let currentInstrument = "sine";
+          let avatar = "https://i.ibb.co/8455cZ4G/Untitled-design-59.png";
+
+          try {
+            const response = await axios.post(`${VITE_NETWORK_HOST}/createUser`, {
+              id,
+              username,
+              password,
+              userids,
+              musicCoins,
+              life,
+              totalPoints,
+              maps,
+              currentInstrument,
+              avatar,
+              story,
+              items,
+              bio,
+            });
 
             alert(response.data.message);
 
             await getUser()
 
             window.location.href = '/h'
+          } catch(err){
+
+          }
 
 
-        } catch (error) {
-            alert('Failed to add item');
-        }
-    };
+     
+    }
 
   return (
     <div className='flex fdc jc-c aic'>

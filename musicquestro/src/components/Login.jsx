@@ -4,6 +4,7 @@ import axios from 'axios';
 import '../styles/Log.css'
 import { token } from '../Token.js'
 import { Link } from 'react-router-dom';
+import GoogleLoginButton from './GoogleLoginButton.jsx'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
@@ -96,7 +97,7 @@ function Login() {
                         <button disabled={disabled} onClick={handleLogin}>Login</button>
 
                        
-                      { /** <GoogleLoginButton />  */}
+                      <GoogleLoginButton />
                         <p style={{color: 'white'}}>Need an account? <Link to={'/register'} style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(false)
                         }}>Click here</Link></p>

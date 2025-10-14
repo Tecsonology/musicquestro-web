@@ -96,7 +96,11 @@
 }
 
 /* 💻 Medium Devices (Tablets and Small Laptops) */
-@media (min-width: 700px) and (max-width: 1199px) {
+@media (min-width: 700px) {
+  .bottom-navigation {
+    height: 6em;
+  }
+
   .icon-label {
     display: block;
     font-size: 0.9em;
@@ -108,6 +112,29 @@
 
   .nav-item img {
     width: 2.2em;
+  }
+
+  a.link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h3.icon-label {
+    margin: 0;
+  }
+
+  .link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-weight: bolder;
+
+    img {
+      margin-right: 1em;
+    }
   }
 }
 

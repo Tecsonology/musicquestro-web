@@ -157,7 +157,7 @@ function Profile() {
                     }} className='flex fdc aic jc-c' 
                       style={{backgroundColor: 'rgba(59, 61, 59, 0.9)', height: '2.5em', border: '1px solid rgba(170, 170, 170, 0.9)',
                      borderRadius: '1em', }}>
-                      <div className='flex fdr aic jc-c'>
+                      <div className='flex fdr aic'>
                         
                       <img style={{margin: 0}} width={20} height={20} src={logout} alt="" />
 

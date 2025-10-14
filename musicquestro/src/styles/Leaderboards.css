@@ -12,7 +12,6 @@
 }
 
 .leaderboard-wrapper {
-    margin-top: 7.5em;
     margin-bottom: 10em;
     
   
@@ -23,7 +22,8 @@
 }
 
 #leaderboardBanner {
-    position: absolute;
+    width: clamp(25em, 50vw, 50em);;
+    position: relative;
     top: 3em;
     z-index: 2;
 }

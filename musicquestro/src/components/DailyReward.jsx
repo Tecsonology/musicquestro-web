@@ -54,7 +54,7 @@ function DailyReward({open}) {
       top: "50%",
       left: "50%",
       transform: "translate(-50%, -50%)",
-      width: "80%",
+      width: "20em",
       borderRadius: "2em",
       position: "fixed",
       zIndex: "100",

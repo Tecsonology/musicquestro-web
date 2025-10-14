@@ -51,6 +51,8 @@
 
 .store-wrapper{
     overflow-y: hidden;
+
+  
 }
 
 @media (max-width: 767px) {
@@ -94,10 +96,24 @@
         flex-direction: row;
     }
 
+   
+
     
 }
 
-@media (min-width: 1500px){
+@media (min-width: 1024px){
+
+}
+
+@media (min-width: 1440px) {
     
+}
+
+@media (min-width: 1900px) {
+         .cat-items-wrapper button {
+        font-size: 1.5em;
+       
+    }
+  
 }
 

@@ -5,6 +5,14 @@
   padding: 0;
 }
 
+  #btnStory, #btnPlayGame {
+    width: 85vw;
+  }
+
+ #main-home-visual {
+    width: 80vw;
+  }
+
 /* Buttons */
 .main-home-button {
   display: flex;
@@ -14,6 +22,7 @@
 }
 
 .main-home-button button {
+  width: 80vw;
   margin: 0.5em;
   color: #fff;
   text-shadow: -1px 5px black, 0 1px black, 1px 0 black, 0 -1px white;
@@ -25,45 +34,10 @@
   background-color: #222;
 }
 
-/* Navigation */
-.main-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  background: rgb(40, 40, 40);
-  width: 100%;
-  z-index: 5;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  padding: 0.5em 0;
-}
-
-.main-nav ul {
-  display: flex;
-  justify-content: space-evenly;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.main-nav ul li {
-  flex: 1;
-  text-align: center;
-}
-
-.main-nav ul li a {
-  text-decoration: none;
-  color: white;
-  font-size: 1em;
-  font-weight: bold;
-}
 
 /* Main visual (scales with screen size) */
 .main-left img {
   width: 90%;
-  max-width: 400px;
   height: auto;
   display: block;
   margin: 2em auto;
@@ -85,15 +59,7 @@
 
 /* ========== TABLET (min-width: 700px) ========== */
 @media (min-width: 700px) {
-  .main-left img {
-    width: 80%;
-    max-width: 500px;
-  }
-
-  .main-home-button button {
-    width: 60%;
-    font-size: 1.2em;
-  }
+  
 
   .main-nav {
     padding: 0.8em 0;
@@ -106,46 +72,41 @@
 
 /* ========== SMALL DESKTOP (min-width: 1024px) ========== */
 @media (min-width: 1024px) {
-  .main-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+ 
 
-  .main-left img {
-    width: 60%;
-    max-width: 600px;
+  .main-home-button {
+    flex-direction: row;
   }
 
   #btnStory, #btnPlayGame {
-    width: 25em;
+    
+    width: 30vw;
     font-size: 1.3em;
+    margin: 0.7em 1em;
+    height: 4em;
   }
 
-  .main-nav {
-    position: static;
-    display: block;
-    background: none;
+
+
+
+   #main-home-visual {
+    width: 60vw;
   }
 }
 
 /* ========== LARGE DESKTOP (min-width: 1440px) ========== */
 @media (min-width: 1440px) {
-
-  .main-left img {
-    width: 40em;
-    max-width: 1000px;
-  }
-
-  .main-content {
-    flex-direction: row;
+  #main-home-visual {
+    width: 40vw;
   }
 
   #btnStory, #btnPlayGame {
-    width: 20em;
-    height: 3em;
-    font-size: 1.5em;
+    
+    width: 30vw;
+    font-size: 2em;
+    margin: 0.7em;
   }
+  
 
   
 }
@@ -153,22 +114,5 @@
 /* ========== ULTRA-WIDE (min-width: 1900px) ========== */
 @media (min-width: 1900px) {
 
-  .main-content {
-    padding: 0;
-    margin: 0;
-  }
-  .main-left img {
-    width: 50em;
-    max-width: 1000px;
-  }
-
-  .main-content {
-    flex-direction: row;
-  }
-
-  #btnStory, #btnPlayGame {
-    width: 20em;
-    height: 3em;
-    font-size: 2em;
-  }
+  
 }
