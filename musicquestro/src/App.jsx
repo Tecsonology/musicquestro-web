@@ -126,7 +126,7 @@ function App() {
           </div>
 
           <div  style={{marginTop: '3em'}}>
-              <video width={300} src="src/assets/Tutorial.mp4" autoPlay muted loop controls></video>
+              <video width={300} src="../Tutorial.mp4" autoPlay muted loop controls></video>
               <h2>MusicQuestro Gameplay</h2>
           </div>
 
