@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect} from 'react'
 import './App.css'
 import './styles/Log.css'
 import {  Link, useLocation } from 'react-router-dom';
@@ -25,6 +25,20 @@ function App() {
   const loc = useLocation()
   const [ logingIn, setLoggingIn ] = useState(false)
   const [ showPrompt, setShowPrompt ] = useState(true)
+
+   useEffect(() => {
+    const enableFullscreen = () => {
+      const elem = document.documentElement;
+      if (elem.requestFullscreen) elem.requestFullscreen();
+      window.removeEventListener("click", enableFullscreen);
+    };
+
+    window.addEventListener("click", enableFullscreen);
+
+    return () => {
+      window.removeEventListener("click", enableFullscreen);
+    };
+  }, []);
   
 
   return (
@@ -55,7 +69,15 @@ function App() {
           </> : null  
         }
         {
-          loc.pathname === '/' ? <Link onClick={()=> setLoggingIn(true)} className='navLink' to={'login'}>PLAY</Link> : null
+          loc.pathname === '/' ? <Link onClick={()=> {
+            const elem = document.documentElement;
+             if (elem.requestFullscreen) elem.requestFullscreen();
+      else if (elem.mozRequestFullScreen) elem.mozRequestFullScreen();
+      else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+      else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
+
+             setLoggingIn(true);
+          }} className='navLink' to={'login'}>PLAY</Link> : null
         }
           </> : null
         }

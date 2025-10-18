@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense, useEffect } from 'react'
 import {  useNavigate, Outlet } from 'react-router-dom'
 import '../styles/Homepage.css'
 import BottonNavigation from './BottonNavigation'
@@ -6,6 +6,20 @@ import BGMusic from './BGMusic'
 import LoadingPage from './LoadingPage'
 
 function Homepage() {
+
+  useEffect(() => {
+      const enableFullscreen = () => {
+        const elem = document.documentElement;
+        if (elem.requestFullscreen) elem.requestFullscreen();
+        window.removeEventListener("click", enableFullscreen);
+      };
+  
+      window.addEventListener("click", enableFullscreen);
+  
+      return () => {
+        window.removeEventListener("click", enableFullscreen);
+      };
+    }, []);
 
   return (
       
