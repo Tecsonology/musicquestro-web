@@ -73,7 +73,7 @@ function Store() {
 
   const userCollection = []
   const navigate = useNavigate()
-  const { currentUser } = useContext(UserContext)
+  const { currentUser, setCurrentUser } = useContext(UserContext)
   const [ status, setStatus ] = useState(false)
   const [ approved, setApproved ] = useState()
   const [ activeShow, setActiveShow ] = useState('instrument')
@@ -143,21 +143,27 @@ function Store() {
 
   const updateQty = async (index) => {
     if(approved){
-      try {
 
+      console.log(currentUser?.userids)
+      try {
+        
         const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
-          userids: currentUser ? currentUser.userids : null,
+          userids: currentUser?.userids,
           operator: 1,
-          index: index
+          index
         })
+
+
+
+        console.log(response)
+
+        setCurrentUser({...currentUser, spells: response.data.spells})  
 
 
       } catch (error) {
         console.log(error)
       }
-    } else if(!approved){
-      console.log("Purchase unsuccessful")
-    }
+    } 
   }
 
   const deductCoins = async (coins) => {
@@ -167,8 +173,6 @@ function Store() {
         userids: currentUser ? currentUser.userids : null,
         coinsDeduct: coins
       })
-
-      console.log(response)
 
       if(response.data === 'Success'){
         setStatus('Item purchased!') 
@@ -246,9 +250,9 @@ function Store() {
                         <StoreCard imgItem={hint} itemName={'Hint'} itemPrice={50}
                             description={'Get a spark of inspiration when the notes get tricky!'}
                           children={
-                            <span><button onClick={()=> {
-                              deductCoins(50)
-                              updateQty(0)
+                            <span><button onClick={async()=> {
+                              await deductCoins(50)
+                              await updateQty(0)
                               
                             }}>Buy</button></span>
                         } />
@@ -256,9 +260,9 @@ function Store() {
                         <StoreCard imgItem={replay} itemName={'Replay'} itemPrice={10}
                             description={'Rewind the performance and try again without missing a beat!'}
                           children={
-                            <span><button onClick={()=> {
-                              deductCoins(10)
-                              updateQty(1)
+                            <span><button onClick={async()=> {
+                              await deductCoins(10)
+                              await updateQty(1)
                             }}>Buy</button></span>
                         } />
 
@@ -296,7 +300,6 @@ function Store() {
                 <div className="menu-items ">
                   <div className='avatar-items'>
                     <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Friend'} image={friend} price={150} />
-                    <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Monster'} image={monster} price={200} />
                     <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Doggie'} image={dog} price={250} />
                     <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Cat'} image={cat} price={250} />
                     <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Bunny'} image={bunny} price={250} />

@@ -170,7 +170,7 @@ function Collections() {
                           margin: '1em', textAlign: 'center', width: '100px', borderBottom: '0.7em solid rgb(54, 2, 85)', border: '1px solid white'}}  >
                               <img width={100} key={index} src={
                                 avatar === 'Friend' ? friend :
-                                avatar === 'Devil' ? devil :
+                                avatar === 'Monster' ? devil :
                                 avatar === 'Doggie' ? dog :
                                 avatar === 'Cat' ? cat :
                                 avatar === 'Bunny' ? bunny : null

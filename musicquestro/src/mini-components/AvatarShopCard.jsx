@@ -15,7 +15,8 @@ function AvatarShopCard({image, name, price, setStatus, setApproved}) {
 
 
   const purchaseItem = async(e) => {
-    e.target.disabled = true
+    const button = e.currentTarget;
+    button.disabled = true;
       try {
         const response = await axios.put(`${import.meta.env.VITE_NETWORK_HOST}/add-avatar-item`, {
           userids: currentUser ? currentUser.userids : null,
