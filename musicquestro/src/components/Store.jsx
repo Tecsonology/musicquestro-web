@@ -155,7 +155,7 @@ function Store() {
       } catch (error) {
         console.log(error)
       }
-    } else {
+    } else if(!approved){
       console.log("Purchase unsuccessful")
     }
   }
@@ -258,7 +258,7 @@ function Store() {
                           children={
                             <span><button onClick={()=> {
                               deductCoins(10)
-                              updateQty(2)
+                              updateQty(1)
                             }}>Buy</button></span>
                         } />
 
