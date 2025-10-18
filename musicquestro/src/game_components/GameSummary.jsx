@@ -235,7 +235,7 @@ function GameSummary(props) {
           {isVictory ? (
             <button
               style={{ color: 'white', backgroundColor: 'green', width: '60%',}}
-              onClick={gameUpload}
+              onClick={()=> gameUpload()}
               disabled={btnText === 'Game uploading, please wait...'}
             >
               {btnText}
