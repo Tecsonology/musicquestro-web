@@ -144,7 +144,6 @@ function Store() {
   const updateQty = async (index) => {
     if(approved){
 
-      console.log(currentUser?.userids)
       try {
         
         const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
@@ -152,10 +151,6 @@ function Store() {
           operator: 1,
           index
         })
-
-
-
-        console.log(response)
 
         setCurrentUser({...currentUser, spells: response.data.spells})  
 

@@ -23,7 +23,6 @@ function AvatarShopCard({image, name, price, setStatus, setApproved}) {
           newItem: name,
           price: price
         })
-        console.log(response.data)  
 
         if(response){
            setStatus('Item Purchased!') 
