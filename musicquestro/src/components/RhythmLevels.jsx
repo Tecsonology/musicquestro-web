@@ -4,6 +4,7 @@ import { useNavigate,  } from 'react-router-dom'
 import CurrentUserContext,{ UserContext } from './CurrentUserContext'
 import Loader from './Loader'
 import star from '../assets/star.png'
+import '../styles/Maps.css'
 
 
 function RhythmLevels() {
@@ -27,16 +28,32 @@ function RhythmLevels() {
             levels ? 
             Object.values(numberOfLevels).map((level, index)=> (
                 <button key={index} disabled={level != levels[index]} className='level-buttons'
+                style={{border: level != levels[index] ? '1px solid white' : '3px solid yellow',
+                  background: level != levels[index] && 'black'
+                }}
                 onClick={()=> {
                     navigate(`/rhythmGame/${index}`)
-                }}>{level}</button>
+                }}>{level != levels[index] ? '🔒' : level}</button>
             ))
             : <Loader />
         }
+        {
+            levels && levels.length == 5 ? 
+            <div className='flex fdc aic jc-c' style={{
+              backgroundColor: 'rgba(109, 105, 105, 0.5)',
+              padding: '1em',
+              borderRadius: '0.5em',
+              border: '0.2px solid gold',
+            }}>
+              <p style={{color: 'gold'}}>👏 LEVELS COMPLETED</p>
+              <button
+                style={{margin: 0, backgroundColor: 'transparent', textTransform: 'underline',}}
+                onClick={()=> { navigate('/h/story#13')}}>View chapter story</button>
+            </div>
+            : null
+        }
       </div>
-      {
-        numberOfLevels.length >= 5 ? <p style={{color: 'white'}}>Complete all of these levels <span><img width={20} src={star} alt="" /></span></p> : null
-      }
+     
     </div>
   )
 }

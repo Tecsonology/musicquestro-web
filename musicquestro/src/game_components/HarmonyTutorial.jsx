@@ -40,10 +40,13 @@ function HarmonyTutorial({ showTutorial, setShowTutorial, allNotes, chords, play
               Skip tutorial &gt;&gt;
             </button>
                         
-            <h1 style={{color: 'black'}}>Chord Harmony Tutorial</h1>
-            <p className="text-gray-300 text-lg max-w-xl text-center">
+            <h1 style={{color: 'rgba(125, 0, 251, 0.91)'}}>Chord Harmony Tutorial</h1>
+            <div className="flex fdr aic jc-c">
+              <img width={40} src="../assets/Maestro.png" alt="" />
+              <p>
                 Click on any chord below to hear how it sounds and see exactly which notes are used to build it.
             </p>
+            </div>
 
             {/* Display Current Chord Information */}
             <div className="w-full max-w-4xl min-h-[100px] flex flex-col items-center justify-center bg-gray-800 p-4 rounded-lg shadow-inner transition-all duration-300">
@@ -63,12 +66,13 @@ function HarmonyTutorial({ showTutorial, setShowTutorial, allNotes, chords, play
             </div>
 
             {/* Chord Selection Buttons - No longer need the Array.isArray check since chords is guaranteed in module scope */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 w-full max-w-4xl">
+            <div className="flex fdr aic jc-c" style={{flexWrap: 'wrap'}}>
                 {chords.map(chord => (
                 <button 
                     key={chord.name} 
                     onClick={() => handleTutorialChordClick(chord)}
                     className='tut-btn'
+        
                 >
                     {chord.name}
                 </button>

@@ -12,6 +12,7 @@ import GamePrompt from '../mini-components/GamePrompt.jsx';
 import CurrentUserContext from '../components/CurrentUserContext.jsx';
 import GameSummary from './GameSummary.jsx';
 import hint from '../assets/game-assets/ItemAssets/hint.png'
+import LevelInfo from '../components/LevelInfo.jsx';
 
 
 import HarmonyPic from '../assets/game-assets/Assets/Logo&Menu/HarmonyPic.png'
@@ -57,8 +58,7 @@ function HarmonyGame() {
     const [wait, setWait] = useState(false);
     const [showCorrection, setShowCorrection] = useState(false);
 
-    let countdownTimer = 180;
-
+    const [ countdownTimer, setCountdownTimer] = useState(30);
     const [score, setScore] = useState(0);
     const [userPoints, setUserPoints] = useState(0);
     const [currentRound, setCurrentRound] = useState(0);
@@ -144,16 +144,21 @@ function HarmonyGame() {
     useEffect(() => {
         if (id == 0) {
             setGameRound(5);
+            setCountdownTimer(45);
         } else if (id == 1) {
             setShowTutorial(false);
+            setCountdownTimer(35);
             setGameRound(7);
         } else if (id == 2) {
             setGameRound(10);
+            setCountdownTimer(30);
             setShowTutorial(false);
         } else if (id == 3) {
             setGameRound(13);
+            setCountdownTimer(25);
             setShowTutorial(false);
         } else if (id == 4) {
+            setCountdownTimer(20);
             setGameRound(15);
             setShowTutorial(false);
         }
@@ -607,7 +612,9 @@ function HarmonyGame() {
                     </>
                 ) : (
                     <div className='flex fdc aic jc-c'>
-                        <img width={150} src={HarmonyPic} alt="" />
+                        <img width={50} src={HarmonyPic} alt="" />
+                <LevelInfo targetPoint={targetPoint} countdownTimer={countdownTimer} gameRound={gameRound}/>
+                        
                         <button
                             onClick={() => {
                                 setStart(true);

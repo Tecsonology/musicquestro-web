@@ -32,6 +32,9 @@ import slide21 from "/src/assets/game-assets/Scenes(HQ)/21.png"
 import slide22 from "/src/assets/game-assets/Scenes(HQ)/22(Before Melody Game).png"
 import slide23 from "/src/assets/game-assets/Scenes(HQ)/23.png"
 import slide24 from "/src/assets/game-assets/Scenes(HQ)/24(After Melody Game).png"
+import end from "/src/assets/game-assets/Scenes(HQ)/THE_END.png"
+
+
 
 // ====================================
 // 📝 SLIDE DATA ARRAY
@@ -50,6 +53,10 @@ const allSlides = [
     
     // Chapter 3
     { id: '22', src: slide22 }, { id: '23', src: slide23 }, { id: '24', src: slide24 }, 
+
+    { id: '25', src: end }, , 
+
+
 ];
 
 const CHAPTER_2_START_ID = '13';

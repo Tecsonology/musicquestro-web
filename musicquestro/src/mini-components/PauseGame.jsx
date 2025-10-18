@@ -16,7 +16,7 @@ function PauseGame({isOpen, setIsOpen, setRunning}) {
         contentLabel="Example Modal"
         style={{
           content: { top: "50%", left: "50%", transform: "translate(-50%, -50%)", width:'80%',
-            borderRadius: '2em'
+            borderRadius: '2em',
            },
           overlay: {
              backgroundColor: "rgba(0, 0, 0, 0.94)", // dim background

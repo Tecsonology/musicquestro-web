@@ -51,7 +51,8 @@ function Collections() {
     }
   }, [])
 
-  const changeAvatar = async (image) => {
+  const 
+  changeAvatar = async (image) => {
     image = image === 'Friend' ? friend :
             image === 'Devil' ? devil :
             image === 'Doggie' ? dog :

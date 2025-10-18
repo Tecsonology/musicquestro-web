@@ -151,9 +151,8 @@ button#playRhythm :hover {
 .game-summary-wrapper {
     color: rgb(255, 255, 255);
     background-color: #000000a2;
-    width: 100%;
     border-radius: 1em;
-    padding: 1em;
+    padding: 3em;
 
     p {
         margin: 1em;
@@ -302,11 +301,16 @@ button:disabled {
     }
 }
 
+.purchased-buttons button {
+    margin: 10em;
+    
+}
+
 .store-card, .collection-card {
     background-color: #7F03F3;
     color: #FAFAEF;
     padding: 0.5em;
-    min-width: 5em;
+    width: 8em;
     border-radius: 1em;
     margin: 0.7em;
     justify-content: space-between;
@@ -333,12 +337,13 @@ button:disabled {
 }
 
 .collection-cards {
-    
+    box-sizing: border-box;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
     overflow: auto;
+    width: 100%;
 }
 
 

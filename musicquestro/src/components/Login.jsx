@@ -72,13 +72,15 @@ function Login() {
     }
 
   return (
-    <div className='flex jc-c fdc'>
+    <div className='glass-bg flex jc-c fdc'>
         <div className='flex fdc jc-c aic'>
             
                 <h2>LOGIN</h2>
                <div className="login flex fdc jc-c aic">
                         <input
                         type="text"
+                        maxLength={20}
+                        name="username"
                         value={username}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Username"
@@ -97,7 +99,7 @@ function Login() {
                         <button disabled={disabled} onClick={handleLogin}>Login</button>
 
                        
-                      <GoogleLoginButton />
+                      {/**<GoogleLoginButton /> */}
                         <p style={{color: 'white'}}>Need an account? <Link to={'/register'} style={{cursor: "pointer", textDecoration: "underline"}} onClick={()=> {
                             setLog(false)
                         }}>Click here</Link></p>

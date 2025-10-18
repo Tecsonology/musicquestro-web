@@ -13,19 +13,19 @@ import MelodyCard from '../assets/game-assets/Assets/Categories/Melody.png';
 // Map metadata for navigation and unlocking
 const mapNames = {
   rhythm: {
-    imgLink: 'https://i.ibb.co/VWV4wcPV/Untitled-design-15.png',
+    imgLink: '/assets/Maps/Rhythm.png',
     location: '/rhythmGame'
   },
   melody: {
-    imgLink: MelodyCard,
+    imgLink: '/assets/Maps/Rhythm.png',
     location: '/melodyGame'
   },
   harmony: {
-    imgLink: 'https://i.ibb.co/FLZzsRfD/Untitled-design-61.png',
+    imgLink: '/assets/Maps/Harmony.png',
     location: '/harmonyGame'
   },
   pitch: {
-    imgLink: 'https://i.ibb.co/W4bb6H3f/Untitled-design-79.png',
+    imgLink: '/assets/Maps/Pitch.png',
     location: '/pitchGame'
   },
 };
@@ -62,7 +62,9 @@ function GameSummary(props) {
 
   const mapUnlocker = async (mapIndex) => {
     if (!userids) return false;
-
+    setShowNextMapPrompt(true);
+    console.log('Attempting to unlock map index:', mapIndex);
+    
     let categoryKey;
     switch (mapIndex) {
       case 1:
@@ -89,6 +91,7 @@ function GameSummary(props) {
 
       // Assuming API returns a success indicator in its data
       if (unlockMap.data.success) {
+        setShowNextMapPrompt(true)
         return true;
       }
       return false;
@@ -133,8 +136,8 @@ function GameSummary(props) {
 
     try {
       // 1. Calculate new user totals
-      const newCoins = (currentUser?.musicCoins || 0) + coinedGained;
-      const newTotalPoints = (currentUser?.totalPoints || 0) + finalRating; // Use precise rating
+      const newCoins = currentUser && currentUser.musicCoins + coinedGained;  
+      const newTotalPoints = currentUser && currentUser.totalPoints + gamePoints;
 
       // 2. Update User Stats (Coins and Total Points)
       const updateUser = await axios.put(`${VITE_NETWORK_HOST}/api/update-user`, {
@@ -145,13 +148,19 @@ function GameSummary(props) {
         }
       });
 
+      console.log('User update response:', updateUser.data);
+
       // 3. Update the user context state locally immediately after success
-      if (updateUser.data.success && setCurrentUser) {
+      {
+        /**
+         * if(updateUser.data.success && setCurrentUser) {
         setCurrentUser(prevUser => ({
           ...prevUser,
           musicCoins: newCoins,
           totalPoints: newTotalPoints,
         }));
+      }
+         */
       }
 
       // 4. Handle Navigation/Map Unlock
@@ -160,10 +169,8 @@ function GameSummary(props) {
         const mapindex = props.nextGameIndex;
         if (await mapUnlocker(mapindex)) {
           setShowNextMapPrompt(true);
-        } else {
-          // Max level reached, no new map unlocked (e.g., last map), go to main map
-          navigate('/h/m'); 
-        }
+          console.log('1 Next game unlocked!');
+        } 
       } else {
         // Otherwise, navigate to the level selection screen for the current game
         const baseLocation = mapNames[props.gameName]?.location;
@@ -174,7 +181,8 @@ function GameSummary(props) {
           window.location.href = `/h${levelScreenPath}`; 
         } else {
           // Fallback
-          navigate('/h/m'); 
+          //navigate('/h/m'); 
+          console.log('3 Next game unlocked!');
         }
       }
 
@@ -189,16 +197,14 @@ function GameSummary(props) {
   return (
     <div className='game-summary fpage flex fdc jc-c aic' style={{ position: 'fixed' }}>
       {!showNextMapPrompt ? (
-        <div className="game-summary-wrapper fpage flex fdc aic jc-c">
-          <h1 style={{ textAlign: 'center', color: '#6ac3ffff' }}>
-            {isVictory ? 'Congratulations! Level Complete!' : 'Keep practicing, try again next time!'}
+        <div style={{
+          backgroundColor: !isVictory && 'rgba(81, 16, 0, 0.63)',
+        }} className="game-summary-wrapper fpage flex fdc aic jc-c">
+          <h1  style={{ textAlign: 'center', color: '#6ac3ffff' }}>
+            {isVictory ? 'Congrats! Level Complete!' : 'Keep practicing, try again next time!'}
           </h1>
-
-         
-
-        
-
           <div style={{ backgroundColor: 'rgba(132, 134, 134, 0.49)', borderRadius: '1em' }} className='flex fdr aic jc-c'>
+            
              <div className='flex fdr aic jc-c'>
             <p>Score: {props.score}</p>
             <p>Points: {props.points}</p>
@@ -219,9 +225,9 @@ function GameSummary(props) {
 
        
           <div style={{border: '1px solid white', padding: '0.5em', borderRadius: '1em', color: 'black' }} className='flex fdr aic jc-c'>
-               <h3>Rewards</h3>
-            <h4 style={{ marginRight: '1em', color: 'black' }}><span><img width={20}  style={{margin: 0}} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
-            <h4 style={{ color: 'black' }}><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
+            <h3 style={{ marginRight: '2em', color: 'white' }}>Rewards</h3>
+            <h4 style={{ marginRight: '1em', color: 'white' }}><span><img width={20}  style={{margin: 0}} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
+            <h4 style={{ color: 'white' }}><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
           </div>
           
 
@@ -252,7 +258,7 @@ function GameSummary(props) {
         <div style={{ backgroundColor: 'rgba(1, 19, 37, 1)' }} className='fpage flex gdc aic jc-c'>
           <div className=' next-game-container flex fdc aic jc-c'>
             <h3 style={{ color: 'yellow' }}>Congratulations</h3>
-            <img width={200} src={nextGameImg} alt="Next Game" />
+            <img loading='lazy' width={200} src={nextGameImg} alt="Next Game" />
             <h2 style={{ textAlign: 'center' }}>You unlocked the next game!</h2>
             <button style={{ width: '10em', borderRadius: '2em' }} className='navLink' onClick={() => navigate('/h/m')}>
               Go to Maps

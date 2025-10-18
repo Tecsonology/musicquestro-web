@@ -164,7 +164,7 @@ function Register() {
   }
 
   return (
-    <div style={{ margin: "1em 0" }} className="register flex fdc jc-c aic">
+    <div style={{ margin: "1em 0" }} className="register glass-bg flex fdc jc-c aic">
       <h2>REGISTER</h2>
       {!success ? (
         <>

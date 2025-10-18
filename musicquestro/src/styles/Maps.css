@@ -63,13 +63,16 @@
 
 /* Level Buttons */
 .level-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 3em;
   height: 4em;
   margin: 1em 0.5em;
   font-size: 1.2em;
   font-weight: bolder;
-  background-color: rgb(57, 2, 57);
-  border: 3px solid gold;
+  
+  
   color: gold;
   border-radius: 0.5em;
   transition: background-color 0.3s ease;

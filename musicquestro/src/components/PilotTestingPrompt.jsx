@@ -19,8 +19,7 @@ function PilotTestingPrompt({showPrompt, setShowPrompt}) {
     })
 
     const handleCheckBox =(e)=> {
-        console.log(e.target.value)
-        setAgreed(false)
+        e.target.checked ? setAgreed(false) : setAgreed(true)
         
     }
 
@@ -86,7 +85,7 @@ function PilotTestingPrompt({showPrompt, setShowPrompt}) {
 
                     <div className='flex fdr aic jc-c'>
                         <label htmlFor="Agree" />
-                        <input onChange={handleCheckBox} type="checkbox" name="dasdsa" id="Agree" value={'dsadasd'} />
+                        <input onChange={handleCheckBox} type="checkbox" name="dasdsa" id="Agree"/>
                         <p style={{color: 'black'}}>Agree to user agreement policy</p>
                    
                     </div>
@@ -97,7 +96,7 @@ function PilotTestingPrompt({showPrompt, setShowPrompt}) {
                     }}
                     style={{
                         width: '95%',
-                        backgroundColor: 'green'
+                        backgroundColor: agreed ? 'gray' : 'green'
                     }}
                     disabled={agreed}
                     >Okay</button>

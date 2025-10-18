@@ -29,11 +29,11 @@ function CollectionCard({image, itemName, instrCode}) {
   return (
     <CurrentUserContext>
       <div className='collection-card flex fdc jc-c aic'>
-          <img width={100} src={image} alt="" />
+          <img width={80} src={image} alt="" />
           <h3 style={{color: 'white'}}>{itemName}</h3>
           <button
             style={{
-              backgroundColor: currentUser.currentInstrument === instrCode ? '#43005ebe' : '#c55708ff'
+              backgroundColor: currentUser.currentInstrument === instrCode ? '#43005ebe' : '#c55708ff', margin: '1em', 
             }}
           disabled={currentUser.currentInstrument === instrCode} onClick={updateCurrentInstrument}>
             {currentUser.currentInstrument === instrCode ? 'Currently used' : 'Use this'}

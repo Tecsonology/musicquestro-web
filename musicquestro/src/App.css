@@ -215,12 +215,14 @@ button {
   font-weight: bolder;
   font-size: 1.5em;
   text-align: center;
-  width: 6em;
 }
 
 .backHome {
-  background-color: #ffffff61;
-  font-size: 1em
+  background-color: #ffffff0d;
+  box-shadow: none;
+  font-size: 1em;
+  position: 'absolute';
+  right: 0;
   
 }
 
@@ -316,14 +318,20 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 
 .tutorial-bg {
    background-image: url('https://i.ibb.co/DDmLYjS6/Untitled-design-82.png');
+   background-size: cover;
+   background-repeat: no-repeat;
+   background-position: center;
 }
 
 .tut-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #0D1DFF;
   width: 4em;
   height: 4em;
   margin: 0.6em;
-  padding: 0;
+  padding: 1em;
   font-weight: bold;
 }
 
@@ -433,16 +441,16 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
         cursor: pointer;
     }
 
-    .main-logo {
-      width: 20em;
-    }
+   
 }
 
 
 .rhythm-levels-container {
   background: #1b263bf5;
   background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
-  background-position: center;
+    background-repeat: no-repeat;
+  background-size: cover;
+    background-position: center;
   background-blend-mode: multiply;
 }
 

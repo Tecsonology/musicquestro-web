@@ -274,12 +274,16 @@ function Store() {
                   {
                   Object.values(ITEMS).map((item, index)=> (
                     <StoreCard sound={item.itemCode} key={index} imgItem={item.imgItem}  itemName={item.itemName} itemPrice={item.price}
-                      description={item.description}
+                      description={item.description} owned={!userCollection.includes(item.itemName) ? false : true}
                       children={
-                        !userCollection.includes(item.itemName) ? <span><button 
+                        !userCollection.includes(item.itemName) ? <button 
+                        className='flex fdr aic jc-c'
                         onClick={(e)=> handleBuyItem(e, item.price, item.itemName)}>
-                          Buy</button></span>
-                        : <span><button style={{backgroundColor: '#2f3679ff'}} disabled>OWNED</button></span>
+                          <span><img style={{width: '1.3em', marginRight: '0.5em'}} src="https://i.ibb.co/N6w014ng/Currency.png" alt="" /></span>
+                          <span>{item.price}</span>
+                          </button>
+                        : <button style={{backgroundColor: '#2f3679ff'}} disabled>
+                          ✅ OWNED</button>
                       }
                     />
                   ))

@@ -197,7 +197,7 @@
     background: rgb(21, 24, 67); 
     overflow-y: scroll;
     min-height: 100vh;
-    padding-bottom: 2em;
+    padding-bottom: 10em;
     z-index: 20;
 }
 

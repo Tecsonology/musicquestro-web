@@ -37,21 +37,27 @@ function App() {
 
         {/**<ClickEffect play={true}/> */}
     
-       { loc.pathname != '/' ? <Link onClick={()=> setLoggingIn(false)} className='navLink backHome'>X Cancel</Link> : null}
+       
+
        <div  className="main-log flex fdc aic jc-c">
         
-        <img width={!logingIn ? 300 : 200} className='main-logo' src={logo} alt="" />
-        <p id='beta-version'>Beta Version: 1.000.0.005</p>
+        <img width={ loc.pathname === '/' ? 300 : 100} className='main-logo' src={logo} alt="" />
+        {
+          loc.pathname === '/' ?
+          <>
+              
         {
           !logingIn ? 
           <>
-              <h2 style={{color: '#22E1E7'}}>Music & Rhythm Game for Kids</h2>
+              <h2 style={{color: '#22E1E7'}}>Interactive Music Game for Kids</h2>
               
        <p style={{textAlign: 'center', color: 'white', marginBottom: '2.5em'}}>Step into the world of MusicQuestro – a magical adventure where music comes alive!</p>
           </> : null  
         }
         {
           loc.pathname === '/' ? <Link onClick={()=> setLoggingIn(true)} className='navLink' to={'login'}>PLAY</Link> : null
+        }
+          </> : null
         }
 
         {
@@ -69,7 +75,15 @@ function App() {
         }
 
 
-        <Outlet />
+        <div style={{width: '23em', position: 'relative'}} >
+          { loc.pathname != '/' ? <Link onClick={()=> setLoggingIn(false)} 
+            className='navLink backHome'
+            style={{border: 0, background: 'transparent', position: 'absolute', zIndex: '5', right: '1em', top: '-1em',
+              backgroundColor: 'rgba(119, 45, 45, 1)', width: '0.3em', borderRadius: '50%',
+            }}
+            >X</Link> : null}
+          <Outlet />
+        </div>
 
        </div>
 

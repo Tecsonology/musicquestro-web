@@ -9,6 +9,7 @@ import PauseGame from '../mini-components/PauseGame';
 import ItemHolder from '../components/ItemHolder.jsx';
 import CountdownCircle from '../components/CountdownCircle.jsx';
 import hint from '../assets/game-assets/ItemAssets/hint.png'
+import LevelInfo from '../components/LevelInfo.jsx';
 
 
 const notesMap = {
@@ -37,12 +38,13 @@ function MelodyGame() {
   const [userPoints, setUserPoints] = useState(0);
   const [time, setTime] = useState(0);
   const [level, setLevel] = useState(0);
-  const [message, setMessage] = useState('Listen to the melody and match the notes!');
+  const [message, setMessage] = useState('');
   const [wait, setWait] = useState(false);
   const [ gameRound, setGameRound ] = useState()
   const intervalRef = useRef(null);
   const audioCtxRef = useRef(null);
   const [ showTutorial, setShowTutorial ] = useState(true);
+  const [ countdownTimer, setCountdownTimer ] = useState(60);
   
   
   const [ gameStatus, setGameStatus ] = useState("")
@@ -56,7 +58,6 @@ function MelodyGame() {
   
 
   let currentLevel = 0
-  let countdownTimer = 120
   const targetPoint = 60;
 
   useEffect(() => {
@@ -85,16 +86,22 @@ function MelodyGame() {
   
       if(id == 0){
         setGameRound(5)
+        setCountdownTimer(30)
       } else if(id == 1){
         setShowTutorial(false)
         setGameRound(5)
+        setCountdownTimer(30)
       } else if(id == 2){
+        setCountdownTimer(45)
         setGameRound(5)
         setShowTutorial(false)
       } else if(id == 3){
+        setCountdownTimer(60)
         setGameRound(5)
+        setCountdownTimer(80)
         setShowTutorial(false)
       } else if(id == 4){
+        setCountdownTimer(120 )
         setGameRound(5)
         setShowTutorial(false)
       }
@@ -313,9 +320,14 @@ function MelodyGame() {
 
           <div className='flex fdc aic jc-c' style={{marginTop: '5em',}}>
            { userInput.length <= 0 &&  <h2 style={{textAlign: 'center', position: 'relative'}}>{message}</h2>}
-        {listenMode()}
+        { currentRound > 0 && listenMode()}
 
-        { level < 1 ? <button onClick={playMelody} style={{fontSize: '1.5em', background: 'green' }}>Let's Begin!</button> : null}
+        { level < 1 ? 
+        <>
+        <LevelInfo targetPoint={targetPoint} countdownTimer={countdownTimer} gameRound={gameRound} noteLength={noteLength}/>
+          <button onClick={playMelody} style={{fontSize: '1.5em', background: 'green', margin: 0 }}>Let's Begin!</button>
+        </>
+        : null}
 
        {
           !showAnswer &&
@@ -397,7 +409,7 @@ function MelodyGame() {
         }
 
          { wait && revealedNotesCount > 0  && 
-                <div className='flex fdr aic' style={{position: 'relative', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
+                <div className='flex fdr aic' style={{position: 'relative', bottom: 0, color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
                 borderRadius: '10px', width: '90%', marginTop: '31.000.0.005em', justifyContent: 'space-evenly', }}>
                   <div className='flex fdr aic jc-c' style={{position: 'absolute', 
                     top: '-2em', left: '1em', backgroundColor: '#344', padding: '0 1em', borderRadius: '1em', border: '2px solid yellow'}}>

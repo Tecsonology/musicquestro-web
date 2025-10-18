@@ -45,8 +45,8 @@ function PitchGame() {
     const [currentBeat, setCurrentBeat] = useState(0);
     const [showCorrection, setShowCorrection] = useState(false);
     const [showNextButton, setShowNextButton] = useState(false);
-  
-    let countdownTimer = 120;
+    const [countdownTimer, setCountdownTimer] = useState(30);
+    
   
     const [currentRound, setCurrentRound] = useState(0);
     const [gameRound, setGameRound] = useState(0);
@@ -74,7 +74,7 @@ function PitchGame() {
   const [ hidePlayButton , setHidePlayButton ] = useState(false)
   const [ wait, setWait ] = useState(false)
 
-    const targetPoint = 30;
+  const targetPoint = 30;
 
 
   useEffect(() => {
@@ -107,22 +107,27 @@ function PitchGame() {
       if (id == 0) {
         setGameRound(5);
         setNoteLength(2)
+        setCountdownTimer(30)
       } else if (id == 1) {
         setShowTutorial(false);
-        setGameRound(7);
+        setGameRound(5);
         setNoteLength(3)
+        setCountdownTimer(45)
       } else if (id == 2) {
-        setGameRound(10);
+        setGameRound(5);
         setShowTutorial(false);
         setNoteLength(4)
+        setCountdownTimer(60)
       } else if (id == 3) {
-        setGameRound(13);
+        setGameRound(5);
         setNoteLength(5)
         setShowTutorial(false);
+        setCountdownTimer(80)
       } else if (id == 4) {
-        setGameRound(10);
+        setGameRound(5);
         setShowTutorial(false);
         setNoteLength(6)
+        setCountdownTimer(100)
       }
 
     }, [id, level, gameRound]);

@@ -22,7 +22,7 @@
 }
 
 #leaderboardBanner {
-    width: clamp(25em, 50vw, 50em);;
+    width: clamp(22em, 50vw, 50em);;
     position: relative;
     top: 3em;
     z-index: 2;

@@ -9,6 +9,7 @@ import RhythmTutorial from './RhythmTutorial';
 import CountdownCircle from '../components/CountdownCircle.jsx'
 import ItemHolder from '../components/ItemHolder.jsx';
 import hint from '../assets/game-assets/ItemAssets/hint.png'
+import LevelInfo from '../components/LevelInfo.jsx';
 
 
 const durations = [
@@ -47,13 +48,14 @@ function RhythmGame() {
   const [ currentRound, setCurrentRound ] = useState(0)
   const [ showCorrection, setShowCorrection ] = useState(false)
   const [ showNextButton, setShowNextButton ] = useState(false)
+  const [ countdownTimer, setCountdownTimer ] = useState(30)
   
 // START NEW/MODIFIED STATE
   const [revealedNotesCount, setRevealedNotesCount] = useState(0); 
 // END NEW/MODIFIED STATE
   
   let currentLevel = 0
-  let countdownTimer = 60
+  
   const targetPoint = 55;
 
     const audioCtxRef = useRef(null);
@@ -87,17 +89,22 @@ useEffect(() => {
 
     if(id == 0){
       setGameRound(5)
+      setCountdownTimer(30)
     } else if(id == 1){
       setShowTutorial(false)
-      setGameRound(7)
+      setGameRound(5)
+      setCountdownTimer(25)
     } else if(id == 2){
-      setGameRound(10)
+      setGameRound(5)
       setShowTutorial(false)
+      setCountdownTimer(20)
     } else if(id == 3){
-      setGameRound(12)
+      setGameRound(5)
+      setCountdownTimer(15)
       setShowTutorial(false)
     } else if(id == 4){
-      setGameRound(14)
+      setCountdownTimer(10)
+      setGameRound(3)
       setShowTutorial(false)
     }
 
@@ -610,11 +617,17 @@ useEffect(() => {
 
         </div> :
         <>
-            { currentUser ? level && level && level >= 0 ? null : <button id='btnStartRhythm' onClick={()=>{
+            { currentUser ? level && level && level >= 0 ? null : 
+            <>
+            <LevelInfo targetPoint={targetPoint} countdownTimer={countdownTimer} gameRound={gameRound}/>
+              <button id='btnStartRhythm' onClick={()=>{
               playSequence()
               setRunning(true)
               setStart(true)
-            }}>START</button> : 'Loading...' }
+            }}>START</button>
+            </>
+            
+            : 'Loading...' }
         </>
         }
         </div>

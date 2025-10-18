@@ -38,7 +38,7 @@ function Profile() {
                  
                     <div>
                       <h2 style={{margin: '0.2em 0', color: 'white'}}>{currentUser ? currentUser.username : 'No data'}</h2>
-                      <p><span><img style={{margin: 0}} width={20} src={star} alt="" /></span>{currentUser ? currentUser.totalPoints : 0}</p>
+                      <p><span><img style={{margin: 0}} width={20} src={star} alt="" /></span>{currentUser ? currentUser.totalPoints.toFixed(0) : 0}</p>
                     </div>
 
 
@@ -46,7 +46,8 @@ function Profile() {
                       onClick={()=> {
                         navigate('edit')
                       }}
-                      style={{position: 'absolute', right: 0, bottom: '0.5em', backgroundColor: 'black', borderRadius: '50%'}} height={30} src={EditIcon} alt="" />
+                      style={{position: 'absolute', right: 0, bottom: '0.5em', cursor: 'pointer', 
+                      backgroundColor: 'black', borderRadius: '50%'}} height={30} src={EditIcon} alt="" />
                  </div> 
 
                     <p style={{fontWeight: 'normal', color: '#d2ccccd1', margin: '2em 0 0 0'}}>{currentUser && currentUser.bio ? currentUser.bio : ''}</p>
