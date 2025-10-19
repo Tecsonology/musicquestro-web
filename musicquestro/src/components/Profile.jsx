@@ -8,6 +8,8 @@ import musLife from '../assets/store-assets/MusicLife.png'
 import muscoins from '../assets/store-assets/musicoins.png'
 import EditIcon from '../assets/EditIcon.png'
 import logout from '../assets/logout.png'
+import axios from 'axios'
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST
 
 import star from '../assets/star.png'
 
@@ -16,11 +18,43 @@ import image from '../assets/game-assets/Badges/image.png'
 function Profile() {
   const { currentUser } = useContext(UserContext)
   const navigate = useNavigate()
+  const [ rankings, setRankings ] = useState()
+  const [ userRank, setUserRank ] = useState()
 
-      
+  useEffect(()=> {
+
+    const getPlayers = async()=> {
+        try{
+
+      const getPlayers = await axios.get(`${VITE_NETWORK_HOST}/api/get/leaderboards`)
+
+
+        setRankings([...getPlayers.data].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 10))
+        
+
+        if(rankings){
+          let rank = rankings.findIndex(player=> player._id === currentUser._id) + 1
+          setUserRank(rank)
+        }
+
+
+      } catch(err){
+        console.log(err)
+      }
+    }
+
+    getPlayers()
+
+    return ()=> {}
+  }, [])
+
+if(rankings){
+
+}      
   return (
     <>
       <div className='profile fpage flex fdc aic jc-c'>
+        <h2 style={{margin: 0}}>PROFILE</h2>
         {
           currentUser ? 
             <>
@@ -30,24 +64,26 @@ function Profile() {
           <div className="profile-wrapper flex fdr jc-c aic">
               {
                 currentUser && currentUser ?
-                <div style={{margin: '2em 0', justifyContent: 'flex-start'}} className=' flex fdc aic'>
-                  <div className="profile-container fdr flex">
+                <div style={{margin: '2em 0', justifyContent: 'flex-start', }} className=' flex fdc aic'>
+                  <img  
+                        onClick={()=> {
+                          navigate('edit')
+                        }}
+                        style={{position: 'absolute', cursor: 'pointer', top: '1em', right: '0', padding: '0.2em',    
+                        backgroundColor: 'black', borderRadius: '50%'}} height={30} src={EditIcon} alt="" />
+                  <div style={{position: 'relative'}} className="profile-container fdr flex">
                     
 
                     <img width={80} src={currentUser ? currentUser.avatar : null} alt="" />
                  
-                    <div>
+                    <div style={{position: 'relative'}}>
                       <h2 style={{margin: '0.2em 0', color: 'white'}}>{currentUser ? currentUser.username : 'No data'}</h2>
                       <p><span><img style={{margin: 0}} width={20} src={star} alt="" /></span>{currentUser ? currentUser.totalPoints.toFixed(0) : 0}</p>
+                      
                     </div>
 
 
-                    <img  
-                      onClick={()=> {
-                        navigate('edit')
-                      }}
-                      style={{position: 'absolute', right: 0, bottom: '0.5em', cursor: 'pointer', 
-                      backgroundColor: 'black', borderRadius: '50%'}} height={30} src={EditIcon} alt="" />
+           
                  </div> 
 
                     <p style={{fontWeight: 'normal', color: '#d2ccccd1', margin: '2em 0 0 0'}}>{currentUser && currentUser.bio ? currentUser.bio : ''}</p>
@@ -118,7 +154,7 @@ function Profile() {
               <div style={{backgroundColor: '#33333348', justifyContent: 'space-between',
                 padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}}  className="current-rank flex fdr aic jc-c">
                 <h4>Current Rank: </h4>
-                <h2>+100</h2>
+                <h2>{userRank && userRank}</h2>
               </div>
 
                {

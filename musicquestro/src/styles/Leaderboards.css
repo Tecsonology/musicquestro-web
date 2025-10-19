@@ -40,8 +40,9 @@
 
 @media (min-width: 700px){
     .rank-container {
-    width: 45vw;
-}
+
+        width: 30vw;
+    }
 }
 
 
