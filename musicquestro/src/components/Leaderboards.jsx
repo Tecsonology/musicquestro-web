@@ -8,7 +8,7 @@ import UserRank from '../mini-components/UserRank'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST
 import star from '../assets/star.png'
 
-import Gold from '../assets/game-assets/Badges/GoldMedal.png'
+import Gold from '../assets/game-assets/Badges/GoldMEdal.png'
 import Silver from '../assets/game-assets/Badges/SilverMedal.png'
 import Bronze from '../assets/game-assets/Badges/BronzeMedal.png'
 
