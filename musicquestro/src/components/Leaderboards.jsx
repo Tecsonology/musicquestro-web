@@ -8,11 +8,17 @@ import UserRank from '../mini-components/UserRank'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST
 import star from '../assets/star.png'
 
+import Gold from '../assets/game-assets/Badges/GoldMedal.png'
+import Silver from '../assets/game-assets/Badges/SilverMedal.png'
+import Bronze from '../assets/game-assets/Badges/BronzeMedal.png'
+
+
 function Leaderboards() {
 
   const navigate = useNavigate()
 
   const [ players, setplayers ] = useState()
+  const [ topPlayers, setTopPlayers ] = useState()
 
   useEffect(()=> {
 
@@ -23,6 +29,7 @@ function Leaderboards() {
 
 
         setplayers(getPlayers.data)
+        setTopPlayers([...getPlayers.data].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 3))
 
       } catch(err){
         console.log(err)
@@ -34,42 +41,87 @@ function Leaderboards() {
     return ()=> {}
   }, [])
 
+  console.log(topPlayers)
+
+  
 
   return (
  
       <div className='leaderboard fpage flex fdc aic jc-c'>
         <div className="leaderboard-wrapper flex fdc aic jc-c">
-            <img id='leaderboardBanner' src="https://i.ibb.co/xKsdRQH1/Untitled-design-64.png" alt="" />
+          <h1 style={{fontSize: '2.5em', padding: '0.5em', borderRadius: '0.7em', backgroundColor: 'rgba(11, 93, 176, 1)'}}>LEADERBOARD</h1>
             <ButtonBack />
-             <div className='flex fdc aic jc-c'>
-              <div style={{marginTop: '3em', alignItems: 'flex-end'}} className='flex fdr'>
-                {
-                  players && [...players].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 3).map((user, index)=> (
-                    user.totalPoints > 0 ? 
-                      <div 
-                      key={index}
+             <div style={{width: '100%'}} className='flex fdc aic jc-c'>
+               <div className='flex fdr jc-c' style={{marginTop: '0',alignItems: 'flex-end',  width: '100%',
+               }}>
+                  <div className='topBar'>
+                    <img width={50} src={Bronze} alt="" />
+
+                    <div 
                       style={{
                         height: '100%',
-                        minHeight: index === 0 ? '18em' : index === 1 ? '12em' : '10em',
-                        justifyContent: 'flex-start',  margin: '0.2em', width: '6em', boxSizing: 'content-box',
-                        padding: '1em 0.5em', borderRadius: '1em'}} className='glass-bg flex fdc aic'>
+                        minHeight: '11em',
+                        justifyContent: 'flex-start', width: '100%',
+                        padding: '1em 0.5em', borderRadius: '1em', backgroundColor: 'red  '}} className='flex fdc aic'>
                         
                         <div className='flex fdc aic'> 
-                          <h2>{index+1}</h2>
-                          <img style={{marginLeft: '1em'}} width={50} src={user.avatar} alt="" />
+                          <h2>3</h2>
+                          <img style={{marginLeft: '1em'}} width={50} src={topPlayers && topPlayers[1].avatar} alt="" />
                         </div>
-                        <h4>{user.username}</h4>
+                        <h4 style={{backgroundColor: 'rgba(0, 72, 131, 1)', padding: '0.3em', borderRadius: '0.5em'}} >{topPlayers && topPlayers[1].username}</h4>
                         <div className='flex fdc aic jc-c'>
                           <img  width={20} src={star} alt="" />
-                          <p style={{margin: 0}}> {user.totalPoints.toFixed(0)}</p>
+                          <p style={{margin: 0}}> {topPlayers && topPlayers[1].totalPoints.toFixed(0)}</p>
                         </div>
 
-                      </div>
-                    : null
-                  ))
-              }
-              </div>
-             {
+                  </div>
+                  </div>
+                  <div className='topBar'>
+                    <img width={50} src={Gold} alt="" />
+
+                    <div 
+                      style={{
+                        height: '100%',
+                        minHeight: '18em',
+                        justifyContent: 'flex-start', width: '100%',
+                        padding: '1em 0.5em', borderRadius: '1em', backgroundColor: 'green'}} className='flex fdc aic'>
+                        <div className='flex fdc aic'> 
+                          <h2>1</h2>
+                          <img style={{marginLeft: '1em'}} width={50} src={topPlayers && topPlayers[0].avatar} alt="" />
+                        </div>
+                        <h4 style={{backgroundColor: 'rgba(0, 72, 131, 1)', padding: '0.3em', borderRadius: '0.5em'}}>{topPlayers && topPlayers[0].username}</h4>
+                        <div className='flex fdc aic jc-c'>
+                          <img  width={20} src={star} alt="" />
+                          <p style={{margin: 0}}> {topPlayers && topPlayers[0].totalPoints.toFixed(0)}</p>
+                        </div>
+
+                    </div>
+                  </div>
+                  <div className='topBar'> 
+                    <img width={50} src={Silver} alt="" />
+                    <div 
+                      style={{
+                        height: '100%',
+                        minHeight: '15em',
+                        justifyContent: 'flex-start', width: '100%',
+                        padding: '1em 0.5em', borderRadius: '1em', backgroundColor: 'gold'}} className='flex fdc aic'>
+
+                        <div className='flex fdc aic'> 
+                          <h2>2</h2>
+                          <img style={{marginLeft: '1em'}} width={50} src={topPlayers && topPlayers[2].avatar} alt="" />
+                        </div>
+                        <h4 style={{backgroundColor: 'rgba(0, 72, 131, 1)', padding: '0.3em', borderRadius: '0.5em'}}>{topPlayers && topPlayers[2].username}</h4>
+                        <div className='flex fdc aic jc-c'>
+                          <img  width={20} src={star} alt="" />
+                          <p style={{margin: 0}}> {topPlayers && topPlayers[2].totalPoints.toFixed(0)}</p>
+                        </div>
+
+                    </div>
+                  </div>
+                  
+                </div>
+              
+               {
                   
                   players && [...players].sort((a, b)=> b.totalPoints - a.totalPoints).slice(3, 10).map((user, index)=> (
                     user.totalPoints > 0 ? 
@@ -77,13 +129,13 @@ function Leaderboards() {
                       key={index}
                       style={{
                         justifyContent: 'space-between',  margin: '0.5em 0',
-                        padding: '1em', borderRadius: '1em'}} className='rank-container glass-bg flex fdr aic'>
+                        padding: '0.5em 1em', borderRadius: '1em'}} className='rank-container flex fdr aic'>
                         
                         <div className='flex fdr aic'> 
-                          <h2>{index+4}</h2>
+                          <h2 style={{margin: 0}}>{index+4}</h2>
                           <img style={{marginLeft: '1em'}} width={50} src={user.avatar} alt="" />
                         </div>
-                        <h2>{user.username}</h2>
+                        <h4 style={{margin: 0}}>{user.username}</h4>
                         <div className='flex fdc aic jc-c'>
                           <img  width={20} src={star} alt="" />
                           <p style={{margin: 0}}> {user.totalPoints.toFixed(0)}</p>

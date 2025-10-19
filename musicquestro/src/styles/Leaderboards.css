@@ -1,5 +1,5 @@
 .leaderboard {
-    background: #000000a2;
+    background: #000000ce;
     background-image: url('https://i.ibb.co/zT8xn7Zm/ec58ebf2-79dd-4304-abf8-b46a854f20c3.jpg');
     background-repeat: no-repeat;
     background-size: cover;
@@ -13,12 +13,22 @@
 
 .leaderboard-wrapper {
     margin-bottom: 10em;
+    padding-top: 2em;
     
   
 }
 
+.topBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0.8em;
+}
+
 .rank-container {
     width: 85vw;
+    background-color: rgb(135, 146, 126);
 }
 
 #leaderboardBanner {

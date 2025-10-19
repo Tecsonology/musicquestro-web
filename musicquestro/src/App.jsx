@@ -160,11 +160,15 @@ function App() {
           style={{
             background: 'transparent',
             position: 'relative',
-            bottom: '-4em',
+            bottom: '0em',
             cursor: 'pointer',
             color: 'white'
           }} className='flex fdr aic jc-c'><span><img className='animateGoingDown' style={{marginRight: '0.5em '}} src={arrowUp} alt="" /></span>Back to top</h3>
         </section>
+        <footer className='flex fdc aic jc-c' style={{marginTop: '3em', padding: '2em'}}>
+          <img style={{margin: 0}} width={100} src={logo} alt="" />
+          <h4 style={{color: 'white', margin: 0}}>© 2024 MusicQuestro. All rights reserved.</h4>
+        </footer>
       
     </div>
     </>
