@@ -8,6 +8,7 @@ import './App.css'
 import '../src/styles/GameStyles.css'
 import Loader from './components/Loader.jsx';
 import LoadingPage from './components/LoadingPage.jsx';
+import ErrorPage from './components/ErrorPage.jsx';
 
 const Homepage = lazy(()=> import('./components/Homepage.jsx'));
 
@@ -200,6 +201,11 @@ const router = createBrowserRouter([
         element: <ButtonBack />
       }
     ]
+  },
+
+  {
+    path: '*',
+    element: <ErrorPage />
   }
 
 

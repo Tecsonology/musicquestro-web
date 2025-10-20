@@ -1,6 +1,6 @@
 .homepage {
-    background: #000000c6;
-    background-image: url('../assets/bg-assets/HomeBG.png');
+    background: #00000091;
+    background-image: url(../assets/mainHome2.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode:multiply;
@@ -15,7 +15,7 @@
 }
 
 #btnStory, #btnPlayGame {
-    background-image: url('https://i.ibb.co/0jS0k20P/fa4c0ce4-6ed5-4622-b685-84092d408c58.jpg');
+    background-image: url(../assets/game-assets//Assets/BackGround/NormalBG/AppBg.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -37,7 +37,7 @@
 
 #btnPlayGame {
     background: #000000b8;
-    background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+    background-image: url(../assets/bg-assets/Cave.png);
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;

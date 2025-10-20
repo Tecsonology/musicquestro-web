@@ -1,16 +1,20 @@
 import React, { useState, useRef, useCallback } from 'react';
+import whole from '../assets/rhythmnotes/WholeNote.png'
+import half from '../assets/rhythmnotes/HalfNote.png'
+import quarter from '../assets/rhythmnotes/QuarterNote.png'
+import rest from '../assets/rhythmnotes/RestNote.png'
 
 const durations = [
-  { name: "Rest (silent beat)", beats: 1, duration: 600, freq: 0, img: 'https://i.ibb.co/67NSSxxn/Untitled-design-74.png',
+  { name: "Rest (silent beat)", beats: 1, duration: 600, freq: 0, img: rest,
     desc: 'A break in the music. It means you keep time but make no sound.'
     },
-  { name: "Quarter", beats: 1, duration: 600, freq: 500, img: 'https://i.ibb.co/WqXZ1fd/Untitled-design-71.png',
+  { name: "Quarter", beats: 1, duration: 600, freq: 500, img: quarter,
     desc: 'A quick note that lasts for one single count or beat.'
     },
-  { name: "Half", beats: 2, duration: 1200, freq: 500, img: 'https://i.ibb.co/gnXRSb1/Untitled-design-75.png',
+  { name: "Half", beats: 2, duration: 1200, freq: 500, img: half,
     desc: 'A longer note that is held for two full counts or beats.'
     },
-  { name: "Whole", beats: 4, duration: 2400, freq: 500, img: 'https://i.ibb.co/zC0gwgG/Untitled-design-77.png',
+  { name: "Whole", beats: 4, duration: 2400, freq: 500, img: whole,
     desc: 'The longest note, held for four full counts, usually filling up an entire bar of music.'
     },
 ];

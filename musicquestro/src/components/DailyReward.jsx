@@ -109,6 +109,11 @@ function DailyReward({open}) {
           marginTop: "1em",
           borderRadius: "1em",
           padding: "0.5em 1em",
+          backgroundColor: 'blue',
+          color: "white",
+          fontWeight: "bold",
+          fontSize: "1.2em",
+          cursor: "pointer",
         }}
         onClick={claimReward}
       >

@@ -1,37 +1,32 @@
 import React, { useContext } from 'react'
 import '../styles/Store.css'
-import ProtectedComponent from './ProtectedComponent'
-import Lifebar from '../mini-components/Lifebar'
-import PointsBar from '../mini-components/PointsBar'
+
 import StoreCard from '../mini-components/StoreCard'
 import ButtonBack from '../mini-components/ButtonBack'
 import { useState } from 'react'
-import { useEffect } from 'react'
-import { userToken, userids } from '../Token'
+import { userids } from '../Token'
 import axios from 'axios'
 import ShopStatus from '../mini-components/ShopStatus'
 import { UserContext } from './CurrentUserContext'
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
 import friend from '../assets/AvatarShopItems/Friend.png'
-import monster from '../assets/AvatarShopItems/Devil.png'
 import dog from '../assets/AvatarShopItems/Dog.png'
 import cat from '../assets/AvatarShopItems/Cat.png'
 import bunny from '../assets/AvatarShopItems/Bunny.png'
-import heart from '../assets/game-assets/ItemAssets/heart.png'
 import replay from '../assets/game-assets/ItemAssets/replay.png'
 import hint from '../assets/game-assets/ItemAssets/hint.png'
 
+import musicoins from '../assets/store-assets/musicoins.png'
+import MusicLife from '../assets/store-assets/MusicLife.png'
+
+
 import flute  from '../assets/game-assets/Assets/Instrument/Flute.png'
-import guitar  from '../assets/game-assets/Assets/Instrument/Guitar.png'
-import xylo  from '../assets/game-assets/Assets/Instrument/Xylo.png'
 import Clarinet from '../assets/game-assets/Assets/Instrument/Clarinet.png'
 import Trumpet from '../assets/game-assets/Assets/Instrument/Trumpet.png'
 import Violin from '../assets/game-assets/Assets/Instrument/Violin.png'
 import AvatarShopCard from '../mini-components/AvatarShopCard'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
-
-import avatar from '../assets/game-assets/ProfilePics/Brim.png'
 
 
 const ITEMS = {
@@ -209,9 +204,9 @@ function Store() {
                 
               <div className='flex fdr aic jc-c'>
                 <div className='flex fdr aic jc-c' style={{marginBottom: '1em', backgroundColor: '#0199DA', color: 'black', borderRadius: '1em', padding: '0.4em'}}>
-                <h3 style={{color: 'white', margin: '0', backgroundColor: '#025B82', padding: '0.4em 0.8em', borderRadius: '1em', marginRight: '0.6em'}}><span><img style={{width: '0.7em', marginRight: '0.5em', padding: '0'}} src="https://i.ibb.co/BVq668JC/Untitled-design-30.png"alt="" /></span>{currentUser && currentUser.life}</h3>
+                <h3 style={{color: 'white', margin: '0', backgroundColor: '#025B82', padding: '0.4em 0.8em', borderRadius: '1em', marginRight: '0.6em'}}><span><img style={{width: '0.7em', marginRight: '0.5em', padding: '0'}} src={MusicLife} alt="" /></span>{currentUser && currentUser.life}</h3>
                  <h3 style={{color: 'white', margin: '0', backgroundColor: '#025B82', padding: '0.4em 0.8em', borderRadius: '1em'}}>
-                  <span><img style={{width: '1em', marginRight: '0.5em'}} src="https://i.ibb.co/N6w014ng/Currency.png" alt="" /></span>
+                  <span><img style={{width: '1em', marginRight: '0.5em'}} src={musicoins} alt="" /></span>
                   {currentUser && currentUser.musicCoins}</h3>
               </div>
 
@@ -228,7 +223,7 @@ function Store() {
                   {
                     activeShow === 'spells' ?
                     <div className='menu-items flex fdc aic jc-c'>
-                      <StoreCard imgItem='https://i.ibb.co/BVq668JC/Untitled-design-30.png' itemName={'Music Energy'} itemPrice={50}
+                      <StoreCard imgItem={MusicLife} itemName={'Music Energy'} itemPrice={50}
                             description={'Boosts your music energy!'}
                           children={
                             <span><button onClick={()=> {
@@ -278,7 +273,7 @@ function Store() {
                         !userCollection.includes(item.itemName) ? <button 
                         className='flex fdr aic jc-c'
                         onClick={(e)=> handleBuyItem(e, item.price, item.itemName)}>
-                          <span><img style={{width: '1.3em', marginRight: '0.5em'}} src="https://i.ibb.co/N6w014ng/Currency.png" alt="" /></span>
+                          <span><img style={{width: '1.3em', marginRight: '0.5em'}} src={musicoins} alt="" /></span>
                           <span>{item.price}</span>
                           </button>
                         : <button style={{backgroundColor: '#2f3679ff'}} disabled>

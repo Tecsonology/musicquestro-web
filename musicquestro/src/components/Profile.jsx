@@ -33,7 +33,7 @@ function Profile() {
         
 
         if(rankings){
-          let rank = rankings.findIndex(player=> player._id === currentUser._id) + 1
+          let rank = rankings.findIndex(player=> player.username === currentUser.username) + 1
           setUserRank(rank)
         }
 
@@ -49,15 +49,16 @@ function Profile() {
   }, [])
 
 if(rankings){
-
+    
 }      
   return (
     <>
       <div className='profile fpage flex fdc aic jc-c'>
-        <h2 style={{margin: 0}}>PROFILE</h2>
         {
           currentUser ? 
             <>
+              <h2 style={{margin: 0}}>PROFILE</h2>
+
               <img onClick={()=> {
                 navigate(-1)
               }} className='btn-back' src="https://i.ibb.co/KzBKmLC3/Untitled-design-2.png" alt="" />

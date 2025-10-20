@@ -96,7 +96,11 @@ function Login() {
 
                          { error && error ? <p style={{textAlign: 'center'}} className='errorM'>Invalid username or password</p> : null}
                       
-                        <button disabled={disabled} onClick={handleLogin}>Login</button>
+                        <button disabled={disabled} onClick={handleLogin}>
+                            {
+                                disabled ? 'Login' : <span>Loging in...</span>
+                            }
+                        </button>
 
                        
                       {/**<GoogleLoginButton /> */}

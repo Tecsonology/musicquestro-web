@@ -18,21 +18,25 @@ function CurrentUserContext({children}) {
         const player = JSON.parse(localStorage.getItem('userLogged'))
 
         if(!player){
-           
-            navigate('/login')
+            console.log("No player found in local storage")
+            children = 'Oppppsss'
+            
             
         }
-        const userids = player.userids
+        const userids = player?.userids
         
 
         const getPlayer = async()=> {
             
-            const getUser = await axios.get(`${VITE_NETWORK_HOST}/player`, {
+            try {
+                const getUser = await axios.get(`${VITE_NETWORK_HOST}/player`, {
                 params: { userids }
             })
 
+
     
             if(getUser.data.message === 'No player found'){
+                
                 console.log("Cant find userids")
                 localStorage.clear()
                 console.log("All local storage are deleted...")
@@ -40,6 +44,13 @@ function CurrentUserContext({children}) {
             }
             const currUser = getUser.data.userWithoutPassword
             setCurrentUser(currUser)
+            } catch (error) {
+                            
+
+                alert("Something went wrong. We are redirecting you to login.")
+                localStorage.clear()
+                navigate('/login')
+            }
 
             
         }

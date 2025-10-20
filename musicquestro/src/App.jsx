@@ -47,10 +47,7 @@ function App() {
     <PilotTestingPrompt showPrompt={showPrompt} setShowPrompt={setShowPrompt}/>
     
       <div id='main-app' className='log fpage flex fdc jc-c aic'>
-        <h4 style={{position: 'absolute', background: 'transparent', padding: '1em', top: '0em', right: '1em', border: '1px solid #708993', color: 'white'}}><span><img style={{marginRight: '1em'}} width={20} src={headset} alt="" /></span>Best played with Headset</h4>
-
-        {/**<ClickEffect play={true}/> */}
-    
+        <h4 style={{position: 'absolute', background: 'transparent', padding: '1em', top: '0em', right: '1em', border: '1px solid #708993', color: 'white'}}><span><img style={{marginRight: '1em'}} width={20} src={headset} alt="" /></span>Best played with Headset</h4>    
        
 
        <div  className="main-log flex fdc aic jc-c">
@@ -97,11 +94,11 @@ function App() {
         }
 
 
-        <div style={{width: '23em', position: 'relative'}} >
+        <div style={{width: '23em', position: 'relative',}} >
           { loc.pathname != '/' ? <Link onClick={()=> setLoggingIn(false)} 
-            className='navLink backHome'
-            style={{border: 0, background: 'transparent', position: 'absolute', zIndex: '5', right: '1em', top: '-1em',
-              backgroundColor: 'rgba(119, 45, 45, 1)', width: '0.3em', borderRadius: '50%',
+            className='navLink backHome flex fdc aic jc-c glass-bg'
+            style={{border: 0, position: 'absolute', zIndex: '1', right: '1em', top: '-1em',
+               width: '0.1em', borderRadius: '50%', border: '1px solid white', 
             }}
             >X</Link> : null}
           <Outlet />

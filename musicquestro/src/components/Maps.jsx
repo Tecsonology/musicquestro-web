@@ -38,7 +38,6 @@ const mapNames = {
 
 }
 
-const lockImgLink = 'https://i.ibb.co/8455cZ4G/Untitled-design-59.png'
 
 function Maps() {
 

@@ -11,12 +11,17 @@ import ItemHolder from '../components/ItemHolder.jsx';
 import hint from '../assets/game-assets/ItemAssets/hint.png'
 import LevelInfo from '../components/LevelInfo.jsx';
 
+import whole from '../assets/rhythmnotes/WholeNote.png'
+import half from '../assets/rhythmnotes/HalfNote.png'
+import quarter from '../assets/rhythmnotes/QuarterNote.png'
+import rest from '../assets/rhythmnotes/RestNote.png'
+
 
 const durations = [
-  { name: "rest", beats: 1, duration: 600, freq: 0, img: 'https://i.ibb.co/67NSSxxn/Untitled-design-74.png' },
-  { name: "quarter", beats: 1, duration: 600, freq: 500, img: 'https://i.ibb.co/WqXZ1fd/Untitled-design-71.png' },
-  { name: "half", beats: 2, duration: 1200, freq: 500, img: 'https://i.ibb.co/gnXRSb1/Untitled-design-75.png' },
-  { name: "whole", beats: 4, duration: 2400, freq: 500, img: 'https://i.ibb.co/zC0gwgG/Untitled-design-77.png' },
+  { name: "rest", beats: 1, duration: 600, freq: 0, img: rest },
+  { name: "quarter", beats: 1, duration: 600, freq: 500, img: quarter },
+  { name: "half", beats: 2, duration: 1200, freq: 500, img: half },
+  { name: "whole", beats: 4, duration: 2400, freq: 500, img: whole },
   
 ];
 
