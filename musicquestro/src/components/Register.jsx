@@ -216,6 +216,27 @@ function Register() {
             placeholder="Create a password"
             required
           />
+          <div className="password-requirements">
+            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
+              <span>{passwordValid.minLength ? '✅' : '❌ '}</span>
+              Minimum of 8 characters</p>
+
+            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
+              <span>{passwordValid.upper ? '✅' : '❌ '}</span>
+              With uppercase letter</p>
+
+            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
+              <span>{passwordValid.number ? '✅' : '❌ '}</span>
+              With number</p>
+
+            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
+              <span>{passwordValid.special ? '✅' : '❌ '}</span>
+              With special character (!@#$%^&* etc.)</p>
+
+            
+            
+            
+          </div>
 
   
           {

@@ -33,9 +33,13 @@ function Login() {
     }, [username, password])    
 
     const handleLogin = async (e) => {
+<<<<<<< HEAD
         const btn = e.currentTarget
         btn.disabled = true
         btn.innerHTML = 'Loading... Please wait'
+=======
+        
+>>>>>>> dd7e0d5 (security updates)
         e.preventDefault()
 
             const postData = async () => {
