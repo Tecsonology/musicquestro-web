@@ -136,6 +136,10 @@
   .title {
     font-size: clamp(3rem, 4vw, 5em);
   }
+
+  .level-buttons {
+    font-size: 2em;
+  }
 }
 
 /* 🖥️ Ultra-Wide Screens */

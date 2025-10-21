@@ -462,7 +462,7 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 
 .rhythm-levels-container {
   background: #1b263bf5;
-  background-image: url('https://i.ibb.co/s9jfjRhF/Cave.png');
+  background-image: url(./assets/bg-assets/Cave.png);
     background-repeat: no-repeat;
   background-size: cover;
     background-position: center;
@@ -471,7 +471,7 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
 
 .melody-levels-container {
   background: #000000b6;
-  background-image: url('https://i.ibb.co/hRPDwzZM/Melody-Stage-Select.png');
+  background-image: url(./assets/game-assets/Assets/BackGround/NormalBG/MainBG.png);
   background-position: center;
   background-repeat: no-repeat;
   background-blend-mode: multiply;

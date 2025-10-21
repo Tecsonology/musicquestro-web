@@ -1,10 +1,9 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import '../styles/Store.css'
 
 import StoreCard from '../mini-components/StoreCard'
 import ButtonBack from '../mini-components/ButtonBack'
 import { useState } from 'react'
-import { userids } from '../Token'
 import axios from 'axios'
 import ShopStatus from '../mini-components/ShopStatus'
 import { UserContext } from './CurrentUserContext'
@@ -233,13 +232,17 @@ function Store() {
                             description={'Boosts your music energy!'}
                           children={
                             <span><button onClick={()=> {
-                              handleAddLife()
+                              if(currentUser && currentUser.musicCoins >= 50){
+                                handleAddLife()
                                 setCurrentUser({...currentUser, life: currentUser.life + 1, musicCoins: currentUser.musicCoins - 50})
                                 setStatus('Item purchased!') 
                                   setApproved(true)
                                     setTimeout(()=> {
                                       setStatus(false)
                                     }, 3000)
+                              } else {
+                                 return null
+                              }
                             }}><span><img src={musicoins} width={20} alt="" /></span> 50</button></span>
                         } />
 
@@ -276,7 +279,13 @@ function Store() {
                       children={
                         !userCollection.includes(item.itemName) ? <button 
                         className='flex fdr aic jc-c'
-                        onClick={(e)=> handleBuyItem(e, item.price, item.itemName)}>
+                        onClick={(e)=> {
+                          if(currentUser && currentUser.musicCoins >= item.price){
+                            handleBuyItem(e, item.price, item.itemName)
+                          } else {
+                            return null
+                          }
+                        }}>
                           <span><img style={{width: '1.3em', marginRight: '0.5em'}} src={musicoins} alt="" /></span>
                           <span>{item.price}</span>
                           </button>

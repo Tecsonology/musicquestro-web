@@ -33,7 +33,9 @@ function Login() {
     }, [username, password])    
 
     const handleLogin = async (e) => {
-        
+        const btn = e.currentTarget
+        btn.disabled = true
+        btn.innerHTML = 'Loading... Please wait'
         e.preventDefault()
 
             const postData = async () => {
@@ -57,7 +59,8 @@ function Login() {
             } catch (error) {
                 setError(true)
                 console.error('Unauthorized:', error.response?.data || error.message);
-
+                btn.disabled = false
+                btn.innerHTML = 'Login'
                 setInterval(removeErrorMessage, 5000)
             }
            

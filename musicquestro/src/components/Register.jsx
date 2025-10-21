@@ -100,6 +100,9 @@ function Register() {
   };
 
   const handleSubmit = async (e) => {
+    const btn = e.currentTarget
+    btn.innerHTML = "Loading..."
+    btn.disabled = true
     
        const userNameValidation = await axios.get(
       `${VITE_NETWORK_HOST}/users`,
@@ -109,6 +112,8 @@ function Register() {
 
       if(userNameValidation.data.message === "User exists") {
         setError("Username already exists. Please choose another one.");
+        btn.disabled = false
+        btn.innerHTML = "Register"
         return;
       } else {
           e.preventDefault();
@@ -150,7 +155,7 @@ function Register() {
           }
           let bio = ''
           let currentInstrument = "sine";
-          let avatar = "https://i.ibb.co/8455cZ4G/Untitled-design-59.png";
+          let avatar = '../assets/game-assets/ProfilePics/Tejo.png';
 
           try {
             const response = await axios.post(`${VITE_NETWORK_HOST}/createUser`, {
@@ -211,7 +216,11 @@ function Register() {
             placeholder="Create a password"
             required
           />
-          <div className="password-requirements">
+
+  
+          {
+            password && password.length > 0 &&
+            <div className="password-requirements">
             <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
               <span>{passwordValid.minLength ? '✅' : '❌ '}</span>
               Minimum of 8 characters</p>
@@ -232,6 +241,7 @@ function Register() {
             
             
           </div>
+          }
 
           {error ? 
             <p style={{ color: "red", fontSize: "0.9em", marginTop: "0.5em" }}>
