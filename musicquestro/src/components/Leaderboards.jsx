@@ -40,9 +40,6 @@ function Leaderboards() {
 
     return ()=> {}
   }, [])
-
-  console.log(topPlayers)
-
   
 
   return (

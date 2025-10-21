@@ -21,7 +21,7 @@ function Login() {
 
     useEffect(()=> {
 
-        if(username && username.length >= 0){
+        if(username && username.length >= 0 && password && password.length >=0){
             setDisabled(false)
         } else {
             setDisabled(true)
@@ -30,9 +30,10 @@ function Login() {
         if(token){
             window.location.href = '/h'
          }
-    }, [username])    
+    }, [username, password])    
 
     const handleLogin = async (e) => {
+        
         e.preventDefault()
 
             const postData = async () => {
@@ -96,10 +97,8 @@ function Login() {
 
                          { error && error ? <p style={{textAlign: 'center'}} className='errorM'>Invalid username or password</p> : null}
                       
-                        <button disabled={disabled} onClick={handleLogin}>
-                            {
-                                disabled ? 'Login' : <span>Loging in...</span>
-                            }
+                        <button disabled={disabled} onClick={(e) => handleLogin(e)}>
+                            Login
                         </button>
 
                        

@@ -12,26 +12,49 @@ function Register() {
   const [error, setError] = useState();
   const [ userNameError, setUsernameError ] = useState()
   const [success, setSuccess] = useState(false);
+  const [passwordValid, setPasswordValid] = useState(
+    {
+      minLength: false,
+      upper: false,
+      number: false,
+      special: false, 
+    }
+  )
+
 
   const validatePassword = (pwd) => {
     if(password && password.length >= 0){
       const minLength = /.{8,}/;
       const upper = /[A-Z]/;  
-      const lower = /[a-z]/;
       const number = /[0-9]/;
       const special = /[!@#$%^&*(),.?":{}|<>]/;
 
-      if (!minLength.test(pwd))
-        return "Password must be at least 8 characters long.";
-      if (!upper.test(pwd))
-        return "Password must contain at least one uppercase letter.";
-      if (!lower.test(pwd))
-        return "Password must contain at least one lowercase letter.";
-      if (!number.test(pwd))
-        return "Password must contain at least one number.";
-      if (!special.test(pwd))
-        return "Password must contain at least one special character.";
-      return "";
+      if (minLength.test(pwd)){
+        setPasswordValid(prevState => ({ ...prevState, minLength: true }));
+      } else {
+        setPasswordValid(prevState => ({ ...prevState, minLength: false }));
+        setDisabled(false)
+      }
+        
+      if (upper.test(pwd)){
+        setPasswordValid(prevState => ({ ...prevState, upper: true }));
+      } else {
+        setPasswordValid(prevState => ({ ...prevState, upper: false }));
+      }
+        
+      if (number.test(pwd)){
+        setPasswordValid(prevState => ({ ...prevState, number: true }));
+        
+      } else {
+        setPasswordValid(prevState => ({ ...prevState, number: false }));
+      }
+      if (special.test(pwd)){
+        setPasswordValid(prevState => ({ ...prevState, special: true }));
+      } else {
+        setPasswordValid(prevState => ({ ...prevState, special: false }));
+
+      }
+      
     } 
   };
 
@@ -41,18 +64,17 @@ function Register() {
       setUsernameError("*Username must not exceed in 12 characters")
     } else if(username && username.length <= 12){
       setUsernameError()
-    }
+    } 
 
   },[username])
 
   useEffect(() => {
+    
 
-    if(password && password.length >= 0){
-      const validationError = validatePassword(password);
-      setError(validationError);
-      setDisabled(validationError !== "");
-    } else if(password && password.length <= 0){
-      
+    if (passwordValid.minLength && passwordValid.upper && passwordValid.number && passwordValid.special){
+      setDisabled(false)
+    } else {
+      setDisabled(true)
     }
 
     
@@ -182,10 +204,34 @@ function Register() {
             type="password"
             name="password"
             id="txtPass"
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              validatePassword(e.target.value);
+              setPassword(e.target.value)
+            }}
             placeholder="Create a password"
             required
           />
+          <div className="password-requirements">
+            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
+              <span>{passwordValid.minLength ? '✅' : '❌ '}</span>
+              Minimum of 8 characters</p>
+
+            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
+              <span>{passwordValid.upper ? '✅' : '❌ '}</span>
+              With uppercase letter</p>
+
+            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
+              <span>{passwordValid.number ? '✅' : '❌ '}</span>
+              With number</p>
+
+            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
+              <span>{passwordValid.special ? '✅' : '❌ '}</span>
+              With special character (!@#$%^&* etc.)</p>
+
+            
+            
+            
+          </div>
 
           {error ? 
             <p style={{ color: "red", fontSize: "0.9em", marginTop: "0.5em" }}>
@@ -193,7 +239,7 @@ function Register() {
             </p> : null
           }
 
-          <button id="btnRegister" disabled={disabled} onClick={handleSubmit}>
+          <button id="btnRegister" disabled={disabled} onClick={(e) => handleSubmit(e)}>
             Register
           </button>
 
