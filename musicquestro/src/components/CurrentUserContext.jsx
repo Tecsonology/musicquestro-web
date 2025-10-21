@@ -1,103 +1,72 @@
-import axios from 'axios';
-import React, { useEffect, useState, createContext } from 'react';
+import axios from 'axios'
+import React, { useEffect, useState, lazy, Suspense }  from 'react'
 import { useNavigate } from 'react-router-dom';
-import LoadingPage from './LoadingPage';
-import { authenticateToken } from '../AthenticateToken';
-
-export const UserContext = createContext();
-
+import { createContext } from 'react'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
+import LoadingPage from './LoadingPage';
 
-function CurrentUserContext({ children }) {
+export const UserContext = React.createContext()
 
+function CurrentUserContext({children}) {
 
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [audioActive, setAudioActive] = useState(true);
-  const [ userids, setUserids ] = useState()
-  const navigate = useNavigate();
+    const [ currentUser, setCurrentUser ] = useState()
+    const [ audioActive, setAudioACtive ] = useState(true)
+    const navigate = useNavigate()
 
- {/**
-     useEffect(() => {
-  const verifyUserToken = async () => {
-        const userToken = localStorage.getItem("token");
-        if (!userToken) {
-        navigate("/login");
-        return;
+    useEffect(()=> {
+      let interval;
+
+        const player = JSON.parse(localStorage.getItem('userLogged'))
+
+        if(!player){
+            console.log("No player found in local storage")
+            alert('Something went wrong. Redirecting you to login page...')
+
+            window.location.href = '/login'
+            
+            
         }
-
-        const response = await authenticateToken();
-        setUserids(response)
+        const userids = player?.userids
         
-        if (!response) {
-        
-        localStorage.clear();
-        navigate("/login");
-        }
-    };
 
-    verifyUserToken();
-    }, []); */}
+        const getPlayer = async()=> {
+            
+            try {
+                const getUser = await axios.get(`${VITE_NETWORK_HOST}/player`, {
+                params: { userids }
+            })
 
 
-  useEffect( () => {
-    const player = JSON.parse(localStorage.getItem('userLogged'));
+            const currUser = getUser.data.userWithoutPassword
+            setCurrentUser(currUser)
+            } catch (error) {
 
-    if (!player) {
-      console.log("No player found in local storage");
-      navigate('/login');
-      return;
-    }
+                navigate('/*')
+            }
 
-
-    const getPlayer = async () => {
-        const userids = await authenticateToken()
-        setUserids(userids)
-
-      try {
-        const response = await axios.get(`${VITE_NETWORK_HOST}/player`, {
-          params: { userids },
-        });
-
-        if (response.data.message === 'No player found') {
-          console.log("Can't find userids");
-          navigate('/error')
-          localStorage.clear();
-          navigate('/login');
-          return;
+            
         }
 
-        setCurrentUser(response.data.userWithoutPassword);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-        alert("Something went wrong. Redirecting to login.");
-        localStorage.clear();
-        navigate('/login');
-      } finally {
-        setLoading(false);
-      }
-    };
+         interval = setInterval(()=> {
+             getPlayer()
+        }, 1000)
 
-    getPlayer();
+        return ()=> {
+            clearInterval(interval)
+        }
 
-    const interval = setInterval(getPlayer, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, [navigate]);
 
-  
+    }, [])
 
-  
-
- 
-  if (loading) {
-    return <LoadingPage />;
-  }
 
   return (
-    <UserContext.Provider value={{ currentUser, setCurrentUser, audioActive, setAudioActive, userids }}>
-      {children}
+    <Suspense fallback={<LoadingPage />}>
+        <UserContext.Provider value={{currentUser, setCurrentUser}}>
+       
+        {children}
     </UserContext.Provider>
-  );
+    </Suspense>
+  )
 }
 
-export default CurrentUserContext;
+export default CurrentUserContext

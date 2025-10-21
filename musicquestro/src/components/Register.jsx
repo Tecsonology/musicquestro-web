@@ -237,6 +237,7 @@ function Register() {
             
             
           </div>
+<<<<<<< HEAD
 
   
           {
@@ -263,6 +264,8 @@ function Register() {
             
           </div>
           }
+=======
+>>>>>>> dd7e0d5 (security updates)
 
           {error ? 
             <p style={{ color: "red", fontSize: "0.9em", marginTop: "0.5em" }}>

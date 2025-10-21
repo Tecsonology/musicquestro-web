@@ -332,7 +332,6 @@ function HarmonyGame() {
 
 
     const useReplay = () => {
-        // Simply replay the sound of the CURRENT targetChord
         if (!targetChord) return;
 
         setRunning(true);
@@ -423,7 +422,7 @@ function HarmonyGame() {
             />
 
             {
-                !showAnswer && !showCorrection &&
+                !showAnswer && !showCorrection && start && !isListeningPhase &&
                
                                             <ItemHolder
                                                 life={life}

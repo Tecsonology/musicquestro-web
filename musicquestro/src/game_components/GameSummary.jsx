@@ -2,15 +2,14 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CalculateGame from '../CalculateGame.js';
 import axios from 'axios';
+import musicoins from '../assets/store-assets/musicoins.png'
+import star from '../assets/star.png'
+
 import { UserContext } from '../components/CurrentUserContext.jsx';
 
-// Environment variable for the host
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
-// Asset imports
-import MelodyCard from '../assets/game-assets/Assets/Categories/Melody.png';
 
-// Map metadata for navigation and unlocking
 const mapNames = {
   rhythm: {
     imgLink: '/assets/Maps/Rhythm.png',
@@ -37,8 +36,7 @@ function GameSummary(props) {
   // Get both currentUser and the function to update it
   const { currentUser, setCurrentUser } = useContext(UserContext); 
 
-  // --- 1. GAME CALCULATION ---
-  // IMPORTANT: The CalculateGame constructor now only takes (score, points, MAX_SCORE, MAX_POINTS, VICTORY_THRESHOLD)
+  
   const calculate = new CalculateGame(
     props.score,
     props.points,
@@ -232,8 +230,8 @@ function GameSummary(props) {
        
           <div style={{border: '1px solid white', padding: '0.5em', borderRadius: '1em', color: 'black' }} className='flex fdr aic jc-c'>
             <h3 style={{ marginRight: '2em', color: 'white' }}>Rewards</h3>
-            <h4 style={{ marginRight: '1em', color: 'white' }}><span><img width={20}  style={{margin: 0}} src="https://i.ibb.co/whLc7nMH/Untitled-design-57.png" alt="" /></span> {gamePoints}</h4>
-            <h4 style={{ color: 'white' }}><span><img width={20} src="https://i.ibb.co/Rpkrgr9x/Untitled-design-92.png" alt="" /></span> {coinedGained}</h4>
+            <h4 style={{ marginRight: '1em', color: 'white' }}><span><img width={20}  style={{margin: 0}} src={star} alt="" /></span> {gamePoints}</h4>
+            <h4 style={{ color: 'white' }}><span><img width={20} src={musicoins} alt="" /></span> {coinedGained}</h4>
           </div>
           
 

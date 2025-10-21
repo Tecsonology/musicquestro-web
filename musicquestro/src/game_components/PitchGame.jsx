@@ -179,7 +179,7 @@ function PitchGame() {
     
 
     let roundQuestion = generateQuestion().toUpperCase()
-    setMessage(`Which of these has the ${roundQuestion === 'highest' ? `"☝🏼${roundQuestion}"` : `"👇${roundQuestion}"`} pitch?`)
+    setMessage(`Which of these has the ${roundQuestion} pitch?`)
     let delay = 0
     setPitchKey([])
     setPitchCards([])
@@ -352,6 +352,7 @@ function PitchGame() {
     
   }
 
+
   return (
     <div style={{justifyContent: 'flex-start'}} className='pitch-game-container fpage flex fdc aic'>
             <GameStatus gameStatus={gameStatus} score={score} userPoints={userPoints} currentRound={currentRound} level={gameRound} time={time} running={running} setRunning={setRunning} />
@@ -365,7 +366,7 @@ function PitchGame() {
         <GamePrompt gameName={'Echoic Cliff'} />
       )}
        {
-                      !wait && 
+                      !wait && start &&
                       (
                         <ItemHolder life={life} userContext={currentUser} useHint={useHint} useReplay={useReplay} running={running} setRunning={setRunning} children={
                           <div>
@@ -439,7 +440,7 @@ function PitchGame() {
               
 
                 </div> : 
-                !showCorrection &&
+                !showCorrection && 
                 (
                    <>
                   <div className="roundAnswer flex fdc aic jc-c glass-bg">
@@ -500,12 +501,12 @@ function PitchGame() {
             setStart(true)
             setShowAnswer(false)
             playNote()
-          }}>Start</button>
+          }}>Begin</button>
       }
       </div>
 
       {
-        showHint &&  
+        showHint &&
         (
           <div className='flex fdr aic' style={{position: 'fixed', color: 'white', padding: '1em', backgroundColor: 'rgba(30, 158, 1, 0.25)', 
                   borderRadius: '10px', marginBottom: '1em', bottom: '1em', width: '90%', justifyContent: 'space-evenly', }}>

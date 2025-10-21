@@ -73,45 +73,56 @@ function Store() {
   const [ approved, setApproved ] = useState()
   const [ activeShow, setActiveShow ] = useState('instrument')
   const [ isOpen, setIsOpen ] = useState(false)
-  const [ loading, setLoading ] = useState(false)
 
-   async function  handleBuyItem (e, price, item) {
-    const btn = e.currentTarget;
-      btn.disabled = true;
-      e.preventDefault()
-      try {
-        const token = localStorage.getItem('token')
-        const updateUserItems =  await axios.put(`${VITE_NETWORK_HOST}/api/update-user-from-shop`, {
-            userids: userids,
-            coinsDeduct: price,
-            newItem: item
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-        
-      
-      )
+   async function handleBuyItem(e, price, item) {
+        let userids = currentUser.userids
+        e.preventDefault();
+        const btn = e.currentTarget;
+        btn.disabled = true;
 
-        if(updateUserItems){ 
-          setCurrentUser({...currentUser, musicCoins: currentUser.musicCoins - price, collection: {...currentUser.collection, [item]: item}})
-          if(updateUserItems.status === 201){
-            setApproved(false)
+        try {
+          const token = localStorage.getItem("token");
+          const response = await axios.put(
+            `${VITE_NETWORK_HOST}/api/update-user-from-shop`,
+            {
+              userids,
+              coinsDeduct: price,
+              newItem: item,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          const data = response.data;
+
+          if (!data.success) {
+            setStatus(data.message || "Purchase failed");
+            setTimeout(() => setStatus(false), 3000);
+            btn.disabled = false; // allow retry
+            return;
           }
 
-          setStatus(updateUserItems.data.message) 
-          setTimeout(()=> {
-            setStatus(false)
-          }, 3000)
-        } 
+          setCurrentUser((prev) => ({
+            ...prev,
+            musicCoins: prev.musicCoins - price,
+            collection: [...prev.collection, item],
+          }));
 
-      } catch (err){
-        console.log(err)
-      }
+          setStatus("Item purchased successfully!");
+          setTimeout(() => setStatus(false), 3000);
 
-  }
+        } catch (err) {
+          console.error("Purchase error:", err);
+          setStatus("Server error. Try again later.");
+          setTimeout(() => setStatus(false), 3000);
+        } finally {
+          btn.disabled = false;
+        }
+}
+
 
   if(currentUser && currentUser.collection){
       Object.values(currentUser.collection).map((item, index)=> {
@@ -119,35 +130,30 @@ function Store() {
       })
   }
 
-  const handleAddLife = async (e)=> {
+  const handleAddLife = async (e) => {
+  const token = localStorage.getItem('token');
 
-      try {
-        const lifeAdded = 1
-        const coinDeduct = 50
-        const addLife = await axios.put(`${VITE_NETWORK_HOST}/api/user-add-life`, {
-            userids,
-            lifeAdded,
-            coinDeduct
-        }, { headers: {
-          Authorization: `Bearer ${token}`
-        }}
-         
-      
-      )
+  try {
+    let userids = currentUser.userids
+    const lifeAdded = 1;
+    const coinDeduct = 50;
 
-        if(addLife){
-          setStatus(addLife.data.message) 
-          setTimeout(()=> {
-            setStatus(false)
-          }, 3000)
-        }
-
-        !addLife ? setStatus(addLife.data) : null
-
-      } catch(err){
-        console.log(err.response?.data?.message || err.message)
+    const response = await axios.put(
+      `${VITE_NETWORK_HOST}/api/user-add-life`,
+      { userids, lifeAdded, coinDeduct },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       }
+    );
+
+
+  } catch (err) {
+    console.log(err.response?.data?.message || err.message);
   }
+};
+
 
 
   const handleBuySpell = async (e, spellIndex, price) => {
@@ -232,17 +238,7 @@ function Store() {
                             description={'Boosts your music energy!'}
                           children={
                             <span><button onClick={()=> {
-                              if(currentUser && currentUser.musicCoins >= 50){
-                                handleAddLife()
-                                setCurrentUser({...currentUser, life: currentUser.life + 1, musicCoins: currentUser.musicCoins - 50})
-                                setStatus('Item purchased!') 
-                                  setApproved(true)
-                                    setTimeout(()=> {
-                                      setStatus(false)
-                                    }, 3000)
-                              } else {
-                                 return null
-                              }
+                              handleAddLife()
                             }}><span><img src={musicoins} width={20} alt="" /></span> 50</button></span>
                         } />
 

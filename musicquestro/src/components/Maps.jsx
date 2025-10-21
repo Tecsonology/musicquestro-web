@@ -91,7 +91,7 @@ function Maps() {
             currentUser ?
             <div className="map-selection">
               {
-               maps && Object.values(maps.maps).map((value, index) => {
+               maps && maps && Object.values(maps.maps).map((value, index) => {
                 return <img  key={index} src={value.isLocked ? LockCat : mapInfo[index].imgLink} alt='' className='cat-card' 
                     onClick={()=> {
                         value.isLocked == true ? null : navigate(`${mapInfo[index].location}`)
