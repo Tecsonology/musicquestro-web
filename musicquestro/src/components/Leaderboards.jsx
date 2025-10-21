@@ -63,12 +63,12 @@ function Leaderboards() {
                         
                         <div className='flex fdc aic'> 
                           <h2>3</h2>
-                          <img style={{marginLeft: '1em'}} width={50} src={topPlayers && topPlayers[1].avatar} alt="" />
+                          <img style={{marginLeft: '1em'}} width={50} src={topPlayers && topPlayers[2].avatar} alt="" />
                         </div>
-                        <h4 style={{backgroundColor: 'rgba(0, 72, 131, 1)', padding: '0.3em', borderRadius: '0.5em'}} >{topPlayers && topPlayers[1].username}</h4>
+                        <h4 style={{backgroundColor: 'rgba(0, 72, 131, 1)', padding: '0.3em', borderRadius: '0.5em'}} >{topPlayers && topPlayers[2].username}</h4>
                         <div className='flex fdc aic jc-c'>
                           <img  width={20} src={star} alt="" />
-                          <p style={{margin: 0}}> {topPlayers && topPlayers[1].totalPoints.toFixed(0)}</p>
+                          <p style={{margin: 0}}> {topPlayers && topPlayers[2].totalPoints.toFixed(0)}</p>
                         </div>
 
                   </div>
@@ -79,7 +79,7 @@ function Leaderboards() {
                     <div 
                       style={{
                         height: '100%',
-                        minHeight: '18em',
+                        minHeight: '20em',
                         justifyContent: 'flex-start', width: '100%',
                         padding: '1em 0.5em', borderRadius: '1em', backgroundColor: 'green'}} className='flex fdc aic'>
                         <div className='flex fdc aic'> 
@@ -99,18 +99,18 @@ function Leaderboards() {
                     <div 
                       style={{
                         height: '100%',
-                        minHeight: '15em',
+                        minHeight: '16em',
                         justifyContent: 'flex-start', width: '100%',
                         padding: '1em 0.5em', borderRadius: '1em', backgroundColor: 'gold'}} className='flex fdc aic'>
 
                         <div className='flex fdc aic'> 
                           <h2>2</h2>
-                          <img style={{marginLeft: '1em'}} width={50} src={topPlayers && topPlayers[2].avatar} alt="" />
+                          <img style={{marginLeft: '1em'}} width={50} src={topPlayers && topPlayers[1].avatar} alt="" />
                         </div>
-                        <h4 style={{backgroundColor: 'rgba(0, 72, 131, 1)', padding: '0.3em', borderRadius: '0.5em'}}>{topPlayers && topPlayers[2].username}</h4>
+                        <h4 style={{backgroundColor: 'rgba(0, 72, 131, 1)', padding: '0.3em', borderRadius: '0.5em'}}>{topPlayers && topPlayers[1].username}</h4>
                         <div className='flex fdc aic jc-c'>
                           <img  width={20} src={star} alt="" />
-                          <p style={{margin: 0}}> {topPlayers && topPlayers[2].totalPoints.toFixed(0)}</p>
+                          <p style={{margin: 0}}> {topPlayers && topPlayers[1].totalPoints.toFixed(0)}</p>
                         </div>
 
                     </div>

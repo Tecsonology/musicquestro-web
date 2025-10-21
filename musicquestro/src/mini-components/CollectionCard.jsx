@@ -9,6 +9,7 @@ const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost
 
 function CollectionCard({image, itemName, instrCode}) {
 
+  const token = localStorage.getItem('token')
   const { currentUser } = useContext(UserContext)
 
   const updateCurrentInstrument =async()=> {
@@ -19,6 +20,10 @@ function CollectionCard({image, itemName, instrCode}) {
           {
             userids,
             instrument
+          }, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
           }
         )
 

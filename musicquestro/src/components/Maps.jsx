@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, lazy } from 'react'
+import React, { useEffect, useState, useContext, lazy, use } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 import '../styles/Maps.css'
 import ProtectedComponent from './ProtectedComponent'
@@ -12,56 +12,62 @@ const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
 
 
+
 const main = lazy(()=> import('https://i.ibb.co/VWV4wcPV/Untitled-design-15.png'))
 
 
 
-const mapNames = {
-  rhythm: {
+const mapInfo = [
+   {
     imgLink: '/assets/Maps/Rhythm.png',
     location: '/h/rhythmLevels'
   },
-  melody: {
+ {
     imgLink: '/assets/Maps/Melody-2.png',
     location: '/h/melodyLevels'
   },
 
-  harmony: {
+ {
     imgLink: '/assets/Maps/Harmony.png',
     location: '/h/harmonyLevels'
   },
-
-  pitch: {
+ {
     imgLink: '/assets/Maps/Pitch.png',
     location: '/h/pitchLevels'
   },
 
-}
+]
 
 
 function Maps() {
 
-  let id = 0
-  const mapAvailability = []
+  const { currentUser } = useContext(UserContext)  
   const navigate = useNavigate()  
   const [ maps, setMaps ] = useState()
-  const userids = userToken ? userToken.userids : '46546546'
-  const { currentUser } = useContext(UserContext)  
+  const userids = currentUser && currentUser.userids 
+  
 
     useEffect(() => {
       getUserMap(userids);
     }, [userids]);
  
   async function getUserMap(userid) {
-    try{
+    if(userids){
+      const token = localStorage.getItem('token');
+      try{
 
       const response = await axios.get(`${VITE_NETWORK_HOST}/api/player/maps`,
         {
-          params: {userids}
+          params: {userids},
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       )
 
       const data = await response.data
+     
+
       setMaps(data)
       
 
@@ -69,14 +75,10 @@ function Maps() {
       console.error('Error: ', err)
      
     }
+    }
   }
 
-  if(maps){
-      maps && maps ?  Object.values(maps).map((val, indx)=> {
-          mapAvailability.push(val.isLocked)
-      }) : null
-  }
-
+  
 
   return (
    
@@ -89,22 +91,24 @@ function Maps() {
             currentUser ?
             <div className="map-selection">
               {
-                 Object.values(mapNames).map((value, index)=> {
-                    
-                  return <img  key={index} src={mapAvailability[index] == true ? LockCat : value.imgLink} alt='' className='cat-card' 
+               maps && Object.values(maps.maps).map((value, index) => {
+                return <img  key={index} src={value.isLocked ? LockCat : mapInfo[index].imgLink} alt='' className='cat-card' 
                     onClick={()=> {
-                        mapAvailability[index] == true ? null : navigate(`${value.location}`)
+                        value.isLocked == true ? null : navigate(`${mapInfo[index].location}`)
                     }}
                    />
-        
-                }   )
+
+               })
               }
+            
               <br /><br /><br /><br /><br /><br /><br />
               <Outlet />
           
           </div> : <Loader />
           }
         </div>
+
+       
 
       </div>
 

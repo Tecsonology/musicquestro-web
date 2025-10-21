@@ -31,6 +31,8 @@ const mapNames = {
 };
 
 function GameSummary(props) {
+
+  const token = localStorage.getItem('token')
   const navigate = useNavigate();
   // Get both currentUser and the function to update it
   const { currentUser, setCurrentUser } = useContext(UserContext); 
@@ -111,9 +113,13 @@ function GameSummary(props) {
       await axios.put(`${VITE_NETWORK_HOST}/update-map-level`, {
         userids: userids,
         map: props.gameName,
-        level: props.level + 2, // e.g., current level 1 -> new level 3 unlocked
+        level: props.level + 2, 
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
       });
-      // console.log('Next level unlocked successfully.');
+  
     } catch (error) {
       console.error('Error unlocking next level:', error);
     }
@@ -259,7 +265,7 @@ function GameSummary(props) {
           <div className=' next-game-container flex fdc aic jc-c'>
             <h3 style={{ color: 'yellow' }}>Congratulations</h3>
             <img loading='lazy' width={200} src={nextGameImg} alt="Next Game" />
-            <h2 style={{ textAlign: 'center' }}>You unlocked the next game!</h2>
+            <h2 style={{ textAlign: 'center', color: 'white' }}>You unlocked the next game!</h2>
             <button style={{ width: '10em', borderRadius: '2em' }} className='navLink' onClick={() => navigate('/h/m')}>
               Go to Maps
             </button>

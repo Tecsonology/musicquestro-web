@@ -70,8 +70,7 @@ function Collections() {
             })
 
         if(change){
-          const updatedUser = {...currentUser, avatar: image}
-          setCurrentUser(updatedUser)
+          setCurrentUser({...currentUser, avatar: image})
           localStorage.setItem('avatar', image)
         }
 
@@ -150,7 +149,7 @@ function Collections() {
                     }
                    {
                       activeShow === 'spells' ?
-                      <div className='flex fdr aic jc-c' style={{flexWrap: 'wrap',}}>
+                      <div className='flex fdr aic jc-c' style={{flexWrap: 'wrap', paddingBottom: '3em'}}>
                         {userItems && userItems.spells.map((spell, index) => (
                           <SpellCard key={index}  name={spell[0]} quantity={spell[1]} image={spell[2]}/>
                         ))}

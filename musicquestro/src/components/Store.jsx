@@ -26,6 +26,7 @@ import Clarinet from '../assets/game-assets/Assets/Instrument/Clarinet.png'
 import Trumpet from '../assets/game-assets/Assets/Instrument/Trumpet.png'
 import Violin from '../assets/game-assets/Assets/Instrument/Violin.png'
 import AvatarShopCard from '../mini-components/AvatarShopCard'
+import StoreRoof from '../assets/StoreRoof.png'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 
@@ -65,30 +66,38 @@ const ITEMS = {
 
 function Store() {
 
-
+  const token = localStorage.getItem('token')
   const userCollection = []
   const navigate = useNavigate()
-  const { currentUser, setCurrentUser } = useContext(UserContext)
+  const { currentUser, setCurrentUser, userids } = useContext(UserContext)
   const [ status, setStatus ] = useState(false)
   const [ approved, setApproved ] = useState()
   const [ activeShow, setActiveShow ] = useState('instrument')
-  const [ isOpen, setIsOpen ] = useState(true)
+  const [ isOpen, setIsOpen ] = useState(false)
   const [ loading, setLoading ] = useState(false)
 
-
    async function  handleBuyItem (e, price, item) {
-
+    const btn = e.currentTarget;
+      btn.disabled = true;
+      e.preventDefault()
       try {
-
+        const token = localStorage.getItem('token')
         const updateUserItems =  await axios.put(`${VITE_NETWORK_HOST}/api/update-user-from-shop`, {
             userids: userids,
             coinsDeduct: price,
             newItem: item
-
-        })
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+        
+      
+      )
 
         if(updateUserItems){ 
-
+          setCurrentUser({...currentUser, musicCoins: currentUser.musicCoins - price, collection: {...currentUser.collection, [item]: item}})
           if(updateUserItems.status === 201){
             setApproved(false)
           }
@@ -120,7 +129,12 @@ function Store() {
             userids,
             lifeAdded,
             coinDeduct
-        })
+        }, { headers: {
+          Authorization: `Bearer ${token}`
+        }}
+         
+      
+      )
 
         if(addLife){
           setStatus(addLife.data.message) 
@@ -136,55 +150,44 @@ function Store() {
       }
   }
 
-  const updateQty = async (index) => {
-    if(approved){
 
-      try {
-        
-        const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
-          userids: currentUser?.userids,
-          operator: 1,
-          index
-        })
-
-        setCurrentUser({...currentUser, spells: response.data.spells})  
-
-
-      } catch (error) {
-        console.log(error)
-      }
-    } 
-  }
-
-  const deductCoins = async (coins) => {
+  const handleBuySpell = async (e, spellIndex, price) => {
+    e.preventDefault()
+    
     try {
-      const response = await axios.put(`${VITE_NETWORK_HOST}/deduct-coins`, 
-        {
-        userids: currentUser ? currentUser.userids : null,
-        coinsDeduct: coins
-      })
+      if(currentUser && currentUser.musicCoins >= price){
+        const response = await axios.put(`${VITE_NETWORK_HOST}/buy-spell`, {
+            userids: currentUser?.userids,
+            spellIndex: spellIndex,
+            price: price
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          }
+        )    
+      
 
-      if(response.data === 'Success'){
-        setStatus('Item purchased!') 
-        setApproved(true)
-          setTimeout(()=> {
-            setStatus(false)
-          }, 3000)
-      } else {
-        setStatus('Insufficient coins!') 
-          setTimeout(()=> {
-            setStatus(false)
-            setApproved(false)
-          }, 3000)
+      console.log(response.data)
+      if(response){
+        setCurrentUser({...currentUser, musicCoins: currentUser.musicCoins - price})
+        setStatus(response.data.message) 
+        setApproved(true) 
+
+        setTimeout(()=> {
+          setIsOpen(true)
+        }, 5000)
       }
-
-
-
+      } else {
+        return null
+      }
 
     } catch (error) {
       console.log(error)
-    } 
-  }
+    }   
+  }       
+
   
 
   return (
@@ -194,8 +197,11 @@ function Store() {
       
       <div className='store-container fpage flex fdc jc-c aic'>
         
-        <img className='store-banner' src="https://i.ibb.co/nN9KC0dr/Untitled-design-83.png" alt="Untitled-design-83" border="0"/>
-        { status && status ? <ShopStatus message={status} approved={approved}/> : null}
+        <img className='store-banner' src={StoreRoof} alt="Untitled-design-83" border="0"/>
+        {
+          isOpen ? 
+          <ShopStatus message={status} approved={approved} isOpen={isOpen} setIsOpen={isOpen}/> : null
+        }
         <div className='store-wrapper flex fdc aic jc-c' style={{position: 'absolute', zIndex: '3'}}>
           <h1 className='animateBlingkingLights ' style={{textAlign: 'center', backgroundColor: 'orange', padding: '0.1em 1em', borderRadius: '1em', border: '3px dotted yellow'}}>Store</h1>
         <div className="item-lists flex fdc">
@@ -228,32 +234,30 @@ function Store() {
                           children={
                             <span><button onClick={()=> {
                               handleAddLife()
-
+                                setCurrentUser({...currentUser, life: currentUser.life + 1, musicCoins: currentUser.musicCoins - 50})
                                 setStatus('Item purchased!') 
                                   setApproved(true)
                                     setTimeout(()=> {
                                       setStatus(false)
                                     }, 3000)
-                            }}>Buy</button></span>
+                            }}><span><img src={musicoins} width={20} alt="" /></span> 50</button></span>
                         } />
 
                         <StoreCard imgItem={hint} itemName={'Hint'} itemPrice={50}
                             description={'Get a spark of inspiration when the notes get tricky!'}
                           children={
-                            <span><button onClick={async()=> {
-                              await deductCoins(50)
-                              await updateQty(0)
+                            <span><button onClick={async(e)=> {
+                              handleBuySpell(e, 0, 50)
                               
-                            }}>Buy</button></span>
+                            }}><span><img src={musicoins} width={20} alt="" /></span> 50</button></span>
                         } />
 
                         <StoreCard imgItem={replay} itemName={'Replay'} itemPrice={10}
                             description={'Rewind the performance and try again without missing a beat!'}
                           children={
-                            <span><button onClick={async()=> {
-                              await deductCoins(10)
-                              await updateQty(1)
-                            }}>Buy</button></span>
+                            <span><button onClick={async(e)=> {
+                              handleBuySpell(e, 1, 10)
+                            }}><span><img src={musicoins} width={20} alt="" /></span> 10</button></span>
                         } />
 
                  
@@ -303,6 +307,7 @@ function Store() {
 
             
             </div>
+              
         </div>
         </div>
       </div>

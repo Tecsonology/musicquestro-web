@@ -344,6 +344,7 @@ button:disabled {
     justify-content: center;
     overflow: auto;
     width: 100%;
+    padding-bottom: 6em;
 }
 
 

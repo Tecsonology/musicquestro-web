@@ -13,6 +13,7 @@ import axios from 'axios';
 
 function DailyReward({open}) {
 
+    const token = localStorage.getItem('token')
     const [ isOpen, setIsOpen ] = useState(true)
     const { currentUser } = useContext(UserContext)
     const [ claimed, setClaimed ] = useState()
@@ -32,7 +33,10 @@ function DailyReward({open}) {
         const recipient = await axios.post(`${VITE_NETWORK_HOST}/rewards-claim`, 
           {
             userids: currentUser && currentUser.userids
-        })
+        }, { headers: {
+          Authorization: `Bearer ${token}`
+        }}
+      )
 
         if(recipient){
           setClaimed(true)

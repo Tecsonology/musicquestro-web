@@ -4,11 +4,14 @@ import replay from '../assets/game-assets/ItemAssets/replay.png'
 import hint from '../assets/game-assets/ItemAssets/hint.png'
 import CountdownCircle from './CountdownCircle'
 import axios from 'axios'
+import { UserContext } from './CurrentUserContext'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 
 function ItemHolder({life, useHint, useReplay, running, setRunning, children, userContext }) {
 
+  const token = localStorage.getItem('token')
+  const { currentUser, setCurrentUser } = useContext(UserContext)
   const tempHintQty = userContext ? userContext.items.spells[0][1] : 0
   const tempReplayQty = userContext ? userContext.items.spells[1][1] : 0
 
@@ -27,14 +30,33 @@ function ItemHolder({life, useHint, useReplay, running, setRunning, children, us
 
   const updateQty = async (index) => {
     try {
+      setCurrentUser({...currentUser, items: {
+        ...currentUser.items,
+        spells: spells ? spells.map((spell, i) => { 
+          if(i === index){
+            return [spell[0], spell[1] - 1]
+          } else {
+            return spell
+          }   
+        }) : null
+        }})        
+
+
 
       const response = await axios.put(`${VITE_NETWORK_HOST}/update-spells`, {
         userids: userContext ? userContext.userids : null,
         operator: -1,
         index: index
-      })
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    
+    )
 
       console.log(response.data)
+      
 
     } catch (error) {
       console.log(error)
@@ -45,7 +67,9 @@ function ItemHolder({life, useHint, useReplay, running, setRunning, children, us
   return (
     <div className='item-holder-container flex fdr'>
       <div className="left-items flex fdr aic jc-c">
-        <div style={{
+       {
+        hintQty >= 0 ?
+         <div style={{
           opacity: hintQty == 0 ? 0.2 : 1
         }} id='hint-spell' onClick={()=> {
             if (hintQty > 0) {
@@ -58,7 +82,8 @@ function ItemHolder({life, useHint, useReplay, running, setRunning, children, us
           }} className='item-wrapper glass-bg'>
             <img width={40} src={hint} alt="" />
             <h4 className='item-quantity'>{tempHintQty}</h4>
-      </div>
+      </div> : null
+       }
 
     
       {

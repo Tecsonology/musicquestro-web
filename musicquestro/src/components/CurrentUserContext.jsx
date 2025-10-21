@@ -1,80 +1,103 @@
-import axios from 'axios'
-import React, { useEffect, useState, lazy, Suspense }  from 'react'
+import axios from 'axios';
+import React, { useEffect, useState, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { createContext } from 'react'
-const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 import LoadingPage from './LoadingPage';
+import { authenticateToken } from '../AthenticateToken';
 
-export const UserContext = React.createContext()
+export const UserContext = createContext();
 
-function CurrentUserContext({children}) {
+const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 
-    const [ currentUser, setCurrentUser ] = useState()
-    const [ audioActive, setAudioACtive ] = useState(true)
-    const navigate = useNavigate()
+function CurrentUserContext({ children }) {
 
-    useEffect(()=> {
 
-        const player = JSON.parse(localStorage.getItem('userLogged'))
+  const [currentUser, setCurrentUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [audioActive, setAudioActive] = useState(true);
+  const [ userids, setUserids ] = useState()
+  const navigate = useNavigate();
 
-        if(!player){
-            console.log("No player found in local storage")
-            children = 'Oppppsss'
-            
-            
+ {/**
+     useEffect(() => {
+  const verifyUserToken = async () => {
+        const userToken = localStorage.getItem("token");
+        if (!userToken) {
+        navigate("/login");
+        return;
         }
-        const userids = player?.userids
+
+        const response = await authenticateToken();
+        setUserids(response)
         
+        if (!response) {
+        
+        localStorage.clear();
+        navigate("/login");
+        }
+    };
 
-        const getPlayer = async()=> {
-            
-            try {
-                const getUser = await axios.get(`${VITE_NETWORK_HOST}/player`, {
-                params: { userids }
-            })
+    verifyUserToken();
+    }, []); */}
 
 
-    
-            if(getUser.data.message === 'No player found'){
-                
-                console.log("Cant find userids")
-                localStorage.clear()
-                console.log("All local storage are deleted...")
-                navigate('/login')
-            }
-            const currUser = getUser.data.userWithoutPassword
-            setCurrentUser(currUser)
-            } catch (error) {
-                            
+  useEffect( () => {
+    const player = JSON.parse(localStorage.getItem('userLogged'));
 
-                alert("Something went wrong. We are redirecting you to login.")
-                localStorage.clear()
-                navigate('/login')
-            }
+    if (!player) {
+      console.log("No player found in local storage");
+      navigate('/login');
+      return;
+    }
 
-            
+
+    const getPlayer = async () => {
+        const userids = await authenticateToken()
+        setUserids(userids)
+
+      try {
+        const response = await axios.get(`${VITE_NETWORK_HOST}/player`, {
+          params: { userids },
+        });
+
+        if (response.data.message === 'No player found') {
+          console.log("Can't find userids");
+          navigate('/error')
+          localStorage.clear();
+          navigate('/login');
+          return;
         }
 
-        const interval = setInterval(()=> {
-             getPlayer()
-        }, 1000)
+        setCurrentUser(response.data.userWithoutPassword);
+      } catch (error) {
+        console.error('Error fetching user:', error);
+        alert("Something went wrong. Redirecting to login.");
+        localStorage.clear();
+        navigate('/login');
+      } finally {
+        setLoading(false);
+      }
+    };
 
-        return ()=> {
-            clearInterval(interval)
-        }
+    getPlayer();
 
+    const interval = setInterval(getPlayer, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [navigate]);
 
-    }, [])
+  
 
+  
+
+ 
+  if (loading) {
+    return <LoadingPage />;
+  }
 
   return (
-    <Suspense fallback={<LoadingPage />}>
-        <UserContext.Provider value={{currentUser, setCurrentUser}}>
-       
-        {children}
+    <UserContext.Provider value={{ currentUser, setCurrentUser, audioActive, setAudioActive, userids }}>
+      {children}
     </UserContext.Provider>
-    </Suspense>
-  )
+  );
 }
 
-export default CurrentUserContext
+export default CurrentUserContext;

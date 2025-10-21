@@ -9,6 +9,7 @@ const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost
 
 function EditProfile() {
 
+  const token = localStorage.getItem('token')
   const { currentUser } = useContext(UserContext)
   const navigate = useNavigate()
   const [ username, setUsername ] = React.useState(currentUser ? currentUser.username : null)
@@ -49,6 +50,10 @@ function EditProfile() {
                 userids: currentUser ? currentUser.userids : null,
                 newUsername: newUsername,
                 bio: bio
+              }, {
+                headers: {
+                  Authorization: `Bearer ${token}`
+                }
               }
           )
 

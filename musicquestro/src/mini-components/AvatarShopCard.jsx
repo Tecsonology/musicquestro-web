@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import musicoins from '../assets/store-assets/musicoins.png'
 import axios from 'axios'
 import { useContext } from 'react'
@@ -6,26 +6,34 @@ import { UserContext } from '../components/CurrentUserContext'
 
 function AvatarShopCard({image, name, price, setStatus, setApproved}) {
 
+  const token = localStorage.getItem('token')
   const { currentUser, setCurrentUser } = useContext(UserContext)
   const [ avatarItems, setAvatarItems ] = React.useState(currentUser ? currentUser.items.avatars : null)
-
+  const [ owned, setOwned ] = useState()
   React.useEffect(()=> {
     currentUser ? setAvatarItems(currentUser.items.avatars) : null
   }, [currentUser])
 
 
-  const purchaseItem = async(e) => {
+  const purchaseItem = async(e, price) => {
     const button = e.currentTarget;
+    
     button.disabled = true;
       try {
         const response = await axios.put(`${import.meta.env.VITE_NETWORK_HOST}/add-avatar-item`, {
           userids: currentUser ? currentUser.userids : null,
           newItem: name,
           price: price
-        })
+        }, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        }
+      )
 
         if(response){
            setStatus('Item Purchased!') 
+           setCurrentUser({...currentUser, musicCoins: currentUser.musicCoins - price})
            setApproved(true)
           setTimeout(()=> {
             setStatus(false)
@@ -52,7 +60,10 @@ function AvatarShopCard({image, name, price, setStatus, setApproved}) {
         <button
           disabled={avatarItems && avatarItems.includes(name) ? true : false}
         onClick={
-          (e)=> purchaseItem(e)
+          (e)=> {
+            purchaseItem(e, price)
+            
+          }
         }
         className='flex fdr aic jc-c'  style={{width: '100%', margin: '0.5em', 
           backgroundColor: avatarItems && avatarItems.includes(name) ? '#2f3679ff' : 'green' }}><span>
