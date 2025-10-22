@@ -139,6 +139,7 @@ function GameSummary(props) {
 
 
     try {
+      const token = localStorage.getItem('token')
       // 1. Calculate new user totals
       const newCoins = currentUser && currentUser.musicCoins + coinedGained;  
       const newTotalPoints = currentUser && currentUser.totalPoints + gamePoints;
@@ -149,6 +150,10 @@ function GameSummary(props) {
         updates: {
           musicCoins: newCoins,
           totalPoints: newTotalPoints,
+        }, 
+      }, {
+        headers: {
+          Authorization:  `Bearer ${token}`
         }
       });
 

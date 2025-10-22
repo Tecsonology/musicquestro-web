@@ -557,3 +557,9 @@ background: linear-gradient(to left, #0D1DFF 0%, #FF0000 100%);
     
   }
 }
+
+@media (min-width: 1200px){
+  * {
+    font-size: 1.03em;
+  }
+}

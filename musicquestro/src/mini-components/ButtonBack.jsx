@@ -1,5 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
+import ReturnBTn from '../assets/game-assets/Assets/Buttons/Returnbtn.png'
 
 function ButtonBack() {
 
@@ -8,7 +9,7 @@ function ButtonBack() {
   return (
      <img onClick={()=> {
             navigate('/h')
-    }} className='btn-back' src="https://i.ibb.co/KzBKmLC3/Untitled-design-2.png" alt="" />
+    }} className='btn-back' src={ReturnBTn} alt="" />
   )
 }
 

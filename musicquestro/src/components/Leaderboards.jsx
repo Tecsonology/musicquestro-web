@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ProtectedComponent from './ProtectedComponent'
 import '../styles/Leaderboards.css'
 import axios from 'axios'
 import ButtonBack from '../mini-components/ButtonBack'

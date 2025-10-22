@@ -67,14 +67,16 @@ function MainHome() {
          right: '1em', zIndex: '5', borderRadius: '50%'}} width={60} src={gift} alt="" />
          <div className="main-content fpage flex fdc aic">
           <div className="main-left">
+
             <img id='main-home-visual' src={MainHomeVisual} alt="" />
-            <h4 id='bio-text' style={{textAlign: 'center', margin: 0, color: 'white'}}>"{currentUser ? currentUser.bio : null}"</h4>
+            <h4 id='bio-text' style={{textAlign: 'center', margin: 0, color: 'white'}}>{currentUser ? currentUser.bio : null}</h4>
          </div>
          <div className="main-right flex fdc aic jc-c">
             <div className='main-home-button flex fdc aic jc-c'>
                 <button id='btnStory' onClick={()=> {
-                      console.log(localStorage.getItem('current-reading-page'))
+                      
                       let currentPage = localStorage.getItem('current-reading-page')
+                      console.log(currentPage)
                       navigate(`story#${currentPage}`)
                     }}>STORY</button>
 

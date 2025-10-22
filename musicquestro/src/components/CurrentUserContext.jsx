@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { createContext } from 'react'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
 import LoadingPage from './LoadingPage';
+import { authenticateToken } from '../AuthenticateToken';
 
 export const UserContext = React.createContext()
 
@@ -14,19 +15,17 @@ function CurrentUserContext({children}) {
     const navigate = useNavigate()
 
     useEffect(()=> {
+
       let interval;
 
         const player = JSON.parse(localStorage.getItem('userLogged'))
 
         if(!player){
             console.log("No player found in local storage")
-            alert('Something went wrong. Redirecting you to login page...')
-
-            window.location.href = '/login'
-            
+        
             
         }
-        const userids = player?.userids
+        const userids = player
         
 
         const getPlayer = async()=> {
@@ -40,7 +39,7 @@ function CurrentUserContext({children}) {
             const currUser = getUser.data.userWithoutPassword
             setCurrentUser(currUser)
             } catch (error) {
-
+                alert(error)
                 navigate('/*')
             }
 

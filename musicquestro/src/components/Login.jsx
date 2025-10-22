@@ -2,7 +2,6 @@ import { useEffect, useState, useContext} from 'react'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Log.css'
-import { token } from '../Token.js'
 import { Link } from 'react-router-dom';
 import GoogleLoginButton from './GoogleLoginButton.jsx'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST;
@@ -26,6 +25,7 @@ function Login() {
             setDisabled(true)
         }
 
+        const token = localStorage.getItem('token')
         if(token){
             window.location.href = '/h'
          }
@@ -48,7 +48,6 @@ function Login() {
             
                 );
                 const user = response.data.userWithoutPassword;
-                console.log(user.avatar)
 
                 localStorage.setItem('token', response.data.token)
                 localStorage.setItem("userLogged", JSON.stringify(user))

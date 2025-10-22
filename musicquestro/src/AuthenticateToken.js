@@ -18,6 +18,11 @@ export async function authenticateToken() {
       return response.data.user.userids;
     }
   } catch (error) {
+    if(error.response?.data?.message === 'unauthorized'){
+      alert('Session expired. Login first.')
+      localStorage.clear()
+      window.location.href = '/login'
+    }
     console.error("❌ Invalid token:", error.response?.data?.message || error.message);
     return false;
   }

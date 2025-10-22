@@ -3,7 +3,6 @@ import React from 'react'
 import { useEffect, useContext } from 'react'
 import { useState,  } from 'react'
 import CollectionCard from '../mini-components/CollectionCard'
-import ButtonBack from '../mini-components/ButtonBack'
 import { UserContext } from './CurrentUserContext'
 import Loader from './Loader'
 import { useNavigate } from 'react-router-dom'
@@ -20,8 +19,7 @@ import cat from '../assets/AvatarShopItems/Cat.png'
 import bunny from '../assets/AvatarShopItems/Bunny.png'
 
 import Flute from '../assets/game-assets/Assets/Instrument/Flute.png'
-import Guitar from '../assets/game-assets/Assets/Instrument/Guitar.png'
-import Xylo from '../assets/game-assets/Assets/Instrument/Flute.png'
+
 import Clarinet from '../assets/game-assets/Assets/Instrument/Clarinet.png'
 import Trumpet from '../assets/game-assets/Assets/Instrument/Trumpet.png'
 import Violin from '../assets/game-assets/Assets/Instrument/Violin.png'
@@ -62,12 +60,17 @@ function Collections() {
      const userid = currentUser ? currentUser.userids : null
 
     try {
-      
+        const token = localStorage.getItem('token')
        const change = await axios.put(`${VITE_NETWORK_HOST}/update-avatar`,
           {
               userids: userid,
               avatar: image
-            })
+            },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          })
 
         if(change){
           setCurrentUser({...currentUser, avatar: image})
@@ -89,7 +92,6 @@ function Collections() {
     
     setShowPrompt(true)
     setTimeout(()=> {
-      console.log("Dasdsad")
       setShowPrompt(false)
     }, 3000)
   }

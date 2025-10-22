@@ -55,9 +55,7 @@ function RhythmGame() {
   const [ showNextButton, setShowNextButton ] = useState(false)
   const [ countdownTimer, setCountdownTimer ] = useState(30)
   
-// START NEW/MODIFIED STATE
   const [revealedNotesCount, setRevealedNotesCount] = useState(0); 
-// END NEW/MODIFIED STATE
   
   let currentLevel = 0
   
@@ -108,8 +106,8 @@ useEffect(() => {
       setCountdownTimer(15)
       setShowTutorial(false)
     } else if(id == 4){
-      setCountdownTimer(10)
-      setGameRound(3)
+      setCountdownTimer(12)
+      setGameRound(5)
       setShowTutorial(false)
     }
 
@@ -142,13 +140,15 @@ useEffect(() => {
 
 
   useEffect(()=> {
-    let answerKey = ""
-    if(sequence){
-      sequence.map((note, index)=> {
-        answerKey += note.name + " "
-      })
+    if(currentUser && currentUser.admin){
+      let answerKey = ""
+      if(sequence){
+        sequence.map((note, index)=> {
+          answerKey += note.name + " "
+        })
+      }
+      answerKey ? console.log("Round",currentRound +" answer: ", answerKey ) : null
     }
-    answerKey ? console.log("Round",currentRound +" answer: ", answerKey ) : null
   }, [sequence])
 
 

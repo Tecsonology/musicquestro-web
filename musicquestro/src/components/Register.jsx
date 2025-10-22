@@ -88,7 +88,7 @@ function Register() {
       const user = response.data;
       localStorage.setItem(
         "userLogged",
-        JSON.stringify(user.userWithoutPassword)
+        JSON.stringify(user.userWithoutPassword.userids)
       );
       localStorage.setItem("token", response.data.token);
 

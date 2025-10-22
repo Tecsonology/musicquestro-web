@@ -4,8 +4,23 @@ import '../styles/Homepage.css'
 import BottonNavigation from './BottonNavigation'
 import BGMusic from './BGMusic'
 import LoadingPage from './LoadingPage'
+import { authenticateToken } from '../AuthenticateToken'
 
 function Homepage() {
+
+
+  useEffect(()=> {
+
+    const authenticate = async()=> {
+     
+      const authStatus = authenticateToken()
+      if(!authStatus){
+        console.log("Invaldiasdsa")
+      }
+    }
+
+    authenticate()
+  }, [])
 
   useEffect(() => {
       const enableFullscreen = () => {

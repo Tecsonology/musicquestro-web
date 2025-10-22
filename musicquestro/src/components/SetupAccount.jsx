@@ -24,19 +24,28 @@ function SetupAccount() {
 
     const [ selected, setSelected ] = useState("https://i.ibb.co/7tVHp34s/Avatar-4.png")
 
-    const finishSettingUp =async()=> {
+    const finishSettingUp = async(e)=> {
+      const selBtn = e.currentTarget
+      selBtn.innerHTML = 'Changing avatar...'
+      console.log(selBtn)
       try {
-        const token = JSON.parse(localStorage.getItem('userLogged'))
+        const userid = JSON.parse(localStorage.getItem('userLogged'))
+        const token = localStorage.getItem('token')
         let avatar = selected
 
         if(token){
           
-          let userids = token.userids
+          let userids = userid
+          
 
           const setUpAvatar = await axios.put(`${VITE_NETWORK_HOST}/update-avatar`,
             {
               userids,
               avatar
+            }, {
+              headers: {
+                Authorization: `Bearer ${token}`
+              }
             }
           )
 
@@ -51,7 +60,8 @@ function SetupAccount() {
         }
         
       } catch (error) {
-        alert(error)
+        alert('Oppooo', error)
+        console.log(error)
       }
     }
 
@@ -76,7 +86,9 @@ function SetupAccount() {
 
        </div>
        <button style={{backgroundColor: 'green', color: 'white', fontWeight: '1000', width: '20em'}} 
-       onClick={finishSettingUp}>Choose this avatar</button>
+       onClick={(e)=> {
+        finishSettingUp(e)
+       }}>Choose this avatar</button>
         </Suspense>
     </div>
   )

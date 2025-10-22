@@ -101,15 +101,11 @@ function Store() {
           if (!data.success) {
             setStatus(data.message || "Purchase failed");
             setTimeout(() => setStatus(false), 3000);
-            btn.disabled = false; // allow retry
+            btn.disabled = false; 
             return;
           }
 
-          setCurrentUser((prev) => ({
-            ...prev,
-            musicCoins: prev.musicCoins - price,
-            collection: [...prev.collection, item],
-          }));
+          
 
           setStatus("Item purchased successfully!");
           setTimeout(() => setStatus(false), 3000);
@@ -174,7 +170,6 @@ function Store() {
         )    
       
 
-      console.log(response.data)
       if(response){
         setCurrentUser({...currentUser, musicCoins: currentUser.musicCoins - price})
         setStatus(response.data.message) 
