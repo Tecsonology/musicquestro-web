@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
@@ -216,30 +216,7 @@ function Register() {
             placeholder="Create a password"
             required
           />
-          <div className="password-requirements">
-            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
-              <span>{passwordValid.minLength ? '✅' : '❌ '}</span>
-              Minimum of 8 characters</p>
-
-            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
-              <span>{passwordValid.upper ? '✅' : '❌ '}</span>
-              With uppercase letter</p>
-
-            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
-              <span>{passwordValid.number ? '✅' : '❌ '}</span>
-              With number</p>
-
-            <p style={{textAlign: 'left', margin: 0, fontSize: '0.8em', color: 'white'}}>
-              <span>{passwordValid.special ? '✅' : '❌ '}</span>
-              With special character (!@#$%^&* etc.)</p>
-
-            
-            
-            
-          </div>
-<<<<<<< HEAD
-
-  
+    
           {
             password && password.length > 0 &&
             <div className="password-requirements">
@@ -264,8 +241,6 @@ function Register() {
             
           </div>
           }
-=======
->>>>>>> dd7e0d5 (security updates)
 
           {error ? 
             <p style={{ color: "red", fontSize: "0.9em", marginTop: "0.5em" }}>
