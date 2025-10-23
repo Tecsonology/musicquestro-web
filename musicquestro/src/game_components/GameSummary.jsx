@@ -146,7 +146,7 @@ function GameSummary(props) {
 
       // 2. Update User Stats (Coins and Total Points)
       const updateUser = await axios.put(`${VITE_NETWORK_HOST}/api/update-user`, {
-        userids: userids,
+        userids: userids, 
         updates: {
           musicCoins: newCoins,
           totalPoints: newTotalPoints,

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import React from 'react'
 import { useEffect, useContext } from 'react'
 import { useState,  } from 'react'
 import CollectionCard from '../mini-components/CollectionCard'

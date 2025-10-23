@@ -90,14 +90,14 @@
 
 
    #main-home-visual {
-    width: 60vw;
+    width: 50vw;
   }
 }
 
 /* ========== LARGE DESKTOP (min-width: 1440px) ========== */
 @media (min-width: 1440px) {
   #main-home-visual {
-    width: 40vw;
+    width: 34vw;
   }
 
   #btnStory, #btnPlayGame {

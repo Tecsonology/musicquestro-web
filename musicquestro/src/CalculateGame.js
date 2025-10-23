@@ -2,7 +2,7 @@ export default class CalculateGame {
     /**
      * @param {number} score - Total correct levels or tasks completed (Max 15)
      * @param {number} points - User's accumulated game points (Max ~6000)
-     * @param {number} MAX_SCORE
+     * @param {number} MAX_SCORE - Maximum score for particular round
      * @param {number} MAX_POINTS
      * @param {number} VICTORY_THRESHOLD
      */

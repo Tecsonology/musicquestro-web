@@ -1,19 +1,19 @@
-import React from 'react'
 import { useState, useEffect, useContext} from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Profile.css'
 import { UserContext } from './CurrentUserContext'
-import Loader from './Loader'
 import musLife from '../assets/store-assets/MusicLife.png'
 import muscoins from '../assets/store-assets/musicoins.png'
 import EditIcon from '../assets/EditIcon.png'
 import logout from '../assets/logout.png'
 import axios from 'axios'
+import ButtonBack from '../mini-components/ButtonBack'
+import replay from '../assets/game-assets/ItemAssets/replay.png'
+import hint from '../assets/game-assets/ItemAssets/hint.png'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST
 
 import star from '../assets/star.png'
 
-import image from '../assets/game-assets/Badges/image.png'
 
 function Profile() {
   const { currentUser } = useContext(UserContext)
@@ -53,16 +53,16 @@ if(rankings){
 }      
   return (
     <>
-      <div className='profile fpage flex fdc aic jc-c'>
+      <div className='profile fpage flex'>
         {
           currentUser ? 
             <>
-              <h2 style={{margin: 0}}>PROFILE</h2>
+              
+              
 
-              <img onClick={()=> {
-                navigate(-1)
-              }} className='btn-back' src="https://i.ibb.co/KzBKmLC3/Untitled-design-2.png" alt="" />
-          <div className="profile-wrapper flex fdr jc-c aic">
+              <div className='main-profile-content'>
+                <div className='user-profile-container'>
+                <div className="profile-wrapper flex fdr jc-c aic">
               {
                 currentUser && currentUser ?
                 <div style={{margin: '2em 0', justifyContent: 'flex-start', }} className=' flex fdc aic'>
@@ -93,6 +93,8 @@ if(rankings){
                 </div> : <p>Loading... please wait</p>
               }
           </div>
+
+
               <div style={{margin: '0.7em 0'}} className="atts-container flex fdr aic jc-c">
                 
                 <div className="life flex fdr aic jc-c">
@@ -110,7 +112,22 @@ if(rankings){
                 
               </div>
 
-              <div style={{backgroundColor: '#33333348', padding: '1em', boxSizing: 'border-box'}} className="stats flex fdc aic jc-c">
+
+              <div className="collections-section flex fdr">
+                <div className='item-spell'>
+                  <img width={30} style={{margin: 0}} src={hint} alt="" /><p>{currentUser && currentUser.items.spells[0][1]}</p>
+                </div>
+                <div className='item-spell'>
+                  <img width={30} style={{margin: 0}} src={replay} alt="" /> <p>{currentUser && currentUser.items.spells[1][1]}</p>
+                </div>
+              </div>
+
+              </div>
+
+              {/** */}
+
+              <div className="stats-container flex fdc aic jc-c">
+                <div style={{backgroundColor: '#33333348', padding: '1em', boxSizing: 'border-box'}} className="stats flex fdc aic jc-c">
                 <h6 style={{margin: '1em'}}>STATS</h6>
                 <div>
                   <label htmlFor="rhythmStat">Rhythm: </label>
@@ -158,28 +175,6 @@ if(rankings){
                 <h2>{userRank && userRank}</h2>
               </div>
 
-               {
-                /**
-                 * <div className='item-count' style={{backgroundColor: '#33333348', justifyContent: 'space-between',
-                padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}}>
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td>dsfds</td>
-                        <td>dsfds</td>
-                        <td>dsfds</td>
-                      </tr>
-                      <tr>
-                        <td>dsfds</td>
-                        <td>dsfds</td>
-                        <td>dsfds</td>
-                      </tr>
-                    </tbody>
-                  </table>
-              </div>
-                 */
-               }
-
               <div style={{
                 position: 'relative', bottom: '-4em',}} className="bottom-buttons flex fdr">
                 <div onClick={()=> {
@@ -199,9 +194,12 @@ if(rankings){
                         
                       <img style={{margin: 0}} width={20} height={20} src={logout} alt="" />
 
-                      <h4>Logout</h4>
+                      <h4 style={{marginLeft: '0.5em'}}>Logout</h4>
                       </div>
                 </div>  
+
+              </div>
+              </div>
               </div>
 
              

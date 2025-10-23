@@ -66,6 +66,7 @@ function DailyReward({open}) {
       height: "60%",
       padding: "0",
       border: '4px solid yellow',
+      boxSizing: 'border-box',
       overflow: "visible", // ✅ allows the gift to show outside the box
     },
     overlay: {
@@ -80,7 +81,7 @@ function DailyReward({open}) {
     width={100}
     style={{
       position: "absolute",
-      top: "-40px", // move above the modal
+      top: "-4em", // move above the modal
       left: "50%",
       transform: "translateX(-50%)",
       zIndex: 10,
@@ -93,6 +94,7 @@ function DailyReward({open}) {
       width: "100%",
       height: "100%",
       paddingTop: "2em",
+      boxSizing: 'border-box'
     }}
     className="daily-reward flex fdc aic jc-c"
   >
@@ -104,7 +106,7 @@ function DailyReward({open}) {
       borderRadius: '1em'
     }}
     width={60} src={musicCoin} alt="Music Coin" />
-    <h2 style={{ color: "black" }}>100 MusicCoins</h2>
+    <h2 style={{ color: "black" }}>200 MusicCoins</h2>
 
     {!claimed ? (
       <button
