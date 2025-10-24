@@ -67,14 +67,13 @@ function Store() {
 
   const token = localStorage.getItem('token')
   const userCollection = []
-  const navigate = useNavigate()
   const { currentUser, setCurrentUser, userids } = useContext(UserContext)
   const [ status, setStatus ] = useState(false)
   const [ approved, setApproved ] = useState()
   const [ activeShow, setActiveShow ] = useState('instrument')
   const [ isOpen, setIsOpen ] = useState(false)
 
-   async function handleBuyItem(e, price, item) {
+   async function handleBuysItem(e, price, item) {
         let userids = currentUser.userids
         e.preventDefault();
         const btn = e.currentTarget;
@@ -168,6 +167,7 @@ function Store() {
             }
           }
         )    
+
       
 
       if(response){
@@ -272,7 +272,7 @@ function Store() {
                         className='flex fdr aic jc-c'
                         onClick={(e)=> {
                           if(currentUser && currentUser.musicCoins >= item.price){
-                            handleBuyItem(e, item.price, item.itemName)
+                            handleBuysItem(e, item.price, item.itemName)
                           } else {
                             return null
                           }

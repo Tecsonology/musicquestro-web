@@ -22,6 +22,30 @@ function Profile() {
   const [ userRank, setUserRank ] = useState()
 
   useEffect(()=> {
+    const checkUserRank =()=> {
+      
+      if(rankings){
+        console.log("dasdasd")
+        for(let x = 0; rankings.length-1 >= x; x++){
+          console.log(currentUser && currentUser.username === rankings[x].username)
+          if( currentUser && currentUser.username === rankings[x].username){
+              setUserRank(x+1)
+          }
+        }
+    } 
+    }
+
+     const interval = setInterval(()=> {
+             checkUserRank()
+        }, 1000)
+
+     return ()=> {
+        clearInterval(interval)
+    }
+
+  }, [rankings])
+
+  useEffect(()=> {
 
     const getPlayers = async()=> {
         try{
@@ -31,12 +55,6 @@ function Profile() {
 
         setRankings([...getPlayers.data].sort((a, b)=> b.totalPoints - a.totalPoints).slice(0, 10))
         
-
-        if(rankings){
-          let rank = rankings.findIndex(player=> player.username === currentUser.username) + 1
-          setUserRank(rank)
-        }
-
 
       } catch(err){
         console.log(err)
@@ -48,16 +66,13 @@ function Profile() {
     return ()=> {}
   }, [])
 
-if(rankings){
-    
-}      
+     
   return (
     <>
       <div className='profile fpage flex'>
         {
           currentUser ? 
             <>
-              
               
 
               <div className='main-profile-content'>

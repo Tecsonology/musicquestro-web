@@ -27,7 +27,7 @@ function CollectionCard({image, itemName, instrCode}) {
           }
         )
 
-        console.log(updateInstrument)
+        //console.log(updateInstrument)
     }
   }
 

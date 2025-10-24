@@ -3,18 +3,10 @@ import { useNavigate } from 'react-router-dom'
 import { useContext, Suspense, lazy } from 'react'
 import '../styles/MainHome.css'
 import MainHomeVisual from '../assets/MainHomeVisual.png'
-import { Link } from 'react-router-dom'
 import musicoins from '../assets/store-assets/musicoins.png'
-import HomeIcon from '../assets/nav-icons/3d-house.png'
-import MusicIcon from '../assets/nav-icons/shop.png'
-import LeaderboardIcon from '../assets/nav-icons/podium.png'
-import CurrentUserContext from './CurrentUserContext'
 import { UserContext } from './CurrentUserContext'
 import MusicLife from '../assets/store-assets/MusicLife.png'
-import BGMusic from './BGMusic'
-import mainVisual from '../assets/game-assets/Assets/Logo&Menu/Menu.png'
 import logo from '../assets/game-assets/Assets/Logo&Menu/Logo.png'
-import mainHome2 from '../assets/mainHome2.jpg'
 
 const MainBG = lazy(()=> import('../assets/game-assets/Assets/BackGround/NormalBG/MainBG.png'))
 
@@ -31,6 +23,8 @@ function MainHome() {
   const navigate = useNavigate() 
   const { currentUser } = useContext(UserContext)
   const [ openReward, setOpenReward ] = useState(false)
+  const dateToday = new Date().toLocaleDateString('en-CA'); // "2025-10-07"
+
   
 
   return (
@@ -38,7 +32,8 @@ function MainHome() {
       backgroundImage: {MainBG}
       }}>
       
-          <DailyReward open={openReward} />
+          <DailyReward /> 
+      
          <img width={100} className='scaling main-home-logo' src={logo} alt="" 
           style={{position: 'fixed', top: '1em', left: '1em', zIndex: '3', cursor: 'pointer'}}
           onClick={()=> {
@@ -61,10 +56,15 @@ function MainHome() {
          </div>
 
           
-         <img
-          onClick={()=> openReward === false ? setOpenReward(true) : setOpenReward(false)}
-         style={{position: 'absolute', bottom: '6em', border: '4px solid rgba(238, 255, 0, 1)',
-         right: '1em', zIndex: '5', borderRadius: '50%'}} width={60} src={gift} alt="" />
+         {
+          currentUser && currentUser.lastClaimedDate === dateToday &&
+          <img
+              onClick={()=> openReward === false ? setOpenReward(true) : setOpenReward(false)}
+            style={{position: 'absolute', bottom: '6em', border: '4px solid rgba(238, 255, 0, 1)',
+            right: '1em', zIndex: '5', borderRadius: '50%'}} width={60} src={gift} alt="" />
+         }
+
+
          <div className="main-content fpage flex fdc aic">
           <div className="main-left">
 
@@ -76,7 +76,7 @@ function MainHome() {
                 <button id='btnStory' onClick={()=> {
                       
                       let currentPage = localStorage.getItem('current-reading-page')
-                      console.log(currentPage)
+                      //console.log(currentPage)
                       navigate(`story#${currentPage}`)
                     }}>STORY</button>
 

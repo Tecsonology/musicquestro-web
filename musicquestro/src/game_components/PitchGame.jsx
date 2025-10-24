@@ -97,7 +97,7 @@ function PitchGame() {
       }
       
         if (answerKey.trim()) {
-          currentRound > 0 ? console.log("Round", currentRound + " answer: ", answerKey.trim()) : null
+          //currentRound > 0 ? console.log("Round", currentRound + " answer: ", answerKey.trim()) : null
       }
 
     }, [savedSequence]);
@@ -214,7 +214,7 @@ function PitchGame() {
         setWait(false) 
         let noteCopy = [...noteSequence].reverse()
         setSavedSequence(noteCopy)
-        console.log(noteCopy)
+        //console.log(noteCopy)
 
         setRunning(true)
         

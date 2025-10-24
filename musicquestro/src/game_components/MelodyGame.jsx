@@ -137,7 +137,7 @@ function MelodyGame() {
           answerKey += note + " "
         })
       }
-      answerKey ? console.log("Round",currentRound +" answer: ", answerKey ) : null
+      //answerKey ? console.log("Round",currentRound +" answer: ", answerKey ) : null
     }, [melody])
 
 

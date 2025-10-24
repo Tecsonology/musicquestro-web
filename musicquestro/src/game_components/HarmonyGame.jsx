@@ -393,7 +393,7 @@ function HarmonyGame() {
     const userNotes = notesInBox.map((note) => note.note);
     const wasNoteCorrectlyPlayed = (note) => userNotes.includes(note);
 
-    currentNotes ? console.log(currentNotes, currentNotes.notes) :null
+    //currentNotes ? console.log(currentNotes, currentNotes.notes) :null
 
     return (
         <div style={{ justifyContent: 'flex-start' }} className="harmony-game-container fpage flex fdc jc-c">

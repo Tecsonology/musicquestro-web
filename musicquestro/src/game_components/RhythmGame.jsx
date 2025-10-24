@@ -19,9 +19,9 @@ import rest from '../assets/rhythmnotes/RestNote.png'
 
 const durations = [
   { name: "rest", beats: 1, duration: 600, freq: 0, img: rest },
-  { name: "quarter", beats: 1, duration: 600, freq: 500, img: quarter },
-  { name: "half", beats: 2, duration: 1200, freq: 500, img: half },
-  { name: "whole", beats: 4, duration: 2400, freq: 500, img: whole },
+  { name: "quarter", beats: 1, duration: 600, freq: 600, img: quarter },
+  { name: "half", beats: 2, duration: 1200, freq: 600, img: half },
+  { name: "whole", beats: 4, duration: 2400, freq: 600, img: whole },
   
 ];
 

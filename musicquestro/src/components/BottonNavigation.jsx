@@ -5,14 +5,12 @@ import HomeIcon from '../assets/game-assets/Navigation/Home.png';
 import Shop from '../assets/game-assets/Navigation/Shop.png';
 import Leaderborad from '../assets/game-assets/Navigation/Leader-Board.png';
 import { UserContext } from './CurrentUserContext';
-import Loader from './Loader';
-import LoadingPage from './LoadingPage';
 
 
 
 function BottonNavigation() {
     const location = useLocation();
-    const { currentUser } = useContext(UserContext);
+    const {currentUser} = useContext(UserContext);
 
     useEffect(()=> {
        
