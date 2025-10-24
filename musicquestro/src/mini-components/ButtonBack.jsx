@@ -7,7 +7,7 @@ function ButtonBack() {
     const navigate = useNavigate()
 
   return (
-     <img  onClick={()=> {
+     <img onClick={()=> {
             navigate('/h')
     }} className='btn-back' src={ReturnBTn} alt="" />
   )

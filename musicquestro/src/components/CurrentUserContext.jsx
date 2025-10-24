@@ -39,7 +39,6 @@ function CurrentUserContext({children}) {
             const currUser = getUser.data.userWithoutPassword
             setCurrentUser(currUser)
             } catch (error) {
-                alert(error)
                 navigate('/*')
             }
 
