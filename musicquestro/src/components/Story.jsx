@@ -5,9 +5,7 @@ import arrowDown from '../assets/game-assets/AppAssets/arrowDown.png';
 import { UserContext } from './CurrentUserContext';
 import '../styles/Story.css';
 
-// ====================================
-// 🖼️ IMPORT ALL SLIDE ASSETS
-// ====================================
+
 import slide1 from "/src/assets/game-assets/Stories/1.png"
 import slide2 from "/src/assets/game-assets/Stories/2.png"
 import slide3 from "/src/assets/game-assets/Stories/3.png"
