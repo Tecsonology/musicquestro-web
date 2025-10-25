@@ -151,7 +151,7 @@ function Profile() {
               {/** */}
 
               <div className="stats-container flex fdc aic jc-c">
-                <div style={{backgroundColor: '#33333348', padding: '1em', boxSizing: 'border-box'}} className="stats flex fdc aic jc-c">
+                <div style={{backgroundColor: '#333333a0', padding: '1em', boxSizing: 'border-box'}} className="stats flex fdc aic jc-c">
                 <h6 style={{margin: '1em', color: 'white'}}>STATS</h6>
                 <div>
                   <label style={{color: 'white'}} htmlFor="rhythmStat">Rhythm: </label>
@@ -193,7 +193,7 @@ function Profile() {
                   </div>
               </div>
 
-              <div style={{backgroundColor: '#33333348', justifyContent: 'space-between',
+              <div style={{backgroundColor: '#333333a0', justifyContent: 'space-between',
                 padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}}  className="current-rank flex fdr aic jc-c">
                 <h4 style={{color: 'white'}}>Current Rank: </h4>
                 

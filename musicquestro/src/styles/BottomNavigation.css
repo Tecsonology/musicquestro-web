@@ -163,3 +163,22 @@
     padding: 0;
   }
 }
+
+@media (max-height: 600px){
+   .nav-item img {
+    width: 2em;
+  }
+
+  .nav-wrapper {
+    padding: 0;
+  }
+
+  .nav-item {
+    margin:  0;
+  }
+
+  .bottom-navigation {
+    background-color: red;
+    height: 4.5em;
+  }
+}

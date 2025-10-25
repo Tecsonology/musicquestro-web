@@ -5,7 +5,7 @@ import { playInstrument} from '../components/IntstrumentPlayer'
 function StoreCard({sound, imgItem, itemName, itemPrice, children, description, setStatus, owned }) {
 
   return (
-    <div style={{width: '170px', padding:'1em', minHeight: '300px', position: 'relative'}} className='store-card flex fdc aic'>
+    <div className='store-card flex fdc aic'>
         <div style={{position: 'relative', backgroundColor: ' rgb(54, 2, 85)',
           width: '100%', height: '5em'}} className='flex fdc aic jc-c'>
           <img width={60} src={imgItem} alt="" 

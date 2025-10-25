@@ -219,20 +219,20 @@ function Store() {
               </div>
 
               <div style={{marginBottom: '1em'}} className='cat-items-wrapper flex fdr aic jc-c'>
-                <button onClick={()=> {setActiveShow('instrument')}}>Instrument</button>
-                <button onClick={()=> {setActiveShow('spells')}}>Spells</button>
-                <button onClick={()=> {setActiveShow('avatars')}}>Avatars</button>
+                <button className='cat-btn' onClick={()=> {setActiveShow('instrument')}}>Instrument</button>
+                <button className='cat-btn' onClick={()=> {setActiveShow('spells')}}>Spells</button>
+                <button className='cat-btn' onClick={()=> {setActiveShow('avatars')}}>Avatars</button>
               </div>
               {
                 currentUser && currentUser ?
                 <div>
                   {
                     activeShow === 'spells' ?
-                    <div className='menu-items flex fdc' style={{justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                    <div className='menu-items flex fdc aic jc-c'>
                       <StoreCard imgItem={MusicLife} itemName={'Music Energy'} itemPrice={50}
                             description={'Boosts your music energy!'}
                           children={
-                            <span><button onClick={()=> {
+                            <span><button style={{margin: '0.3em'}} onClick={()=> {
                               handleAddLife()
                             }}><span><img src={musicoins} width={20} alt="" /></span> 50</button></span>
                         } />
@@ -240,7 +240,7 @@ function Store() {
                         <StoreCard imgItem={hint} itemName={'Hint'} itemPrice={50}
                             description={'Get a spark of inspiration when the notes get tricky!'}
                           children={
-                            <span><button onClick={async(e)=> {
+                            <span><button style={{margin: '0.3em'}} onClick={async(e)=> {
                               handleBuySpell(e, 0, 50)
                               
                             }}><span><img src={musicoins} width={20} alt="" /></span> 50</button></span>
