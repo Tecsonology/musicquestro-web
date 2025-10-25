@@ -58,6 +58,7 @@ function AvatarShopCard({image, name, price, setStatus, setApproved}) {
           <img width='100%' style={{border: '1px solid #6800c9ff', marginBottom: '1em', backgroundColor: '#38026aff'}} src={image} alt={name} />
           <h3 style={{margin: '0', color: 'white'}}>{name}</h3>
         <button
+          
           disabled={avatarItems && avatarItems.includes(name) ? true : false}
         onClick={
           (e)=> {
@@ -65,7 +66,7 @@ function AvatarShopCard({image, name, price, setStatus, setApproved}) {
             
           }
         }
-        className='flex fdr aic jc-c'  style={{width: '100%', margin: '0.5em', 
+        className='flex fdr aic jc-c'  style={{width: '100%', margin: '0.5em', color: 'white',
           backgroundColor: avatarItems && avatarItems.includes(name) ? '#2f3679ff' : 'green' }}><span>
             {avatarItems && avatarItems.includes(name) ? null : <img style={{marginRight: '0.2em'}} width='20px' src={musicoins} alt="musicoins" />}
           </span> {avatarItems && avatarItems.includes(name) ? 'OWNED' : price}</button>
