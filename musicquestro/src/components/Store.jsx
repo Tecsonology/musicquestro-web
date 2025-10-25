@@ -228,7 +228,7 @@ function Store() {
                 <div>
                   {
                     activeShow === 'spells' ?
-                    <div className='menu-items flex fdc aic jc-c'>
+                    <div className='menu-items flex fdc' style={{justifyContent: 'flex-start', alignItems: 'flex-start'}}>
                       <StoreCard imgItem={MusicLife} itemName={'Music Energy'} itemPrice={50}
                             description={'Boosts your music energy!'}
                           children={
@@ -249,7 +249,7 @@ function Store() {
                         <StoreCard imgItem={replay} itemName={'Replay'} itemPrice={10}
                             description={'Rewind the performance and try again without missing a beat!'}
                           children={
-                            <span><button onClick={async(e)=> {
+                            <span><button style={{margin: '0.3em'}} onClick={async(e)=> {
                               handleBuySpell(e, 1, 10)
                             }}><span><img src={musicoins} width={20} alt="" /></span> 10</button></span>
                         } />
@@ -268,7 +268,8 @@ function Store() {
                     <StoreCard sound={item.itemCode} key={index} imgItem={item.imgItem}  itemName={item.itemName} itemPrice={item.price}
                       description={item.description} owned={!userCollection.includes(item.itemName) ? false : true}
                       children={
-                        !userCollection.includes(item.itemName) ? <button 
+                        !userCollection.includes(item.itemName) ? <button
+                        style={{margin: 0}} 
                         className='flex fdr aic jc-c'
                         onClick={(e)=> {
                           if(currentUser && currentUser.musicCoins >= item.price){
@@ -280,7 +281,7 @@ function Store() {
                           <span><img style={{width: '1.3em', marginRight: '0.5em', color: 'white'}} src={musicoins} alt="" /></span>
                           <span>{item.price}</span>
                           </button>
-                        : <button style={{backgroundColor: '#2f3679ff', color: 'white'}} disabled>
+                        : <button style={{backgroundColor: '#2f3679ff', color: 'white', margin: 0}} disabled>
                           ✅ OWNED</button>
                       }
                     />

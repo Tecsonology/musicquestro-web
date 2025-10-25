@@ -233,7 +233,7 @@ function Story() {
 
             <button
                     onClick={() => navigate('/h/m')}
-                    style={{ width: '90%', margin: '2em', padding: '0.5em 1em', fontSize: '1.2em', backgroundColor: 'green', borderRadius: '5px' }}
+                    style={{ width: '18em', margin: '2em', padding: '0.5em 1em', fontSize: '1.2em', backgroundColor: 'green', borderRadius: '5px' }}
                 >
                     Play Game
                 </button>

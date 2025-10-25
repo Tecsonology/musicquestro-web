@@ -16,7 +16,7 @@ function StoreCard({sound, imgItem, itemName, itemPrice, children, description, 
         </div>
         <h3 style={{fontWeight: 'bolder', color: 'white', marginTop: '1em', marginBottom: '0em'}}>{itemName}</h3>
 
-        <p style={{textAlign: 'center', margin: '0 0 0.8em 0', color: '#F5F5F5', height: '3em',
+        <p style={{textAlign: 'center', fontSize: '0.7em', margin: '0 0 0.8em 0', color: '#F5F5F5', height: '3em',
          
         }}>{description}</p>
         <div className='purchased-buttons flex fdr aic jc-c'>
