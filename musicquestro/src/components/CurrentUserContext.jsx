@@ -7,7 +7,7 @@ import LoadingPage from './LoadingPage';
 import { authenticateToken } from '../AuthenticateToken';
 
 export const UserContext = React.createContext()
-
+'['
 function CurrentUserContext({children}) {
 
     const [ currentUser, setCurrentUser ] = useState()

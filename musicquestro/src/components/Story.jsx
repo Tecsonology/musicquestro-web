@@ -226,12 +226,7 @@ function Story() {
                             return <img key={index} id={img.id} src={img.src} className="img-story"/>
                         })
                     }
-                    {
-                        isChapter5Unlocked &&
-                        chapter5.map((img, index)=> {
-                            return <img key={index} id={img.id} src={img.src} className="img-story"/>
-                        })
-                    }
+                   
                     
                   
                 </div>

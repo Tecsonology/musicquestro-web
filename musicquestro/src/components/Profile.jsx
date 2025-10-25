@@ -21,13 +21,22 @@ function Profile() {
   const [ rankings, setRankings ] = useState()
   const [ userRank, setUserRank ] = useState()
 
+
+  let rank;
+  if(rankings){
+        for(let x = 0; rankings.length-1 >= x; x++){
+          if( currentUser && currentUser.username === rankings[x].username){
+              rank=x+1
+          }
+        }
+    } 
+
+
   useEffect(()=> {
     const checkUserRank =()=> {
       
       if(rankings){
-        console.log("dasdasd")
         for(let x = 0; rankings.length-1 >= x; x++){
-          console.log(currentUser && currentUser.username === rankings[x].username)
           if( currentUser && currentUser.username === rankings[x].username){
               setUserRank(x+1)
           }
@@ -187,7 +196,8 @@ function Profile() {
               <div style={{backgroundColor: '#33333348', justifyContent: 'space-between',
                 padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}}  className="current-rank flex fdr aic jc-c">
                 <h4>Current Rank: </h4>
-                <h2>{userRank && userRank}</h2>
+                <h2>{rank ? rank : '10+'}</h2>
+
               </div>
 
               <div style={{

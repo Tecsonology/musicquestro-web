@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../styles/Leaderboards.css'
 import axios from 'axios'
 import ButtonBack from '../mini-components/ButtonBack'
-import UserRank from '../mini-components/UserRank'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST
 import star from '../assets/star.png'
 
@@ -13,8 +12,6 @@ import Bronze from '../assets/game-assets/Badges/BronzeMEdal.png'
 
 
 function Leaderboards() {
-
-  const navigate = useNavigate()
 
   const [ players, setplayers ] = useState()
   const [ topPlayers, setTopPlayers ] = useState()
