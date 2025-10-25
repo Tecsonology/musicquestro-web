@@ -103,7 +103,7 @@ function Profile() {
                  
                     <div style={{position: 'relative'}}>
                       <h2 style={{margin: '0.2em 0', color: 'white'}}>{currentUser ? currentUser.username : 'No data'}</h2>
-                      <p><span><img style={{margin: 0}} width={20} src={star} alt="" /></span>{currentUser ? currentUser.totalPoints.toFixed(0) : 0}</p>
+                      <p style={{color: 'white'}}><span><img style={{margin: 0}} width={20} src={star} alt="" /></span >{currentUser ? currentUser.totalPoints.toFixed(0) : 0}</p>
                       
                     </div>
 
