@@ -123,12 +123,12 @@ function Profile() {
                 
                 <div className="life flex fdr aic jc-c">
                   <img width={30} src={musLife} alt="" />
-                  <p>{currentUser.life}</p>
+                  <p style={{color: 'white'}}>{currentUser.life}</p>
                 </div>
 
                 <div className="coins flex fdr aic jc-c">
                   <img width={30} src={muscoins} alt="" />
-                  <p>{currentUser.musicCoins}</p>
+                  <p style={{color: 'white'}}>{currentUser.musicCoins}</p>
                 </div>
                 <button style={{backgroundColor: '#00306fff', margin: '0', color: 'white'}} onClick={()=> {navigate('/h/collections')}}>My Collections</button>
 
@@ -139,10 +139,10 @@ function Profile() {
 
               <div className="collections-section flex fdr">
                 <div className='item-spell'>
-                  <img width={30} style={{margin: 0}} src={hint} alt="" /><p>{currentUser && currentUser.items.spells[0][1]}</p>
+                  <img width={30} style={{margin: 0}} src={hint} alt="" /><p style={{color: 'white'}}>{currentUser && currentUser.items.spells[0][1]}</p>
                 </div>
                 <div className='item-spell'>
-                  <img width={30} style={{margin: 0}} src={replay} alt="" /> <p>{currentUser && currentUser.items.spells[1][1]}</p>
+                  <img width={30} style={{margin: 0}} src={replay} alt="" /> <p style={{color: 'white'}}>{currentUser && currentUser.items.spells[1][1]}</p>
                 </div>
               </div>
 
@@ -152,29 +152,29 @@ function Profile() {
 
               <div className="stats-container flex fdc aic jc-c">
                 <div style={{backgroundColor: '#33333348', padding: '1em', boxSizing: 'border-box'}} className="stats flex fdc aic jc-c">
-                <h6 style={{margin: '1em'}}>STATS</h6>
+                <h6 style={{margin: '1em', color: 'white'}}>STATS</h6>
                 <div>
-                  <label htmlFor="rhythmStat">Rhythm: </label>
+                  <label style={{color: 'white'}} htmlFor="rhythmStat">Rhythm: </label>
                   <progress id='rhythmStat' value={currentUser && currentUser.maps.rhythm.levels.length} max={5}></progress>
                 </div>
                 {
                   currentUser && currentUser.maps.melody.isLocked == false ?
                   <div>
-                    <label htmlFor="rhythmStat">Melody: </label>
+                    <label style={{color: 'white'}} htmlFor="rhythmStat">Melody: </label>
                     <progress id='rhythmStat' value={currentUser && currentUser.maps.melody.levels.length} max={5}></progress>
                   </div> : null
                 }
                 {
                   currentUser && currentUser.maps.harmony.isLocked == false ?
                   <div>
-                    <label htmlFor="rhythmStat">Harmony: </label>
+                    <label  style={{color: 'white'}} htmlFor="rhythmStat">Harmony: </label>
                     <progress id='rhythmStat' value={currentUser && currentUser.maps.harmony.levels.length} max={5}></progress>
                   </div> : null
                 }
                 {
                   currentUser && currentUser.maps.harmony.isLocked == false ?
                     <div>
-                    <label htmlFor="rhythmStat">Pitch: </label>
+                    <label style={{color: 'white'}} htmlFor="rhythmStat">Pitch: </label>
                     <progress id='rhythmStat' value={currentUser && currentUser.maps.pitch.levels.length} max={5}></progress>
                   </div> : null
                 }
@@ -184,19 +184,20 @@ function Profile() {
 
               <div style={{backgroundColor: '#33333348', justifyContent: 'space-between',
                 padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}} className='badges flex fdr aic'>
-                <h4>BADGES</h4>
+                <h4 style={{color: 'white'}}>BADGES</h4>
                   <div style={{ backgroundColor: '#53535348', padding: '0.5em', flexWrap: 'wrap'}} className="badges-container flex fdr aic jc-c">
                     {
                       currentUser && currentUser.items.badges > 0 ?
-                      <div></div> : <>Coming soon...</>
+                      <div></div> : <p style={{color: 'white'}}>Coming soon...</p>
                     }
                   </div>
               </div>
 
               <div style={{backgroundColor: '#33333348', justifyContent: 'space-between',
                 padding: '1em', boxSizing: 'border-box', margin: '0.5em 0'}}  className="current-rank flex fdr aic jc-c">
-                <h4>Current Rank: </h4>
-                <h2>{rank ? rank : '10+'}</h2>
+                <h4 style={{color: 'white'}}>Current Rank: </h4>
+                
+                <h2 style={{color: 'white'}}>{rank ? rank : '10+'}</h2>
 
               </div>
 
@@ -219,7 +220,7 @@ function Profile() {
                         
                       <img style={{margin: 0}} width={20} height={20} src={logout} alt="" />
 
-                      <h4 style={{marginLeft: '0.5em'}}>Logout</h4>
+                      <h4 style={{marginLeft: '0.5em', color: 'white'}}>Logout</h4>
                       </div>
                 </div>  
 
