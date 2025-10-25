@@ -277,10 +277,10 @@ function Store() {
                             return null
                           }
                         }}>
-                          <span><img style={{width: '1.3em', marginRight: '0.5em'}} src={musicoins} alt="" /></span>
+                          <span><img style={{width: '1.3em', marginRight: '0.5em', color: 'white'}} src={musicoins} alt="" /></span>
                           <span>{item.price}</span>
                           </button>
-                        : <button style={{backgroundColor: '#2f3679ff'}} disabled>
+                        : <button style={{backgroundColor: '#2f3679ff', color: 'white'}} disabled>
                           ✅ OWNED</button>
                       }
                     />
