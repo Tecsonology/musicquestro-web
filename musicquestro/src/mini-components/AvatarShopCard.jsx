@@ -1,16 +1,17 @@
-import React, { useState } from 'react'
 import musicoins from '../assets/store-assets/musicoins.png'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useContext } from 'react'
 import { UserContext } from '../components/CurrentUserContext'
 
-function AvatarShopCard({image, name, price, setStatus, setApproved}) {
+function AvatarShopCard({image, name, price, setStatus, setApproved, setIsOpen, setSelectedItemImg, setInsufficientMessage}) {
 
   const token = localStorage.getItem('token')
   const { currentUser, setCurrentUser } = useContext(UserContext)
-  const [ avatarItems, setAvatarItems ] = React.useState(currentUser ? currentUser.items.avatars : null)
-  const [ owned, setOwned ] = useState()
-  React.useEffect(()=> {
+  const [ avatarItems, setAvatarItems ] = useState(currentUser ? currentUser.items.avatars : null)
+  
+  
+  useEffect(()=> {
     currentUser ? setAvatarItems(currentUser.items.avatars) : null
   }, [currentUser])
 
@@ -31,19 +32,23 @@ function AvatarShopCard({image, name, price, setStatus, setApproved}) {
         }
       )
 
-        if(response){
+      console.log(response)
+
+        if(response.data.message === 'Avatar item added to collection'){
            setStatus('Item Purchased!') 
+           setSelectedItemImg(image)
+            setIsOpen(true)
            setCurrentUser({...currentUser, musicCoins: currentUser.musicCoins - price})
-           setApproved(true)
-          setTimeout(()=> {
-            setStatus(false)
-          }, 3000)
         }
 
         if(response.data.message === 'Not enough coins'){
-          setApproved(false)
-          setStatus("Not enough coins")
+          setInsufficientMessage("Insufficient coins...")
+          setTimeout(()=> {
+              setInsufficientMessage(false)
+          }, 1000)
         }
+
+        
 
       } catch (error) {
         console.log(error)

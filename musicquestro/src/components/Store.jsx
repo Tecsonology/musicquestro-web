@@ -7,7 +7,6 @@ import { useState } from 'react'
 import axios from 'axios'
 import ShopStatus from '../mini-components/ShopStatus'
 import { UserContext } from './CurrentUserContext'
-import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
 import friend from '../assets/AvatarShopItems/Friend.png'
 import dog from '../assets/AvatarShopItems/Dog.png'
@@ -26,6 +25,7 @@ import Trumpet from '../assets/game-assets/Assets/Instrument/Trumpet.png'
 import Violin from '../assets/game-assets/Assets/Instrument/Violin.png'
 import AvatarShopCard from '../mini-components/AvatarShopCard'
 import StoreRoof from '../assets/StoreRoof.png'
+import InsufficinetPrompt from '../mini-components/InsufficinetPrompt'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST || 'http://localhost:5000';
 
 
@@ -67,13 +67,17 @@ function Store() {
 
   const token = localStorage.getItem('token')
   const userCollection = []
-  const { currentUser, setCurrentUser, userids } = useContext(UserContext)
-  const [ status, setStatus ] = useState(false)
+  const { currentUser, setCurrentUser } = useContext(UserContext)
+  const [ isOpen, setIsOpen ] = useState(false)
   const [ approved, setApproved ] = useState()
   const [ activeShow, setActiveShow ] = useState('instrument')
-  const [ isOpen, setIsOpen ] = useState(false)
+  const [ selectedItemImg, setSelectedItemImg ] = useState()
+  const [ status, setStatus ] = useState()
+  const [ insufficientMessage, setInsufficientMessage ] = useState(false)
 
-   async function handleBuysItem(e, price, item) {
+
+   async function handleBuysItem(e, price, item, img) {
+        
         let userids = currentUser.userids
         e.preventDefault();
         const btn = e.currentTarget;
@@ -95,24 +99,29 @@ function Store() {
             }
           );
 
+          console.log(response)
+
           const data = response.data;
 
+          console.log(data)
+
           if (!data.success) {
-            setStatus(data.message || "Purchase failed");
-            setTimeout(() => setStatus(false), 3000);
             btn.disabled = false; 
+            setInsufficientMessage('Insufficient coins...')
+            
             return;
           }
 
+
+        setSelectedItemImg(img)
+        setIsOpen(true)
+
           
 
-          setStatus("Item purchased successfully!");
-          setTimeout(() => setStatus(false), 3000);
 
         } catch (err) {
           console.error("Purchase error:", err);
-          setStatus("Server error. Try again later.");
-          setTimeout(() => setStatus(false), 3000);
+          
         } finally {
           btn.disabled = false;
         }
@@ -144,14 +153,23 @@ function Store() {
     );
 
 
+
+    if(response.data.success === false){
+      setInsufficientMessage("Insufficient coins...")
+        setTimeout(()=> {
+            setInsufficientMessage(false)
+        }, 1000)     
+    }
+
   } catch (err) {
     console.log(err.response?.data?.message || err.message);
+    
   }
 };
 
 
 
-  const handleBuySpell = async (e, spellIndex, price) => {
+  const handleBuySpell = async (e, spellIndex, price, img ) => {
     e.preventDefault()
     
     try {
@@ -172,15 +190,16 @@ function Store() {
 
       if(response){
         setCurrentUser({...currentUser, musicCoins: currentUser.musicCoins - price})
-        setStatus(response.data.message) 
         setApproved(true) 
+        setSelectedItemImg(img)
+        setIsOpen(true)
 
-        setTimeout(()=> {
-          setIsOpen(true)
-        }, 5000)
       }
       } else {
-        return null
+        setInsufficientMessage("Insufficient coins...")
+        setTimeout(()=> {
+            setInsufficientMessage(false)
+        }, 1000)
       }
 
     } catch (error) {
@@ -196,17 +215,18 @@ function Store() {
       <ButtonBack />
       
       <div className='store-container fpage flex fdc jc-c aic'>
-        
-        <img className='store-banner' src={StoreRoof} alt="Untitled-design-83" border="0"/>
         {
-          isOpen ? 
-          <ShopStatus message={status} approved={approved} isOpen={isOpen} setIsOpen={isOpen}/> : null
+          insufficientMessage && <InsufficinetPrompt  insufficientMessage={insufficientMessage} />
         }
+        <img className='store-banner' src={StoreRoof} alt="Untitled-design-83" border="0"/>
+       
         <div className='store-wrapper flex fdc aic jc-c' style={{position: 'absolute', zIndex: '3'}}>
           <h1 className='animateBlingkingLights ' style={{textAlign: 'center', backgroundColor: 'orange', padding: '0.1em 1em', borderRadius: '1em', border: '3px dotted yellow'}}>Store</h1>
         <div className="item-lists flex fdc">
             
             <div className="survival-items flex fdc aic jc-c">
+
+              <ShopStatus isOpen={isOpen} setIsOpen={setIsOpen} message={"Dasdsa"} approved={true} pic={selectedItemImg}/>
                 
               <div className='flex fdr aic jc-c'>
                 <div className='flex fdr aic jc-c' style={{marginBottom: '1em', backgroundColor: '#0199DA', color: 'black', borderRadius: '1em', padding: '0.4em'}}>
@@ -218,11 +238,13 @@ function Store() {
 
               </div>
 
+              
               <div style={{marginBottom: '1em'}} className='cat-items-wrapper flex fdr aic jc-c'>
                 <button className='cat-btn' onClick={()=> {setActiveShow('instrument')}}>Instrument</button>
                 <button className='cat-btn' onClick={()=> {setActiveShow('spells')}}>Spells</button>
                 <button className='cat-btn' onClick={()=> {setActiveShow('avatars')}}>Avatars</button>
               </div>
+
               {
                 currentUser && currentUser ?
                 <div>
@@ -241,7 +263,7 @@ function Store() {
                             description={'Get a spark of inspiration when the notes get tricky!'}
                           children={
                             <span><button style={{margin: '0.3em'}} onClick={async(e)=> {
-                              handleBuySpell(e, 0, 50)
+                              handleBuySpell(e, 0, 50, hint)
                               
                             }}><span><img src={musicoins} width={20} alt="" /></span> 50</button></span>
                         } />
@@ -250,12 +272,10 @@ function Store() {
                             description={'Rewind the performance and try again without missing a beat!'}
                           children={
                             <span><button style={{margin: '0.3em'}} onClick={async(e)=> {
-                              handleBuySpell(e, 1, 10)
+                              handleBuySpell(e, 1, 10, replay)
                             }}><span><img src={musicoins} width={20} alt="" /></span> 10</button></span>
                         } />
-
-                 
-                                 
+              
                   </div> : null
                   }
 
@@ -273,9 +293,12 @@ function Store() {
                         className='flex fdr aic jc-c'
                         onClick={(e)=> {
                           if(currentUser && currentUser.musicCoins >= item.price){
-                            handleBuysItem(e, item.price, item.itemName)
+                            handleBuysItem(e, item.price, item.itemName, item.imgItem)
                           } else {
-                            return null
+                            setInsufficientMessage("Insufficient coins...")
+                            setTimeout(()=> {
+                              setInsufficientMessage(false)
+                            }, 1000)
                           }
                         }}>
                           <span><img style={{width: '1.3em', marginRight: '0.5em', color: 'white'}} src={musicoins} alt="" /></span>
@@ -294,10 +317,10 @@ function Store() {
                 activeShow === 'avatars' ?
                 <div className="menu-items ">
                   <div className='avatar-items'>
-                    <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Friend'} image={friend} price={150} />
-                    <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Doggie'} image={dog} price={250} />
-                    <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Cat'} image={cat} price={250} />
-                    <AvatarShopCard setApproved={setApproved} setStatus={setStatus} name={'Bunny'} image={bunny} price={250} />
+                    <AvatarShopCard setInsufficientMessage={setInsufficientMessage} setSelectedItemImg={setSelectedItemImg} setIsOpen={setIsOpen} setApproved={setApproved} setStatus={setStatus} name={'Friend'} image={friend} price={150} />
+                    <AvatarShopCard setInsufficientMessage={setInsufficientMessage} setSelectedItemImg={setSelectedItemImg} setIsOpen={setIsOpen} setApproved={setApproved} setStatus={setStatus} name={'Doggie'} image={dog} price={250} />
+                    <AvatarShopCard setInsufficientMessage={setInsufficientMessage} setSelectedItemImg={setSelectedItemImg} setIsOpen={setIsOpen} setApproved={setApproved} setStatus={setStatus} name={'Cat'} image={cat} price={250} />
+                    <AvatarShopCard setInsufficientMessage={setInsufficientMessage} setSelectedItemImg={setSelectedItemImg} setIsOpen={setIsOpen} setApproved={setApproved} setStatus={setStatus} name={'Bunny'} image={bunny} price={250} />
                   </div>
                 </div> : null
                }

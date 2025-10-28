@@ -14,7 +14,6 @@ export async function authenticateToken() {
     const response = await axios.post(`${VITE_NETWORK_HOST}/authenticateToken`, { token });
 
     if (response.data.message === "Token valid") {
-      console.log("Token valid")
       return response.data.user.userids;
     }
   } catch (error) {
