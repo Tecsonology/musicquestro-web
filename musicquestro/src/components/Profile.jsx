@@ -7,9 +7,11 @@ import muscoins from '../assets/store-assets/musicoins.png'
 import EditIcon from '../assets/EditIcon.png'
 import logout from '../assets/logout.png'
 import axios from 'axios'
-import ButtonBack from '../mini-components/ButtonBack'
 import replay from '../assets/game-assets/ItemAssets/replay.png'
 import hint from '../assets/game-assets/ItemAssets/hint.png'
+import Gold from '../assets/game-assets/Badges/GoldMedal.png'
+import Silver from '../assets/game-assets/Badges/SilverMedal.png'
+import Bronze from '../assets/game-assets/Badges/BronzeMEdal.png'
 const VITE_NETWORK_HOST = import.meta.env.VITE_NETWORK_HOST
 
 import star from '../assets/star.png'
@@ -20,6 +22,7 @@ function Profile() {
   const navigate = useNavigate()
   const [ rankings, setRankings ] = useState()
   const [ userRank, setUserRank ] = useState()
+  const [ rankBadge, setRankBadge ] = useState()
 
 
   let rank;
@@ -74,6 +77,22 @@ function Profile() {
 
     return ()=> {}
   }, [])
+
+  useEffect(()=> {
+      if(rank){
+        if(rank === 1){
+          setRankBadge(Gold)
+        } else if(rank === 2){
+          setRankBadge(Silver)
+        } else if(rank === 3){
+          setRankBadge(Bronze)
+        } else if(rank > 3){
+          setRankBadge(Silver)
+        }
+      }
+  }, [rank])
+
+  
 
      
   return (
@@ -198,6 +217,7 @@ function Profile() {
                 <h4 style={{color: 'white'}}>Current Rank: </h4>
                 
                 <h2 style={{color: 'white'}}>{rank ? rank : '10+'}</h2>
+                <img width={30} src={rankBadge} alt="" />
 
               </div>
 
