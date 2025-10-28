@@ -7,7 +7,8 @@
     background-position: center;
     background-blend-mode: multiply;
     justify-content: flex-start;
-    padding-top: 8em;
+    padding-top: 3em;
+    overflow-y: hidden;
 
     input {
         border-radius: 0.7em;
@@ -66,6 +67,10 @@
     h1 {
         width: 80%;
     }
+}
+
+#video-tutorial {
+    width: 100%;
 }
 
 @media (min-width: 778px) {

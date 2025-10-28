@@ -47,10 +47,11 @@ function App() {
     <PilotTestingPrompt showPrompt={showPrompt} setShowPrompt={setShowPrompt}/>
     
       <div id='main-app' className='log fpage flex fdc jc-c aic'>
-        <h4 style={{position: 'absolute', background: 'transparent', padding: '1em', top: '0em', right: '1em', border: '1px solid #708993', color: 'white'}}><span><img style={{marginRight: '1em'}} width={20} src={headset} alt="" /></span>Best played with Headset</h4>    
        
 
-       <div  className="main-log flex fdc aic jc-c">
+       <div  className="main-log  fpage flex fdc aic jc-c">
+        <h4 style={{position: 'absolute', background: 'transparent', padding: '1em', top: '0em', right: '1em', border: '1px solid #708993', color: 'white'}}><span><img style={{marginRight: '1em'}} width={20} src={headset} alt="" /></span>Best played with Headset</h4>    
+
         
         <img width={ loc.pathname === '/' ? 300 : 100} className='main-logo' src={logo} alt="" />
         {
@@ -60,7 +61,7 @@ function App() {
         {
           !logingIn ? 
           <>
-              <h2 style={{color: '#22E1E7'}}>Interactive Music Game for Kids</h2>
+              <h2 style={{color: '#22E1E7', textAlign: 'center'}}>Interactive Music Game for Youth</h2>
               
        <p style={{textAlign: 'center', color: 'white', marginBottom: '2.5em'}}>Step into the world of MusicQuestro – a magical adventure where music comes alive!</p>
           </> : null  
@@ -145,8 +146,8 @@ function App() {
           </div>
 
           <div  style={{marginTop: '3em'}}>
-              <video width={300} src="../Tutorial.mp4" autoPlay muted loop controls></video>
-              <h2>MusicQuestro Gameplay</h2>
+              <video id='video-tutorial' src="../GameTutorial.mp4" autoPlay muted loop controls></video>
+              <h4 style={{textAlign: 'center'}}>- MusicQuestro Gameplay -</h4>
           </div>
 
           <h3  onClick={() => {

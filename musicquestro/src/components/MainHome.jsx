@@ -48,11 +48,11 @@ function MainHome() {
 
             <div  style={{marginRight: '1em'}} className='flex fdr aic jc-c'>
               <img className='scaleWithLight' style={{color: 'white', marginRight: '0.7em'}} width={30} src={MusicLife} alt="" />
-              { currentUser ? <h2>{currentUser.life}</h2> : 'Loading...'}
+              { currentUser ? <h2 style={{color: 'white'}}>{currentUser.life}</h2> : 'Loading...'}
             </div>
 
             <img className='rotating'  width={30} src={musicoins} alt="" style={{marginRight: '0.5em', color: 'white'}} />
-            { currentUser ? <h2>{currentUser.musicCoins}</h2> : 'Loading'}
+            { currentUser ? <h2 style={{color: 'white'}}>{currentUser.musicCoins}</h2> : 'Loading'}
          </div>
 
           
